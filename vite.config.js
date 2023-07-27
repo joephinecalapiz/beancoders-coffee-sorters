@@ -1,13 +1,11 @@
-/** @format */
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
-  base: "/public", // Change this path according to your Laravel public directory
-  build: {
-    outDir: "../public", // Output directory for production build
+  server: {
+    port: 3000,
+    host: true, // This should be true or omitted to bind to all available network interfaces.
   },
+  plugins: [react()],
 });
