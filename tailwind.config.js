@@ -9,6 +9,7 @@ export default {
     extend: {},
     backgroundImage: {
       CoffeeBeans: "url('./assets/background.png')",
+      BgLanding: "url('./assets/background_landing.jpg')",
       bgopacity: "url('./assets/bgopacity.png')",
     },
   },
