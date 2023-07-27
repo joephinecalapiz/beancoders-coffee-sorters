@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import BgLanding from "../assets/background_landing.jpg";
 import Navbar from "../component/Navbar.jsx";
