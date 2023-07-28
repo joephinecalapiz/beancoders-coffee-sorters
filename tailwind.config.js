@@ -9,10 +9,11 @@ export default {
     extend: {},
     backgroundImage: {
       CoffeeBeans: "url('./assets/background.png')",
-      BgLanding: "url('./assets/background_landing.jpg')",
+      BgLanding: "url('./assets/bg_landing2.png')",
       bgopacity: "url('./assets/bgopacity.png')",
     },
   },
+  
   //custom color theme/overwrite the default color of daisyUI
   daisyui: {
     themes: [

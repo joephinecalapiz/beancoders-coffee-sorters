@@ -17,13 +17,35 @@ const Landing = () => {
     <>
       <Navbar />
       <div className="flex flex-col justify-center items-center bg-BgLanding bg-cover h-full w-full">
-        <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-1" />
+        <div 
+          className="text-white font-bold text-2xl"
+        >
+          <p style={{ fontSize: "35px", marginBottom: "1px", position: "absolute", top: "48%", left: "50%"}}>
+            BeanCoders:
+          </p>
+          <p style={{ fontSize: "40px", position: "absolute", top: "55%", left: "58%"}}>
+            Quality Bean Sorter
+          </p>
+        </div>
+        <div
+          className="logocontainer"
+          style={{
+            position: "absolute",
+            top: "32%", 
+            left: "60%",
+            transform: "translate(-50%, -50%)",
+          }}
+        >
+          <img src={BeansLogo} alt="BeansLogo" 
+          className="h-80 w-80 mt-1" 
+          />
+        </div>
       </div>
 
       {/* Row 1*/}
       <div className="bg-black">
         <div className="text-center justify-center items-center">
-          <h1 style={{ color: "white" }} className="mt-0 font-bold text-[40px]">
+          <h1 style={{ color: "white", marginBottom: "20px"}} className="mt-0 font-bold text-[40px]">
             Coffee Sorting Establishments
           </h1>
         </div>
