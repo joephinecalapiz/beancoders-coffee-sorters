@@ -2,7 +2,10 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-//import BgLanding from "../assets/background_landing.jpg";
+
+//import BgLanding from "./assets/background_landing.jpg";
+import BeansLogo from "../assets/beansLogo.png";
+
 import Navbar from "../component/Navbar.jsx";
 
 const Landing = () => {
@@ -13,9 +16,19 @@ const Landing = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col justify-center items-center bg-CoffeeBeans bg-cover h-screen w-full">
-        {/* Row 1*/}
-        <div className="grid grid-cols-3 gap-4 justify-items-center items-center bg-black">
+      <div className="flex flex-col justify-center items-center bg-CoffeeBeans bg-cover h-full w-full">
+        <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-1" />
+      </div>
+
+      {/* Row 1*/}
+      <div className="bg-black">
+        <div className="text-center justify-center items-center">
+          <h1 style={{ color: "white" }} className="mt-0 font-bold text-[40px]">
+            Coffee Sorting Establishments
+          </h1>
+        </div>
+
+        <div className="grid grid-cols-3 gap-4 justify-items-center items-center">
           <div
             className="bg-red-500 h-48 w-48 rounded-lg p-4"
             style={{ borderRadius }}
@@ -42,8 +55,7 @@ const Landing = () => {
           </div>
         </div>
 
-        {/* Row 2 */}
-        <div className="grid grid-cols-3 gap-4 justify-items-center items-center bg-black">
+        <div className="grid grid-cols-3 gap-4 justify-items-center items-center">
           <div
             className="bg-yellow-500 h-48 w-48 rounded-lg p-4"
             style={{ borderRadius }}
@@ -71,7 +83,7 @@ const Landing = () => {
         </div>
 
         {/* Grid 3 */}
-        <div className="grid grid-cols-3 gap-4 justify-items-center items-center bg-black">
+        <div className="grid grid-cols-3 gap-4 justify-items-center items-center">
           <div
             className="bg-orange-500 h-48 w-48 rounded-lg p-4"
             style={{ borderRadius }}
