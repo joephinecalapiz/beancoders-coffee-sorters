@@ -2,13 +2,11 @@
 
 import React from "react";
 import { useNavigate } from "react-router-dom";
-//import BgLanding from "./assets/background_landing.jpg";
 import BeansLogo from "../assets/beansLogo.png";
 import Navbar from "../component/Navbar.jsx";
 
 const Landing = () => {
   const navigate = useNavigate();
-  // automatic na pag set sa radius sa box2
   const borderRadius = "26px";
   const margin = "10px";
 
@@ -16,13 +14,28 @@ const Landing = () => {
     <>
       <Navbar />
       <div className="flex flex-col justify-center items-center bg-BgLanding bg-cover h-full w-full">
-        <div 
-          className="text-white font-bold text-2xl"
-        >
-          <p style={{ fontSize: "40px", marginBottom: "1px", position: "absolute", top: "50%", left: "52%", fontFamily: "Poppins, sans-serif"}}>
+        <div className="text-white font-bold text-2xl">
+          <p
+            style={{
+              fontSize: "40px",
+              marginBottom: "1px",
+              position: "absolute",
+              top: "50%",
+              left: "52%",
+              fontFamily: "Poppins, sans-serif",
+            }}
+          >
             BeanCoders:
           </p>
-          <p style={{ fontSize: "48px", position: "absolute", top: "58%", left: "60%", fontFamily: "Poppins, sans-serif"}}>
+          <p
+            style={{
+              fontSize: "48px",
+              position: "absolute",
+              top: "58%",
+              left: "60%",
+              fontFamily: "Poppins, sans-serif",
+            }}
+          >
             Quality Bean Sorter
           </p>
         </div>
@@ -30,21 +43,21 @@ const Landing = () => {
           className="logocontainer"
           style={{
             position: "absolute",
-            top: "34%", 
+            top: "34%",
             left: "60%",
             transform: "translate(-50%, -50%)",
           }}
         >
-          <img src={BeansLogo} 
-          alt="BeansLogo" 
-          className="h-80 w-80 mt-1" 
-          />
+          <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-1" />
         </div>
       </div>
 
       <div className="bg-black">
         <div className="text-center justify-center items-center">
-          <h1 style={{ color: "white", marginBottom: "20px"}} className="mt-0 font-bold text-[40px]">
+          <h1
+            style={{ color: "white", marginBottom: "20px" }}
+            className="mt-0 font-bold text-[40px]"
+          >
             Coffee Sorting Establishments
           </h1>
         </div>
@@ -60,68 +73,42 @@ const Landing = () => {
               alt="beansLogo"
               className="h-25 w-25 mb-1"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-45px",
+                left: "1px",
               }}
             />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
-              Name
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Address
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Phone
-            </p>
-        </div>
-
-          <div
-            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
-            style={{ borderRadius, margin }}
-          >
-            <img
-              src={BeansLogo}
-              alt="beansLogo"
-              className="h-25 w-25 mb-1"
+            <p
+              className="text-black font-bold"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
               }}
-            />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
+            >
               Name
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Address
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Phone
-            </p>
-          </div>
-          
-          <div
-            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
-            style={{ borderRadius, margin }}
-          >
-            <img
-              src={BeansLogo}
-              alt="beansLogo"
-              className="h-25 w-25 mb-1"
+            <p
+              className="text-black"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
               }}
-            />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
-              Name
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: 'Poppins, sans-serif' }}>
+            >
               Address
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Phone
             </p>
           </div>
@@ -135,18 +122,140 @@ const Landing = () => {
               alt="beansLogo"
               className="h-25 w-25 mb-1"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-45px",
+                left: "1px",
               }}
             />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
+            <p
+              className="text-black font-bold"
+              style={{
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Name
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Address
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Phone
+            </p>
+          </div>
+
+          <div
+            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
+            style={{ borderRadius, margin }}
+          >
+            <img
+              src={BeansLogo}
+              alt="beansLogo"
+              className="h-25 w-25 mb-1"
+              style={{
+                position: "relative",
+                top: "-45px",
+                left: "1px",
+              }}
+            />
+            <p
+              className="text-black font-bold"
+              style={{
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Name
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Address
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Phone
+            </p>
+          </div>
+
+          <div
+            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
+            style={{ borderRadius, margin }}
+          >
+            <img
+              src={BeansLogo}
+              alt="beansLogo"
+              className="h-25 w-25 mb-1"
+              style={{
+                position: "relative",
+                top: "-45px",
+                left: "1px",
+              }}
+            />
+            <p
+              className="text-black font-bold"
+              style={{
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Name
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Address
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Phone
             </p>
           </div>
@@ -163,68 +272,42 @@ const Landing = () => {
               alt="beansLogo"
               className="h-25 w-25 mb-1"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-45px",
+                left: "1px",
               }}
             />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
-              Name
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Address
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Phone
-            </p>
-        </div>
-
-          <div
-            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
-            style={{ borderRadius, margin }}
-          >
-            <img
-              src={BeansLogo}
-              alt="beansLogo"
-              className="h-25 w-25 mb-1"
+            <p
+              className="text-black font-bold"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
               }}
-            />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
+            >
               Name
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Address
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
-              Phone
-            </p>
-          </div>
-          
-          <div
-            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
-            style={{ borderRadius, margin }}
-          >
-            <img
-              src={BeansLogo}
-              alt="beansLogo"
-              className="h-25 w-25 mb-1"
+            <p
+              className="text-black"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
               }}
-            />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
-              Name
-            </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
+            >
               Address
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Phone
             </p>
           </div>
@@ -238,18 +321,140 @@ const Landing = () => {
               alt="beansLogo"
               className="h-25 w-25 mb-1"
               style={{
-                position: 'relative',
-                top: '-45px',
-                left: '1px',
+                position: "relative",
+                top: "-45px",
+                left: "1px",
               }}
             />
-            <p className="text-black font-bold" style={{ position: 'relative', top: '-70px', fontSize: '24px', fontFamily: "Poppins, sans-serif"}}>
+            <p
+              className="text-black font-bold"
+              style={{
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Name
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-45px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Address
             </p>
-            <p className="text-black" style={{ position: 'relative', top: '-20px', fontSize: '24px', fontFamily: "Poppins, sans-serif" }}>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Phone
+            </p>
+          </div>
+
+          <div
+            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
+            style={{ borderRadius, margin }}
+          >
+            <img
+              src={BeansLogo}
+              alt="beansLogo"
+              className="h-25 w-25 mb-1"
+              style={{
+                position: "relative",
+                top: "-45px",
+                left: "1px",
+              }}
+            />
+            <p
+              className="text-black font-bold"
+              style={{
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Name
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Address
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Phone
+            </p>
+          </div>
+
+          <div
+            className="bg-gray-200 h-59 w-74 rounded-lg p-4"
+            style={{ borderRadius, margin }}
+          >
+            <img
+              src={BeansLogo}
+              alt="beansLogo"
+              className="h-25 w-25 mb-1"
+              style={{
+                position: "relative",
+                top: "-45px",
+                left: "1px",
+              }}
+            />
+            <p
+              className="text-black font-bold"
+              style={{
+                position: "relative",
+                top: "-70px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Name
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-45px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
+              Address
+            </p>
+            <p
+              className="text-black"
+              style={{
+                position: "relative",
+                top: "-20px",
+                fontSize: "24px",
+                fontFamily: "Poppins, sans-serif",
+              }}
+            >
               Phone
             </p>
           </div>
