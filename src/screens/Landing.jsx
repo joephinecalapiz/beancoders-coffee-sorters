@@ -16,7 +16,7 @@ const Landing = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col justify-center items-center bg-CoffeeBeans bg-cover h-full w-full">
+      <div className="flex flex-col justify-center items-center bg-BgLanding bg-cover h-full w-full">
         <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-1" />
       </div>
 
