@@ -11,7 +11,9 @@ const About = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col justify-center items-center bg-CoffeeBeans bg-cover h-screen w-full">
+      <div className="flex flex-col justify-center items-center bg-CoffeeBeans bg-cover min-h-screen w-full">
+        {/* Use min-h-screen to make sure the div takes at least the height of the screen */}
+
         <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-1" />
 
         <div className="text-center">
