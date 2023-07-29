@@ -3,10 +3,9 @@ import { useNavigate } from "react-router-dom";
 import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
-
+import axios from 'axios';
 const Login = () => {
   const navigate = useNavigate();
-
   const {
     register,
     handleSubmit,
@@ -20,6 +19,18 @@ const Login = () => {
   const onSubmitHandler = (data) => {
     console.log(data);
     console.log("checkboxStatus:", checkboxStatus);
+
+    axios.post('http://192.168.254.111:8000/api/login', data)
+    .then(response => {
+      if(response.status == 200){
+        navigate('/dashboard');
+      }
+    }).catch(error => {
+      console.error('Error', error.response.data)
+      if(error.response.status == 401){
+        //Navigate to desired page
+      }
+    });
   };
 
   return (
