@@ -1,13 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
-
+import api_endpoint from "../../config";
 const Customers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
-
+  const [allCustomers , setAllCustomers] = useState([]);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -19,12 +19,34 @@ const Customers = () => {
     setNewCustomerAddress("");
   };
 
-  const handleAddNewCustomer = (e) => {
+  const handleAddNewCustomer = async (e) => {
     e.preventDefault();
-    console.log("New customer details:");
-    console.log("Name:", newCustomerName);
-    console.log("Phone Number:", newCustomerPhoneNumber);
-    console.log("Address:", newCustomerAddress);
+    try{
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = fetch(
+        api_endpoint + "/add/customer",
+        {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token
+          },
+          body: JSON.stringify({
+            user_id: user_id,
+            customerName: newCustomerName,
+            phoneNum: newCustomerPhoneNumber,
+            address: newCustomerAddress
+          })
+        });
+        if(!response.ok){
+          throw new Error("Fail to add customer")
+        }
+        const newCustomer = await response.json();
+        setAllCustomers([...allCustomers, newCustomer]);
+    }catch(error){
+      console.error(error);
+    }
     closeModal();
   };
 
@@ -36,6 +58,33 @@ const Customers = () => {
     alert(
       `History for ${customerName}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
     );
+  };
+
+  useEffect(() =>{
+    fetchCustomers();
+  },[]);
+
+  const fetchCustomers = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = await fetch(
+        api_endpoint + "/customers/" + user_id,
+        {
+          method: "GET",
+          headers: {
+            Authorization: 'Bearer ' + token, // Add a space after 'Bearer'
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to fetch customer data");
+      }
+      const data = await response.json();
+      setAllCustomers(data.customer);
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
   };
 
   return (
@@ -97,23 +146,23 @@ const Customers = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {customerData.map((customer) => (
+                {allCustomers.map((customer) => (
                   <tr key={customer.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {customer.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.name}
+                      {customer.customerName}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.phoneNumber}
+                      {customer.phoneNum}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       {customer.address}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button
-                        onClick={() => handleSeeMore(customer.name)}
+                        onClick={() => handleSeeMore(customer.customerName)}
                         className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
                       >
                         See More
@@ -211,56 +260,5 @@ const Customers = () => {
     </>
   );
 };
-
-const customerData = [
-  {
-    id: 1,
-    name: "Juan Dela Cruz",
-    phoneNumber: "0912-345-6789",
-    address: "123 Kagay-anon St., Cagayan de Oro City",
-  },
-  {
-    id: 2,
-    name: "Maria Santos",
-    phoneNumber: "0987-654-3210",
-    address: "456 Xavier St., Cagayan de Oro City",
-  },
-  {
-    id: 3,
-    name: "Pedro Reyes",
-    phoneNumber: "0922-123-4567",
-    address: "789 Limketkai Ave., Cagayan de Oro City",
-  },
-  {
-    id: 4,
-    name: "Luz Fernandez",
-    phoneNumber: "0917-888-7777",
-    address: "101 Velez St., Cagayan de Oro City",
-  },
-  {
-    id: 5,
-    name: "Emmanuel Santos",
-    phoneNumber: "0932-999-1111",
-    address: "222 Masterson Ave., Cagayan de Oro City",
-  },
-  {
-    id: 6,
-    name: "Anna Reyes",
-    phoneNumber: "0915-333-2222",
-    address: "666 Hayes St., Cagayan de Oro City",
-  },
-  {
-    id: 7,
-    name: "Jose Gonzalez",
-    phoneNumber: "0927-111-5555",
-    address: "777 Tomas Saco St., Cagayan de Oro City",
-  },
-  {
-    id: 8,
-    name: "Rosario Lim",
-    phoneNumber: "0944-444-3333",
-    address: "999 Corrales Ave., Cagayan de Oro City",
-  },
-];
 
 export default Customers;

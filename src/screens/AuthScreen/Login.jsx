@@ -6,6 +6,7 @@ import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import api_endpoint from "../../config";
 const Login = () => {
   const navigate = useNavigate();
   const {
@@ -23,13 +24,16 @@ const Login = () => {
     console.log("checkboxStatus:", checkboxStatus);
 
     axios
-      .post("http://192.168.1.18:8000/api/login", data)
+      .post(api_endpoint + "/login", data)
       .then((response) => {
         if (response.status == 200) {
           const token = response.data.token;
+          const user_id = response.data.user.id;
           localStorage.setItem("token", token);
+          localStorage.setItem("user_id", user_id);
           const tkn = localStorage.getItem("token");
-          console.log(tkn);
+          const idd = localStorage.getItem("user_id");
+          console.log(idd);
           navigate("/dashboard");
         }
       })
