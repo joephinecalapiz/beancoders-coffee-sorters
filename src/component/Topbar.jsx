@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,23 +15,23 @@ const Topbar = () => {
   };
   useEffect(() => {
     fetchUserInfo();
-  },[]);
+  }, []);
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
     try {
-      const response = await fetch('http://192.168.254.111:8000/api/user', {
+      const response = await fetch("http://192.168.254.111:8000/api/user", {
         headers: {
-          'Authorization': 'Bearer ' + token,
-          'Content-Type': 'application/json',
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
-        throw new Error('Failed to fetch user data');
+        throw new Error("Failed to fetch user data");
       }
       const data = await response.json();
       setUserInfo(data.user);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error("Error fetching user data:", error);
     }
   };
   return (
@@ -39,18 +41,18 @@ const Topbar = () => {
         <h1 className="text-white text-16px ml-2">BeanCoders</h1>
       </div>
       <div className="flex bg-black items-center">
-        <div className="flex items-center ml-2 relative">
+        <div className="flex items-center mr-8 relative">
           <button
             type="button"
             onClick={toggleDropdown}
-            className="flex text-sm mr-2 bg-white-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+            className="flex bg-white-800 relative"
             aria-expanded={isDropdownOpen}
           >
-            <span className="sr-only">Dropwdown user</span>
+            <span className="invisible">Dropwdown user</span>
             <img
-              className="w-12 h-12 rounded-full"
-              src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-              alt="user photo"
+              src={BeansLogo}
+              alt="BeansLogo"
+              className="w-12 h-12 rounded-full bg-white"
             />
           </button>
           {isDropdownOpen && (
@@ -60,19 +62,26 @@ const Topbar = () => {
             >
               {/* Dropdown content */}
               <div className="px-4 py-3" role="none">
-                <p className="text-sm text-gray-900 dark:text-white" role="none">
+                <p
+                  className="text-sm text-gray-900 dark:text-white"
+                  role="none"
+                >
                   {userInfo.name}
                 </p>
                 {userInfo && (
-                  <p className="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                  {userInfo.email}
+                  <p
+                    className="text-sm font-medium text-gray-900 truncate dark:text-gray-300"
+                    role="none"
+                  >
+                    {userInfo.email}
                   </p>
                 )}
               </div>
               <ul className="py-1" role="none">
-                <li onClick={() => {
-                  navigate("/dashboard");
-                }}
+                <li
+                  onClick={() => {
+                    navigate("/dashboard");
+                  }}
                 >
                   <a
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -81,10 +90,11 @@ const Topbar = () => {
                     Dashboard
                   </a>
                 </li>
-                <li onClick={() => {
-                  navigate("/settings");
-                  console.log(userInfo.name)
-                }}
+                <li
+                  onClick={() => {
+                    navigate("/settings");
+                    console.log(userInfo.name);
+                  }}
                 >
                   <a
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -93,9 +103,10 @@ const Topbar = () => {
                     Settings
                   </a>
                 </li>
-                <li onClick={() => {
-                  navigate("/signout");
-                }}
+                <li
+                  onClick={() => {
+                    navigate("/signout");
+                  }}
                 >
                   <a
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -108,6 +119,7 @@ const Topbar = () => {
             </div>
           )}
         </div>
+        <h1 className="text-white text-14px mr-8">Admin</h1>
       </div>
     </div>
   );

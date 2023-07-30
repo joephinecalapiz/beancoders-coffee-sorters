@@ -1,12 +1,42 @@
 /** @format */
 
-import React from "react";
+import React, { useState } from "react"; // Import useState
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
+import Modal from "../../component/Modal"; // Import the Modal component
+
 
 const Status = () => {
   const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newCustomerName, setNewCustomerName] = useState(""); // Add this state
+
+
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleAddNew = (event) => {
+    event.preventDefault();
+    // Perform the logic to add a new customer here
+    // For example, you can access the new customer name with "newCustomerName" state
+    console.log("New customer name:", newCustomerName);
+    // Close the modal after submission
+    closeModal();
+  };
+
+  const handleCancel = () => {
+    // Close the modal when the "Cancel" button is clicked
+    closeModal();
+  };
+
+
   return (
     <>
       <Sidebar />
@@ -15,12 +45,49 @@ const Status = () => {
       <div className="flex justify-between items-center mt-20">
           <h1 className="text-black text-32px">Status</h1>
           <button
-              onClick={() => handleAddNew()}
-              className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-            >
-              Add New
-            </button>
+            onClick={openModal}
+            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
+          >
+            Add New
+          </button>
         </div>
+
+        {/* Modal */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h2 className="text-2xl font-semibold mb-4">Add New Customer</h2>
+        {/* Add your form or content for adding a new customer */}
+        <form onSubmit={handleAddNew}>
+          {/* Your form inputs go here */}
+          {/* For example: */}
+          <div className="mb-4">
+            <label htmlFor="customerName">Customer Name:</label>
+            <input
+              type="text"
+              id="customerName"
+              value={newCustomerName}
+              onChange={(e) => setNewCustomerName(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+              required
+            />
+          </div>
+          {/* Add other input fields for customer details */}
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+          >
+            Create Customer
+          </button>
+          <button
+            type="button"
+            onClick={handleCancel}
+            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+          >
+            Cancel
+          </button>
+        </form>
+      </Modal>
+
+
         <div className="overflow-x-auto">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
@@ -69,10 +136,6 @@ const Status = () => {
   );
 };
 
-const handleAddNew = () => {
-	// Replace this function with the logic to add a new customer
-	console.log("Add New Customer button clicked!");
-  };
 
   const sorterData = [
 	{
