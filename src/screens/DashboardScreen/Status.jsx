@@ -8,7 +8,6 @@ import Modal from "../../component/Modal"; // Import the Modal component
 
 const Status = () => {
   const navigate = useNavigate();
-  const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState(""); // Add this state
 
@@ -36,120 +35,118 @@ const Status = () => {
 
   return (
     <>
-      <Sidebar visible={navVisible} show={showNavbar} />
+      <Sidebar />
       <Topbar />
-      <div className="App">
-        <div className="m-auto p-4 sm:ml-64">
-          <div className="flex justify-between items-center mt-20">
-            <h1 className="text-black text-32px">Status</h1>
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-            >
-              Add New
-            </button>
-          </div>
+      <div className="m-auto p-4 sm:ml-64">
+        <div className="flex justify-between items-center mt-20">
+          <h1 className="text-black text-32px">Status</h1>
+          <button
+            onClick={openModal}
+            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
+          >
+            Add New
+          </button>
+        </div>
 
-          {/* Modal */}
-          <Modal isOpen={isModalOpen} onClose={closeModal}>
-            <h2 className="text-2xl font-semibold mb-4">Add New Customer</h2>
-            {/* Add your form or content for adding a new customer */}
-            <form onSubmit={handleAddNew}>
-              {/* Your form inputs go here */}
-              {/* For example: */}
-              <div className="mb-4">
-                <label htmlFor="customerName">Customer Name:</label>
-                <input
-                  type="text"
-                  id="customerName"
-                  value={newCustomerName}
-                  onChange={(e) => setNewCustomerName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
-                  required
-                />
-              </div>
-              {/* Add other input fields for customer details */}
-              <button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
-              >
-                Create Customer
-              </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
-              >
-                Cancel
-              </button>
-            </form>
-          </Modal>
-
-          <div className="overflow-x-auto">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Date
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Sorter's Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Customer Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Show
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {sortedData.map((sorted) => (
-                    <tr key={sorted.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorted.date}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorted.sorterName}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorted.customerName}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorted.status}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button
-                          onClick={() => handleSeeMore(customer.show)}
-                          className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
-                        >
-                          See More
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+        {/* Modal */}
+        <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <h2 className="text-2xl font-semibold mb-4">Add New Customer</h2>
+          {/* Add your form or content for adding a new customer */}
+          <form onSubmit={handleAddNew}>
+            {/* Your form inputs go here */}
+            {/* For example: */}
+            <div className="mb-4">
+              <label htmlFor="customerName">Customer Name:</label>
+              <input
+                type="text"
+                id="customerName"
+                value={newCustomerName}
+                onChange={(e) => setNewCustomerName(e.target.value)}
+                className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                required
+              />
             </div>
+            {/* Add other input fields for customer details */}
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+            >
+              Create Customer
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+            >
+              Cancel
+            </button>
+          </form>
+        </Modal>
+
+        <div className="overflow-x-auto">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Date
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Sorter's Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Customer Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Status
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Show
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {sortedData.map((sorted) => (
+                  <tr key={sorted.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorted.date}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorted.sorterName}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorted.customerName}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorted.status}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button
+                        onClick={() => handleSeeMore(customer.show)}
+                        className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
+                      >
+                        See More
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
