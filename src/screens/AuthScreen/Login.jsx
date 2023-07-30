@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
-import axios from 'axios';
+import axios from "axios";
 const Login = () => {
   const navigate = useNavigate();
   const {
@@ -22,21 +22,23 @@ const Login = () => {
     console.log(data);
     console.log("checkboxStatus:", checkboxStatus);
 
-    axios.post('http://192.168.254.111:8000/api/login', data)
-    .then(response => {
-      if(response.status == 200){
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        const tkn = localStorage.getItem("token");
-        console.log(tkn);
-        navigate('/dashboard');
-      }
-    }).catch(error => {
-      console.error('Error', error.response.data)
-      if(error.response.status == 401){
-        navigate('login');
-      }
-    });
+    axios
+      .post("http://192.168.1.18:8000/api/login", data)
+      .then((response) => {
+        if (response.status == 200) {
+          const token = response.data.token;
+          localStorage.setItem("token", token);
+          const tkn = localStorage.getItem("token");
+          console.log(tkn);
+          navigate("/dashboard");
+        }
+      })
+      .catch((error) => {
+        console.error("Error", error.response.data);
+        if (error.response.status == 401) {
+          navigate("login");
+        }
+      });
   };
 
   return (
