@@ -15,13 +15,10 @@ import Sidebar from "./component/Sidebar";
 import Topbar from "./component/Topbar";
 
 function App() {
-  const [navVisible, showNavbar] = useState(false);
 
   return (
     <BrowserRouter>
       <div className="App">
-        <Sidebar visible={navVisible} show={showNavbar} />
-        <Topbar />
         <Routes>
           <Route
             path="/dashboard"
