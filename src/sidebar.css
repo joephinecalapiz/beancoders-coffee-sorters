@@ -5,8 +5,8 @@ nav{
 	display:flex;
 	flex-direction:column;
 	justify-content: space-between;
-	width:15%;
-	min-height: 100vh;
+	width:17%;
+	height: 100%;
 	background-color: #512615;
 	padding:2rem 1rem 1rem 1rem;
 	/* transition: transform 1s; */
