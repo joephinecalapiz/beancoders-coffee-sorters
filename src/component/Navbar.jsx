@@ -16,6 +16,7 @@ const Navbar = () => {
           onClick={() => {
             navigate("/");
           }}
+          
         >
           Home
         </li>

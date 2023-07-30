@@ -23,7 +23,7 @@ const Login = () => {
     console.log("checkboxStatus:", checkboxStatus);
 
     axios
-      .post("http://192.168.1.18:8000/api/login", data)
+      .post("http://192.168.1.16:8000/api/login", data)
       .then((response) => {
         if (response.status == 200) {
           const token = response.data.token;

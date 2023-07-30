@@ -32,7 +32,7 @@ const Topbar = () => {
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://192.168.1.18:8000/api/user", {
+      const response = await fetch("http://192.168.1.16:8000/api/user", {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",

@@ -18,7 +18,6 @@ const [navVisible, showNavbar] = useState(false);
 
   return (
 	<BrowserRouter>
-	<Routes></Routes>
         <Routes>
           <Route
             path="/dashboard"
