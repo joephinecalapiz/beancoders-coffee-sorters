@@ -25,12 +25,16 @@ const Login = () => {
     axios.post('http://192.168.254.111:8000/api/login', data)
     .then(response => {
       if(response.status == 200){
+        const token = response.data.token;
+        localStorage.setItem('token', token);
+        const tkn = localStorage.getItem("token");
+        console.log(tkn);
         navigate('/dashboard');
       }
     }).catch(error => {
       console.error('Error', error.response.data)
       if(error.response.status == 401){
-        //Navigate to desired page
+        navigate('login');
       }
     });
   };
