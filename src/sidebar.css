@@ -18,7 +18,7 @@ nav{
 
 .nav-btn{
 	position: absolute;
-		transform: translateX(38px);
+	transform: translateX(38px);
 	top: 10px;
 	right: 0;
 	width:40px;
@@ -37,7 +37,7 @@ nav{
 	color: #fff;
 }
 
-/* .logo{
+.logo{
 	display: block;
 	width: 100px;
 	margin: auto;
@@ -48,7 +48,7 @@ nav{
 	display: block;
 	width: 100%;
 	height: 100%;
-} */
+}
 
 .nav-link{
 	display: flex;
@@ -94,6 +94,7 @@ nav{
 	nav{
 		width: 40%;
 		padding: 10px;
+		height: 100%;
 	}
 }
 

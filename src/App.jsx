@@ -6,19 +6,19 @@ import Login from "./screens/AuthScreen/Login";
 import Landing from "./screens/Landing";
 import About from "./screens/about";
 import "./index.css";
+import "./sidebar.css";
 import Signup from "./screens/AuthScreen/Signup";
 import Dashboard from "./screens/DashboardScreen/Dashboard";
 import Sorters from "./screens/DashboardScreen/Sorters";
 import Customers from "./screens/DashboardScreen/Customers";
 import Status from "./screens/DashboardScreen/Status";
-import Sidebar from "./component/Sidebar";
-import Topbar from "./component/Topbar";
 
 function App() {
 const [navVisible, showNavbar] = useState(false);
+
   return (
-    <BrowserRouter>
-      <div className="App">
+	<BrowserRouter>
+	<Routes></Routes>
         <Routes>
           <Route
             path="/dashboard"
@@ -52,12 +52,11 @@ const [navVisible, showNavbar] = useState(false);
               </div>
             }
           />
-          <Route path="/" element={<Landing />} />
+		  <Route path="/" element={<Landing />} />
           <Route path="/aboutus" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
-      </div>
     </BrowserRouter>
   );
 }
