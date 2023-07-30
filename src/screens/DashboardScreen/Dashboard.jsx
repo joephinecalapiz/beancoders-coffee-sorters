@@ -7,19 +7,13 @@ import Sidebar from "../../component/Sidebar";
 // import { Chart, LinearScale } from "chart.js";
 
 const Dashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false); // State to control sidebar
-  const navigate = useNavigate();
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!sidebarOpen); // Toggle sidebar state
-  };
+  const [navVisible, showNavbar] = useState(false);
   
-
   return (
     
     <>
-      {/* <Sidebar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} /> Pass props */}
-      {/* <Topbar /> */}
+      <Sidebar visible={navVisible} show={showNavbar} />
+        <Topbar />
       <div className="m-auto p-4 sm:ml-64">
         <p class="text-2xl text-gray-400 dark:text-gray-500">
           <h1 className="text-black text-16px">Dashboard</h1>

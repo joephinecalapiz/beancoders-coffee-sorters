@@ -9,6 +9,7 @@ import Modal from "../../component/Modal"; // Import the Modal component
 
 const Status = () => {
   const navigate = useNavigate();
+  const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState(""); // Add this state
 
@@ -39,6 +40,8 @@ const Status = () => {
 
   return (
     <>
+     <Sidebar visible={navVisible} show={showNavbar} />
+        <Topbar />
       <div className="m-auto p-4 sm:ml-64">
       <div className="flex justify-between items-center mt-20">
           <h1 className="text-black text-32px">Status</h1>

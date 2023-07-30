@@ -66,16 +66,7 @@ function Sidebar({visible, show}) {
 						</NavLink>
 					</div>
 				</div>
-
 				<div className="links">
-					{/* <NavLink to="/settings" className="nav-link">
-						<FaCog size={ICON_SIZE} />
-						<span>Settings</span> 
-					</NavLink> */}
-					<NavLink to="/Sign-out" className="nav-link">
-						<FaSignOutAlt size={ICON_SIZE} />
-						<span>Logout</span> 
-					</NavLink>
 				</div>
 			</nav>
 		</>
