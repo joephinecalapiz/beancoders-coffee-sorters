@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+/** @format */
+
+import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
-
+import api_endpoint from "../../config";
 const Customers = () => {
-  const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
-
+  const [allCustomers, setAllCustomers] = useState([]);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -20,12 +21,32 @@ const Customers = () => {
     setNewCustomerAddress("");
   };
 
-  const handleAddNewCustomer = (e) => {
+  const handleAddNewCustomer = async (e) => {
     e.preventDefault();
-    console.log("New customer details:");
-    console.log("Name:", newCustomerName);
-    console.log("Phone Number:", newCustomerPhoneNumber);
-    console.log("Address:", newCustomerAddress);
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = fetch(api_endpoint + "/add/customer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          customerName: newCustomerName,
+          phoneNum: newCustomerPhoneNumber,
+          address: newCustomerAddress,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Fail to add customer");
+      }
+      const newCustomer = await response.json();
+      setAllCustomers([...allCustomers, newCustomer]);
+    } catch (error) {
+      console.error(error);
+    }
     closeModal();
   };
 
@@ -39,92 +60,115 @@ const Customers = () => {
     );
   };
 
+  useEffect(() => {
+    fetchCustomers();
+  }, []);
+
+  const fetchCustomers = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = await fetch(api_endpoint + "/customers/" + user_id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token, // Add a space after 'Bearer'
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch customer data");
+      }
+      const data = await response.json();
+      setAllCustomers(data.customer);
+    } catch (error) {
+      console.error("Error fetching customer data:", error);
+    }
+  };
+
   return (
     <>
-      <Sidebar visible={navVisible} show={showNavbar} />
+      <Sidebar />
       <Topbar />
-      <div className="App">
-        <div className="m-auto p-4 sm:ml-64">
-          <div className="flex justify-between items-center mt-20">
-            <h1 className="text-black text-32px mt-5 m-5">Customers</h1>
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-            >
-              Add New
-            </button>
-          </div>
 
-          <input
-            type="text"
-            placeholder="Search Customers"
-            className="px-4 py-2 border rounded-l focus:outline-none"
-          />
-          <div className="overflow-x-auto">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Id num
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Customer Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Phone Number
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Address
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      History
-                    </th>
+      <div className="m-auto p-4 sm:ml-64">
+        <div className="flex justify-between items-center mt-20">
+          <h1 className="text-black text-32px mt-5 m-5">Customers</h1>
+          <button
+            onClick={openModal}
+            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
+          >
+            Add New
+          </button>
+        </div>
+
+        <input
+          type="text"
+          placeholder="Search Customers"
+          className="px-4 py-2 border rounded-l focus:outline-none"
+        />
+        <div className="overflow-x-auto">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Id num
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Customer Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Phone Number
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Address
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    History
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {allCustomers.map((customer) => (
+                  <tr key={customer.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {customer.id}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {customer.customerName}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {customer.phoneNum}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {customer.address}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button
+                        onClick={() => handleSeeMore(customer.customerName)}
+                        className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
+                      >
+                        See More
+                      </button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {customerData.map((customer) => (
-                    <tr key={customer.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {customer.id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {customer.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {customer.phoneNumber}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {customer.address}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <button
-                          onClick={() => handleSeeMore(customer.name)}
-                          className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
-                        >
-                          See More
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -213,56 +257,5 @@ const Customers = () => {
     </>
   );
 };
-
-const customerData = [
-  {
-    id: 1,
-    name: "Juan Dela Cruz",
-    phoneNumber: "0912-345-6789",
-    address: "123 Kagay-anon St., Cagayan de Oro City",
-  },
-  {
-    id: 2,
-    name: "Maria Santos",
-    phoneNumber: "0987-654-3210",
-    address: "456 Xavier St., Cagayan de Oro City",
-  },
-  {
-    id: 3,
-    name: "Pedro Reyes",
-    phoneNumber: "0922-123-4567",
-    address: "789 Limketkai Ave., Cagayan de Oro City",
-  },
-  {
-    id: 4,
-    name: "Luz Fernandez",
-    phoneNumber: "0917-888-7777",
-    address: "101 Velez St., Cagayan de Oro City",
-  },
-  {
-    id: 5,
-    name: "Emmanuel Santos",
-    phoneNumber: "0932-999-1111",
-    address: "222 Masterson Ave., Cagayan de Oro City",
-  },
-  {
-    id: 6,
-    name: "Anna Reyes",
-    phoneNumber: "0915-333-2222",
-    address: "666 Hayes St., Cagayan de Oro City",
-  },
-  {
-    id: 7,
-    name: "Jose Gonzalez",
-    phoneNumber: "0927-111-5555",
-    address: "777 Tomas Saco St., Cagayan de Oro City",
-  },
-  {
-    id: 8,
-    name: "Rosario Lim",
-    phoneNumber: "0944-444-3333",
-    address: "999 Corrales Ave., Cagayan de Oro City",
-  },
-];
 
 export default Customers;

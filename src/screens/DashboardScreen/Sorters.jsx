@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
@@ -5,7 +7,6 @@ import Sidebar from "../../component/Sidebar";
 
 const Sorters = () => {
   const navigate = useNavigate();
-  const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSorterName, setNewSorterName] = useState("");
   const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
@@ -48,79 +49,75 @@ const Sorters = () => {
 
   return (
     <>
-      <Sidebar visible={navVisible} show={showNavbar} />
+      <Sidebar />
       <Topbar />
-      <div className="App">
-        <div className="m-auto p-4 sm:ml-64">
-          <div className="flex justify-between items-center mt-20">
-            <h1 className="text-black text-32px">Sorters</h1>
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-            >
-              Add New
-            </button>
-          </div>
-          <div className="overflow-x-auto">
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Id num
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Sorter's Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Phone Number
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Address
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                      Date Hired
-                    </th>
+      <div className="m-auto p-4 sm:ml-64">
+        <div className="flex justify-between items-center mt-20">
+          <h1 className="text-black text-32px">Sorters</h1>
+          <button
+            onClick={openModal}
+            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
+          >
+            Add New
+          </button>
+        </div>
+        <div className="overflow-x-auto">
+          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Id num
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Sorter's Name
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Phone Number
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Address
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Date Hired
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {sorterData.map((sorter) => (
+                  <tr key={sorter.id}>
+                    <td className="px-6 py-4 whitespace-nowrap">{sorter.id}</td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorter.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorter.phoneNumber}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorter.address}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      {sorter.dateHired}
+                    </td>
                   </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {sorterData.map((sorter) => (
-                    <tr key={sorter.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorter.id}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorter.name}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorter.phoneNumber}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorter.address}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        {sorter.dateHired}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
