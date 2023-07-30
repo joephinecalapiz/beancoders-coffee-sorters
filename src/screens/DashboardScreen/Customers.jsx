@@ -3,6 +3,7 @@ import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 
 const Customers = () => {
+  const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
@@ -40,89 +41,90 @@ const Customers = () => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar visible={navVisible} show={showNavbar} />
       <Topbar />
+      <div className="App">
+        <div className="m-auto p-4 sm:ml-64">
+          <div className="flex justify-between items-center mt-20">
+            <h1 className="text-black text-32px mt-5 m-5">Customers</h1>
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
+            >
+              Add New
+            </button>
+          </div>
 
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center mt-20">
-          <h1 className="text-black text-32px mt-5 m-5">Customers</h1>
-          <button
-            onClick={openModal}
-            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-          >
-            Add New
-          </button>
-        </div>
-
-        <input
-          type="text"
-          placeholder="Search Customers"
-          className="px-4 py-2 border rounded-l focus:outline-none"
-        />
-        <div className="overflow-x-auto">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Id num
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Customer Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Phone Number
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    Address
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
-                  >
-                    History
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {customerData.map((customer) => (
-                  <tr key={customer.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.phoneNumber}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.address}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => handleSeeMore(customer.name)}
-                        className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
-                      >
-                        See More
-                      </button>
-                    </td>
+          <input
+            type="text"
+            placeholder="Search Customers"
+            className="px-4 py-2 border rounded-l focus:outline-none"
+          />
+          <div className="overflow-x-auto">
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Id num
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Customer Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Phone Number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      Address
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    >
+                      History
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {customerData.map((customer) => (
+                    <tr key={customer.id}>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {customer.id}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {customer.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {customer.phoneNumber}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {customer.address}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <button
+                          onClick={() => handleSeeMore(customer.name)}
+                          className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
+                        >
+                          See More
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
