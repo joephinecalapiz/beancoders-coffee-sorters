@@ -16,7 +16,7 @@ const Topbar = () => {
   return (
     <div
       className="absolute flex flex-row w-full text-white text-[14px]"
-      style={{ position: "fixed", top: 0, left: 0, zIndex: 100 }}
+      style={{ position: "absolute", top: 0, left: 0, zIndex: 100 }}
     >
       <div className="bg-black h-full w-full flex items-center">
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1" />

@@ -40,9 +40,6 @@ const Customers = () => {
 
   return (
     <>
-      <Sidebar />
-      <Topbar />
-
       <div className="m-auto p-4 sm:ml-64">
         <div className="flex justify-between items-center mt-20">
           <h1 className="text-black text-32px mt-5 m-5">Customers</h1>

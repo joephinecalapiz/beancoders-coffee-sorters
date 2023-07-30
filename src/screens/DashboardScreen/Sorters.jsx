@@ -45,8 +45,6 @@ const Sorters = () => {
 
   return (
     <>
-      <Sidebar />
-      <Topbar />
       <div className="m-auto p-4 sm:ml-64">
         <div className="flex justify-between items-center mt-20">
           <h1 className="text-black text-32px">Sorters</h1>
