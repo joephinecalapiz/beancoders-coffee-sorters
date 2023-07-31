@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from ".././assets/beansLogo.png";
-
+import api_endpoint from "../config";
 const Topbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
@@ -32,7 +32,7 @@ const Topbar = () => {
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://192.168.1.18:8000/api/user", {
+      const response = await fetch(api_endpoint + "/user", {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -56,7 +56,8 @@ const Topbar = () => {
   const handleLogoutConfirmed = () => {
     // Clear the user's token from local storage
     localStorage.removeItem("token");
-
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("isLoggedIn");
     // Clear the user data from state, if necessary
     setUserInfo(null);
 

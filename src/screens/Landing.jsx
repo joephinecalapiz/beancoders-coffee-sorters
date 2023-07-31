@@ -1,15 +1,34 @@
 /** @format */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from "../assets/beansLogo.png";
 import Navbar from "../component/Navbar.jsx";
 
 const Landing = () => {
+  const [authenticated, setAuthenticated] = useState(null);
   const navigate = useNavigate();
   const borderRadius = "26px";
   const margin = "10px";
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (authenticated) {
+      navigate("/dashboard");
+    }
+  }, [authenticated]);
+
+  if (authenticated === null) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
       <Navbar />
