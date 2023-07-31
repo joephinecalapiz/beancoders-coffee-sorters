@@ -56,7 +56,8 @@ const Topbar = () => {
   const handleLogoutConfirmed = () => {
     // Clear the user's token from local storage
     localStorage.removeItem("token");
-
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("isLoggedIn");
     // Clear the user data from state, if necessary
     setUserInfo(null);
 
