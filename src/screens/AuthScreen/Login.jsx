@@ -31,9 +31,6 @@ const Login = () => {
           const user_id = response.data.user.id;
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
-          const tkn = localStorage.getItem("token");
-          const idd = localStorage.getItem("user_id");
-          console.log(idd);
           navigate("/dashboard");
         }
       })
