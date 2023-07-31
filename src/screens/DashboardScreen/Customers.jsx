@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
@@ -7,7 +9,7 @@ const Customers = () => {
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
-  const [allCustomers , setAllCustomers] = useState([]);
+  const [allCustomers, setAllCustomers] = useState([]);
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -21,30 +23,28 @@ const Customers = () => {
 
   const handleAddNewCustomer = async (e) => {
     e.preventDefault();
-    try{
+    try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = fetch(
-        api_endpoint + "/add/customer",
-        {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token
-          },
-          body: JSON.stringify({
-            user_id: user_id,
-            customerName: newCustomerName,
-            phoneNum: newCustomerPhoneNumber,
-            address: newCustomerAddress
-          })
-        });
-        if(!response.ok){
-          throw new Error("Fail to add customer")
-        }
-        const newCustomer = await response.json();
-        setAllCustomers([...allCustomers, newCustomer]);
-    }catch(error){
+      const response = fetch(api_endpoint + "/add/customer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          customerName: newCustomerName,
+          phoneNum: newCustomerPhoneNumber,
+          address: newCustomerAddress,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Fail to add customer");
+      }
+      const newCustomer = await response.json();
+      setAllCustomers([...allCustomers, newCustomer]);
+    } catch (error) {
       console.error(error);
     }
     closeModal();
@@ -60,23 +60,20 @@ const Customers = () => {
     );
   };
 
-  useEffect(() =>{
+  useEffect(() => {
     fetchCustomers();
-  },[]);
+  }, []);
 
   const fetchCustomers = async () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(
-        api_endpoint + "/customers/" + user_id,
-        {
-          method: "GET",
-          headers: {
-            Authorization: 'Bearer ' + token, // Add a space after 'Bearer'
-          },
-        }
-      );
+      const response = await fetch(api_endpoint + "/customers/" + user_id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token, // Add a space after 'Bearer'
+        },
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch customer data");
       }
