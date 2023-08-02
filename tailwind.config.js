@@ -18,6 +18,7 @@ export default {
       BgLanding: "url('./assets/bg_landing2.png')",
       bgopacity: "url('./assets/bgopacity.png')",
       bgLogin: "url('./assets/login_bg2.png')",
+      bgRegister: "url('./assets/reg_bg2.png')",
     },
   },
 
