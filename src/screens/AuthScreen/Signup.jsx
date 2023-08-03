@@ -46,7 +46,7 @@ const Signup = () => {
                     message: "Invalid Name",
                   },
                 })}
-                className={`bg-white w-full rounded-[10px] h-10 text-white px-4 ${
+                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.name ? "mb-2" : "mb-5"
                 }`}
               />
@@ -66,7 +66,7 @@ const Signup = () => {
                     message: "Invalid email address",
                   },
                 })}
-                className={`bg-white w-full rounded-[10px] h-10 text-white px-4 ${
+                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
               />
@@ -85,7 +85,7 @@ const Signup = () => {
                     message: "Password must be at least 8 characters long",
                   },
                 })}
-                className={`bg-white w-full rounded-[10px] h-10 text-white px-4 ${
+                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
               />
