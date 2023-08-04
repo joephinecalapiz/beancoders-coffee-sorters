@@ -1,15 +1,18 @@
 /** @format */
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
+
 const Customers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [allCustomers, setAllCustomers] = useState([]);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -53,6 +56,7 @@ const Customers = () => {
   const handleCancel = () => {
     closeModal();
   };
+
   const handleSeeMore = (customerName) => {
     // For demonstration purposes, we'll display an alert with the customer's name as the history
     alert(
@@ -71,7 +75,7 @@ const Customers = () => {
       const response = await fetch(api_endpoint + "/customers/" + user_id, {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + token, // Add a space after 'Bearer'
+          Authorization: "Bearer " + token,
         },
       });
       if (!response.ok) {
@@ -89,22 +93,36 @@ const Customers = () => {
       <Sidebar />
       <Topbar />
 
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center mt-20">
-          <h1 className="text-black text-32px mt-5 m-5">Customers</h1>
-          <button
-            onClick={openModal}
-            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-          >
-            Add New
-          </button>
+      <div className="m-auto p-4 sm:ml-32">
+        {/* Move "Customers" text to the top */}
+        <h1
+          style={{
+            fontSize: "32px",
+            fontWeight: "bold",
+            marginTop: "60px",
+          }}
+          className="text-black mt-43 mb-5"
+        >
+          Customers
+        </h1>
+
+        {/* Add margin below the search bar and align the "Add New" button */}
+        <div className="mb-4">
+          <div className="flex justify-between items-center">
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none mr-2"
+            >
+              Add New
+            </button>
+            <input
+              type="text"
+              placeholder="Search Customers"
+              className="flex-grow px-4 py-2 border rounded focus:outline-none"
+            />
+          </div>
         </div>
 
-        <input
-          type="text"
-          placeholder="Search Customers"
-          className="px-4 py-2 border rounded-l focus:outline-none"
-        />
         <div className="overflow-x-auto">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
@@ -114,7 +132,7 @@ const Customers = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
-                    Id num
+                    Id number
                   </th>
                   <th
                     scope="col"
