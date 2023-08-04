@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./screens/AuthScreen/Login";
@@ -22,7 +24,7 @@ function App() {
       setAuthenticated(false);
     }
   }, []);
-  
+
   useEffect(() => {
     if (authenticated && window.location.pathname === "/login") {
       window.location.replace("/dashboard");

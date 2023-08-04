@@ -19,7 +19,7 @@ const Landing = () => {
       setAuthenticated(false);
     }
   }, []);
-  
+
   useEffect(() => {
     if (authenticated) {
       navigate("/dashboard");
