@@ -21,6 +21,7 @@
 
 .search-bar {
     width: 500px;
+    border-radius: 20px;
 }
 
 /* Table - Cell Data (below the header) */
