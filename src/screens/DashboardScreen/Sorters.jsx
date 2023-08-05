@@ -5,6 +5,9 @@ import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import "../../sorter.css";
+import "../../datepicker.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Sorters = () => {
   const navigate = useNavigate();
@@ -215,11 +218,11 @@ const Sorters = () => {
                 >
                   Date Hired:
                 </label>
-                <input
-                  type="text"
+                {/*DatePicker*/}
+                <DatePicker
                   id="newSorterDateHired"
-                  value={newSorterDateHired}
-                  onChange={(e) => setNewSorterDateHired(e.target.value)}
+                  selected={newSorterDateHired}
+                  onChange={(date) => setNewSorterDateHired(date)}
                   className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
