@@ -139,7 +139,6 @@ const Customers = () => {
             >
               Add New
             </button>
-
           </div>
         </div>
 
@@ -277,12 +276,12 @@ const Customers = () => {
                   />
                 </div>
                 
-                <div class="button-container">
+                <div class="flex justify-between">
                   <button
                     type="submit"
                     className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
                   >
-                    Create Customer
+                    Add Customer
                   </button>
                   <button
                     type="button"

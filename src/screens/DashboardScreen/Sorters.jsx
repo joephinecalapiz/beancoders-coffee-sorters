@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
+import "../../sorter.css";
 
 const Sorters = () => {
   const navigate = useNavigate();
@@ -51,16 +52,48 @@ const Sorters = () => {
     <>
       <Sidebar />
       <Topbar />
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center mt-20">
-          <h1 className="text-black text-32px">Sorters</h1>
-          <button
-            onClick={openModal}
-            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-          >
-            Add New
-          </button>
+      <div className="m-auto p-4 sm:ml-32">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center"> {/* Wrapping the heading and button in a flex container */}
+            <h1
+              style={{
+                fontSize: "32px",
+                fontWeight: "bold",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+              className="text-black mt-16 mb-3"
+            >
+              Sorters
+            </h1>
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white rounded focus:outline-none ml-3 mt-12"
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#C4A484";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#512615";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              style={{
+                backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              Add New
+            </button>
+          </div>
         </div>
+
+        <div className="mb-4 poppins-font">
+          <input
+            type="text"
+            placeholder="Search Sorters"
+            className="px-4 py-2 border rounded focus:outline-none search-bar"
+          />
+        </div>
+
         <div className="overflow-x-auto">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
@@ -68,31 +101,31 @@ const Sorters = () => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Id num
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Sorter's Name
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Phone Number
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Address
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Date Hired
                   </th>
@@ -100,20 +133,12 @@ const Sorters = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {sorterData.map((sorter) => (
-                  <tr key={sorter.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">{sorter.id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.phoneNumber}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.address}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.dateHired}
-                    </td>
+                  <tr key={sorter.id} className="sort-table">
+                    <td className="poppins-font">{sorter.id}</td>
+                    <td className="poppins-font">{sorter.name}</td>
+                    <td className="poppins-font">{sorter.phoneNumber}</td>
+                    <td className="poppins-font">{sorter.address}</td>
+                    <td className="poppins-font">{sorter.dateHired}</td>
                   </tr>
                 ))}
               </tbody>
@@ -136,10 +161,10 @@ const Sorters = () => {
             >
               &times;
             </span>
-            <h2 className="text-2xl font-semibold mb-4">Add New Sorter</h2>
+            <h2 className="text-2xl font-semibold mb-4 poppins-font">Add New Sorter</h2>
             <form onSubmit={handleAddNewSorter}>
               <div className="mb-4">
-                <label htmlFor="newSorterName" className="block font-medium">
+                <label htmlFor="newSorterName" className="block font-medium poppins-font">
                   Name:
                 </label>
                 <input
@@ -147,7 +172,7 @@ const Sorters = () => {
                   id="newSorterName"
                   value={newSorterName}
                   onChange={(e) => setNewSorterName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -155,7 +180,7 @@ const Sorters = () => {
               <div className="mb-4">
                 <label
                   htmlFor="newSorterPhoneNumber"
-                  className="block font-medium"
+                  className="block font-medium poppins-font"
                 >
                   Phone Number:
                 </label>
@@ -164,13 +189,13 @@ const Sorters = () => {
                   id="newSorterPhoneNumber"
                   value={newSorterPhoneNumber}
                   onChange={(e) => setNewSorterPhoneNumber(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
 
               <div className="mb-4">
-                <label htmlFor="newSorterAddress" className="block font-medium">
+                <label htmlFor="newSorterAddress" className="block font-medium poppins-font">
                   Address:
                 </label>
                 <input
@@ -178,7 +203,7 @@ const Sorters = () => {
                   id="newSorterAddress"
                   value={newSorterAddress}
                   onChange={(e) => setNewSorterAddress(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -186,7 +211,7 @@ const Sorters = () => {
               <div className="mb-4">
                 <label
                   htmlFor="newSorterDateHired"
-                  className="block font-medium"
+                  className="block font-medium poppins-font"
                 >
                   Date Hired:
                 </label>
@@ -195,7 +220,7 @@ const Sorters = () => {
                   id="newSorterDateHired"
                   value={newSorterDateHired}
                   onChange={(e) => setNewSorterDateHired(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -203,14 +228,14 @@ const Sorters = () => {
               <div className="flex justify-between">
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
                 >
-                  Create Sorter
+                  Add Sorter
                 </button>
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
                 >
                   Cancel
                 </button>
