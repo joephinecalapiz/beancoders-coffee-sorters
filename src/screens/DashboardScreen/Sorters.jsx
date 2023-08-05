@@ -57,7 +57,7 @@ const Sorters = () => {
       <Topbar />
       <div className="m-auto p-4 sm:ml-32">
         <div className="flex justify-between items-center">
-          <div className="flex items-center"> {/* Wrapping the heading and button in a flex container */}
+          <div className="flex items-center">
             <h1
               style={{
                 fontSize: "32px",
@@ -99,7 +99,7 @@ const Sorters = () => {
 
         <div className="overflow-x-auto">
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="sorters-table divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th
@@ -165,6 +165,7 @@ const Sorters = () => {
               &times;
             </span>
             <h2 className="text-2xl font-semibold mb-4 poppins-font">Add New Sorter</h2>
+            
             <form onSubmit={handleAddNewSorter}>
               <div className="mb-4">
                 <label htmlFor="newSorterName" className="block font-medium poppins-font">

@@ -199,7 +199,7 @@ const Customers = () => {
                       onClick={() => handleSeeMore(customer.customerName)}
                       className="see-more-button focus:outline-none"
                     >
-                      See More
+                      See More...
                     </button>
                   </td>
                 </tr>
