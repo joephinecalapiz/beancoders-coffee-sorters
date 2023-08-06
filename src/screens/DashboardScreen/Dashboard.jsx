@@ -1,3 +1,5 @@
+/** @format */
+
 // Import React and other necessary libraries
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +21,7 @@ const Dashboard = () => {
       <Sidebar visible={navVisible} show={showNavbar} />
       <Topbar onToggleSidebar={toggleSidebar} />
       <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
-        <div className="p-5 sm:ml-32">
+        <div className="p-5 sm:ml-64">
           <h1 className="text-black mb-5 dashboard-title">Dashboard</h1>
 
           <div className="grid grid-cols-1 gap-12 mb-4">
@@ -32,7 +34,9 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title">Pieces of Good Beans</h1>
+                  <h1 className="text-black data-title">
+                    Pieces of Good Beans
+                  </h1>
                   <h1 className="text-black data-size">60 pieces</h1>
                 </div>
               </div>
