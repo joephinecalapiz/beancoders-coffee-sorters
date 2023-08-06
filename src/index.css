@@ -35,17 +35,17 @@ body,
   height: 100vh;
 }
 
-.page {
+/* .page {
   flex-basis: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: margin-left 1s;
+  transition: margin-left 4s;
 }
 
 .page-with-navbar {
   margin-left: 15%;
-}
+} */
 
 @media only screen and (max-width: 768px) {
   .page-with-navbar {

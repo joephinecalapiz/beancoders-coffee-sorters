@@ -18,7 +18,6 @@ const Dashboard = () => {
 
   return (
     <>
-      <Sidebar visible={navVisible} show={showNavbar} />
       <Topbar onToggleSidebar={toggleSidebar} />
       <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
         <div className="p-5 sm:ml-64">

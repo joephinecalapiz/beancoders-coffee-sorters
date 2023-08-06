@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./screens/AuthScreen/Login";
@@ -6,13 +8,14 @@ import About from "./screens/about";
 import "./index.css";
 import "./sidebar.css";
 import Signup from "./screens/AuthScreen/Signup";
-import Dashboard from "./screens/DashboardScreen/Dashboard";
 import Sorters from "./screens/DashboardScreen/Sorters";
 import Customers from "./screens/DashboardScreen/Customers";
 import Status from "./screens/DashboardScreen/Status";
+import DashboardLayout from "./screens/DashboardScreen/DashboardLayout"; // Import the DashboardLayout component
 
 function App() {
-  const [navVisible, showNavbar] = useState(false);
+  const [navVisible, setNavVisible] = useState(false);
+
   const [authenticated, setAuthenticated] = useState(null);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,7 +25,7 @@ function App() {
       setAuthenticated(false);
     }
   }, []);
-  
+
   useEffect(() => {
     if (authenticated && window.location.pathname === "/login") {
       window.location.replace("/dashboard");
@@ -41,7 +44,10 @@ function App() {
           element={
             authenticated ? (
               <div className={!navVisible ? "page" : "page page-with-navbar"}>
-                <Dashboard />
+                <DashboardLayout
+                  navVisible={navVisible}
+                  setNavVisible={setNavVisible}
+                />
               </div>
             ) : (
               <Navigate to="/login" />

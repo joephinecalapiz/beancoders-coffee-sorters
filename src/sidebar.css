@@ -1,5 +1,5 @@
 /** @format */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 nav {
   position: Fixed;
@@ -61,10 +61,10 @@ nav {
   padding: 10px 1rem;
   border-radius: 5px;
   margin-bottom: 10px;
-  white-space: nowrap; 
-  overflow: hidden; 
-  text-overflow: ellipsis; 
-  font-family: 'Poppins', sans-serif;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Poppins", sans-serif;
 }
 
 .nav-link:hover {
@@ -121,7 +121,7 @@ nav {
   }
 }
 .collapsed {
-  width: 65px; 
+  width: 65px;
 }
 
 .text-visible {
@@ -129,10 +129,10 @@ nav {
 }
 
 .nav-link .icon {
-  margin-right: 10px; 
+  margin-right: 10px;
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   transform: translateX(-9px);
 }
 
@@ -144,10 +144,10 @@ nav {
 }
 
 .collapsed .nav-link:hover span.text-visible {
-  transition: transform 0.5s; 
+  transition: transform 0.5s;
   margin-left: 75px;
 }
 
 .collapsed .nav-link:hover .icon {
-  transform: translateX(1px); 
+  transform: translateX(1px);
 }
