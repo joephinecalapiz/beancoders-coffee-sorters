@@ -5,8 +5,6 @@ import {
   FaChartBar,
   FaThLarge,
   FaShoppingCart,
-  FaCog,
-  FaSignOutAlt,
   FaBars
 } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
@@ -15,10 +13,10 @@ import '../sidebar.css';
 const ICON_SIZE = 20;
 
 function Sidebar() {
-  const [visible, setVisible] = useState(true); // Set the initial state to true
+  const [collapsed, setCollapsed] = useState(false);
 
   const handleToggleSidebar = () => {
-    setVisible(!visible); // Toggle the visibility of the sidebar
+    setCollapsed(!collapsed);
   };
 
   return (
@@ -28,29 +26,39 @@ function Sidebar() {
           <FaBars size={24} />
         </button>
       </div>
-      <nav className={!visible ? 'navbar' : ''}>
+      <nav className={collapsed ? 'collapsed' : ''}>
         <button type="button" className="nav-btn" onClick={handleToggleSidebar}>
-          {!visible ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
+          {collapsed ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
         </button>
         <div>
           {/* Your logo NavLink (commented out for this example) */}
           <div className="links nav-top">
-            <NavLink to="/dashboard" className="nav-link">
-              <FaThLarge size={ICON_SIZE} />
-              <span>Dashboard</span>
+
+          <NavLink to="/dashboard" className="nav-link">
+              <span className="icon">
+                <FaThLarge size={ICON_SIZE} />
+              </span>
+              <span className={!collapsed ? 'text-visible' : ''}>Dashboard</span>
             </NavLink>
             <NavLink to="/customers" className="nav-link">
-              <FaShoppingCart size={ICON_SIZE} />
-              <span>Customers</span>
+              <span className="icon">
+                <FaShoppingCart size={ICON_SIZE} />
+              </span>
+              <span className={!collapsed ? 'text-visible' : ''}>Customers</span>
             </NavLink>
             <NavLink to="/sorters" className="nav-link">
-              <FaShoppingCart size={ICON_SIZE} />
-              <span>Sorters</span>
+              <span className="icon">
+                <FaShoppingCart size={ICON_SIZE} />
+              </span>
+              <span className={!collapsed ? 'text-visible' : ''}>Sorters</span>
             </NavLink>
             <NavLink to="/status" className="nav-link">
-              <FaChartBar size={ICON_SIZE} />
-              <span>Status</span>
+              <span className="icon">
+                <FaChartBar size={ICON_SIZE} />
+              </span>
+              <span className={!collapsed ? 'text-visible' : ''}>Status</span>
             </NavLink>
+
           </div>
         </div>
         <div className="links">{/* Add any other links you need here */}</div>

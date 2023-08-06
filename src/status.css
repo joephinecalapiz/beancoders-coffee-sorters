@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+/* Table - Header*/
+.table-header {
+    background-color: #512615;
+    color: white;
+    text-align: left;
+    font-size: 16px;
+}
+
+.add-new-btn {
+    font-family: 'Poppins', sans-serif;
+}
+  
+.poppins-font {
+    font-family: 'Poppins', sans-serif;
+}
+
+.sorted-table {
+    width: 1000px; 
+}
+
+.search-bar {
+    width: 500px;
+    border-radius: 20px;
+}
+
+/* Table - Cell Data (below the header) */
+.sort-table {
+    background-color: #f2f2f2;
+    font-size: 16px;
+    color: #333;
+    text-align: left;
+  }
+  
+  .sort-table td {
+    padding: 12px;
+    padding-left: 22px;
+  }
+  
+  .sort-table .see-more-button {
+    color: #0066cc;
+    text-decoration: underline;
+  }
+  
+  .sort-table .see-more-button:hover {
+    color: #0052a3;
+  }
+
+/* For Modal Styling */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+  
+.modal-container {
+    background-color: #f2f2f2;
+    width: 400px;
+    margin: auto;
+    border-radius: 0.5rem;
+    padding: 2rem;
+}
+  
+.modal-close {
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+  
+.modal-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+  
+.modal-form {
+    margin-bottom: 1rem;
+}
+  
+.modal-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+/* Modal Buttons */
+.button-container {
+    display: flex;
+    gap: 80px;
+    font-size: 14px;
+}
+
+/* Height of Text Field for Address */
+.custom-address-input {
+    height: 70px;
+}
