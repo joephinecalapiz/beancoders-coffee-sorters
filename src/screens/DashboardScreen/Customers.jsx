@@ -76,7 +76,10 @@ const Customers = () => {
             Authorization: "Bearer " + token
           }
         }
-      );
+      ).then(function(response){
+        console.log(response.data),
+        console.log(response.status)
+      })
       const newCustomer = await response.json()
       setAllCustomers([...allCustomers, newCustomer]);
     } catch (error) {
