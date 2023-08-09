@@ -39,8 +39,8 @@ const Landing = () => {
               fontSize: "40px",
               marginBottom: "1px",
               position: "absolute",
-              top: "50%",
-              left: "52%",
+              top: "55%",
+              left: "48%",
               fontFamily: "Poppins, sans-serif",
             }}
           >
@@ -50,8 +50,8 @@ const Landing = () => {
             style={{
               fontSize: "48px",
               position: "absolute",
-              top: "58%",
-              left: "60%",
+              top: "65%",
+              left: "55%",
               fontFamily: "Poppins, sans-serif",
             }}
           >
@@ -62,8 +62,8 @@ const Landing = () => {
           className="logocontainer"
           style={{
             position: "absolute",
-            top: "34%",
-            left: "60%",
+            top: "38%",
+            left: "57%",
             transform: "translate(-50%, -50%)",
           }}
         >

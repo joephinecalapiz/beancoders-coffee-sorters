@@ -45,31 +45,24 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-2 bg-CoffeeBeans bg-cover h-[100vh] w-full">
-        <section
-          className="flex flex-cols w-full  
-        justify-center items-center"
-        >
-          <img
-            src={BeansLogo}
-            alt="BeansLogo"
-            className="h-22 w-22 mx-auto 
-            "
-          />
-        </section>
+      <div className="grid grid-cols-2 bg-bgLogin bg-cover h-[100vh] w-full">
 
         <section
-          className="flex flex-cols w-full 
-        justify-center items-center"
+          className="flex flex-cols w-full justify-center items-center mt-5"
         >
           <form
             onSubmit={handleSubmit(onSubmitHandler)}
-            className="bg-bgopacity rounded-[30px] w-[440px]"
+            className="rounded-[40px] w-[400px]"
           >
             <div className="w-[85%] mx-auto">
-              <h1 className="text-center font-bold text-[21px] mt-10 mb-14">
-                Login your account
+              <h1 className="text-center font-bold text-[30px] mt-8 mb-5"
+              style={{ color: "white" }}
+              >
+                Login
               </h1>
+              <label className="block text-white mb-2" htmlFor="email">
+                Enter your Email
+              </label>
               <input
                 name="email"
                 type="email"
@@ -81,13 +74,16 @@ const Login = () => {
                     message: "Invalid email address",
                   },
                 })}
-                className={`bg-[#512615] w-full rounded-[20px] h-10 text-white px-4 ${
+                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
               )}
+              <label className="block text-white mb-2" htmlFor="password">
+                Enter your Password
+              </label>
               <input
                 name="password"
                 type="password"
@@ -99,7 +95,7 @@ const Login = () => {
                     message: "Password must be at least 8 characters long",
                   },
                 })}
-                className={`bg-[#512615] w-full rounded-[20px] h-10 text-white px-4 ${
+                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
               />
@@ -116,13 +112,19 @@ const Login = () => {
                   <input
                     type="checkbox"
                     name="checkbox"
-                    className="checkbox h-5 w-5 rounded-[5px] border-black border-2"
+                    className="checkbox h-5 w-5 rounded-[5px] border-white border-2"
                     checked={checkboxStatus}
                     onChange={(e) => setCheckboxStatus(e.target.checked)}
                   />
-                  <span className="ml-2 pt-1">Stay signed In</span>
+                  <span className="ml-2 pt-1" 
+                  style={{ color: "white" }}
+                  >
+                    Remember me
+                  </span>
                 </div>
-                <p className="hover:underline cursor-pointer pt-1 ">
+                <p className="hover:underline cursor-pointer pt-1"
+                style={{ color: "white" }}
+                >
                   Forgot password?
                 </p>
               </div>
@@ -132,16 +134,19 @@ const Login = () => {
               >
                 login
               </button>
-              <p className="text-center my-7">
+              <p className="text-center my-7" 
+              style={{ color: "white" }}
+              >
                 Don't have and account?
                 <span
                   className="hover:underline cursor-pointer"
                   onClick={() => {
                     navigate("/signup");
                   }}
+                  style={{ color: "#512615", fontWeight: "bold" }}
                 >
                   {" "}
-                  Sign up
+                  Create an Account
                 </span>
               </p>
             </div>
