@@ -159,7 +159,7 @@ const Customers = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Id number
+                    Number
                   </th>
                   <th
                     scope="col"
@@ -188,9 +188,9 @@ const Customers = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {allCustomers.map((customer) => (
+                {allCustomers.map((customer, index) => (
                   <tr key={customer.id} className="custom-table">
-                    <td className="poppins-font">{customer.id}</td>
+                    <td className="poppins-font">{index + 1}</td>
                     <td className="poppins-font">{customer.customerName}</td>
                     <td className="poppins-font">{customer.phoneNum}</td>
                     <td className="poppins-font">{customer.address}</td>
