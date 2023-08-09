@@ -6,7 +6,7 @@ import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 import "../../customer.css";
-
+import axios from 'axios';
 const Customers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
@@ -44,23 +44,40 @@ const Customers = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = fetch(api_endpoint + "/add/customer", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
+      // const response = await fetch(api_endpoint + "/add/customer", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //     Authorization: "Bearer " + token,
+      //   },
+      //   body: JSON.stringify({
+      //     user_id: user_id,
+      //     customerName: newCustomerName,
+      //     phoneNum: newCustomerPhoneNumber,
+      //     address: newCustomerAddress,
+      //   }),
+      // });
+      // if (!response.ok) {
+      //   throw new Error("Fail to add customer");
+      // }
+      // const newCustomer = await response.json();
+      // setAllCustomers([...allCustomers, newCustomer]);
+      const response  = await axios.post(
+        api_endpoint + "/add/customer",
+        {
           user_id: user_id,
           customerName: newCustomerName,
           phoneNum: newCustomerPhoneNumber,
           address: newCustomerAddress,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Fail to add customer");
-      }
-      const newCustomer = await response.json();
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token
+          }
+        }
+      );
+      const newCustomer = await response.json()
       setAllCustomers([...allCustomers, newCustomer]);
     } catch (error) {
       console.error(error);
