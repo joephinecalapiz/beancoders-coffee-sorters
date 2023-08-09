@@ -55,7 +55,7 @@ const Sorters = () => {
     <>
       <Sidebar />
       <Topbar />
-      <div className="m-auto p-4 sm:ml-32">
+      <div className="m-auto p-4 sm:ml-64">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <h1
@@ -164,11 +164,16 @@ const Sorters = () => {
             >
               &times;
             </span>
-            <h2 className="text-2xl font-semibold mb-4 poppins-font">Add New Sorter</h2>
-            
+            <h2 className="text-2xl font-semibold mb-4 poppins-font">
+              Add New Sorter
+            </h2>
+
             <form onSubmit={handleAddNewSorter}>
               <div className="mb-4">
-                <label htmlFor="newSorterName" className="block font-medium poppins-font">
+                <label
+                  htmlFor="newSorterName"
+                  className="block font-medium poppins-font"
+                >
                   Name:
                 </label>
                 <input
@@ -199,7 +204,10 @@ const Sorters = () => {
               </div>
 
               <div className="mb-4">
-                <label htmlFor="newSorterAddress" className="block font-medium poppins-font">
+                <label
+                  htmlFor="newSorterAddress"
+                  className="block font-medium poppins-font"
+                >
                   Address:
                 </label>
                 <input

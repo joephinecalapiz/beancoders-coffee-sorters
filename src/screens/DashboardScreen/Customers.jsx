@@ -108,7 +108,7 @@ const Customers = () => {
       <Sidebar />
       <Topbar />
 
-      <div className="m-auto p-4 sm:ml-32">
+      <div className="m-auto p-4 sm:ml-64">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <h1
@@ -132,7 +132,7 @@ const Customers = () => {
                 e.target.style.backgroundColor = "#512615";
                 e.target.style.transition = "background-color 0.3s ease";
               }}
-              style={{ 
+              style={{
                 backgroundColor: "#512615",
                 fontFamily: "'Poppins', sans-serif",
               }}
@@ -190,19 +190,19 @@ const Customers = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {allCustomers.map((customer) => (
                   <tr key={customer.id} className="custom-table">
-                  <td className="poppins-font">{customer.id}</td>
-                  <td className="poppins-font">{customer.customerName}</td>
-                  <td className="poppins-font">{customer.phoneNum}</td>
-                  <td className="poppins-font">{customer.address}</td>
-                  <td className="poppins-font">
-                    <button
-                      onClick={() => handleSeeMore(customer.customerName)}
-                      className="see-more-button focus:outline-none"
-                    >
-                      See More...
-                    </button>
-                  </td>
-                </tr>
+                    <td className="poppins-font">{customer.id}</td>
+                    <td className="poppins-font">{customer.customerName}</td>
+                    <td className="poppins-font">{customer.phoneNum}</td>
+                    <td className="poppins-font">{customer.address}</td>
+                    <td className="poppins-font">
+                      <button
+                        onClick={() => handleSeeMore(customer.customerName)}
+                        className="see-more-button focus:outline-none"
+                      >
+                        See More...
+                      </button>
+                    </td>
+                  </tr>
                 ))}
               </tbody>
             </table>
@@ -212,94 +212,95 @@ const Customers = () => {
 
       {/* Modal */}
       {isModalOpen && (
-          <div className="fixed inset-0 flex items-center justify-center z-50">
-            <div
-              className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div
+            className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
+            onClick={closeModal}
+          ></div>
+          <div className="modal-container bg-white p-8 max-w-sm mx-auto rounded z-50">
+            <span
+              className="modal-close absolute top-4 right-4 text-xl cursor-pointer"
               onClick={closeModal}
-            ></div>
-            <div className="modal-container bg-white p-8 max-w-sm mx-auto rounded z-50">
-              <span
-                className="modal-close absolute top-4 right-4 text-xl cursor-pointer"
-                onClick={closeModal}
-              >
-                &times;
-              </span>
-              <h2 className="text-2xl font-semibold mb-4 poppins-font">Add New Customer</h2>
-              <form onSubmit={handleAddNewCustomer}>
-                <div className="mb-4">
-                  <label 
-                    htmlFor="newCustomerName" 
-                    className="block font-medium poppins-font">
-                    Name:
-                  </label>
-                  <input
-                    type="text"
-                    id="newCustomerName"
-                    value={newCustomerName}
-                    onChange={(e) => setNewCustomerName(e.target.value)}
-                    className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                    required
-                  />
-                </div>
+            >
+              &times;
+            </span>
+            <h2 className="text-2xl font-semibold mb-4 poppins-font">
+              Add New Customer
+            </h2>
+            <form onSubmit={handleAddNewCustomer}>
+              <div className="mb-4">
+                <label
+                  htmlFor="newCustomerName"
+                  className="block font-medium poppins-font"
+                >
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  id="newCustomerName"
+                  value={newCustomerName}
+                  onChange={(e) => setNewCustomerName(e.target.value)}
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label
-                    htmlFor="newCustomerPhoneNumber"
-                    className="block font-medium poppins-font"
-                  >
-                    Phone Number:
-                  </label>
-                  <input
-                    type="text"
-                    id="newCustomerPhoneNumber"
-                    value={newCustomerPhoneNumber}
-                    onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
-                    className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                    required
-                  />
-                </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="newCustomerPhoneNumber"
+                  className="block font-medium poppins-font"
+                >
+                  Phone Number:
+                </label>
+                <input
+                  type="text"
+                  id="newCustomerPhoneNumber"
+                  value={newCustomerPhoneNumber}
+                  onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                  required
+                />
+              </div>
 
-                <div className="mb-4">
-                  <label 
-                    htmlFor="newCustomerAddress" 
-                    className="block font-medium poppins-font">
-                    Address:
-                  </label>
-                  <textarea
-                    id="newCustomerAddress"
-                    value={newCustomerAddress}
-                    onChange={(e) => setNewCustomerAddress(e.target.value)}
-                    className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                    rows={4}
-                    style={{ height: '70px', wordWrap: 'break-word' }}
-                    required
-                  />
-                </div>
-                
-                <div class="flex justify-between">
-                  <button
-                    type="submit"
-                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                  >
-                    Add Customer
-                  </button>
-                  <button
-                    type="button"
-                    onClick={handleCancel}
-                    className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                  >
-                    Cancel
-                  </button>
-                </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="newCustomerAddress"
+                  className="block font-medium poppins-font"
+                >
+                  Address:
+                </label>
+                <textarea
+                  id="newCustomerAddress"
+                  value={newCustomerAddress}
+                  onChange={(e) => setNewCustomerAddress(e.target.value)}
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                  rows={4}
+                  style={{ height: "70px", wordWrap: "break-word" }}
+                  required
+                />
+              </div>
 
-              </form>
-            </div>
+              <div class="flex justify-between">
+                <button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+                >
+                  Add Customer
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
-        )}
+        </div>
+      )}
     </>
   );
 };
 
 export default Customers;
-
-

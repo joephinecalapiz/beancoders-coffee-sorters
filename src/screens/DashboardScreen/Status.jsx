@@ -41,14 +41,13 @@ const Status = () => {
     closeModal();
   };
 
-
   return (
     <>
       <Sidebar />
       <Topbar />
-      <div className="m-auto p-4 sm:ml-32">
+      <div className="m-auto p-4 sm:ml-64">
         <div className="flex justify-between items-center">
-        <div className="flex items-center">
+          <div className="flex items-center">
             <h1
               style={{
                 fontSize: "32px",
@@ -133,13 +132,13 @@ const Status = () => {
                     <td className="poppins-font">{sorted.customerName}</td>
                     <td className="poppins-font">{sorted.status}</td>
                     <td className="poppins-font">
-                    <button
-                      onClick={() => handleSeeMore(customer.show)}
-                      className="see-more-button focus:outline-none"
-                    >
-                      See More...
-                    </button>
-                  </td>
+                      <button
+                        onClick={() => handleSeeMore(customer.show)}
+                        className="see-more-button focus:outline-none"
+                      >
+                        See More...
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -150,78 +149,88 @@ const Status = () => {
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <h2 className="text-2xl font-semibold mb-4 poppins-font">Add New Customer</h2>
-          {/* Add your form or content for adding a new customer */}
-          <form onSubmit={handleAddNew}>
-            <div className="mb-4">
-              <label htmlFor="customerName" className="block font-medium poppins-font">
-                Customer's Name:
-              </label>
-              
-              <input
-                type="text"
-                id="customerName"
-                value={newCustomerName}
-                onChange={(e) => setNewCustomerName(e.target.value)}
-                className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                required
-              />
-            </div>
+        <h2 className="text-2xl font-semibold mb-4 poppins-font">
+          Add New Customer
+        </h2>
+        {/* Add your form or content for adding a new customer */}
+        <form onSubmit={handleAddNew}>
+          <div className="mb-4">
+            <label
+              htmlFor="customerName"
+              className="block font-medium poppins-font"
+            >
+              Customer's Name:
+            </label>
 
-            <div className="mb-4">
-              <label htmlFor="newSorterName" className="block font-medium poppins-font">
-                Sorter's Name:
-              </label>
-              
-              <input
-                type="text"
-                id="newSorterName"
-                value={newCustomerName}
-                onChange={(e) => setNewCustomerName(e.target.value)}
-                className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                required
-              />
-            </div>
+            <input
+              type="text"
+              id="customerName"
+              value={newCustomerName}
+              onChange={(e) => setNewCustomerName(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
 
-            <div className="mb-4">
-              <label htmlFor="newStatus" className="block font-medium poppins-font">
-                Status:
-              </label>
-              <select
-                id="newStatus"
-                value={newStatus}
-                onChange={handleStatusChange}
-                className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                required
-              >
-                <option value=" "> </option>
-                <option value="Finished">Finished</option>
-                <option value="Pending">Pending</option>
-                <option value="Cancelled">Cancelled</option>
-              </select>
-            </div>
-            
-            <div className="flex justify-between">
-                <button
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Add Sorting
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-        </Modal>
+          <div className="mb-4">
+            <label
+              htmlFor="newSorterName"
+              className="block font-medium poppins-font"
+            >
+              Sorter's Name:
+            </label>
+
+            <input
+              type="text"
+              id="newSorterName"
+              value={newCustomerName}
+              onChange={(e) => setNewCustomerName(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label
+              htmlFor="newStatus"
+              className="block font-medium poppins-font"
+            >
+              Status:
+            </label>
+            <select
+              id="newStatus"
+              value={newStatus}
+              onChange={handleStatusChange}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            >
+              <option value=" "> </option>
+              <option value="Finished">Finished</option>
+              <option value="Pending">Pending</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          </div>
+
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Add Sorting
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </Modal>
     </>
   );
 };
-
 
 const sorterData = [
   {
