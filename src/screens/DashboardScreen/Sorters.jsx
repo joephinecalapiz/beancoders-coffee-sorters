@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
@@ -8,7 +8,8 @@ import "../../sorter.css";
 import "../../datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import axios from 'axios';
+import api_endpoint from "../../config";
 const Sorters = () => {
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,6 +17,20 @@ const Sorters = () => {
   const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
+  const [allSorters, setAllSorters] = useState([]);
+
+  useEffect(()=> {
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    const headers = {
+      Authorization: 'Bearer ' + token
+    }
+    axios.get(api_endpoint + "/sorters/" + user_id, {headers})
+      .then(response => {
+        const sorters = response.data;
+        setAllSorters(sorters.sorters);
+      })
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -29,15 +44,36 @@ const Sorters = () => {
     setNewSorterDateHired("");
   };
 
-  const handleAddNewSorter = (e) => {
+  const handleAddNewSorter = async (e) => {
     e.preventDefault();
-    // Replace this logic with the code to add a new sorter
-    console.log("New sorter details:");
-    console.log("Name:", newSorterName);
-    console.log("Phone Number:", newSorterPhoneNumber);
-    console.log("Address:", newSorterAddress);
-    console.log("Date Hired:", newSorterDateHired);
-    closeModal();
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    try {
+      const response = await axios.post(
+        api_endpoint + "/add/sorter",
+        {
+          user_id: user_id,
+          sorterName: newSorterName,
+          phoneNum: newSorterPhoneNumber,
+          address: newSorterAddress,
+          dateHired: newSorterDateHired
+        },
+        { 
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json"
+          }
+        }
+      );
+  
+      console.log(response.status);
+      console.log(token);
+      console.log(user_id);
+      closeModal();
+    } catch (error) {
+      console.error('Error adding sorter:', error);
+      // Handle error scenarios if needed
+    }
   };
 
   const handleCancel = () => {
@@ -135,11 +171,11 @@ const Sorters = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {sorterData.map((sorter) => (
+                {allSorters.map((sorter) => (
                   <tr key={sorter.id} className="sort-table">
                     <td className="poppins-font">{sorter.id}</td>
-                    <td className="poppins-font">{sorter.name}</td>
-                    <td className="poppins-font">{sorter.phoneNumber}</td>
+                    <td className="poppins-font">{sorter.sorterName}</td>
+                    <td className="poppins-font">{sorter.phoneNum}</td>
                     <td className="poppins-font">{sorter.address}</td>
                     <td className="poppins-font">{sorter.dateHired}</td>
                   </tr>
@@ -260,28 +296,28 @@ const Sorters = () => {
   );
 };
 
-const sorterData = [
-  {
-    id: 1,
-    name: "John Dela Cruz",
-    phoneNumber: "0912-345-6789",
-    address: "123 Kagay-anon St., Cagayan de Oro City",
-    dateHired: "2023-07-25",
-  },
-  {
-    id: 2,
-    name: "Jenny Santos",
-    phoneNumber: "0987-654-3210",
-    address: "456 Xavier St., Cagayan de Oro City",
-    dateHired: "2023-07-26",
-  },
-  {
-    id: 3,
-    name: "Alfredo Reyes",
-    phoneNumber: "0922-123-4567",
-    address: "789 Limketkai Ave., Cagayan de Oro City",
-    dateHired: "2023-07-27",
-  },
-];
+// const sorterData = [
+//   {
+//     id: 1,
+//     name: "John Dela Cruz",
+//     phoneNumber: "0912-345-6789",
+//     address: "123 Kagay-anon St., Cagayan de Oro City",
+//     dateHired: "2023-07-25",
+//   },
+//   {
+//     id: 2,
+//     name: "Jenny Santos",
+//     phoneNumber: "0987-654-3210",
+//     address: "456 Xavier St., Cagayan de Oro City",
+//     dateHired: "2023-07-26",
+//   },
+//   {
+//     id: 3,
+//     name: "Alfredo Reyes",
+//     phoneNumber: "0922-123-4567",
+//     address: "789 Limketkai Ave., Cagayan de Oro City",
+//     dateHired: "2023-07-27",
+//   },
+// ];
 
 export default Sorters;
