@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
@@ -8,14 +8,36 @@ import "../../sorter.css";
 import "../../datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
+import axios from "axios";
+import api_endpoint from "../../config";
 const Sorters = () => {
+  const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
+
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSorterName, setNewSorterName] = useState("");
   const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
+  const [allSorters, setAllSorters] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
+    axios
+      .get(api_endpoint + "/sorters/" + user_id, { headers })
+      .then((response) => {
+        const sorters = response.data;
+        setAllSorters(sorters.sorters);
+      });
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -29,15 +51,36 @@ const Sorters = () => {
     setNewSorterDateHired("");
   };
 
-  const handleAddNewSorter = (e) => {
+  const handleAddNewSorter = async (e) => {
     e.preventDefault();
-    // Replace this logic with the code to add a new sorter
-    console.log("New sorter details:");
-    console.log("Name:", newSorterName);
-    console.log("Phone Number:", newSorterPhoneNumber);
-    console.log("Address:", newSorterAddress);
-    console.log("Date Hired:", newSorterDateHired);
-    closeModal();
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    try {
+      const response = await axios.post(
+        api_endpoint + "/add/sorter",
+        {
+          user_id: user_id,
+          sorterName: newSorterName,
+          phoneNum: newSorterPhoneNumber,
+          address: newSorterAddress,
+          dateHired: newSorterDateHired,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.status);
+      console.log(token);
+      console.log(user_id);
+      closeModal();
+    } catch (error) {
+      console.error("Error adding sorter:", error);
+      // Handle error scenarios if needed
+    }
   };
 
   const handleCancel = () => {
@@ -53,10 +96,16 @@ const Sorters = () => {
 
   return (
     <>
-      <Sidebar />
-      <Topbar />
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center">
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} />
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
+          {" "}
           <div className="flex items-center">
             <h1
               style={{
@@ -68,6 +117,7 @@ const Sorters = () => {
             >
               Sorters
             </h1>
+
             <button
               onClick={openModal}
               className="px-4 py-2 text-white rounded focus:outline-none ml-3 mt-12"
@@ -89,7 +139,12 @@ const Sorters = () => {
           </div>
         </div>
 
-        <div className="mb-4 poppins-font">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
           <input
             type="text"
             placeholder="Search Sorters"
@@ -97,7 +152,13 @@ const Sorters = () => {
           />
         </div>
 
-        <div className="overflow-x-auto">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
+          {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="sorters-table divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -135,11 +196,11 @@ const Sorters = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {sorterData.map((sorter) => (
+                {allSorters.map((sorter) => (
                   <tr key={sorter.id} className="sort-table">
                     <td className="poppins-font">{sorter.id}</td>
-                    <td className="poppins-font">{sorter.name}</td>
-                    <td className="poppins-font">{sorter.phoneNumber}</td>
+                    <td className="poppins-font">{sorter.sorterName}</td>
+                    <td className="poppins-font">{sorter.phoneNum}</td>
                     <td className="poppins-font">{sorter.address}</td>
                     <td className="poppins-font">{sorter.dateHired}</td>
                   </tr>
@@ -259,29 +320,5 @@ const Sorters = () => {
     </>
   );
 };
-
-const sorterData = [
-  {
-    id: 1,
-    name: "John Dela Cruz",
-    phoneNumber: "0912-345-6789",
-    address: "123 Kagay-anon St., Cagayan de Oro City",
-    dateHired: "2023-07-25",
-  },
-  {
-    id: 2,
-    name: "Jenny Santos",
-    phoneNumber: "0987-654-3210",
-    address: "456 Xavier St., Cagayan de Oro City",
-    dateHired: "2023-07-26",
-  },
-  {
-    id: 3,
-    name: "Alfredo Reyes",
-    phoneNumber: "0922-123-4567",
-    address: "789 Limketkai Ave., Cagayan de Oro City",
-    dateHired: "2023-07-27",
-  },
-];
 
 export default Sorters;
