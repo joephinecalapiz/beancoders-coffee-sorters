@@ -13,18 +13,18 @@ const Customers = () => {
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [allCustomers, setAllCustomers] = useState([
-    {
-      id: 202308051,
-      customerName: "John Doe",
-      phoneNum: "1234567890",
-      address: "123 Main Street",
-    },
-    {
-      id: 202308052,
-      customerName: "Jane Smith",
-      phoneNum: "9876543210",
-      address: "456 Elm Avenue",
-    },
+    // {
+    //   id: 202308051,
+    //   customerName: "John Doe",
+    //   phoneNum: "1234567890",
+    //   address: "123 Main Street",
+    // },
+    // {
+    //   id: 202308052,
+    //   customerName: "Jane Smith",
+    //   phoneNum: "9876543210",
+    //   address: "456 Elm Avenue",
+    // },
     // Add more sample customer data here
   ]);
 
