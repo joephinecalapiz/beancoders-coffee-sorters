@@ -12,13 +12,7 @@ import '../sidebar.css';
 
 const ICON_SIZE = 20;
 
-function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const handleToggleSidebar = () => {
-    setCollapsed(!collapsed);
-  };
-
+function Sidebar({ collapsed, handleToggleSidebar }) {
   return (
     <>
       <div className="mobile-nav">
@@ -33,8 +27,7 @@ function Sidebar() {
         <div>
           {/* Your logo NavLink (commented out for this example) */}
           <div className="links nav-top">
-
-          <NavLink to="/dashboard" className="nav-link">
+            <NavLink to="/dashboard" className="nav-link">
               <span className="icon">
                 <FaThLarge size={ICON_SIZE} />
               </span>
@@ -58,7 +51,6 @@ function Sidebar() {
               </span>
               <span className={!collapsed ? 'text-visible' : ''}>Status</span>
             </NavLink>
-
           </div>
         </div>
         <div className="links">{/* Add any other links you need here */}</div>
