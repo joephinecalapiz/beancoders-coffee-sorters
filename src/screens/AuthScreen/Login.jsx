@@ -7,6 +7,7 @@ import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import api_endpoint from "../../config";
+
 const Login = () => {
   const navigate = useNavigate();
   const {
@@ -16,9 +17,8 @@ const Login = () => {
   } = useForm();
 
   const [checkboxStatus, setCheckboxStatus] = useState(false);
+  const [loginError, setLoginError] = useState(false); // Add a state variable for login error
 
-  //---onSubmit form Handler----
-  //---kanang console.log eh change rana para eh connect sa database
   const onSubmitHandler = (data) => {
     console.log(data);
     console.log("checkboxStatus:", checkboxStatus);
@@ -26,7 +26,7 @@ const Login = () => {
     axios
       .post(api_endpoint + "/login", data)
       .then((response) => {
-        if (response.status == 200) {
+        if (response.status === 200) {
           const token = response.data.token;
           const user_id = response.data.user.id;
           localStorage.setItem("token", token);
@@ -36,8 +36,8 @@ const Login = () => {
       })
       .catch((error) => {
         console.error("Error", error.response.data);
-        if (error.response.status == 401) {
-          navigate("login");
+        if (error.response.status === 401) {
+          setLoginError(true); // Set login error state to true
         }
       });
   };
@@ -99,9 +99,13 @@ const Login = () => {
                   errors.password ? "mb-2" : "mb-5"
                 }`}
               />
-              {errors.password && (
-                <p className="text-red-500 ml-2">{errors.password.message}</p>
+              {loginError && (
+                <p className="text-red-500 ml-2">Invalid email or password.</p>
               )}
+
+              {/* {errors.password && (
+                <p className="text-red-500 ml-2">{errors.password.message}</p>
+              )} */}
 
               <div className=" flex justify-between mx-auto mb-5 w-[95%]">
                 <div className="flex flex-row items-center">
