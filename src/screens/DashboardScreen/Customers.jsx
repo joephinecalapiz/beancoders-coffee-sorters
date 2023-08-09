@@ -3,30 +3,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
+
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 import "../../customer.css";
+import "../../Sidebar.css";
 
 const Customers = () => {
+  const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
-  const [allCustomers, setAllCustomers] = useState([
-    {
-      id: 202308051,
-      customerName: "John Doe",
-      phoneNum: "1234567890",
-      address: "123 Main Street",
-    },
-    {
-      id: 202308052,
-      customerName: "Jane Smith",
-      phoneNum: "9876543210",
-      address: "456 Elm Avenue",
-    },
-    // Add more sample customer data here
-  ]);
+  const [allCustomers, setAllCustomers] = useState([]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -105,12 +98,18 @@ const Customers = () => {
 
   return (
     <>
-      <Sidebar />
-      <Topbar />
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} />
 
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center">
-          <div className="flex items-center">
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
+          {" "}
+          <div className=" items-center">
             <h1
               style={{
                 fontSize: "32px",
@@ -142,7 +141,12 @@ const Customers = () => {
           </div>
         </div>
 
-        <div className="mb-4 poppins-font">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
           <input
             type="text"
             placeholder="Search Customers"
@@ -150,7 +154,13 @@ const Customers = () => {
           />
         </div>
 
-        <div className="overflow-x-auto">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
+          {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200 customers-table">
               <thead className="bg-gray-50">
