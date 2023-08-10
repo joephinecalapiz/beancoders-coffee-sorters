@@ -94,3 +94,9 @@
 .custom-address-input {
     height: 70px;
 }
+
+.content-shift-right {
+    margin-left: 100px;
+    transition: margin-left 0.3s ease; /* Apply a smooth transition effect */
+  }
+  
