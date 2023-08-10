@@ -108,8 +108,7 @@ const Customers = () => {
             transition: "margin-left 0.3s ease",
           }}
         >
-          {" "}
-          <div className=" items-center">
+          <div className="flex items-center">
             <h1
               style={{
                 fontSize: "32px",
