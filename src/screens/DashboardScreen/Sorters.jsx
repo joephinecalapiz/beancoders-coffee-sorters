@@ -8,9 +8,15 @@ import "../../sorter.css";
 import "../../datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import axios from 'axios';
+import axios from "axios";
 import api_endpoint from "../../config";
 const Sorters = () => {
+  const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
+
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSorterName, setNewSorterName] = useState("");
@@ -19,17 +25,18 @@ const Sorters = () => {
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [allSorters, setAllSorters] = useState([]);
 
-  useEffect(()=> {
+  useEffect(() => {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
     const headers = {
-      Authorization: 'Bearer ' + token
-    }
-    axios.get(api_endpoint + "/sorters/" + user_id, {headers})
-      .then(response => {
+      Authorization: "Bearer " + token,
+    };
+    axios
+      .get(api_endpoint + "/sorters/" + user_id, { headers })
+      .then((response) => {
         const sorters = response.data;
         setAllSorters(sorters.sorters);
-      })
+      });
   }, []);
 
   const openModal = () => {
@@ -56,22 +63,22 @@ const Sorters = () => {
           sorterName: newSorterName,
           phoneNum: newSorterPhoneNumber,
           address: newSorterAddress,
-          dateHired: newSorterDateHired
+          dateHired: newSorterDateHired,
         },
-        { 
+        {
           headers: {
             Authorization: "Bearer " + token,
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         }
       );
-  
+
       console.log(response.status);
       console.log(token);
       console.log(user_id);
       closeModal();
     } catch (error) {
-      console.error('Error adding sorter:', error);
+      console.error("Error adding sorter:", error);
       // Handle error scenarios if needed
     }
   };
@@ -89,10 +96,16 @@ const Sorters = () => {
 
   return (
     <>
-      <Sidebar />
-      <Topbar />
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center">
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} />
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
+          {" "}
           <div className="flex items-center">
             <h1
               style={{
@@ -104,6 +117,7 @@ const Sorters = () => {
             >
               Sorters
             </h1>
+
             <button
               onClick={openModal}
               className="px-4 py-2 text-white rounded focus:outline-none ml-3 mt-12"
@@ -125,7 +139,13 @@ const Sorters = () => {
           </div>
         </div>
 
-        <div className="mb-4 poppins-font">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-30px",
+          }}
+        >
           <input
             type="text"
             placeholder="Search Sorters"
@@ -133,9 +153,16 @@ const Sorters = () => {
           />
         </div>
 
-        <div className="overflow-x-auto">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="sorters-table divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th
@@ -295,29 +322,5 @@ const Sorters = () => {
     </>
   );
 };
-
-// const sorterData = [
-//   {
-//     id: 1,
-//     name: "John Dela Cruz",
-//     phoneNumber: "0912-345-6789",
-//     address: "123 Kagay-anon St., Cagayan de Oro City",
-//     dateHired: "2023-07-25",
-//   },
-//   {
-//     id: 2,
-//     name: "Jenny Santos",
-//     phoneNumber: "0987-654-3210",
-//     address: "456 Xavier St., Cagayan de Oro City",
-//     dateHired: "2023-07-26",
-//   },
-//   {
-//     id: 3,
-//     name: "Alfredo Reyes",
-//     phoneNumber: "0922-123-4567",
-//     address: "789 Limketkai Ave., Cagayan de Oro City",
-//     dateHired: "2023-07-27",
-//   },
-// ];
 
 export default Sorters;

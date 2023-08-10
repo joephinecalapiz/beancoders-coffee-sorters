@@ -3,30 +3,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
+
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 import "../../customer.css";
-import axios from 'axios';
+import "../../Sidebar.css";
+
 const Customers = () => {
+  const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
-  const [allCustomers, setAllCustomers] = useState([
-    // {
-    //   id: 202308051,
-    //   customerName: "John Doe",
-    //   phoneNum: "1234567890",
-    //   address: "123 Main Street",
-    // },
-    // {
-    //   id: 202308052,
-    //   customerName: "Jane Smith",
-    //   phoneNum: "9876543210",
-    //   address: "456 Elm Avenue",
-    // },
-    // Add more sample customer data here
-  ]);
+  const [allCustomers, setAllCustomers] = useState([]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -44,43 +37,23 @@ const Customers = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      // const response = await fetch(api_endpoint + "/add/customer", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //     Authorization: "Bearer " + token,
-      //   },
-      //   body: JSON.stringify({
-      //     user_id: user_id,
-      //     customerName: newCustomerName,
-      //     phoneNum: newCustomerPhoneNumber,
-      //     address: newCustomerAddress,
-      //   }),
-      // });
-      // if (!response.ok) {
-      //   throw new Error("Fail to add customer");
-      // }
-      // const newCustomer = await response.json();
-      // setAllCustomers([...allCustomers, newCustomer]);
-      const response  = await axios.post(
-        api_endpoint + "/add/customer",
-        {
+      const response = fetch(api_endpoint + "/add/customer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
           user_id: user_id,
           customerName: newCustomerName,
           phoneNum: newCustomerPhoneNumber,
           address: newCustomerAddress,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token
-          }
-        }
-      ).then(function(response){
-        console.log(response.data),
-        console.log(response.status)
-      })
-      const newCustomer = await response.json()
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Fail to add customer");
+      }
+      const newCustomer = await response.json();
       setAllCustomers([...allCustomers, newCustomer]);
     } catch (error) {
       console.error(error);
@@ -125,11 +98,16 @@ const Customers = () => {
 
   return (
     <>
-      <Sidebar />
-      <Topbar />
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} />
 
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center">
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
           <div className="flex items-center">
             <h1
               style={{
@@ -162,7 +140,13 @@ const Customers = () => {
           </div>
         </div>
 
-        <div className="mb-4 poppins-font">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-30px",
+          }}
+        >
           <input
             type="text"
             placeholder="Search Customers"
@@ -170,7 +154,14 @@ const Customers = () => {
           />
         </div>
 
-        <div className="overflow-x-auto">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200 customers-table">
               <thead className="bg-gray-50">
@@ -179,7 +170,7 @@ const Customers = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Number
+                    Id number
                   </th>
                   <th
                     scope="col"
@@ -208,9 +199,9 @@ const Customers = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {allCustomers.map((customer, index) => (
+                {allCustomers.map((customer) => (
                   <tr key={customer.id} className="custom-table">
-                    <td className="poppins-font">{index + 1}</td>
+                    <td className="poppins-font">{customer.id}</td>
                     <td className="poppins-font">{customer.customerName}</td>
                     <td className="poppins-font">{customer.phoneNum}</td>
                     <td className="poppins-font">{customer.address}</td>

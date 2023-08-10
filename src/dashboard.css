@@ -41,3 +41,8 @@
     /* Adjust styles for smaller screens */
   }
 }
+
+.content-shift-right {
+  margin-left: 100px;
+  transition: margin-left 10.1s ease; /* Apply a smooth transition effect */
+}

@@ -8,6 +8,12 @@ import Modal from "../../component/Modal"; // Import the Modal component
 import "../../status.css";
 
 const Status = () => {
+  const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
+
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
@@ -43,10 +49,16 @@ const Status = () => {
 
   return (
     <>
-      <Sidebar />
-      <Topbar />
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center">
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} />
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+          }}
+        >
+          {" "}
           <div className="flex items-center">
             <h1
               style={{
@@ -79,7 +91,13 @@ const Status = () => {
           </div>
         </div>
 
-        <div className="mb-4 poppins-font">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-30px",
+          }}
+        >
           <input
             type="text"
             placeholder="Search Sorters"
@@ -87,9 +105,16 @@ const Status = () => {
           />
         </div>
 
-        <div className="overflow-x-auto">
+        <div
+          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="sorted-table divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 sorted-table">
               <thead className="bg-gray-50">
                 <tr>
                   <th

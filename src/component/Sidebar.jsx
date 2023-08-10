@@ -14,13 +14,7 @@ import "../sidebar.css";
 
 const ICON_SIZE = 20;
 
-function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
-
-  const handleToggleSidebar = () => {
-    setCollapsed(!collapsed);
-  };
-
+function Sidebar({ collapsed, handleToggleSidebar }) {
   return (
     <>
       <div className="mobile-nav">
@@ -28,7 +22,7 @@ function Sidebar() {
           <FaBars size={24} />
         </button>
       </div>
-      <nav className={collapsed ? "navbar" : ""}>
+      <nav className={collapsed ? "collapsed" : ""}>
         <button type="button" className="nav-btn" onClick={handleToggleSidebar}>
           {collapsed ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
         </button>
