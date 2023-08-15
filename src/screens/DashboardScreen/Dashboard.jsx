@@ -10,6 +10,11 @@ import axios from "axios";
 import api_endpoint from "../../config";
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
+
   const [beanCount, setBeanCount] = useState("");
 
   useEffect(() => {
@@ -19,9 +24,9 @@ const Dashboard = () => {
     });
   });
 
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
+  useEffect(() => {
+    document.title = "Dashboard";
+  }, []);
 
   return (
     <>

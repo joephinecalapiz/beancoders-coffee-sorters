@@ -94,6 +94,10 @@ const Sorters = () => {
     );
   };
 
+  useEffect(() => {
+    document.title = "Sorters";
+  }, []);
+
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />

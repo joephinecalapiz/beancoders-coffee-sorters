@@ -73,6 +73,10 @@ const Customers = () => {
   };
 
   useEffect(() => {
+    document.title = "Customers";
+  }, []);
+
+  useEffect(() => {
     fetchCustomers();
   }, []);
 

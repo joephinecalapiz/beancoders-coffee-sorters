@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react"; // Import useState
+import React, { useState, useEffect } from "react"; // Import useState
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
@@ -13,6 +13,10 @@ const Status = () => {
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
+
+  useEffect(() => {
+    document.title = "Status";
+  }, []);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
