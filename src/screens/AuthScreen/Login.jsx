@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
@@ -15,6 +15,10 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    document.title = "Login";
+  }, []);
 
   const [checkboxStatus, setCheckboxStatus] = useState(false);
   const [loginError, setLoginError] = useState(false); // Add a state variable for login error
@@ -46,17 +50,15 @@ const Login = () => {
     <>
       <Navbar />
       <div className="grid grid-cols-2 bg-bgLogin bg-cover h-[100vh] w-full">
-
-        <section
-          className="flex flex-cols w-full justify-center items-center mt-5"
-        >
+        <section className="flex flex-cols w-full justify-center items-center mt-5">
           <form
             onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] w-[400px]"
           >
             <div className="w-[85%] mx-auto">
-              <h1 className="text-center font-bold text-[30px] mt-8 mb-5"
-              style={{ color: "white" }}
+              <h1
+                className="text-center font-bold text-[30px] mt-8 mb-5"
+                style={{ color: "white" }}
               >
                 Login
               </h1>
@@ -116,14 +118,13 @@ const Login = () => {
                     checked={checkboxStatus}
                     onChange={(e) => setCheckboxStatus(e.target.checked)}
                   />
-                  <span className="ml-2 pt-1" 
-                  style={{ color: "white" }}
-                  >
+                  <span className="ml-2 pt-1" style={{ color: "white" }}>
                     Remember me
                   </span>
                 </div>
-                <p className="hover:underline cursor-pointer pt-1"
-                style={{ color: "white" }}
+                <p
+                  className="hover:underline cursor-pointer pt-1"
+                  style={{ color: "white" }}
                 >
                   Forgot password?
                 </p>
@@ -134,9 +135,7 @@ const Login = () => {
               >
                 login
               </button>
-              <p className="text-center my-7" 
-              style={{ color: "white" }}
-              >
+              <p className="text-center my-7" style={{ color: "white" }}>
                 Don't have and account?
                 <span
                   className="hover:underline cursor-pointer"

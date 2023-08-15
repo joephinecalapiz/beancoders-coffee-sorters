@@ -18,6 +18,7 @@ const Landing = () => {
     } else {
       setAuthenticated(false);
     }
+    document.title = "Home";
   }, []);
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const Landing = () => {
   if (authenticated === null) {
     return <div>Loading...</div>;
   }
+
   return (
     <>
       <Navbar />

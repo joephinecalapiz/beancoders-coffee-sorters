@@ -1,12 +1,16 @@
 /** @format */
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from "../assets/beansLogo.png";
 import Navbar from "../component/Navbar";
 
 const About = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "About Us";
+  }, []);
 
   return (
     <>

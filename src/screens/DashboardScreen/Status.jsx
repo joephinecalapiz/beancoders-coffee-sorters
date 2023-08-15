@@ -114,7 +114,7 @@ const Status = () => {
         >
           {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200 sorted-table">
+            <table className="sorted-table min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th

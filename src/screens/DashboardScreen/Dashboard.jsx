@@ -1,14 +1,24 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import "../../Sidebar.css";
 import "../../dashboard.css";
-
+import axios from "axios";
+import api_endpoint from "../../config";
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
+  const [beanCount, setBeanCount] = useState("");
+
+  useEffect(() => {
+    axios.get(api_endpoint + "/count")
+      .then((response) => {
+        const bean = response.data.beans
+        setBeanCount(bean)
+      });
+  });
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -32,7 +42,7 @@ const Dashboard = () => {
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
                   <h1 className="text-black data-title">Pieces of Bad Beans</h1>
-                  <h1 className="text-black data-size">60 pieces</h1>
+                  <h1 className="text-black data-size">{beanCount.bad} pieces</h1>
                 </div>
               </div>
               <div className="flex items-center justify-center h-28 grid-item">
@@ -40,13 +50,13 @@ const Dashboard = () => {
                   <h1 className="text-black data-title">
                     Pieces of Good Beans
                   </h1>
-                  <h1 className="text-black data-size">60 pieces</h1>
+                  <h1 className="text-black data-size">{beanCount.good} pieces</h1>
                 </div>
               </div>
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
                   <h1 className="text-black data-title">KG of Bad Beans</h1>
-                  <h1 className="text-black data-size">60 kilograms</h1>
+                  <h1 className="text-black data-size">{beanCount.kilograms} kilograms</h1>
                 </div>
               </div>
             </div>
