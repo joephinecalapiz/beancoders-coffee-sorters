@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
-import "../../Sidebar.css";
-import "../../dashboard.css";
+import "../.././css/Sidebar.css";
+import "../.././css/dashboard.css";
 import axios from "axios";
 import api_endpoint from "../../config";
 const Dashboard = () => {

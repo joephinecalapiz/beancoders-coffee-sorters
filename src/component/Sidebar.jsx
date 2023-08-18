@@ -1,5 +1,6 @@
 /** @format */
-
+import { NavLink } from "react-router-dom";
+import "./../css/sidebar.css";
 import React, { useState } from "react";
 import {
   FaAngleRight,
@@ -9,8 +10,6 @@ import {
   FaShoppingCart,
   FaBars,
 } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
-import "../sidebar.css";
 
 const ICON_SIZE = 20;
 

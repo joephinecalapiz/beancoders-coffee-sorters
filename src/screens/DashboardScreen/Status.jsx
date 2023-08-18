@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import Modal from "../../component/Modal"; // Import the Modal component
-import "../../status.css";
+import "../.././css/status.css";
 
 const Status = () => {
   const [navVisible, showNavbar] = useState(false);
