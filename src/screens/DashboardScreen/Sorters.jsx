@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
-import "../../sorter.css";
-import "../../datepicker.css";
+import "../.././css/sorter.css";
+import "../.././css/datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -94,6 +94,10 @@ const Sorters = () => {
     );
   };
 
+  useEffect(() => {
+    document.title = "Sorters";
+  }, []);
+
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
@@ -162,7 +166,7 @@ const Sorters = () => {
         >
           {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="sorters-table min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th

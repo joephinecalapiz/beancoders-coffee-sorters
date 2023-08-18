@@ -6,8 +6,8 @@ import Topbar from "../../component/Topbar";
 
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
-import "../../customer.css";
-import "../../Sidebar.css";
+import "../.././css/customer.css";
+import "../.././css/Sidebar.css";
 
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -71,6 +71,10 @@ const Customers = () => {
       `History for ${customerName}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
     );
   };
+
+  useEffect(() => {
+    document.title = "Customers";
+  }, []);
 
   useEffect(() => {
     fetchCustomers();

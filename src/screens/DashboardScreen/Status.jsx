@@ -1,11 +1,11 @@
 /** @format */
 
-import React, { useState } from "react"; // Import useState
+import React, { useState, useEffect } from "react"; // Import useState
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import Modal from "../../component/Modal"; // Import the Modal component
-import "../../status.css";
+import "../.././css/status.css";
 
 const Status = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -13,6 +13,10 @@ const Status = () => {
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
+
+  useEffect(() => {
+    document.title = "Status";
+  }, []);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -114,7 +118,7 @@ const Status = () => {
         >
           {" "}
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200 sorted-table">
+            <table className="sorted-table min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th

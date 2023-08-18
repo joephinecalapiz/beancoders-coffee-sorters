@@ -1,4 +1,6 @@
-import React from "react";
+/** @format */
+
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
@@ -18,21 +20,24 @@ const Signup = () => {
     console.log(data);
   };
 
+  useEffect(() => {
+    document.title = "Register";
+  }, []);
+
   return (
     <>
       <Navbar />
       <div className="grid grid-cols-2 bg-bgLogin bg-cover h-[100vh] w-full">
-        
-
-        <section
-          className="flex flex-cols w-full justify-center items-center mt-5"
-        >
+        <section className="flex flex-cols w-full justify-center items-center mt-5">
           <form
             onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[30px] w-[440px]"
           >
             <div className="w-[85%] mx-auto">
-              <h1 className="text-center font-bold text-[30px] mt-8 mb-5" style={{ color: "white" }}>
+              <h1
+                className="text-center font-bold text-[30px] mt-8 mb-5"
+                style={{ color: "white" }}
+              >
                 Create Account
               </h1>
               <input
@@ -50,11 +55,11 @@ const Signup = () => {
                   errors.name ? "mb-2" : "mb-5"
                 }`}
               />
-              
+
               {errors.name && (
                 <p className="text-red-500 ml-2">{errors.name.message}</p>
               )}
-              
+
               <input
                 name="email"
                 type="email"
@@ -73,7 +78,7 @@ const Signup = () => {
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
               )}
-              
+
               <input
                 name="password"
                 type="password"
@@ -99,9 +104,7 @@ const Signup = () => {
               >
                 REGISTER
               </button>
-              <p className="text-center my-7"
-              style={{ color: "white" }}
-              >
+              <p className="text-center my-7" style={{ color: "white" }}>
                 Already have an account?
                 <span
                   className="hover:underline cursor-pointer"
