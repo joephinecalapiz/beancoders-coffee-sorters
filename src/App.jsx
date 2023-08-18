@@ -14,6 +14,7 @@ import Sorters from "./screens/DashboardScreen/Sorters";
 import Customers from "./screens/DashboardScreen/Customers";
 import Status from "./screens/DashboardScreen/Status";
 import Profile from "./screens/ProfileScreen/Profile";
+import SortingStatus from "./screens/DashboardScreen/SortingStatus";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -93,6 +94,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/customerstatus" element={<SortingStatus />} />
       </Routes>
     </BrowserRouter>
   );

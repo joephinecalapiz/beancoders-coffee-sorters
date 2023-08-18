@@ -162,7 +162,9 @@ const Status = () => {
                     <td className="poppins-font">{sorted.status}</td>
                     <td className="poppins-font">
                       <button
-                        onClick={() => handleSeeMore(customer.show)}
+                        onClick={() => {
+                          navigate("/customerstatus");
+                        }}
                         className="see-more-button focus:outline-none"
                       >
                         See More...

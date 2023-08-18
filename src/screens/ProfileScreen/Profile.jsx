@@ -73,7 +73,9 @@ const Profile = () => {
             transition: "margin-left 0.3s ease",
           }}
         >
-          <h1 className="text-black profile-title">Profile Settings</h1>
+          <h1 className="text-black profile-title">
+            Profile Settings (NAA SA FIGMA ANG SIMPLE PROFILE)
+          </h1>
 
           {isEditing ? (
             <div>
