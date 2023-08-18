@@ -6,7 +6,7 @@ import Topbar from "../../component/Topbar";
 
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
-import "../../customer.css";
+import "./../customer.css";
 import "../../Sidebar.css";
 
 const Customers = () => {

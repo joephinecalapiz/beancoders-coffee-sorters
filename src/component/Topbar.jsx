@@ -121,19 +121,7 @@ const Topbar = () => {
               <ul className="py-1" role="none">
                 <li
                   onClick={() => {
-                    navigate("/dashboard");
-                  }}
-                >
-                  <a
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                  >
-                    Dashboard
-                  </a>
-                </li>
-                <li
-                  onClick={() => {
-                    navigate("/settings");
+                    navigate("/profile");
                     console.log(userInfo.name);
                   }}
                 >
@@ -141,7 +129,7 @@ const Topbar = () => {
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
                   >
-                    Settings
+                    Profile
                   </a>
                 </li>
                 <li onClick={handleSignOut}>
