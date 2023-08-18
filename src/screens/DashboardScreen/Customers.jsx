@@ -112,8 +112,7 @@ const Customers = () => {
             transition: "margin-left 0.3s ease",
           }}
         >
-          {" "}
-          <div className=" items-center">
+          <div className="flex items-center">
             <h1
               style={{
                 fontSize: "32px",
@@ -149,6 +148,7 @@ const Customers = () => {
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{
             transition: "margin-left 0.3s ease",
+            marginTop: "-30px",
           }}
         >
           <input
@@ -162,6 +162,7 @@ const Customers = () => {
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{
             transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
           }}
         >
           {" "}
