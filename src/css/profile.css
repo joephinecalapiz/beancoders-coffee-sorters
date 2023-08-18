@@ -1,0 +1,31 @@
+/** @format */
+.profile-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 60px;
+  font-family: "Poppins", sans-serif;
+}
+.profile-picture-label {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%; /* Create a circular shape */
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.profile-picture:hover {
+  border-color: #aaa;
+}
+
+.circular-profile {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}

@@ -5,13 +5,15 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./screens/AuthScreen/Login";
 import Landing from "./screens/Landing";
 import About from "./screens/about";
-import ".../../css/index.css";
+import "./index.css";
+// import ".../../css/index.css";
 import ".../.././css/Sidebar.css";
 import Signup from "./screens/AuthScreen/Signup";
 import Dashboard from "./screens/DashboardScreen/Dashboard";
 import Sorters from "./screens/DashboardScreen/Sorters";
 import Customers from "./screens/DashboardScreen/Customers";
 import Status from "./screens/DashboardScreen/Status";
+import Profile from "./screens/ProfileScreen/Profile";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -90,6 +92,7 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </BrowserRouter>
   );

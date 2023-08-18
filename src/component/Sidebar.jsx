@@ -7,7 +7,8 @@ import {
   FaAngleLeft,
   FaChartBar,
   FaThLarge,
-  FaShoppingCart,
+  FaUsers,
+  FaUserFriends,
   FaBars,
 } from "react-icons/fa";
 
@@ -38,7 +39,8 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
             </NavLink>
             <NavLink to="/customers" className="nav-link">
               <span className="icon">
-                <FaShoppingCart size={ICON_SIZE} />
+                <FaUsers size={ICON_SIZE} />{" "}
+                {/* Use FaUser icon for Customers */}
               </span>
               <span className={!collapsed ? "text-visible" : ""}>
                 Customers
@@ -46,7 +48,8 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
             </NavLink>
             <NavLink to="/sorters" className="nav-link">
               <span className="icon">
-                <FaShoppingCart size={ICON_SIZE} />
+                <FaUserFriends size={ICON_SIZE} />{" "}
+                {/* Use FaSort icon for Sorters */}
               </span>
               <span className={!collapsed ? "text-visible" : ""}>Sorters</span>
             </NavLink>
