@@ -4,7 +4,9 @@ import React, { useState, useEffect } from "react"; // Import useState
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
-import "../.././css/status.css";
+import "../.././css/sorting_status.css";
+import "../.././css/Sidebar.css";
+import api_endpoint from "../../config";
 
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -38,14 +40,14 @@ const SortingStatus = () => {
           }}
         >
           {" "}
-          <div className="flex items-center">
+          <div className="flex items-center justify-center mb-1">
             <h1
               style={{
                 fontSize: "32px",
                 fontWeight: "bold",
                 fontFamily: "'Poppins', sans-serif",
               }}
-              className="text-black mt-16 mb-3"
+              className="text-black mt-16 mb-1"
             >
               Customer Status
             </h1>
@@ -59,25 +61,35 @@ const SortingStatus = () => {
             marginTop: "-30px",
           }}
         >
-          <div className="flex items-center mb-3">
-            {/* Add your filter component here (e.g., dropdown or date picker for selecting the month) */}
-            {/* Example dropdown: */}
-            <select
-              className="px-4 py-2 border rounded focus:outline-none"
-              // Add onChange handler to update filter based on selected month
+          <div
+          className="flex items-center justify-end mb-15" // Add flex and justify-end
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginRight: "20px", // Adjust the margin
+          }}
+        >
+          <label htmlFor="monthSelect" className="mr-2 poppins-font">
+            Month:
+          </label>
+          <select
+            id="monthSelect"
+            className="px-4 py-2 border rounded focus:outline-none"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+            }}
             >
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-              <option value="6">June</option>
-              <option value="7">July</option>
-              <option value="8">August</option>
-              <option value="9">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
+              <option value="1" style={{ fontFamily: "'Poppins', sans-serif" }}>January</option>
+              <option value="2" style={{ fontFamily: "'Poppins', sans-serif" }}>February</option>
+              <option value="3" style={{ fontFamily: "'Poppins', sans-serif" }}>March</option>
+              <option value="4" style={{ fontFamily: "'Poppins', sans-serif" }}>April</option>
+              <option value="5" style={{ fontFamily: "'Poppins', sans-serif" }}>May</option>
+              <option value="6" style={{ fontFamily: "'Poppins', sans-serif" }}>June</option>
+              <option value="7" style={{ fontFamily: "'Poppins', sans-serif" }}>July</option>
+              <option value="8" style={{ fontFamily: "'Poppins', sans-serif" }}>August</option>
+              <option value="9" style={{ fontFamily: "'Poppins', sans-serif" }}>September</option>
+              <option value="10" style={{ fontFamily: "'Poppins', sans-serif" }}>October</option>
+              <option value="11" style={{ fontFamily: "'Poppins', sans-serif" }}>November</option>
+              <option value="12" style={{ fontFamily: "'Poppins', sans-serif" }}>December</option>
             </select>
           </div>
         </div>
@@ -86,14 +98,18 @@ const SortingStatus = () => {
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{
             transition: "margin-left 0.3s ease",
-            marginTop: "-20px",
+            marginTop: "-40px",
+            fontSize: "15px",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
-          <h1>Customer's name: Peter Robante</h1>
-          <br />
-          <br />
+          <div style={{ fontFamily: "'Poppins', sans-serif" }}>
+          <span style={{ display: "block", fontFamily: "'Poppins', sans-serif", fontSize: "24px", marginBottom: "1px" }}>Customer's Name:</span>
+          <span style={{ display: "block", fontFamily: "'Poppins', sans-serif", fontSize: "20px", textDecoration: "underline", fontWeight: "bold", marginBottom: "20px",}}>Peter Robante</span>
+        </div>
+
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="sorted-table min-w-full divide-y divide-gray-200">
+            <table className="status-table min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
                   <th
