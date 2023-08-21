@@ -1,12 +1,11 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import "../.././css/sorting_status.css";
 import "../.././css/Sidebar.css";
-import api_endpoint from "../../config";
+import Select from "react-select";
 
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -26,7 +25,22 @@ const SortingStatus = () => {
     }
   }, [navVisible]);
 
-  const navigate = useNavigate();
+  const [selectedMonth, setSelectedMonth] = useState(null);
+
+  const monthOptions = [
+    { value: 1, label: "January" },
+    { value: 2, label: "February" },
+    { value: 3, label: "March" },
+    { value: 4, label: "April" },
+    { value: 5, label: "May" },
+    { value: 6, label: "June" },
+    { value: 7, label: "July" },
+    { value: 8, label: "August" },
+    { value: 9, label: "September" },
+    { value: 10, label: "October" },
+    { value: 11, label: "November" },
+    { value: 12, label: "December" },
+  ];
 
   return (
     <>
@@ -39,7 +53,6 @@ const SortingStatus = () => {
             transition: "margin-left 0.3s ease",
           }}
         >
-          {" "}
           <div className="flex items-center justify-center mb-1">
             <h1
               style={{
@@ -59,38 +72,35 @@ const SortingStatus = () => {
           style={{
             transition: "margin-left 0.3s ease",
             marginTop: "-30px",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
-          <div
-          className="flex items-center justify-end mb-15" // Add flex and justify-end
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginRight: "20px", // Adjust the margin
-          }}
-        >
-          <label htmlFor="monthSelect" className="mr-2 poppins-font">
-            Month:
-          </label>
-          <select
-            id="monthSelect"
-            className="px-4 py-2 border rounded focus:outline-none"
-            style={{
-              fontFamily: "'Poppins', sans-serif",
-            }}
+          <div className="flex items-center justify-end mb-15 mr-6">
+            <label
+              htmlFor="monthSelect"
+              className="mr-2 bold"
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontWeight: "bold",
+              }}
             >
-              <option value="1" style={{ fontFamily: "'Poppins', sans-serif" }}>January</option>
-              <option value="2" style={{ fontFamily: "'Poppins', sans-serif" }}>February</option>
-              <option value="3" style={{ fontFamily: "'Poppins', sans-serif" }}>March</option>
-              <option value="4" style={{ fontFamily: "'Poppins', sans-serif" }}>April</option>
-              <option value="5" style={{ fontFamily: "'Poppins', sans-serif" }}>May</option>
-              <option value="6" style={{ fontFamily: "'Poppins', sans-serif" }}>June</option>
-              <option value="7" style={{ fontFamily: "'Poppins', sans-serif" }}>July</option>
-              <option value="8" style={{ fontFamily: "'Poppins', sans-serif" }}>August</option>
-              <option value="9" style={{ fontFamily: "'Poppins', sans-serif" }}>September</option>
-              <option value="10" style={{ fontFamily: "'Poppins', sans-serif" }}>October</option>
-              <option value="11" style={{ fontFamily: "'Poppins', sans-serif" }}>November</option>
-              <option value="12" style={{ fontFamily: "'Poppins', sans-serif" }}>December</option>
-            </select>
+              Month:
+            </label>
+
+            <Select
+              id="monthSelect"
+              options={monthOptions}
+              value={selectedMonth}
+              onChange={setSelectedMonth}
+              isSearchable={false} // Add this line to disable keyboard input
+              clearable={false}
+              styles={{
+                option: (provided) => ({
+                  ...provided,
+                  fontFamily: "'Poppins', sans-serif",
+                }),
+              }}
+            />
           </div>
         </div>
 
@@ -104,9 +114,29 @@ const SortingStatus = () => {
           }}
         >
           <div style={{ fontFamily: "'Poppins', sans-serif" }}>
-          <span style={{ display: "block", fontFamily: "'Poppins', sans-serif", fontSize: "24px", marginBottom: "1px" }}>Customer's Name:</span>
-          <span style={{ display: "block", fontFamily: "'Poppins', sans-serif", fontSize: "20px", textDecoration: "underline", fontWeight: "bold", marginBottom: "20px",}}>Peter Robante</span>
-        </div>
+            <span
+              style={{
+                display: "block",
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "24px",
+                marginBottom: "1px",
+              }}
+            >
+              Customer's Name:
+            </span>
+            <span
+              style={{
+                display: "block",
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "20px",
+                textDecoration: "underline",
+                fontWeight: "bold",
+                marginBottom: "20px",
+              }}
+            >
+              Peter Robante
+            </span>
+          </div>
 
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="status-table min-w-full divide-y divide-gray-200">

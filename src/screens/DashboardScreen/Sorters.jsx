@@ -98,6 +98,16 @@ const Sorters = () => {
     document.title = "Sorters";
   }, []);
 
+  const [searchText, setSearchText] = useState("");
+
+  const filteredSorters = allSorters.filter((sorter) =>
+    sorter.sorterName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const handleSearchInputChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
@@ -121,31 +131,15 @@ const Sorters = () => {
             >
               Sorters
             </h1>
-
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none ml-3 mt-12"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
-              }}
-            >
-              Add New
-            </button>
           </div>
         </div>
 
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             transition: "margin-left 0.3s ease",
             marginTop: "-30px",
           }}
@@ -153,8 +147,29 @@ const Sorters = () => {
           <input
             type="text"
             placeholder="Search Sorters"
+            value={searchText}
+            onChange={handleSearchInputChange}
             className="px-4 py-2 border rounded focus:outline-none search-bar"
           />
+
+          <button
+            onClick={openModal}
+            className="px-4 py-2 text-white rounded focus:outline-none"
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#C4A484";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#512615";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
+            style={{
+              backgroundColor: "#512615",
+              fontFamily: "'Poppins', sans-serif",
+            }}
+          >
+            Add New
+          </button>
         </div>
 
         <div
@@ -202,7 +217,7 @@ const Sorters = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {allSorters.map((sorter) => (
+                {filteredSorters.map((sorter) => (
                   <tr key={sorter.id} className="sort-table">
                     <td className="poppins-font">{sorter.id}</td>
                     <td className="poppins-font">{sorter.sorterName}</td>
