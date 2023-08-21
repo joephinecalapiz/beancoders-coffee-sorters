@@ -1,6 +1,4 @@
 /** @format */
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
 
@@ -100,6 +98,16 @@ const Customers = () => {
     }
   };
 
+  const [searchText, setSearchText] = useState("");
+
+  const filteredCustomers = allCustomers.filter((customer) =>
+    customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const handleSearchInputChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
@@ -123,30 +131,16 @@ const Customers = () => {
             >
               Customers
             </h1>
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none ml-3 mt-12"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
-              }}
-            >
-              Add New
-            </button>
           </div>
+          <br />
+          <br />
         </div>
-
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
             transition: "margin-left 0.3s ease",
             marginTop: "-30px",
           }}
@@ -154,8 +148,29 @@ const Customers = () => {
           <input
             type="text"
             placeholder="Search Customers"
+            value={searchText}
+            onChange={handleSearchInputChange}
             className="px-4 py-2 border rounded focus:outline-none search-bar"
           />
+
+          <button
+            onClick={openModal}
+            className="px-4 py-2 text-white rounded focus:outline-none"
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#C4A484";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#512615";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
+            style={{
+              backgroundColor: "#512615",
+              fontFamily: "'Poppins', sans-serif",
+            }}
+          >
+            Add New
+          </button>
         </div>
 
         <div
@@ -203,7 +218,7 @@ const Customers = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {allCustomers.map((customer) => (
+                {filteredCustomers.map((customer) => (
                   <tr key={customer.id} className="custom-table">
                     <td className="poppins-font">{customer.id}</td>
                     <td className="poppins-font">{customer.customerName}</td>
@@ -252,11 +267,10 @@ const Customers = () => {
                 </label>
                 <input
                   type="text"
-                  id="newCustomerName"
-                  value={newCustomerName}
-                  onChange={(e) => setNewCustomerName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
+                  placeholder="Search Customers"
+                  value={searchText}
+                  onChange={handleSearchInputChange}
+                  className="px-4 py-2 border rounded focus:outline-none search-bar"
                 />
               </div>
 
