@@ -6,12 +6,22 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        brown: {
+          800: "#512615", // Replace this with your desired brown color code
+        },
+      },
+    },
     backgroundImage: {
       CoffeeBeans: "url('./assets/background.png')",
+      BgLanding: "url('./assets/bg_landing2.png')",
       bgopacity: "url('./assets/bgopacity.png')",
+      bgLogin: "url('./assets/login_bg.png')",
+      bgRegister: "url('./assets/reg_bg2.png')",
     },
   },
+
   //custom color theme/overwrite the default color of daisyUI
   daisyui: {
     themes: [

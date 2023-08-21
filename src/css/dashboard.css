@@ -1,0 +1,48 @@
+/** @format */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+/* Dashboard Text */
+.dashboard-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 60px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* title of the box */
+.data-title {
+  font-size: 24px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* kilos or pieces */
+.data-size {
+  font-size: 32px;
+  font-weight: bold;
+  color: #7f1f19;
+  font-family: "Poppins", sans-serif;
+}
+/* Boxes */
+.grid-item {
+  border-radius: 25px;
+  background-color: #cdcdcd;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.grid-item:hover {
+  background-color: #c4a484;
+}
+
+/* Media query for small screens */
+@media (max-width: 640px) {
+  .grid-item {
+    /* Adjust styles for smaller screens */
+  }
+}
+
+.content-shift-right {
+  margin-left: 100px;
+  transition: margin-left 10.1s ease; /* Apply a smooth transition effect */
+}
