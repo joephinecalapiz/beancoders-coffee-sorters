@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import "../.././css/Sidebar.css";
