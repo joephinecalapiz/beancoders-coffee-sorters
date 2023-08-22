@@ -33,7 +33,10 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
               <span className="icon">
                 <FaThLarge size={ICON_SIZE} />
               </span>
-              <span className={!collapsed ? "text-visible" : ""}>
+              <span
+                className={!collapsed ? "text-visible" : ""}
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 Dashboard
               </span>
             </NavLink>
@@ -42,7 +45,10 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
                 <FaUsers size={ICON_SIZE} />{" "}
                 {/* Use FaUser icon for Customers */}
               </span>
-              <span className={!collapsed ? "text-visible" : ""}>
+              <span
+                className={!collapsed ? "text-visible" : ""}
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 Customers
               </span>
             </NavLink>
@@ -51,13 +57,23 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
                 <FaUserFriends size={ICON_SIZE} />{" "}
                 {/* Use FaSort icon for Sorters */}
               </span>
-              <span className={!collapsed ? "text-visible" : ""}>Sorters</span>
+              <span
+                className={!collapsed ? "text-visible" : ""}
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Sorters
+              </span>
             </NavLink>
             <NavLink to="/status" className="nav-link">
               <span className="icon">
                 <FaChartBar size={ICON_SIZE} />
               </span>
-              <span className={!collapsed ? "text-visible" : ""}>Status</span>
+              <span
+                className={!collapsed ? "text-visible" : ""}
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Status
+              </span>
             </NavLink>
           </div>
         </div>
