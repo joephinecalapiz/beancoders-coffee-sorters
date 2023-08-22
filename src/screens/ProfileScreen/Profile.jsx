@@ -80,9 +80,10 @@ const Profile = () => {
           <div className="flex items-center">
             <h1 className="profile-title">Profile</h1>
           </div>
-          <div className="profile-content">
+          <div className={`profile-content`}>
             <div className="profile-section">
               <div className="profile-picture-container">
+                {/* admin picture */}
                 <label
                   htmlFor="profilePicture"
                   className="profile-picture-label"
@@ -90,7 +91,7 @@ const Profile = () => {
                   <img
                     src={profileData.profilePicture}
                     alt="Profile"
-                    className="profile-picture"
+                    className="admin-picture"
                     onClick={handleProfilePictureClick}
                   />
                 </label>
@@ -102,29 +103,7 @@ const Profile = () => {
                   style={{ display: "none" }}
                 />
 
-                {/* second pivture */}
-                <label
-                  htmlFor="profilePicture2"
-                  className="profile-picture-label"
-                >
-                  <img
-                    src={profileData.profilePicture}
-                    alt="company"
-                    className="profile-picture"
-                    onClick={handleProfilePictureClick}
-                  />
-                </label>
-                <input
-                  type="file"
-                  id="profilePictureInput"
-                  name="company name"
-                  onChange={handleInputChange}
-                  style={{ display: "none" }}
-                />
                 <div className="admin-label">
-                  <label className="poppins-font">Admin</label>
-                </div>
-                <div className="company-label">
                   <label className="poppins-font">Admin</label>
                 </div>
               </div>
@@ -190,7 +169,32 @@ const Profile = () => {
                   )}
                 </div>
               </div>
+              {/* company pic */}
+              <div
+                className={`profile-picture-container-right ${
+                  isEditing ? "editing" : ""
+                }`}
+              >
+                <label htmlFor="profilePicture" className="company-pic">
+                  <img
+                    src={profileData.profilePicture}
+                    alt="Profile"
+                    className={`company-picture ${isEditing ? "editing" : ""}`}
+                    onClick={handleProfilePictureClick}
+                  />
+                </label>
+                {isEditing && (
+                  <input
+                    type="file"
+                    id="profilePictureInput"
+                    name="profilePicture"
+                    onChange={handleInputChange}
+                    style={{ display: "none" }}
+                  />
+                )}
+              </div>
             </div>
+            {/* buttons */}
             <div className="profile-buttons">
               {isEditing ? (
                 <div className="profile-edit-buttons">
