@@ -58,11 +58,15 @@ const Login = () => {
             <div className="w-[85%] mx-auto">
               <h1
                 className="text-center font-bold text-[30px] mt-8 mb-5"
-                style={{ color: "white" }}
+                style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
               >
                 Login
               </h1>
-              <label className="block text-white mb-2" htmlFor="email">
+              <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 Enter your Email
               </label>
               <input
@@ -79,11 +83,16 @@ const Login = () => {
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
+                style={{ fontFamily: "Poppins, sans-serif" }}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
               )}
-              <label className="block text-white mb-2" htmlFor="password">
+              <label
+                className="block text-white mb-2"
+                htmlFor="password"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
                 Enter your Password
               </label>
               <input
@@ -100,9 +109,15 @@ const Login = () => {
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
+                style={{ fontFamily: "Poppins, sans-serif" }}
               />
               {loginError && (
-                <p className="text-red-500 ml-2">Invalid email or password.</p>
+                <p
+                  className="text-red-500 ml-2"
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  Invalid email or password.
+                </p>
               )}
 
               {/* {errors.password && (
@@ -118,13 +133,19 @@ const Login = () => {
                     checked={checkboxStatus}
                     onChange={(e) => setCheckboxStatus(e.target.checked)}
                   />
-                  <span className="ml-2 pt-1" style={{ color: "white" }}>
+                  <span
+                    className="ml-2 pt-1"
+                    style={{
+                      color: "white",
+                      fontFamily: "Poppins, sans-serif",
+                    }}
+                  >
                     Remember me
                   </span>
                 </div>
                 <p
                   className="hover:underline cursor-pointer pt-1"
-                  style={{ color: "white" }}
+                  style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
                 >
                   Forgot password?
                 </p>
@@ -132,17 +153,25 @@ const Login = () => {
               <button
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white"
+                style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
               >
                 login
               </button>
-              <p className="text-center my-7" style={{ color: "white" }}>
+              <p
+                className="text-center my-7"
+                style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
+              >
                 Don't have and account?
                 <span
                   className="hover:underline cursor-pointer"
                   onClick={() => {
                     navigate("/signup");
                   }}
-                  style={{ color: "#512615", fontWeight: "bold" }}
+                  style={{
+                    color: "#512615",
+                    fontWeight: "bold",
+                    fontFamily: "Poppins, sans-serif",
+                  }}
                 >
                   {" "}
                   Create an Account

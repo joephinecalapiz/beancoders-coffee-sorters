@@ -22,13 +22,13 @@ const About = () => {
 
         <div className="text-center">
           <h1
-            style={{ color: "white" }}
+            style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
             className="mt-1 mb-14 font-bold text-[40px]"
           >
             About Arabica Coffee Beans Sorter
           </h1>
           <h3
-            style={{ color: "white" }}
+            style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
             className="mb-12 font-bold text-[18px] ml-20 mr-20"
           >
             The Arabica coffee beans sorter is a sophisticated machine designed
@@ -38,7 +38,7 @@ const About = () => {
             mixed with the coffee cherries during harvesting or processing.
           </h3>
           <h3
-            style={{ color: "white" }}
+            style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
             className="font-bold text-[18px] ml-14 mr-14"
           >
             The sorter uses advanced technology, such as optical sensors, to

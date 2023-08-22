@@ -1,3 +1,5 @@
+/** @format */
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -13,6 +15,7 @@ const Navbar = () => {
       <ul className="flex flex-row justify-between mr-[75px] w-[480px] mt-5">
         <li
           className="my-4 hover:text-[#FF3535] cursor-pointer onClick hover:underline"
+          style={{ fontFamily: "Poppins, sans-serif" }}
           onClick={() => {
             navigate("/");
           }}
@@ -21,6 +24,7 @@ const Navbar = () => {
         </li>
         <li
           className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline"
+          style={{ fontFamily: "Poppins, sans-serif" }}
           onClick={() => {
             navigate("/aboutus");
           }}
@@ -29,6 +33,7 @@ const Navbar = () => {
         </li>
         <li
           className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline"
+          style={{ fontFamily: "Poppins, sans-serif" }}
           onClick={() => {
             navigate("/signup");
           }}
@@ -37,6 +42,7 @@ const Navbar = () => {
         </li>
         <li
           className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline"
+          style={{ fontFamily: "Poppins, sans-serif" }}
           onClick={() => {
             navigate("/login");
           }}
