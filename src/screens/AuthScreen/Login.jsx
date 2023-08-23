@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -24,6 +23,8 @@ const Login = () => {
   const [loginError, setLoginError] = useState(false); // Add a state variable for login error
 
   const onSubmitHandler = (data) => {
+    setLoading(true); // Set loading state to true when form is submitted
+
     console.log(data);
     console.log("checkboxStatus:", checkboxStatus);
 
@@ -35,16 +36,22 @@ const Login = () => {
           const user_id = response.data.user.id;
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
-          navigate("/dashboard");
+
+          navigate("/dashboard"); // Navigate immediately without delay
         }
       })
       .catch((error) => {
         console.error("Error", error.response.data);
         if (error.response.status === 401) {
-          setLoginError(true); // Set login error state to true
+          setLoginError(true);
         }
+      })
+      .finally(() => {
+        setLoading(false); // Reset loading state
       });
   };
+
+  const [loading, setLoading] = useState(false);
 
   return (
     <>
@@ -154,8 +161,9 @@ const Login = () => {
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white"
                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
+                disabled={loading} // Disable the button when loading is true
               >
-                login
+                {loading ? "Loading..." : "Login"}
               </button>
               <p
                 className="text-center my-7"

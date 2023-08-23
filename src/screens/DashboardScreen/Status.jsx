@@ -9,6 +9,11 @@ import "../.././css/status.css";
 
 const Status = () => {
   const [navVisible, showNavbar] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
+
+  const handleSeeMore = (customer) => {
+    setSelectedCustomer(customer);
+  };
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -167,7 +172,7 @@ const Status = () => {
                     <td className="poppins-font">
                       <button
                         onClick={() => {
-                          navigate("/customerstatus");
+                          navigate(`/customerstatus/${sorted.customerName}`);
                         }}
                         className="see-more-button focus:outline-none"
                       >

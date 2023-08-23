@@ -6,9 +6,11 @@ import Sidebar from "../../component/Sidebar";
 import "../.././css/sorting_status.css";
 import "../.././css/Sidebar.css";
 import Select from "react-select";
+import { useParams } from "react-router-dom";
 
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
+  const { customerName } = useParams();
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -134,7 +136,7 @@ const SortingStatus = () => {
                 marginBottom: "20px",
               }}
             >
-              Peter Robante
+              {customerName}
             </span>
           </div>
 
