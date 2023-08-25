@@ -167,6 +167,9 @@ const Sorters = () => {
             style={{
               backgroundColor: "#512615",
               fontFamily: "'Poppins', sans-serif",
+              boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+              border: "none",
+              textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
             }}
           >
             Add New

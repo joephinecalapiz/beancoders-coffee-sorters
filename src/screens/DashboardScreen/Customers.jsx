@@ -113,7 +113,10 @@ const Customers = () => {
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
 
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
+      // CHANGE BG COLOR
+      // style={{ backgroundColor: '#c2bbb8' }}
+      >
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{
@@ -168,6 +171,9 @@ const Customers = () => {
             style={{
               backgroundColor: "#512615",
               fontFamily: "'Poppins', sans-serif",
+              boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+              border: "none",
+              textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
             }}
           >
             Add New
