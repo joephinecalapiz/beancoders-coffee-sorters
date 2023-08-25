@@ -143,6 +143,7 @@ const Customers = () => {
             alignItems: "center",
             transition: "margin-left 0.3s ease",
             marginTop: "-80px",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
           <input

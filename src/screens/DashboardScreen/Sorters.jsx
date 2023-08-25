@@ -142,6 +142,7 @@ const Sorters = () => {
             alignItems: "center",
             transition: "margin-left 0.3s ease",
             marginTop: "-30px",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
           <input

@@ -90,11 +90,12 @@ const Status = () => {
             alignItems: "center",
             transition: "margin-left 0.3s ease",
             marginTop: "-30px",
+            fontFamily: "'Poppins', sans-serif",
           }}
         >
           <input
             type="text"
-            placeholder="Search Sorters"
+            placeholder="Search Customer Status"
             className="px-4 py-2 border rounded focus:outline-none search-bar"
           />
 
