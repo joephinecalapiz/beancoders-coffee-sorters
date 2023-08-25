@@ -142,7 +142,7 @@ const Customers = () => {
             justifyContent: "space-between",
             alignItems: "center",
             transition: "margin-left 0.3s ease",
-            marginTop: "-30px",
+            marginTop: "-80px",
           }}
         >
           <input
