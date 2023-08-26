@@ -107,91 +107,90 @@ const Customers = () => {
   const handleSearchInputChange = (e) => {
     setSearchText(e.target.value);
   };
+  0;
+  const totalCustomers = allCustomers.length;
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} />
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar onToggleSidebar={toggleSidebar} />
 
-      <div
-        className={`App ${navVisible ? "content-shift-right" : ""}`}
-        // CHANGE BG COLOR
-        // style={{ backgroundColor: '#c2bbb8' }}
-      >
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-          }}
-        >
-          <div className="flex items-center">
-            <h1
-              style={{
-                fontSize: "32px",
-                fontWeight: "bold",
-                fontFamily: "'Poppins', sans-serif",
-              }}
-              className="text-black mt-16 mb-3"
-            >
-              Customers
-            </h1>
+        <div className="header">
+          <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
+            <div className="flex items-center">
+              <h1
+                style={{
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+                className="text-black mt-16 mb-3"
+              >
+                Customers
+              </h1>
+            </div>
+            <br />
+            <br />
           </div>
-          <br />
-          <br />
         </div>
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            transition: "margin-left 0.3s ease",
-            marginTop: "-80px",
-            fontFamily: "'Poppins', sans-serif",
-          }}
-        >
-          <input
-            type="text"
-            placeholder="Search Customers"
-            value={searchText}
-            onChange={handleSearchInputChange}
-            className="px-4 py-2 border rounded focus:outline-none search-bar"
-          />
 
-          <button
-            onClick={openModal}
-            className="px-4 py-2 text-white rounded focus:outline-none"
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#C4A484";
-              e.target.style.transition = "background-color 0.3s ease";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
-              e.target.style.transition = "background-color 0.3s ease";
-            }}
+        <div className="search-and-button">
+          <div
+            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
             style={{
-              backgroundColor: "#512615",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              transition: "margin-left 0.3s ease",
+              marginTop: "-80px",
               fontFamily: "'Poppins', sans-serif",
-              boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-              border: "none",
-              textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
             }}
           >
-            Add New
-          </button>
+            {/* Search bar */}
+            Total: {totalCustomers}
+            <input
+              type="text"
+              placeholder="Search Customers"
+              value={searchText}
+              onChange={handleSearchInputChange}
+              className="px-4 py-2 border rounded focus:outline-none search-bar"
+            />
+            {/* Add New button */}
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white rounded focus:outline-none"
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#C4A484";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#512615";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              style={{
+                backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
+                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                border: "none",
+                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+              }}
+            >
+              Add New
+            </button>
+          </div>
         </div>
 
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginTop: "-20px",
-          }}
-        >
-          {" "}
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200 customers-table">
-              <thead className="bg-gray-50">
+        <div className="table-container">
+          <div
+            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+            style={{
+              transition: "margin-left 0.3s ease",
+              marginTop: "-20px",
+            }}
+          >
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 customers-table">
                 <tr>
                   <th
                     scope="col"
@@ -224,26 +223,26 @@ const Customers = () => {
                     History
                   </th>
                 </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {filteredCustomers.map((customer) => (
-                  <tr key={customer.id} className="custom-table">
-                    <td className="poppins-font">{customer.id}</td>
-                    <td className="poppins-font">{customer.customerName}</td>
-                    <td className="poppins-font">{customer.phoneNum}</td>
-                    <td className="poppins-font">{customer.address}</td>
-                    <td className="poppins-font">
-                      <button
-                        onClick={() => handleSeeMore(customer.customerName)}
-                        className="see-more-button focus:outline-none"
-                      >
-                        See More...
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredCustomers.map((customer) => (
+                    <tr key={customer.id} className="custom-table">
+                      <td className="poppins-font">{customer.id}</td>
+                      <td className="poppins-font">{customer.customerName}</td>
+                      <td className="poppins-font">{customer.phoneNum}</td>
+                      <td className="poppins-font">{customer.address}</td>
+                      <td className="poppins-font">
+                        <button
+                          onClick={() => handleSeeMore(customer.customerName)}
+                          className="see-more-button focus:outline-none"
+                        >
+                          See More...
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
