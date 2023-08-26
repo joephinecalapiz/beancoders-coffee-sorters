@@ -6,6 +6,7 @@ import Sidebar from "../../component/Sidebar";
 import "../.././css/Sidebar.css";
 import "../.././css/dashboard.css";
 import "../.././css/profile.css";
+import beansLogo from "../../assets/beansLogo.png"; // Import the image
 
 const Profile = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -34,10 +35,15 @@ const Profile = () => {
     document.title = "Profile";
 
     if (navVisible) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden"; // Disable scrolling
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "auto"; // Enable scrolling
     }
+
+    return () => {
+      // Clean up the effect when the component unmounts
+      document.body.style.overflow = "auto"; // Enable scrolling
+    };
   }, [navVisible]);
 
   const handleEditClick = () => {
@@ -83,25 +89,26 @@ const Profile = () => {
           <div className={`profile-content`}>
             <div className="profile-section">
               <div className="profile-picture-container">
-                {/* admin picture */}
-                <label
-                  htmlFor="profilePicture"
-                  className="profile-picture-label"
-                >
-                  <img
-                    src={profileData.profilePicture}
-                    alt="Profile"
-                    className="admin-picture"
-                    onClick={handleProfilePictureClick}
+                <div className="circular-profile">
+                  <label
+                    htmlFor="profilePicture"
+                    className="profile-picture-label"
+                  >
+                    <img
+                      src={beansLogo}
+                      alt="Beans Logo"
+                      className="admin-picture"
+                      onClick={handleProfilePictureClick}
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="profilePictureInput"
+                    name="profilePicture"
+                    onChange={handleInputChange}
+                    style={{ display: "none" }}
                   />
-                </label>
-                <input
-                  type="file"
-                  id="profilePictureInput"
-                  name="profilePicture"
-                  onChange={handleInputChange}
-                  style={{ display: "none" }}
-                />
+                </div>
 
                 <div className="admin-label">
                   <label className="poppins-font">Admin</label>

@@ -113,9 +113,10 @@ const Customers = () => {
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
 
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
-      // CHANGE BG COLOR
-      // style={{ backgroundColor: '#c2bbb8' }}
+      <div
+        className={`App ${navVisible ? "content-shift-right" : ""}`}
+        // CHANGE BG COLOR
+        // style={{ backgroundColor: '#c2bbb8' }}
       >
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
@@ -274,10 +275,11 @@ const Customers = () => {
                 </label>
                 <input
                   type="text"
-                  placeholder="Search Customers"
-                  value={searchText}
-                  onChange={handleSearchInputChange}
-                  className="px-4 py-2 border rounded focus:outline-none search-bar"
+                  id="newCustomerName"
+                  value={newCustomerName}
+                  onChange={(e) => setNewCustomerName(e.target.value)}
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                  required
                 />
               </div>
 
