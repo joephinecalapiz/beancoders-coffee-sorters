@@ -94,7 +94,10 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/customerstatus" element={<SortingStatus />} />
+        <Route
+          path="/customerstatus/:customerName"
+          element={<SortingStatus />}
+        />
       </Routes>
     </BrowserRouter>
   );

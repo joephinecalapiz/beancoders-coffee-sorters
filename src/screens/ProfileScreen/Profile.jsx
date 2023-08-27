@@ -6,6 +6,7 @@ import Sidebar from "../../component/Sidebar";
 import "../.././css/Sidebar.css";
 import "../.././css/dashboard.css";
 import "../.././css/profile.css";
+import beansLogo from "../../assets/beansLogo.png"; // Import the image
 
 const Profile = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -34,10 +35,15 @@ const Profile = () => {
     document.title = "Profile";
 
     if (navVisible) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = "hidden"; // Disable scrolling
     } else {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = "auto"; // Enable scrolling
     }
+
+    return () => {
+      // Clean up the effect when the component unmounts
+      document.body.style.overflow = "auto"; // Enable scrolling
+    };
   }, [navVisible]);
 
   const handleEditClick = () => {
@@ -80,51 +86,31 @@ const Profile = () => {
           <div className="flex items-center">
             <h1 className="profile-title">Profile</h1>
           </div>
-          <div className="profile-content">
+          <div className={`profile-content`}>
             <div className="profile-section">
               <div className="profile-picture-container">
-                <label
-                  htmlFor="profilePicture"
-                  className="profile-picture-label"
-                >
-                  <img
-                    src={profileData.profilePicture}
-                    alt="Profile"
-                    className="profile-picture"
-                    onClick={handleProfilePictureClick}
+                <div className="circular-profile">
+                  <label
+                    htmlFor="profilePicture"
+                    className="profile-picture-label"
+                  >
+                    <img
+                      src={beansLogo}
+                      alt="Beans Logo"
+                      className="admin-picture"
+                      onClick={handleProfilePictureClick}
+                    />
+                  </label>
+                  <input
+                    type="file"
+                    id="profilePictureInput"
+                    name="profilePicture"
+                    onChange={handleInputChange}
+                    style={{ display: "none" }}
                   />
-                </label>
-                <input
-                  type="file"
-                  id="profilePictureInput"
-                  name="profilePicture"
-                  onChange={handleInputChange}
-                  style={{ display: "none" }}
-                />
-
-                {/* second pivture */}
-                <label
-                  htmlFor="profilePicture2"
-                  className="profile-picture-label"
-                >
-                  <img
-                    src={profileData.profilePicture}
-                    alt="company"
-                    className="profile-picture"
-                    onClick={handleProfilePictureClick}
-                  />
-                </label>
-                <input
-                  type="file"
-                  id="profilePictureInput"
-                  name="company name"
-                  onChange={handleInputChange}
-                  style={{ display: "none" }}
-                />
-                <div className="admin-label">
-                  <label className="poppins-font">Admin</label>
                 </div>
-                <div className="company-label">
+
+                <div className="admin-label">
                   <label className="poppins-font">Admin</label>
                 </div>
               </div>
@@ -190,7 +176,32 @@ const Profile = () => {
                   )}
                 </div>
               </div>
+              {/* company pic */}
+              <div
+                className={`profile-picture-container-right ${
+                  isEditing ? "editing" : ""
+                }`}
+              >
+                <label htmlFor="profilePicture" className="company-pic">
+                  <img
+                    src={profileData.profilePicture}
+                    alt="Profile"
+                    className={`company-picture ${isEditing ? "editing" : ""}`}
+                    onClick={handleProfilePictureClick}
+                  />
+                </label>
+                {isEditing && (
+                  <input
+                    type="file"
+                    id="profilePictureInput"
+                    name="profilePicture"
+                    onChange={handleInputChange}
+                    style={{ display: "none" }}
+                  />
+                )}
+              </div>
             </div>
+            {/* buttons */}
             <div className="profile-buttons">
               {isEditing ? (
                 <div className="profile-edit-buttons">

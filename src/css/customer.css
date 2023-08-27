@@ -1,7 +1,7 @@
 /** @format */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-/* Table - Header*/
+/* Table - Header */
 .table-header {
   background-color: #512615;
   color: white;
@@ -17,13 +17,10 @@
   font-family: "Poppins", sans-serif;
 }
 
-.customers-table {
-  width: 1000px;
-}
-
 .search-bar {
   width: 500px;
   border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Table - Cell Data (below the header) */
@@ -100,4 +97,49 @@
 .content-shift-right {
   margin-left: 100px;
   transition: margin-left 0.3s ease; /* Apply a smooth transition effect */
+}
+
+/* Add this CSS to your existing customer.css file or create a new CSS file and import it */
+
+/* Set a height for the container */
+.table-container {
+  max-height: calc(100vh - 200px); /* Adjust the height as needed */
+  overflow-y: auto;
+}
+
+/* Optional: If you want to style the table headers */
+.customers-table th {
+  position: sticky;
+  top: 0;
+  background-color: #481c14;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1; /* Ensure the headers appear above the content */
+}
+
+/* Optional: Style for the search bar */
+.search-bar {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Optional: Style for the Add New button */
+.add-button:hover {
+  background-color: #c4a484;
+}
+
+/* Optional: Style for the See More button */
+.see-more-button {
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.see-more-button:hover {
+  background-color: #292c30;
 }
