@@ -22,7 +22,7 @@ const Dashboard = () => {
       const bean = response.data.beans;
       setBeanCount(bean);
     });
-  });
+  }, []);
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -49,7 +49,9 @@ const Dashboard = () => {
                 <div>
                   <h1 className="text-black data-title">Pieces of Bad Beans</h1>
                   <h1 className="text-black data-size">
-                  {beanCount.bad ? beanCount.bad + ' pieces' : '0 pieces'}
+                    {beanCount && beanCount.bad !== null
+                      ? `${beanCount.bad}` 
+                      : "0 pieces"}
                   </h1>
                 </div>
               </div>
@@ -59,7 +61,9 @@ const Dashboard = () => {
                     Pieces of Good Beans
                   </h1>
                   <h1 className="text-black data-size">
-                  {beanCount.good ? beanCount.good + ' pieces' : '0 pieces'}
+                    {beanCount && beanCount.good !== null
+                      ? `${beanCount.good} pieces` 
+                      : "0 pieces"}
                   </h1>
                 </div>
               </div>
@@ -67,7 +71,9 @@ const Dashboard = () => {
                 <div>
                   <h1 className="text-black data-title">KG of Bad Beans</h1>
                   <h1 className="text-black data-size">
-                  {beanCount.kilograms ? beanCount.kilograms + ' kilograms' : '0 kilograms'}
+                    {beanCount && beanCount.kilograms !== null
+                      ? `${beanCount.kilograms} kilograms`
+                      : "0 kilograms"}
                   </h1>
                 </div>
               </div>

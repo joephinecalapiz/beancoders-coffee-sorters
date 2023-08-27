@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="absolute flex flex-row justify-end w-full text-grey
+      className="absolute flex flex-row justify-end w-full text-white
     text-[20px]
     "
     >
@@ -19,7 +19,6 @@ const Navbar = () => {
           onClick={() => {
             navigate("/");
           }}
-          
         >
           Home
         </li>
