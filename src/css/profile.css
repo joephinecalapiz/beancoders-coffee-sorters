@@ -19,6 +19,7 @@
   align-items: flex-start;
   margin-top: 60px;
   flex-direction: column;
+  background-color: #d4d4d4;
 }
 
 .admin-label {
@@ -142,7 +143,8 @@
   display: inline-block;
   cursor: pointer;
 }
-.admin-picture {
+.admin-picture {  
+  position: flex;
   width: 200px;
   height: 200px;
   border-radius: 50%; /* Create a circular shape */
@@ -155,7 +157,7 @@
 .company-pic {
   display: inline-block;
   cursor: pointer;
-  position: relative;
+  position: flex;
   transition: margin-left 0.3s ease;
 }
 /* Company picture when EDIT PROFILE IS  CLICKED */
@@ -201,7 +203,7 @@
 }
 
 .circular-profile {
-  position: relative;
+  position: flex;
   width: 200px;
   height: 200px;
   border-radius: 50%;

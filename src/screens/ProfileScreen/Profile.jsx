@@ -89,7 +89,7 @@ const Profile = () => {
             <h1 className="profile-title">Profile</h1>
           </div>
           <div className={`profile-content`}>
-            <div className="profile-section">
+            <div className=" profile-section">
               <div className="profile-picture-container">
                 <div className="circular-profile">
                   <label
@@ -111,7 +111,6 @@ const Profile = () => {
                     style={{ display: "none" }}
                   />
                 </div>
-
                 <div className="admin-label">
                   <label className="poppins-font">Admin</label>
                 </div>
