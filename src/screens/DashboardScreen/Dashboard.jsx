@@ -51,7 +51,7 @@ const Dashboard = () => {
                   <h1 className="text-black data-size">
                     {beanCount && beanCount.bad !== null
                       ? `${beanCount.bad}` 
-                      : "0 pieces"}
+                      : "0"}
                   </h1>
                 </div>
               </div>
@@ -63,7 +63,7 @@ const Dashboard = () => {
                   <h1 className="text-black data-size">
                     {beanCount && beanCount.good !== null
                       ? `${beanCount.good} pieces` 
-                      : "0 pieces"}
+                      : "0"}
                   </h1>
                 </div>
               </div>
@@ -73,7 +73,7 @@ const Dashboard = () => {
                   <h1 className="text-black data-size">
                     {beanCount && beanCount.kilograms !== null
                       ? `${beanCount.kilograms} kilograms`
-                      : "0 kilograms"}
+                      : "0"}
                   </h1>
                 </div>
               </div>
