@@ -1,17 +1,43 @@
 /** @format */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
-
+import "../.././css/sorter.css";
+import "../.././css/datepicker.css";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import axios from "axios";
+import api_endpoint from "../../config";
 const Sorters = () => {
+  const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
+
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSorterName, setNewSorterName] = useState("");
   const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
+  const [allSorters, setAllSorters] = useState([]);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
+    axios
+      .get(api_endpoint + "/sorters/" + user_id, { headers })
+      .then((response) => {
+        const sorters = response.data;
+        setAllSorters(sorters.sorters);
+      });
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -25,15 +51,36 @@ const Sorters = () => {
     setNewSorterDateHired("");
   };
 
-  const handleAddNewSorter = (e) => {
+  const handleAddNewSorter = async (e) => {
     e.preventDefault();
-    // Replace this logic with the code to add a new sorter
-    console.log("New sorter details:");
-    console.log("Name:", newSorterName);
-    console.log("Phone Number:", newSorterPhoneNumber);
-    console.log("Address:", newSorterAddress);
-    console.log("Date Hired:", newSorterDateHired);
-    closeModal();
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    try {
+      const response = await axios.post(
+        api_endpoint + "/add/sorter",
+        {
+          user_id: user_id,
+          sorterName: newSorterName,
+          phoneNum: newSorterPhoneNumber,
+          address: newSorterAddress,
+          dateHired: newSorterDateHired,
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log(response.status);
+      console.log(token);
+      console.log(user_id);
+      closeModal();
+    } catch (error) {
+      console.error("Error adding sorter:", error);
+      // Handle error scenarios if needed
+    }
   };
 
   const handleCancel = () => {
@@ -47,77 +94,149 @@ const Sorters = () => {
     );
   };
 
+  useEffect(() => {
+    document.title = "Sorters";
+  }, []);
+
+  const [searchText, setSearchText] = useState("");
+
+  const filteredSorters = allSorters.filter((sorter) =>
+    sorter.sorterName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const handleSearchInputChange = (e) => {
+    setSearchText(e.target.value);
+  };
+
+  const totalSorters = allSorters.length;
+
   return (
     <>
-      <Sidebar />
-      <Topbar />
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center mt-20">
-          <h1 className="text-black text-32px">Sorters</h1>
-          <button
-            onClick={openModal}
-            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-          >
-            Add New
-          </button>
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
+      style={{ backgroundColor: '#d4d4d4' }}>
+        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar onToggleSidebar={toggleSidebar} />
+
+        <div className="header">
+          <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
+            <div className="flex items-center">
+              <h1
+                style={{
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+                className="text-black mt-16 mb-3"
+              >
+                Sorters
+              </h1>
+            </div>
+            <br />
+            <br />
+          </div>
         </div>
-        <div className="overflow-x-auto">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+
+        <div className="search-and-button">
+          <div
+            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              transition: "margin-left 0.3s ease",
+              marginTop: "-80px",
+              fontFamily: "'Poppins', sans-serif",
+            }}
+          >
+            Total: {totalSorters}
+            <input
+              type="text"
+              placeholder="Search Sorters"
+              value={searchText}
+              onChange={handleSearchInputChange}
+              className="px-4 py-2 border rounded focus:outline-none search-bar"
+            />
+            {/* Add New button */}
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white rounded focus:outline-none"
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#C4A484";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#512615";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              style={{
+                backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
+                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                border: "none",
+                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+              }}
+            >
+              Add New
+            </button>
+          </div>
+        </div>
+
+        <div className="table-container">
+          <div
+            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+            style={{
+              transition: "margin-left 0.3s ease",
+              marginTop: "-20px",
+            }}
+          >
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 ">
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Id num
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Sorter's Name
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Phone Number
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Address
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Date Hired
                   </th>
                 </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {sorterData.map((sorter) => (
-                  <tr key={sorter.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">{sorter.id}</td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.name}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.phoneNumber}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.address}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {sorter.dateHired}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredSorters.map((sorter) => (
+                    <tr key={sorter.id} className="sort-table">
+                      <td className="poppins-font">{sorter.id}</td>
+                      <td className="poppins-font">{sorter.sorterName}</td>
+                      <td className="poppins-font">{sorter.phoneNum}</td>
+                      <td className="poppins-font">{sorter.address}</td>
+                      <td className="poppins-font">{sorter.dateHired}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -136,10 +255,16 @@ const Sorters = () => {
             >
               &times;
             </span>
-            <h2 className="text-2xl font-semibold mb-4">Add New Sorter</h2>
+            <h2 className="text-2xl font-semibold mb-4 poppins-font">
+              Add New Sorter
+            </h2>
+
             <form onSubmit={handleAddNewSorter}>
               <div className="mb-4">
-                <label htmlFor="newSorterName" className="block font-medium">
+                <label
+                  htmlFor="newSorterName"
+                  className="block font-medium poppins-font"
+                >
                   Name:
                 </label>
                 <input
@@ -147,7 +272,7 @@ const Sorters = () => {
                   id="newSorterName"
                   value={newSorterName}
                   onChange={(e) => setNewSorterName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -155,7 +280,7 @@ const Sorters = () => {
               <div className="mb-4">
                 <label
                   htmlFor="newSorterPhoneNumber"
-                  className="block font-medium"
+                  className="block font-medium poppins-font"
                 >
                   Phone Number:
                 </label>
@@ -164,13 +289,16 @@ const Sorters = () => {
                   id="newSorterPhoneNumber"
                   value={newSorterPhoneNumber}
                   onChange={(e) => setNewSorterPhoneNumber(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
 
               <div className="mb-4">
-                <label htmlFor="newSorterAddress" className="block font-medium">
+                <label
+                  htmlFor="newSorterAddress"
+                  className="block font-medium poppins-font"
+                >
                   Address:
                 </label>
                 <input
@@ -178,7 +306,7 @@ const Sorters = () => {
                   id="newSorterAddress"
                   value={newSorterAddress}
                   onChange={(e) => setNewSorterAddress(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -186,16 +314,16 @@ const Sorters = () => {
               <div className="mb-4">
                 <label
                   htmlFor="newSorterDateHired"
-                  className="block font-medium"
+                  className="block font-medium poppins-font"
                 >
                   Date Hired:
                 </label>
-                <input
-                  type="text"
+                {/*DatePicker*/}
+                <DatePicker
                   id="newSorterDateHired"
-                  value={newSorterDateHired}
-                  onChange={(e) => setNewSorterDateHired(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  selected={newSorterDateHired}
+                  onChange={(date) => setNewSorterDateHired(date)}
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -203,14 +331,14 @@ const Sorters = () => {
               <div className="flex justify-between">
                 <button
                   type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
                 >
-                  Create Sorter
+                  Add Sorter
                 </button>
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
                 >
                   Cancel
                 </button>
@@ -222,29 +350,5 @@ const Sorters = () => {
     </>
   );
 };
-
-const sorterData = [
-  {
-    id: 1,
-    name: "John Dela Cruz",
-    phoneNumber: "0912-345-6789",
-    address: "123 Kagay-anon St., Cagayan de Oro City",
-    dateHired: "2023-07-25",
-  },
-  {
-    id: 2,
-    name: "Jenny Santos",
-    phoneNumber: "0987-654-3210",
-    address: "456 Xavier St., Cagayan de Oro City",
-    dateHired: "2023-07-26",
-  },
-  {
-    id: 3,
-    name: "Alfredo Reyes",
-    phoneNumber: "0922-123-4567",
-    address: "789 Limketkai Ave., Cagayan de Oro City",
-    dateHired: "2023-07-27",
-  },
-];
 
 export default Sorters;

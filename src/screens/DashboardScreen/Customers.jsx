@@ -1,15 +1,24 @@
 /** @format */
-
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
+
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
+import "../.././css/customer.css";
+import "../.././css/Sidebar.css";
+
 const Customers = () => {
+  const [navVisible, showNavbar] = useState(false);
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [allCustomers, setAllCustomers] = useState([]);
+
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -53,12 +62,17 @@ const Customers = () => {
   const handleCancel = () => {
     closeModal();
   };
+
   const handleSeeMore = (customerName) => {
     // For demonstration purposes, we'll display an alert with the customer's name as the history
     alert(
       `History for ${customerName}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
     );
   };
+
+  useEffect(() => {
+    document.title = "Customers";
+  }, []);
 
   useEffect(() => {
     fetchCustomers();
@@ -71,7 +85,7 @@ const Customers = () => {
       const response = await fetch(api_endpoint + "/customers/" + user_id, {
         method: "GET",
         headers: {
-          Authorization: "Bearer " + token, // Add a space after 'Bearer'
+          Authorization: "Bearer " + token,
         },
       });
       if (!response.ok) {
@@ -84,91 +98,153 @@ const Customers = () => {
     }
   };
 
+  const [searchText, setSearchText] = useState("");
+
+  const filteredCustomers = allCustomers.filter((customer) =>
+    customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+  );
+
+  const handleSearchInputChange = (e) => {
+    setSearchText(e.target.value);
+  };
+  0;
+  const totalCustomers = allCustomers.length;
+
   return (
     <>
-      <Sidebar />
-      <Topbar />
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
+      style={{ backgroundColor: '#d4d4d4' }}
+      >
+        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar onToggleSidebar={toggleSidebar} />
 
-      <div className="m-auto p-4 sm:ml-64">
-        <div className="flex justify-between items-center mt-20">
-          <h1 className="text-black text-32px mt-5 m-5">Customers</h1>
-          <button
-            onClick={openModal}
-            className="px-4 py-2 text-white bg-blue-600 hover:bg-blue-700 rounded focus:outline-none"
-          >
-            Add New
-          </button>
+        <div className="header">
+          <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
+            <div className="flex items-center">
+              <h1
+                style={{
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+                className="text-black mt-16 mb-3"
+              >
+                Customers
+              </h1>
+            </div>
+            <br />
+            <br />
+          </div>
         </div>
 
-        <input
-          type="text"
-          placeholder="Search Customers"
-          className="px-4 py-2 border rounded-l focus:outline-none"
-        />
-        <div className="overflow-x-auto">
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+        <div className="search-and-button">
+          <div
+            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              transition: "margin-left 0.3s ease",
+              marginTop: "-80px",
+              fontFamily: "'Poppins', sans-serif",
+            }}
+          >
+            {/* Search bar */}
+            Total: {totalCustomers}
+            <input
+              type="text"
+              placeholder="Search Customers"
+              value={searchText}
+              onChange={handleSearchInputChange}
+              className="px-4 py-2 border rounded focus:outline-none search-bar"
+            />
+            {/* Add New button */}
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white rounded focus:outline-none"
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#C4A484";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#512615";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              style={{
+                backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
+                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                border: "none",
+                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+              }}
+            >
+              Add New
+            </button>
+          </div>
+        </div>
+
+        <div className="table-container">
+          <div
+            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+            style={{
+              transition: "margin-left 0.3s ease",
+              marginTop: "-20px",
+            }}
+          >
+            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 customers-table">
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Id num
+                    Id number
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Customer Name
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Phone Number
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Address
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     History
                   </th>
                 </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {allCustomers.map((customer) => (
-                  <tr key={customer.id}>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.id}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.customerName}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.phoneNum}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      {customer.address}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <button
-                        onClick={() => handleSeeMore(customer.customerName)}
-                        className="text-blue-600 hover:text-blue-800 underline focus:outline-none"
-                      >
-                        See More
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {filteredCustomers.map((customer) => (
+                    <tr key={customer.id} className="custom-table">
+                      <td className="poppins-font">{customer.id}</td>
+                      <td className="poppins-font">{customer.customerName}</td>
+                      <td className="poppins-font">{customer.phoneNum}</td>
+                      <td className="poppins-font">{customer.address}</td>
+                      <td className="poppins-font">
+                        <button
+                          onClick={() => handleSeeMore(customer.customerName)}
+                          className="see-more-button focus:outline-none"
+                        >
+                          See More...
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -187,10 +263,15 @@ const Customers = () => {
             >
               &times;
             </span>
-            <h2 className="text-2xl font-semibold mb-4">Add New Customer</h2>
+            <h2 className="text-2xl font-semibold mb-4 poppins-font">
+              Add New Customer
+            </h2>
             <form onSubmit={handleAddNewCustomer}>
               <div className="mb-4">
-                <label htmlFor="newCustomerName" className="block font-medium">
+                <label
+                  htmlFor="newCustomerName"
+                  className="block font-medium poppins-font"
+                >
                   Name:
                 </label>
                 <input
@@ -198,7 +279,7 @@ const Customers = () => {
                   id="newCustomerName"
                   value={newCustomerName}
                   onChange={(e) => setNewCustomerName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -206,7 +287,7 @@ const Customers = () => {
               <div className="mb-4">
                 <label
                   htmlFor="newCustomerPhoneNumber"
-                  className="block font-medium"
+                  className="block font-medium poppins-font"
                 >
                   Phone Number:
                 </label>
@@ -215,7 +296,7 @@ const Customers = () => {
                   id="newCustomerPhoneNumber"
                   value={newCustomerPhoneNumber}
                   onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
@@ -223,33 +304,36 @@ const Customers = () => {
               <div className="mb-4">
                 <label
                   htmlFor="newCustomerAddress"
-                  className="block font-medium"
+                  className="block font-medium poppins-font"
                 >
                   Address:
                 </label>
-                <input
-                  type="text"
+                <textarea
                   id="newCustomerAddress"
                   value={newCustomerAddress}
                   onChange={(e) => setNewCustomerAddress(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                  rows={4}
+                  style={{ height: "70px", wordWrap: "break-word" }}
                   required
                 />
               </div>
 
-              <button
-                type="submit"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
-              >
-                Create Customer
-              </button>
-              <button
-                type="button"
-                onClick={handleCancel}
-                className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
-              >
-                Cancel
-              </button>
+              <div class="flex justify-between">
+                <button
+                  type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+                >
+                  Add Customer
+                </button>
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
           </div>
         </div>

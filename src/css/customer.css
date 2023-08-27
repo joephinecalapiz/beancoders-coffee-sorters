@@ -1,0 +1,145 @@
+/** @format */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+/* Table - Header */
+.table-header {
+  background-color: #512615;
+  color: white;
+  text-align: left;
+  font-size: 30px;
+}
+
+.add-new-btn {
+  font-family: "Poppins", sans-serif;
+}
+
+.poppins-font {
+  font-family: "Poppins", sans-serif;
+}
+
+.search-bar {
+  width: 500px;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Table - Cell Data (below the header) */
+.custom-table {
+  background-color: #f2f2f2;
+  font-size: 16px;
+  color: #333;
+  text-align: left;
+}
+
+.custom-table td {
+  padding: 12px;
+  padding-left: 22px;
+}
+
+.custom-table .see-more-button {
+  color: #0066cc;
+  text-decoration: underline;
+}
+
+.custom-table .see-more-button:hover {
+  color: #0052a3;
+}
+
+/* For Modal Styling */
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-container {
+  background-color: #f2f2f2;
+  width: 400px;
+  margin: auto;
+  border-radius: 0.5rem;
+  padding: 2rem;
+}
+
+.modal-close {
+  top: 1rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.modal-form {
+  margin-bottom: 1rem;
+}
+
+.modal-button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+
+/* Modal Buttons */
+.button-container {
+  display: flex;
+  gap: 80px;
+  font-size: 14px;
+}
+
+/* Height of Text Field for Address */
+.custom-address-input {
+  height: 70px;
+}
+
+.content-shift-right {
+  margin-left: 100px;
+  transition: margin-left 0.3s ease; /* Apply a smooth transition effect */
+}
+
+/* Add this CSS to your existing customer.css file or create a new CSS file and import it */
+
+/* Set a height for the container */
+.table-container {
+  max-height: calc(100vh - 200px); /* Adjust the height as needed */
+  overflow-y: auto;
+}
+
+/* Optional: If you want to style the table headers */
+.customers-table th {
+  position: sticky;
+  top: 0;
+  background-color: #481c14;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  z-index: 1; /* Ensure the headers appear above the content */
+}
+
+/* Optional: Style for the search bar */
+.search-bar {
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Optional: Style for the Add New button */
+.add-button:hover {
+  background-color: #c4a484;
+}
+
+/* Optional: Style for the See More button */
+.see-more-button {
+  color: white;
+  padding: 4px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+  transition: background-color 0.3s ease;
+}
+
+.see-more-button:hover {
+  background-color: #292c30;
+}

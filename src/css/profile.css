@@ -1,0 +1,230 @@
+/** @format */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+.poppins-font {
+  font-family: "Poppins", sans-serif;
+}
+
+.profile-title {
+  font-size: 32px;
+  font-weight: bold;
+  margin-top: 60px;
+  font-family: "Poppins", sans-serif;
+  margin-bottom: 10px;
+}
+
+.profile-content {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 60px;
+  flex-direction: column;
+}
+
+.admin-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 23px;
+  margin-top: 20px;
+  margin-left: 63px;
+}
+
+.company-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 23px;
+  margin-top: 5px;
+  margin-left: 263px;
+}
+
+.profile-section {
+  display: flex;
+  align-items: flex-start;
+  margin-right: 40px;
+}
+
+.profile-picture-container {
+  margin-right: 100px;
+}
+
+.profile-details {
+  flex: 1;
+  flex-direction: column;
+  font-family: "Poppins", sans-serif;
+  align-items: flex-start;
+}
+
+.custom-profile-details {
+  margin-left: 30px;
+}
+
+.input-text {
+  margin-left: -25px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+}
+
+.input-field {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-top: 15px;
+  margin-bottom: 13px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* display text without clicking edit button DATA */
+.profile-data-text {
+  margin-top: 8px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  font-family: "Poppins", sans-serif;
+}
+
+.profile-buttons {
+  justify-content: flex-end;
+  display: flex;
+  text-align: right;
+  margin-top: 4px;
+}
+
+.profile-edit-buttons {
+  align-self: flex-start;
+  margin-top: 30px;
+}
+
+.save-button {
+  margin-left: 380px;
+  scroll-margin-right: 18px;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: green;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.cancel-button {
+  margin-left: 50px;
+  scroll-margin-right: 18px;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button {
+  margin-left: 400px;
+  margin-top: -65px;
+  scroll-margin-right: 18px;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #7f1f19;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+/* ADMIN PROFILE SETTINGS */
+.profile-picture-label {
+  display: inline-block;
+  cursor: pointer;
+}
+.admin-picture {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%; /* Create a circular shape */
+  border: 2px solid #ddd;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+/* company PROFILE SETTINGS */
+.company-pic {
+  display: inline-block;
+  cursor: pointer;
+  position: relative;
+  transition: margin-left 0.3s ease;
+}
+/* Company picture when EDIT PROFILE IS  CLICKED */
+.company-picture.editing {
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  margin-left: 90px;
+}
+/* Company picture when EDIT PROFILE IS NOT CLICKED */
+.company-picture {
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  cursor: pointer;
+  margin-left: 150px;
+  transition: border-color 0.3s ease;
+}
+
+.profile-picture:hover {
+  border-color: #aaa;
+}
+
+/* .circular-profile {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+} */
+
+.admin-image-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end; /* Align the content to the right */
+}
+
+.admin-image {
+  width: 40px; /* Adjust the width as needed */
+  height: auto;
+  margin-left: 10px; /* Add some spacing between the admin label and the image */
+}
+
+.circular-profile {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.admin-picture {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.profile-picture-text {
+  font-size: 12px;
+  font-family: "Poppins", sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
