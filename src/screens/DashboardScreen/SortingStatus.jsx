@@ -48,7 +48,9 @@ const SortingStatus = () => {
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
+      style={{ backgroundColor: '#d4d4d4' }}
+      >
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{

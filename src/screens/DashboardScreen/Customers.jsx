@@ -112,7 +112,9 @@ const Customers = () => {
 
   return (
     <>
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
+      style={{ backgroundColor: '#d4d4d4' }}
+      >
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <Topbar onToggleSidebar={toggleSidebar} />
 
