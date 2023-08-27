@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="absolute flex flex-row justify-end w-full text-white
+      className="absolute flex flex-row justify-end w-full text-grey
     text-[20px]
     "
     >
