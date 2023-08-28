@@ -6,9 +6,15 @@ import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 import "../.././css/customer.css";
 import "../.././css/Sidebar.css";
+import { useNavigate } from "react-router-dom";
 
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
+  const navigate = useNavigate(); // Use the hook here
+
+  const handleSeeMore = (customerId) => {
+    navigate(`/receipt/${customerId}`); // Use the navigate function directly
+  };
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -63,13 +69,6 @@ const Customers = () => {
     closeModal();
   };
 
-  const handleSeeMore = (customerName) => {
-    // For demonstration purposes, we'll display an alert with the customer's name as the history
-    alert(
-      `History for ${customerName}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
-    );
-  };
-
   useEffect(() => {
     document.title = "Customers";
   }, []);
@@ -103,6 +102,7 @@ const Customers = () => {
   const filteredCustomers = allCustomers.filter((customer) =>
     customer.customerName.toLowerCase().includes(searchText.toLowerCase())
   );
+  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => b.id - a.id);
 
   const handleSearchInputChange = (e) => {
     setSearchText(e.target.value);
@@ -112,8 +112,9 @@ const Customers = () => {
 
   return (
     <>
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
-      style={{ backgroundColor: '#d4d4d4' }}
+      <div
+        className={`App ${navVisible ? "content-shift-right" : ""}`}
+        style={{ backgroundColor: "#d4d4d4" }}
       >
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <Topbar onToggleSidebar={toggleSidebar} />
@@ -226,7 +227,7 @@ const Customers = () => {
                   </th>
                 </tr>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredCustomers.map((customer) => (
+                  {sortedFilteredCustomers.map((customer) => (
                     <tr key={customer.id} className="custom-table">
                       <td className="poppins-font">{customer.id}</td>
                       <td className="poppins-font">{customer.customerName}</td>
@@ -237,7 +238,7 @@ const Customers = () => {
                           onClick={() => handleSeeMore(customer.customerName)}
                           className="see-more-button focus:outline-none"
                         >
-                          See More...
+                          Receipt
                         </button>
                       </td>
                     </tr>
