@@ -7,14 +7,55 @@ import "../.././css/Sidebar.css";
 import "../.././css/dashboard.css";
 import "../.././css/profile.css";
 import beansLogo from "../../assets/beansLogo.png"; // Import the image
+import api_endpoint from "../../config";
 
 const Profile = () => {
   const [navVisible, showNavbar] = useState(false);
   const [isEditing, setEditing] = useState(false);
+  const [userInfo, setUserInfo] = useState('');
+
+  useEffect(() => {
+    fetchUserInfo(); // Fetch user info when the component mounts
+  }, []);
+
+  // Update profileData when userInfo changes
+  useEffect(() => {
+    setProfileData((prevProfileData) => ({
+      ...prevProfileData,
+      name: userInfo.name,
+    }));
+  }, [userInfo]);
+
+  // Update editableContent when userInfo want to edit
+  useEffect(() => {
+    setEditableContent((prevProfileData) => ({
+      ...prevProfileData,
+      name: userInfo.name,
+    }));
+  }, [userInfo]);
+
+  const fetchUserInfo = async () => {
+    let token = localStorage.getItem('token');
+    try {
+      const response = await fetch(api_endpoint + "/user", {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Erro("Failed to fetch user data");
+      }
+      const data = await response.json();
+      setUserInfo(data.user);
+    } catch (error){
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   const [profileData, setProfileData] = useState({
     profilePicture: "assets/beansLogo.png",
-    name: "Joephine Calapiz",
+    name: userInfo.name,
     companyPhoneNumber: "9518052760",
     address: "123 Main St, City",
     companyName: "ABC Corporation",
@@ -127,7 +168,7 @@ const Profile = () => {
                       className="input-field"
                     />
                   ) : (
-                    <p className="profile-data-text">{profileData.name}</p>
+                    <p className="profile-data-text">{isEditing ? editableContent.name : profileData.name}</p>
                   )}
                 </div>
                 <div className="input-text">
