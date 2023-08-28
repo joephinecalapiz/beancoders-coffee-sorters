@@ -8,6 +8,7 @@ import "../.././css/Sidebar.css";
 import "../.././css/dashboard.css";
 import axios from "axios";
 import api_endpoint from "../../config";
+import ChartComponent from "./Chart";
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
 
@@ -79,6 +80,7 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          <ChartComponent />
         </div>
       </div>
     </>
