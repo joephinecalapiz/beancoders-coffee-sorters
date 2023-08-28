@@ -50,7 +50,7 @@ const Dashboard = () => {
                   <h1 className="text-black data-title">Pieces of Bad Beans</h1>
                   <h1 className="text-black data-size">
                     {beanCount && beanCount.bad !== null
-                      ? `${beanCount.bad}` 
+                      ? `${beanCount.bad} pieces` 
                       : "0"}
                   </h1>
                 </div>
