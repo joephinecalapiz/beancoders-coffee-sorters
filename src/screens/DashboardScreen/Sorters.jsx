@@ -87,13 +87,6 @@ const Sorters = () => {
     closeModal();
   };
 
-  const handleSeeMore = (sorterName) => {
-    // For demonstration purposes, we'll display an alert with the sorter's name as the history
-    alert(
-      `History for ${sorterName}: Lorem ipsum dolor sit amet, consectetur adipiscing elit.`
-    );
-  };
-
   useEffect(() => {
     document.title = "Sorters";
   }, []);
@@ -103,6 +96,7 @@ const Sorters = () => {
   const filteredSorters = allSorters.filter((sorter) =>
     sorter.sorterName.toLowerCase().includes(searchText.toLowerCase())
   );
+  const sortedFilteredSorters = filteredSorters.sort((a, b) => b.id - a.id);
 
   const handleSearchInputChange = (e) => {
     setSearchText(e.target.value);
@@ -112,8 +106,10 @@ const Sorters = () => {
 
   return (
     <>
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
-      style={{ backgroundColor: '#d4d4d4' }}>
+      <div
+        className={`App ${navVisible ? "content-shift-right" : ""}`}
+        style={{ backgroundColor: "#d4d4d4" }}
+      >
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <Topbar onToggleSidebar={toggleSidebar} />
 
@@ -225,7 +221,7 @@ const Sorters = () => {
                 </tr>
 
                 <tbody className="bg-white divide-y divide-gray-200">
-                  {filteredSorters.map((sorter) => (
+                  {sortedFilteredSorters.map((sorter) => (
                     <tr key={sorter.id} className="sort-table">
                       <td className="poppins-font">{sorter.id}</td>
                       <td className="poppins-font">{sorter.sorterName}</td>

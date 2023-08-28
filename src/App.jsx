@@ -15,6 +15,7 @@ import Customers from "./screens/DashboardScreen/Customers";
 import Status from "./screens/DashboardScreen/Status";
 import Profile from "./screens/ProfileScreen/Profile";
 import SortingStatus from "./screens/DashboardScreen/SortingStatus";
+import Receipt from "./screens/ReceiptScreen/Receipt";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -98,6 +99,7 @@ function App() {
           path="/customerstatus/:customerName"
           element={<SortingStatus />}
         />
+        <Route path="/receipt/:customerId" element={<Receipt />} />
       </Routes>
     </BrowserRouter>
   );
