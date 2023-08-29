@@ -25,11 +25,20 @@ const Status = () => {
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newSorterName, setNewSorterName] = useState("");
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newStatus, setNewStatus] = useState("");
 
   const handleStatusChange = (e) => {
     setNewStatus(e.target.value);
+  };
+
+  const handleSorterChange = (e) => {
+    setNewSorter(e.target.value);
+  };
+
+  const handleCustomerChange = (e) => {
+    setNewCustomer(e.target.value);
   };
 
   const openModal = () => {
@@ -197,42 +206,49 @@ const Status = () => {
         </h2>
         {/* Add your form or content for adding a new customer */}
         <form onSubmit={handleAddNew}>
+          {/* CUSTOMER'S NAME */}
           <div className="mb-4">
             <label
-              htmlFor="customerName"
+              htmlFor="newCustomer"
               className="block font-medium poppins-font"
             >
               Customer's Name:
             </label>
-
-            <input
-              type="text"
-              id="customerName"
+            <select
+              id="newCustomer"
               value={newCustomerName}
-              onChange={(e) => setNewCustomerName(e.target.value)}
+              onChange={handleCustomerChange}
               className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
               required
-            />
+            >
+              <option value=" "> </option>
+              <option value="Finished">Alliana</option>
+              <option value="Pending">Mae</option>
+              <option value="Cancelled">Maria</option>
+            </select>
           </div>
-
+          {/* SORTERS NAME */}
           <div className="mb-4">
             <label
-              htmlFor="newSorterName"
+              htmlFor="newSorter"
               className="block font-medium poppins-font"
             >
               Sorter's Name:
             </label>
-
-            <input
-              type="text"
-              id="newSorterName"
-              value={newCustomerName}
-              onChange={(e) => setNewCustomerName(e.target.value)}
+            <select
+              id="newSorter"
+              value={newSorterName}
+              onChange={handleSorterChange}
               className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
               required
-            />
+            >
+              <option value=" "> </option>
+              <option value="Finished">Joephine</option>
+              <option value="Pending">Jopina</option>
+              <option value="Cancelled">PInang</option>
+            </select>
           </div>
-
+          {/* STATUS   */}
           <div className="mb-4">
             <label
               htmlFor="newStatus"
