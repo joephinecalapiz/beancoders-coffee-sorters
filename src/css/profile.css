@@ -2,6 +2,13 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
+/* Media query for small screens */
+@media (max-width: 640px) {
+  .App{ 
+    background-color: #d4d4d4;
+  }
+}
+
 .poppins-font {
   font-family: "Poppins", sans-serif;
 }
@@ -17,9 +24,11 @@
 .profile-content {
   display: flex;
   align-items: flex-start;
-  margin-top: 60px;
+  margin-bottom: 0px;
+  margin-top: 10px;
   flex-direction: column;
-  background-color: #d4d4d4;
+  /* background-color: #d4d4d4; */
+
 }
 
 .admin-label {
@@ -48,6 +57,7 @@
 
 .profile-details {
   flex: 1;
+  margin-right: 10px;
   flex-direction: column;
   font-family: "Poppins", sans-serif;
   align-items: flex-start;
@@ -58,6 +68,7 @@
 }
 
 .input-text {
+  width: 200px;
   margin-left: -25px;
   margin-bottom: 15px;
   font-size: 18px;
@@ -65,10 +76,11 @@
 }
 
 .input-field {
-  width: 100%;
+  width: 200px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 8px;
+  margin-right: 100px;
   margin-top: 15px;
   margin-bottom: 13px;
   font-family: "Poppins", sans-serif;
@@ -77,21 +89,23 @@
 /* display text without clicking edit button DATA */
 .profile-data-text {
   margin-top: 8px;
+  width: 300px;
   font-size: 24px;
   font-weight: bold;
+  margin-right: 100px;
   color: #333;
   font-family: "Poppins", sans-serif;
 }
 
 .profile-buttons {
-  justify-content: flex-end;
+  justify-content: flex-center;
   display: flex;
-  text-align: right;
-  margin-top: 4px;
+  text-align: center;
+  margin-top: 0px;
 }
 
 .profile-edit-buttons {
-  align-self: flex-start;
+  align-self: flex-center;
   margin-top: 30px;
 }
 
@@ -165,17 +179,19 @@
   width: 450px;
   height: 450px;
   border-radius: 50%;
-  border: 2px solid #ddd;
+  border: 2px solid #000;
   margin-left: 90px;
 }
 /* Company picture when EDIT PROFILE IS NOT CLICKED */
 .company-picture {
+  top: 0px;
+  margin-top: 30px;
   width: 500px;
   height: 500px;
   border-radius: 50%;
-  border: 2px solid #ddd;
+  border: 2px solid #000;
   cursor: pointer;
-  margin-left: 150px;
+  margin-left: 90px;
   transition: border-color 0.3s ease;
 }
 
@@ -229,4 +245,9 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.content-shift-right {
+  margin-left: 100px;
+  transition: margin-left 0.3s ease; /* Apply a smooth transition effect */
 }

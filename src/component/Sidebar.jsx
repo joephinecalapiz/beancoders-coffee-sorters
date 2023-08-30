@@ -1,7 +1,7 @@
 /** @format */
 import { NavLink } from "react-router-dom";
 import "./../css/sidebar.css";
-import React, { useState } from "react";
+import React from "react";
 import {
   FaAngleRight,
   FaAngleLeft,
@@ -17,11 +17,11 @@ import {
 function Sidebar({ collapsed, handleToggleSidebar }) {
   return (
     <>
-      <div className="mobile-nav">
+      {/* <div className="mobile-nav">
         <button className="mobile-nav-btn" onClick={handleToggleSidebar}>
           <FaBars size={24} />
         </button>
-      </div>
+      </div> */}
       <nav className={collapsed ? "collapsed" : ""}>
         <button type="button" className="nav-btn" onClick={handleToggleSidebar}>
           {collapsed ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}

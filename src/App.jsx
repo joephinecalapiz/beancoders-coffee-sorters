@@ -36,7 +36,11 @@ function App() {
   }, [authenticated]);
 
   if (authenticated === null) {
-    return <div>Loading...</div>;
+    return (
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        Loading...
+      </div>
+    );
   }
 
   return (

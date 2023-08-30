@@ -2,6 +2,12 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 /* Table - Header */
+
+/* .App{ 
+  height: 100%;
+  background-color: #d4d4d4;
+} */
+
 .table-header {
   background-color: #512615;
   color: white;
@@ -103,6 +109,7 @@
 
 /* Set a height for the container */
 .table-container {
+  background-color: #d4d4d4;
   max-height: calc(100vh - 200px); /* Adjust the height as needed */
   overflow-y: auto;
 }

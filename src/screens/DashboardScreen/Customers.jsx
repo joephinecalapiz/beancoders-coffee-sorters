@@ -1,7 +1,6 @@
 /** @format */
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
-
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 import "../.././css/customer.css";
@@ -112,12 +111,11 @@ const Customers = () => {
 
   return (
     <>
+    <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+    <Topbar onToggleSidebar={toggleSidebar} />
       <div
         className={`App ${navVisible ? "content-shift-right" : ""}`}
-        style={{ backgroundColor: "#d4d4d4" }}
       >
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar onToggleSidebar={toggleSidebar} />
 
         <div className="header">
           <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
