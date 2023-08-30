@@ -81,7 +81,7 @@ const Dashboard = () => {
     setCompanyImage(e.target.files[0]);
   };
 
-  const handleUpdateCompanyImage = async () => {
+  const handleUpdateCompanyImage = async (e) => {
     try {
       if (!companyImage) {
         return;
@@ -106,7 +106,7 @@ const Dashboard = () => {
     }
   };
 
-  const handleUpdateProfileImage = async () => {
+  const handleUpdateProfileImage = async (e) => {
     try {
       if (!profileImage) {
         return;
