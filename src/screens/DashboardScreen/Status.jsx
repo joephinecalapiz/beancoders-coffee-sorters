@@ -6,10 +6,65 @@ import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import Modal from "../../component/Modal"; // Import the Modal component
 import "../.././css/status.css";
+import axios from "axios";
+import api_endpoint from "../../config";
 
 const Status = () => {
   const [navVisible, showNavbar] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [customers, setCustomer] = useState([]);
+  const [sorters, setSorter] = useState([]);
+  const [status, setAllStatus] = useState([]); 
+
+  useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
+    const token = localStorage.getItem('token');
+
+    axios.get(api_endpoint + '/fetch-status/' + user_id, 
+      {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }
+    ).then((response)=>{
+      const fetchAllStatus = response.data.status;
+      setAllStatus(fetchAllStatus) 
+    }).catch((error) => {
+      console.error();
+    });
+  }, []);
+
+  useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
+    const token = localStorage.getItem('token');
+    axios.get(api_endpoint + '/customers/' + user_id,
+      {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }
+    ).then((response) => {
+        console.log(response.data)
+        const fetchCustomerData = response.data.customer
+        setCustomer(fetchCustomerData);
+      });
+  }, []);
+
+  useEffect(() => {
+    const user_id = localStorage.getItem('user_id');
+    const token = localStorage.getItem('token');
+    axios.get(api_endpoint + '/sorters/' + user_id,
+      {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }
+    ).then((response) => {
+        console.log(response.data)
+        const fetchSorterData = response.data.sorters
+        setSorter(fetchSorterData);
+      });
+  }, []);
 
   const handleSeeMore = (customer) => {
     setSelectedCustomer(customer);
@@ -34,11 +89,11 @@ const Status = () => {
   };
 
   const handleSorterChange = (e) => {
-    setNewSorter(e.target.value);
+    setNewSorterName(e.target.value);
   };
 
   const handleCustomerChange = (e) => {
-    setNewCustomer(e.target.value);
+    setNewCustomerName(e.target.value);
   };
 
   const openModal = () => {
@@ -51,13 +106,30 @@ const Status = () => {
 
   const handleAddNew = (event) => {
     event.preventDefault();
-    // Perform the logic to add a new customer here
-    // For example, you can access the new customer name with "newCustomerName" state
     console.log("Customer Name:", newCustomerName);
     console.log("Sorter Name:", newSorterName);
     console.log("Status:", newStatus);
-    // Close the modal after submission
-    closeModal();
+
+    const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
+    const postData = {
+      'user_id' : user_id,
+      'customerName': newCustomerName,
+      'sorterName' : newSorterName,
+      'status' : newStatus
+    };
+
+    axios.post(api_endpoint + '/add-status' , postData , {
+      headers : {
+        Authorization: 'Bearer ' + token
+      }
+    }).then((response) => {
+      if(response.status === 200){
+        closeModal();
+      }
+    }).catch((error) => {
+      console.log(error)
+    });
   };
 
   const handleCancel = () => {
@@ -175,9 +247,9 @@ const Status = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {sortedData.map((sorted) => (
+                {status.map((sorted) => (
                   <tr key={sorted.id} className="sort-table">
-                    <td className="poppins-font">{sorted.date}</td>
+                    <td className="poppins-font">{new Date(sorted.created_at).toLocaleString()}</td>
                     <td className="poppins-font">{sorted.sorterName}</td>
                     <td className="poppins-font">{sorted.customerName}</td>
                     <td className="poppins-font">{sorted.status}</td>
@@ -221,10 +293,11 @@ const Status = () => {
               className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
               required
             >
-              <option value=" "> </option>
-              <option value="Finished">Alliana</option>
-              <option value="Pending">Mae</option>
-              <option value="Cancelled">Maria</option>
+              <option value=" ">Select Customers</option>
+              {customers.map(customer => (
+                <option key={customer.id} value={customer.customerName}>{customer.customerName}</option>
+              ))
+              }
             </select>
           </div>
           {/* SORTERS NAME */}
@@ -242,10 +315,11 @@ const Status = () => {
               className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
               required
             >
-              <option value=" "> </option>
-              <option value="Finished">Joephine</option>
-              <option value="Pending">Jopina</option>
-              <option value="Cancelled">PInang</option>
+              <option value=" ">Select Sorter</option>
+              {sorters.map(sorter => (
+                <option key={sorter.id} value={sorter.sorterName}>{sorter.sorterName}</option>
+              ))
+              }
             </select>
           </div>
           {/* STATUS   */}
