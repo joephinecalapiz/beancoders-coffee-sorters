@@ -223,6 +223,12 @@ const Customers = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
+                    Kilo beans
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                  >
                     History
                   </th>
                 </tr>
@@ -233,6 +239,7 @@ const Customers = () => {
                       <td className="poppins-font">{customer.customerName}</td>
                       <td className="poppins-font">{customer.phoneNum}</td>
                       <td className="poppins-font">{customer.address}</td>
+                      <td className="poppins-font">2 kilo</td>
                       <td className="poppins-font">
                         <button
                           onClick={() => handleSeeMore(customer.customerName)}
@@ -316,6 +323,22 @@ const Customers = () => {
                   className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   rows={4}
                   style={{ height: "70px", wordWrap: "break-word" }}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label
+                  htmlFor="kiloOfBeans"
+                  className="block font-medium poppins-font"
+                >
+                  Kilo of Beans:
+                </label>
+                <input
+                  type="number"
+                  id="kiloOfBeans"
+                  // value={kiloOfBeans}
+                  onChange={(e) => setKiloOfBeans(e.target.value)}
+                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
