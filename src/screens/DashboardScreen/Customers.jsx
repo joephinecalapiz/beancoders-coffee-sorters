@@ -1,12 +1,12 @@
 /** @format */
 import React, { useState, useEffect } from "react";
 import Topbar from "../../component/Topbar";
-
 import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 import "../.././css/customer.css";
 import "../.././css/Sidebar.css";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -16,6 +16,17 @@ const Customers = () => {
     navigate(`/receipt/${customerId}`); // Use the navigate function directly
   };
 
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState(null);
+
+  useEffect(() => {
+    document.title = "Customers";
+    // Fetch customers after selectedMonth and selectedYear are set
+    if (selectedMonth !== null && selectedYear !== null) {
+      fetchCustomers();
+    }
+  }, [selectedMonth, selectedYear]);
+
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -24,58 +35,6 @@ const Customers = () => {
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [allCustomers, setAllCustomers] = useState([]);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setNewCustomerName("");
-    setNewCustomerPhoneNumber("");
-    setNewCustomerAddress("");
-  };
-
-  const handleAddNewCustomer = async (e) => {
-    e.preventDefault();
-    try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-      const response = fetch(api_endpoint + "/add/customer", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          user_id: user_id,
-          customerName: newCustomerName,
-          phoneNum: newCustomerPhoneNumber,
-          address: newCustomerAddress,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Fail to add customer");
-      }
-      const newCustomer = await response.json();
-      setAllCustomers([...allCustomers, newCustomer]);
-    } catch (error) {
-      console.error(error);
-    }
-    closeModal();
-  };
-
-  const handleCancel = () => {
-    closeModal();
-  };
-
-  useEffect(() => {
-    document.title = "Customers";
-  }, []);
-
-  useEffect(() => {
-    fetchCustomers();
-  }, []);
 
   const fetchCustomers = async () => {
     try {
@@ -99,26 +58,108 @@ const Customers = () => {
 
   const [searchText, setSearchText] = useState("");
 
-  const filteredCustomers = allCustomers.filter((customer) =>
-    customer.customerName.toLowerCase().includes(searchText.toLowerCase())
-  );
-  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => b.id - a.id);
-
   const handleSearchInputChange = (e) => {
+    console.log("Search input changed:", e.target.value);
     setSearchText(e.target.value);
   };
-  0;
+
+  const filteredCustomers = allCustomers.filter((customer) => {
+    if (!selectedMonth && !selectedYear && !searchText) {
+      return true; // Include all customers if no month, year, or search text is selected
+    }
+
+    const registrationDate = new Date(customer.created_at);
+    const matchesSearchText = customer.customerName
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
+
+    return (
+      (!selectedMonth ||
+        registrationDate.getMonth() + 1 === selectedMonth.value) &&
+      (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
+      matchesSearchText
+    );
+  });
+
+  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => b.id - a.id);
+
   const totalCustomers = allCustomers.length;
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNewCustomerName("");
+    setNewCustomerPhoneNumber("");
+    setNewCustomerAddress("");
+  };
+
+  const handleAddNewCustomer = async (e) => {
+    e.preventDefault();
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const currentDate = new Date().toISOString();
+
+      // Get the selected year and month from the state
+      const selectedYearValue = selectedYear;
+      const selectedMonthValue = selectedMonth.value;
+
+      const response = await fetch(api_endpoint + "/add/customer", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          customerName: newCustomerName,
+          phoneNum: newCustomerPhoneNumber,
+          address: newCustomerAddress,
+          registrationDate: currentDate,
+          year: selectedYearValue, // Use the selected year
+          month: selectedMonthValue, // Use the selected month value
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Fail to add customer");
+      }
+      const newCustomer = await response.json();
+      setAllCustomers([...allCustomers, newCustomer]);
+    } catch (error) {
+      console.error(error);
+    }
+    closeModal();
+  };
+
+  const handleCancel = () => {
+    closeModal();
+  };
+
+  const monthOptions = [
+    { value: 1, label: "January" },
+    { value: 2, label: "February" },
+    { value: 3, label: "March" },
+    { value: 4, label: "April" },
+    { value: 5, label: "May" },
+    { value: 6, label: "June" },
+    { value: 7, label: "July" },
+    { value: 8, label: "August" },
+    { value: 9, label: "September" },
+    { value: 10, label: "October" },
+    { value: 11, label: "November" },
+    { value: 12, label: "December" },
+  ];
+
+  console.log(sortedFilteredCustomers);
 
   return (
     <>
-      <div
-        className={`App ${navVisible ? "content-shift-right" : ""}`}
-        style={{ backgroundColor: "#d4d4d4" }}
-      >
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar onToggleSidebar={toggleSidebar} />
-
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} />
+      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
         <div className="header">
           <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
             <div className="flex items-center">
@@ -150,13 +191,66 @@ const Customers = () => {
               fontFamily: "'Poppins', sans-serif",
             }}
           >
-            {/* Search bar */}
+            {/* select month */}
+            <div
+              className="flex mb-15 ml-6"
+              style={{
+                position: "relative", // Add relative positioning to the container
+                zIndex: 2, // Higher z-index value to appear above the table
+              }}
+            >
+              <label
+                htmlFor="monthSelect"
+                className="mr-2 bold"
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontWeight: "bold",
+                }}
+              >
+                Month:
+              </label>
+              <Select
+                id="monthSelect"
+                options={monthOptions}
+                value={selectedMonth}
+                onChange={setSelectedMonth}
+                isSearchable={false}
+                clearable={false}
+                styles={{
+                  option: (provided) => ({
+                    ...provided,
+                    fontFamily: "'Poppins', sans-serif",
+                  }),
+                }}
+              />
+              <label
+                htmlFor="yearSelect"
+                className="mr-2 bold ml-4"
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontWeight: "bold",
+                }}
+              >
+                Year:
+              </label>
+              <input
+                type="number"
+                id="yearSelect"
+                value={selectedYear}
+                onChange={(e) => setSelectedYear(e.target.value)}
+                className="border rounded px-3 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
+                required
+              />
+            </div>
             Total: {totalCustomers}
             <input
               type="text"
               placeholder="Search Customers"
               value={searchText}
-              onChange={handleSearchInputChange}
+              onChange={(e) => {
+                console.log("Search input value:", e.target.value);
+                handleSearchInputChange(e);
+              }}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
             />
             {/* Add New button */}
@@ -194,53 +288,55 @@ const Customers = () => {
           >
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 customers-table">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Id number
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Date
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Customer Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Phone Number
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Address
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Kilo beans
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    History
-                  </th>
-                </tr>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Id number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Customer Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Phone Number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Address
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Kilo beans
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      History
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="custom-table">
                   {sortedFilteredCustomers.map((customer) => (
-                    <tr key={customer.id} className="custom-table">
+                    <tr key={customer.id}>
                       <td className="poppins-font">{customer.id}</td>
                       <td className="poppins-font">
                         {new Date(customer.created_at).toLocaleDateString()}
@@ -346,7 +442,7 @@ const Customers = () => {
                   type="number"
                   id="kiloOfBeans"
                   // value={kiloOfBeans}
-                  onChange={(e) => setKiloOfBeans(e.target.value)}
+                  // onChange={(e) => setKiloOfBeans(e.target.value)}
                   className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
