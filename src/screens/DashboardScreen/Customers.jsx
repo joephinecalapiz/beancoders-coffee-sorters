@@ -205,6 +205,12 @@ const Customers = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
+                    Date
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                  >
                     Customer Name
                   </th>
                   <th
@@ -236,6 +242,9 @@ const Customers = () => {
                   {sortedFilteredCustomers.map((customer) => (
                     <tr key={customer.id} className="custom-table">
                       <td className="poppins-font">{customer.id}</td>
+                      <td className="poppins-font">
+                        {new Date(customer.created_at).toLocaleDateString()}
+                      </td>
                       <td className="poppins-font">{customer.customerName}</td>
                       <td className="poppins-font">{customer.phoneNum}</td>
                       <td className="poppins-font">{customer.address}</td>

@@ -5,3 +5,23 @@
 .poppins-font {
   font-family: "Poppins", sans-serif;
 }
+@media only screen and (max-width: 400px) {
+  .mobile-nav {
+    display: flex;
+    align-items: center;
+    background-color: #512615;
+    width: 100%;
+    height: 50px;
+    display: none;
+    margin-top: 4.2rem;
+  }
+  
+  .mobile-nav-btn {
+    color: #fff;
+    background: transparent;
+    outline: none;
+    border: none;
+    top: 100px;
+    margin: 10px 15px;
+  }
+}

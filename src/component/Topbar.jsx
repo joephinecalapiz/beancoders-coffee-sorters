@@ -4,8 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from ".././assets/beansLogo.png";
 import api_endpoint from "../config";
+import { FaBars } from "react-icons/fa";
 
-const Topbar = () => {
+const Topbar = ({ collapsed, handleToggleSidebar}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -77,7 +78,7 @@ const Topbar = () => {
   return (
     <div className="poppins-font fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
       <div className="poppins-font bg-black h-full w-full flex items-center">
-        <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1" />
+        <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
         <h1
           className="text-white text-16px ml-2"
           style={{ fontFamily: "Poppins, sans-serif" }}
