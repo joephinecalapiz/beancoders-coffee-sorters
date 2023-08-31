@@ -14,54 +14,55 @@ const Status = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customers, setCustomer] = useState([]);
   const [sorters, setSorter] = useState([]);
-  const [status, setAllStatus] = useState([]); 
+  const [status, setAllStatus] = useState([]);
 
   useEffect(() => {
-    const user_id = localStorage.getItem('user_id');
-    const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
 
-    axios.get(api_endpoint + '/fetch-status/' + user_id, 
-      {
+    axios
+      .get(api_endpoint + "/fetch-status/" + user_id, {
         headers: {
-          Authorization: 'Bearer ' + token
-        }
-      }
-    ).then((response)=>{
-      const fetchAllStatus = response.data.status;
-      setAllStatus(fetchAllStatus) 
-    }).catch((error) => {
-      console.error();
-    });
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const fetchAllStatus = response.data.status;
+        setAllStatus(fetchAllStatus);
+      })
+      .catch((error) => {
+        console.error();
+      });
   }, []);
 
   useEffect(() => {
-    const user_id = localStorage.getItem('user_id');
-    const token = localStorage.getItem('token');
-    axios.get(api_endpoint + '/customers/' + user_id,
-      {
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
+    axios
+      .get(api_endpoint + "/customers/" + user_id, {
         headers: {
-          Authorization: 'Bearer ' + token
-        }
-      }
-    ).then((response) => {
-        console.log(response.data)
-        const fetchCustomerData = response.data.customer
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        const fetchCustomerData = response.data.customer;
         setCustomer(fetchCustomerData);
       });
   }, []);
 
   useEffect(() => {
-    const user_id = localStorage.getItem('user_id');
-    const token = localStorage.getItem('token');
-    axios.get(api_endpoint + '/sorters/' + user_id,
-      {
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
+    axios
+      .get(api_endpoint + "/sorters/" + user_id, {
         headers: {
-          Authorization: 'Bearer ' + token
-        }
-      }
-    ).then((response) => {
-        console.log(response.data)
-        const fetchSorterData = response.data.sorters
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+        const fetchSorterData = response.data.sorters;
         setSorter(fetchSorterData);
       });
   }, []);
@@ -110,26 +111,29 @@ const Status = () => {
     console.log("Sorter Name:", newSorterName);
     console.log("Status:", newStatus);
 
-    const token = localStorage.getItem('token');
-    const user_id = localStorage.getItem('user_id');
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
     const postData = {
-      'user_id' : user_id,
-      'customerName': newCustomerName,
-      'sorterName' : newSorterName,
-      'status' : newStatus
+      user_id: user_id,
+      customerName: newCustomerName,
+      sorterName: newSorterName,
+      status: newStatus,
     };
 
-    axios.post(api_endpoint + '/add-status' , postData , {
-      headers : {
-        Authorization: 'Bearer ' + token
-      }
-    }).then((response) => {
-      if(response.status === 200){
-        closeModal();
-      }
-    }).catch((error) => {
-      console.log(error)
-    });
+    axios
+      .post(api_endpoint + "/add-status", postData, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          closeModal();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   const handleCancel = () => {
@@ -249,7 +253,9 @@ const Status = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 {status.map((sorted) => (
                   <tr key={sorted.id} className="sort-table">
-                    <td className="poppins-font">{new Date(sorted.created_at).toLocaleString()}</td>
+                    <td className="poppins-font">
+                      {new Date(sorted.created_at).toLocaleDateString()}
+                    </td>
                     <td className="poppins-font">{sorted.sorterName}</td>
                     <td className="poppins-font">{sorted.customerName}</td>
                     <td className="poppins-font">{sorted.status}</td>
@@ -294,10 +300,11 @@ const Status = () => {
               required
             >
               <option value=" ">Select Customers</option>
-              {customers.map(customer => (
-                <option key={customer.id} value={customer.customerName}>{customer.customerName}</option>
-              ))
-              }
+              {customers.map((customer) => (
+                <option key={customer.id} value={customer.customerName}>
+                  {customer.customerName}
+                </option>
+              ))}
             </select>
           </div>
           {/* SORTERS NAME */}
@@ -316,10 +323,11 @@ const Status = () => {
               required
             >
               <option value=" ">Select Sorter</option>
-              {sorters.map(sorter => (
-                <option key={sorter.id} value={sorter.sorterName}>{sorter.sorterName}</option>
-              ))
-              }
+              {sorters.map((sorter) => (
+                <option key={sorter.id} value={sorter.sorterName}>
+                  {sorter.sorterName}
+                </option>
+              ))}
             </select>
           </div>
           {/* STATUS   */}
