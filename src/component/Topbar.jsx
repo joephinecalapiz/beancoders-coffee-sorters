@@ -6,7 +6,7 @@ import BeansLogo from ".././assets/beansLogo.png";
 import api_endpoint from "../config";
 import { FaBars } from "react-icons/fa";
 
-const Topbar = ({ collapsed, handleToggleSidebar }) => {
+const Topbar = ({ collapsed, handleToggleSidebar}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();

@@ -367,7 +367,7 @@ const Dashboard = () => {
             </>
           )}
         </div>
-      </Modal>;
+      </Modal>
     </>
   );
 };

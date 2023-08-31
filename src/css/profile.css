@@ -3,11 +3,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
 /* Media query for small screens */
-@media (max-width: 640px) {
+/* @media (max-width: 640px) {
   .App{ 
     background-color: #d4d4d4;
   }
-}
+} */
 
 .poppins-font {
   font-family: "Poppins", sans-serif;
@@ -22,7 +22,6 @@
 }
 
 .profile-content {
-  display: flex;
   align-items: flex-start;
   margin-bottom: 0px;
   margin-top: 10px;
