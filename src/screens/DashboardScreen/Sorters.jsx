@@ -227,7 +227,9 @@ const Sorters = () => {
                       <td className="poppins-font">{sorter.sorterName}</td>
                       <td className="poppins-font">{sorter.phoneNum}</td>
                       <td className="poppins-font">{sorter.address}</td>
-                      <td className="poppins-font">{sorter.dateHired}</td>
+                      <td className="poppins-font">
+                        {new Date(sorter.dateHired).toLocaleDateString()}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
