@@ -12,16 +12,32 @@ const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
 
-  const handleSeeMore = (customerId) => {
-    navigate(`/receipt/${customerId}`); // Use the navigate function directly
-  };
+  const monthOptions = [
+    { value: 1, label: "January" },
+    { value: 2, label: "February" },
+    { value: 3, label: "March" },
+    { value: 4, label: "April" },
+    { value: 5, label: "May" },
+    { value: 6, label: "June" },
+    { value: 7, label: "July" },
+    { value: 8, label: "August" },
+    { value: 9, label: "September" },
+    { value: 10, label: "October" },
+    { value: 11, label: "November" },
+    { value: 12, label: "December" },
+  ];
+
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Adding 1 to match your month options (1 - 12)
 
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  const [selectedMonth, setSelectedMonth] = useState({
+    value: currentMonth,
+    label: monthOptions[currentMonth - 1].label, // Get the label for the current month
+  });
 
   useEffect(() => {
     document.title = "Customers";
-    // Fetch customers after selectedMonth and selectedYear are set
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
@@ -34,6 +50,8 @@ const Customers = () => {
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
+  const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
+
   const [allCustomers, setAllCustomers] = useState([]);
 
   const fetchCustomers = async () => {
@@ -64,18 +82,20 @@ const Customers = () => {
   };
 
   const filteredCustomers = allCustomers.filter((customer) => {
-    if (!selectedMonth && !selectedYear && !searchText) {
-      return true; // Include all customers if no month, year, or search text is selected
-    }
-
     const registrationDate = new Date(customer.created_at);
-    const matchesSearchText = customer.customerName
-      .toLowerCase()
-      .includes(searchText.toLowerCase());
+    const matchesSearchText =
+      customer && customer.customerName
+        ? customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+        : false;
+
+    // Check if selectedMonth is not null, and if it is, don't apply the month filter
+    const monthFilter =
+      selectedMonth !== null
+        ? registrationDate.getMonth() + 1 === selectedMonth.value
+        : true;
 
     return (
-      (!selectedMonth ||
-        registrationDate.getMonth() + 1 === selectedMonth.value) &&
+      monthFilter &&
       (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
       matchesSearchText
     );
@@ -94,9 +114,10 @@ const Customers = () => {
     setNewCustomerName("");
     setNewCustomerPhoneNumber("");
     setNewCustomerAddress("");
+    setKiloOfBeans("");
   };
 
-  const handleAddNewCustomer = async (e) => {
+  const getCustomerPostHistory = async (e) => {
     e.preventDefault();
     try {
       let token = localStorage.getItem("token");
@@ -105,9 +126,9 @@ const Customers = () => {
 
       // Get the selected year and month from the state
       const selectedYearValue = selectedYear;
-      const selectedMonthValue = selectedMonth.value;
+      const selectedMonthValue = selectedMonth ? selectedMonth.value : null;
 
-      const response = await fetch(api_endpoint + "/add/customer", {
+      const response = await fetch(api_endpoint + "/add-customer/" + user_id, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -118,6 +139,7 @@ const Customers = () => {
           customerName: newCustomerName,
           phoneNum: newCustomerPhoneNumber,
           address: newCustomerAddress,
+          kiloOfBeans: newCustomerKiloOfBeans,
           registrationDate: currentDate,
           year: selectedYearValue, // Use the selected year
           month: selectedMonthValue, // Use the selected month value
@@ -128,6 +150,7 @@ const Customers = () => {
       }
       const newCustomer = await response.json();
       setAllCustomers([...allCustomers, newCustomer]);
+      navigate(".");
     } catch (error) {
       console.error(error);
     }
@@ -137,21 +160,6 @@ const Customers = () => {
   const handleCancel = () => {
     closeModal();
   };
-
-  const monthOptions = [
-    { value: 1, label: "January" },
-    { value: 2, label: "February" },
-    { value: 3, label: "March" },
-    { value: 4, label: "April" },
-    { value: 5, label: "May" },
-    { value: 6, label: "June" },
-    { value: 7, label: "July" },
-    { value: 8, label: "August" },
-    { value: 9, label: "September" },
-    { value: 10, label: "October" },
-    { value: 11, label: "November" },
-    { value: 12, label: "December" },
-  ];
 
   console.log(sortedFilteredCustomers);
 
@@ -344,14 +352,24 @@ const Customers = () => {
                       <td className="poppins-font">{customer.customerName}</td>
                       <td className="poppins-font">{customer.phoneNum}</td>
                       <td className="poppins-font">{customer.address}</td>
-                      <td className="poppins-font">2 kilo</td>
+                      <td className="poppins-font">{customer.kiloOfBeans}</td>
                       <td className="poppins-font">
                         <button
+                          onClick={() => {
+                            navigate(
+                              `/customerstatus/${customer.customerName}`
+                            );
+                          }}
+                          className="see-more-button focus:outline-none"
+                        >
+                          See More...
+                        </button>
+                        {/* <button
                           onClick={() => handleSeeMore(customer.customerName)}
                           className="see-more-button focus:outline-none"
                         >
                           Receipt
-                        </button>
+                        </button> */}
                       </td>
                     </tr>
                   ))}
@@ -379,7 +397,7 @@ const Customers = () => {
             <h2 className="text-2xl font-semibold mb-4 poppins-font">
               Add New Customer
             </h2>
-            <form onSubmit={handleAddNewCustomer}>
+            <form onSubmit={getCustomerPostHistory}>
               <div className="mb-4">
                 <label
                   htmlFor="newCustomerName"
@@ -439,16 +457,16 @@ const Customers = () => {
                   Kilo of Beans:
                 </label>
                 <input
-                  type="number"
-                  id="kiloOfBeans"
-                  // value={kiloOfBeans}
-                  // onChange={(e) => setKiloOfBeans(e.target.value)}
+                  type="text"
+                  id="newCustomerKiloOfBeans"
+                  value={newCustomerKiloOfBeans}
+                  onChange={(e) => setKiloOfBeans(e.target.value)}
                   className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
               </div>
 
-              <div class="flex justify-between">
+              <div className="flex justify-between">
                 <button
                   type="submit"
                   className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
