@@ -181,7 +181,14 @@ const Customers = () => {
               >
                 Customers
               </h1>
-              <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
+              <div
+                className="ml-auto"
+                style={{
+                  marginTop: "50px",
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: "19px",
+                }}
+              >
                 Total Customer: {totalCustomers}
               </div>
             </div>
@@ -206,9 +213,9 @@ const Customers = () => {
             <div
               className="flex mb-15 ml-2"
               style={{
-                position: "relative", 
-                zIndex: 2, 
-                marginLeft: "20px"
+                position: "relative",
+                zIndex: 2,
+                marginLeft: "20px",
               }}
             >
               <label
@@ -263,7 +270,7 @@ const Customers = () => {
                 handleSearchInputChange(e);
               }}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
-              style={{ width: "100%", maxWidth: "800px", }}
+              style={{ width: "100%", maxWidth: "800px" }}
             />
             {/* Add New button */}
             <button
