@@ -37,7 +37,8 @@ const Login = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
 
-          navigate("/dashboard"); // Navigate immediately without delay
+          navigate("/dashboard");
+          window.location.reload();
         }
       })
       .catch((error) => {
