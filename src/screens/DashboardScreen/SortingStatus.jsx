@@ -176,12 +176,9 @@ const SortingStatus = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
-                  <td className="poppins-font">
-                    {new Date(sorted.created_at).toLocaleDateString()}
-                  </td>
+                  <td className="poppins-font">10/12/22</td>
 
                   <td className="poppins-font">Joephine</td>
-                  <td className="poppins-font">Worker Joephine</td>
                   <td className="poppins-font">2 kilo</td>
                   <td className="poppins-font">Cancelled</td>
                 </tr>
