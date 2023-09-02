@@ -76,7 +76,7 @@
   width: 100%;
   margin-left: 20px;
   overflow-x: auto;
-  border: 1px solid #adadad;
+  /* border: 1px solid #adadad; */
 }
 
 .receipt-table {
