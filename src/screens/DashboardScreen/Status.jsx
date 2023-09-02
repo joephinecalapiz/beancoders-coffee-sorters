@@ -115,6 +115,7 @@ const Status = () => {
       user_id: user_id,
       customerName: newCustomerName,
       sorterName: newSorterName,
+      kiloOfBeans: newCustomerKiloOfBeans,
       status: newStatus,
     };
 

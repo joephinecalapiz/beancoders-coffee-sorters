@@ -139,12 +139,15 @@ const Customers = () => {
           customerName: newCustomerName,
           phoneNum: newCustomerPhoneNumber,
           address: newCustomerAddress,
-          kiloOfBeans: newCustomerKiloOfBeans,
+          //kiloOfBeans: newCustomerKiloOfBeans,
           registrationDate: currentDate,
-          year: selectedYearValue, // Use the selected year
-          month: selectedMonthValue, // Use the selected month value
+          // year: selectedYearValue, // Use the selected year
+          // month: selectedMonthValue, // Use the selected month value
         }),
       });
+      if(response.status === 422){
+        alert('Customer is already in the database');
+      }
       if (!response.ok) {
         throw new Error("Fail to add customer");
       }
@@ -357,12 +360,12 @@ const Customers = () => {
                     >
                       Address
                     </th>
-                    <th
+                    {/* <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
                       Kilo beans
-                    </th>
+                    </th> */}
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
@@ -381,7 +384,7 @@ const Customers = () => {
                       <td className="poppins-font">{customer.customerName}</td>
                       <td className="poppins-font">{customer.phoneNum}</td>
                       <td className="poppins-font">{customer.address}</td>
-                      <td className="poppins-font">{customer.kiloOfBeans}</td>
+                      {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
                       <td className="poppins-font">
                         <button
                           onClick={() => {
