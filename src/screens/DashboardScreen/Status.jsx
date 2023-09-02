@@ -67,10 +67,6 @@ const Status = () => {
       });
   }, []);
 
-  const handleSeeMore = (customer) => {
-    setSelectedCustomer(customer);
-  };
-
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -228,13 +224,13 @@ const Status = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Sorter's Name
+                    Customer's Name
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Customer Name
+                    Sorter's Name
                   </th>
                   <th
                     scope="col"
@@ -246,7 +242,7 @@ const Status = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Show
+                    receipt
                   </th>
                 </tr>
               </thead>
@@ -256,17 +252,19 @@ const Status = () => {
                     <td className="poppins-font">
                       {new Date(sorted.created_at).toLocaleDateString()}
                     </td>
-                    <td className="poppins-font">{sorted.sorterName}</td>
+
                     <td className="poppins-font">{sorted.customerName}</td>
+                    <td className="poppins-font">{sorted.sorterName}</td>
                     <td className="poppins-font">{sorted.status}</td>
                     <td className="poppins-font">
                       <button
                         onClick={() => {
-                          navigate(`/customerstatus/${sorted.customerName}`);
+                          navigate(`/receipt/${sorted.customerName}`);
+                          // navigate(`/customerstatus/${sorted.customerName}`);
                         }}
                         className="see-more-button focus:outline-none"
                       >
-                        See More...
+                        Receipt
                       </button>
                     </td>
                   </tr>
@@ -372,133 +370,5 @@ const Status = () => {
     </>
   );
 };
-
-const sorterData = [
-  {
-    id: 1,
-    name: "John Dela Cruz",
-    phoneNumber: "0912-345-6789",
-    address: "123 Kagay-anon St., Cagayan de Oro City",
-    dateHired: "2023-07-25",
-  },
-  {
-    id: 2,
-    name: "Jenny Santos",
-    phoneNumber: "0987-654-3210",
-    address: "456 Xavier St., Cagayan de Oro City",
-    dateHired: "2023-07-26",
-  },
-  {
-    id: 3,
-    name: "Alfredo Reyes",
-    phoneNumber: "0922-123-4567",
-    address: "789 Limketkai Ave., Cagayan de Oro City",
-    dateHired: "2023-07-27",
-  },
-];
-
-// Static customer data for each row
-const customerData = [
-  {
-    id: 1,
-    name: "Juan Dela Cruz",
-    phoneNumber: "0912-345-6789",
-    address: "123 Kagay-anon St., Cagayan de Oro City",
-  },
-  {
-    id: 2,
-    name: "Maria Santos",
-    phoneNumber: "0987-654-3210",
-    address: "456 Xavier St., Cagayan de Oro City",
-  },
-  {
-    id: 3,
-    name: "Pedro Reyes",
-    phoneNumber: "0922-123-4567",
-    address: "789 Limketkai Ave., Cagayan de Oro City",
-  },
-  {
-    id: 4,
-    name: "Luz Fernandez",
-    phoneNumber: "0917-888-7777",
-    address: "101 Velez St., Cagayan de Oro City",
-  },
-  {
-    id: 5,
-    name: "Emmanuel Santos",
-    phoneNumber: "0932-999-1111",
-    address: "222 Masterson Ave., Cagayan de Oro City",
-  },
-  {
-    id: 6,
-    name: "Anna Reyes",
-    phoneNumber: "0915-333-2222",
-    address: "666 Hayes St., Cagayan de Oro City",
-  },
-  {
-    id: 7,
-    name: "Jose Gonzalez",
-    phoneNumber: "0927-111-5555",
-    address: "777 Tomas Saco St., Cagayan de Oro City",
-  },
-  {
-    id: 8,
-    name: "Rosario Lim",
-    phoneNumber: "0944-444-3333",
-    address: "999 Corrales Ave., Cagayan de Oro City",
-  },
-];
-
-const sortedData = [
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[0].name,
-    customerName: customerData[0].name,
-    status: "Pending",
-  },
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[1].name,
-    customerName: customerData[1].name,
-    status: "Cancelled",
-  },
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[2].name,
-    customerName: customerData[2].name,
-    status: "Finished",
-  },
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[0].name,
-    customerName: customerData[3].name,
-    status: "Pending",
-  },
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[1].name,
-    customerName: customerData[4].name,
-    status: "Pending",
-  },
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[2].name,
-    customerName: customerData[5].name,
-    status: "Finished",
-  },
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[0].name,
-    customerName: customerData[6].name,
-    status: "Pending",
-  },
-  {
-    date: "2023-07-28",
-    sorterName: sorterData[1].name,
-    customerName: customerData[7].name,
-    status: "Pending",
-  },
-  // Add more rows here with the desired data
-];
 
 export default Status;

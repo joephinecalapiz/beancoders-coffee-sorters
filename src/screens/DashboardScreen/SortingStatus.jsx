@@ -48,8 +48,9 @@ const SortingStatus = () => {
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
-      style={{ backgroundColor: '#d4d4d4' }}
+      <div
+        className={`App ${navVisible ? "content-shift-right" : ""}`}
+        style={{ backgroundColor: "#d4d4d4" }}
       >
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
@@ -66,7 +67,7 @@ const SortingStatus = () => {
               }}
               className="text-black mt-16 mb-1"
             >
-              Customer Status
+              History Customer Status
             </h1>
           </div>
         </div>
@@ -163,13 +164,13 @@ const SortingStatus = () => {
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Status
+                    Kilo of Beans
                   </th>
                   <th
                     scope="col"
                     className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
-                    Show
+                    Status
                   </th>
                 </tr>
               </thead>
