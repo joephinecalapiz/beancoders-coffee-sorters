@@ -2,14 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import api_endpoint from "../../config";
+import Modal from "../../component/Modal";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [popupMessage, setPopupMessage] = useState(null);
 
   const {
     register,
@@ -27,6 +28,8 @@ const Signup = () => {
       })
       .then((response) => {
         if (response.status === 200) {
+          setPopupMessage("Done registered your account, you can now login");
+
           navigate("/login");
         }
       })
@@ -35,7 +38,9 @@ const Signup = () => {
           const error = err.response.data.error;
           if (error.email) {
             const emailError = error.email[0];
-            alert(emailError);
+            setPopupMessage("The email has already been taken");
+
+            // alert(emailError);
           }
 
           if (error.name) {
@@ -164,6 +169,13 @@ const Signup = () => {
           </form>
         </section>
       </div>
+      <Modal
+        isOpen={popupMessage !== null}
+        onClose={() => setPopupMessage(null)}
+        showCloseButton={true}
+      >
+        {popupMessage}
+      </Modal>
     </>
   );
 };
