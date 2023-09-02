@@ -120,7 +120,11 @@ const Landing = () => {
       <div className="bg-black">
         <div className="text-center justify-center items-center">
           <h1
-            style={{ color: "white", marginBottom: "20px" }}
+            style={{ 
+              color: "white", 
+              marginBottom: "20px", 
+              fontFamily: "Poppins, sans-serif", 
+            }}
             className="mt-0 font-bold text-[40px]"
           >
             Coffee Sorting Establishments
