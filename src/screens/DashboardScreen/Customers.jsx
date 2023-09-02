@@ -191,104 +191,122 @@ const Customers = () => {
         </div>
 
         <div className="search-and-button">
-          <div
-            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-            style={{
-              display: "flex",
-              flexDirection: "row", // Place items in a column
-              alignItems: "center",
-              transition: "margin-left 0.3s ease",
-              marginTop: "-70px",
-              fontFamily: "'Poppins', sans-serif",
-            }}
-          >
-            {/* select month */}
-            <div
-              className="flex mb-15 ml-2"
-              style={{
-                position: "relative", 
-                zIndex: 2, 
-                marginLeft: "20px"
-              }}
-            >
-              <label
-                htmlFor="monthSelect"
-                className="mr-5 bold ml-5 mt-2"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: "bold",
-                }}
-              >
-                Month:
-              </label>
-              <Select
-                id="monthSelect"
-                options={monthOptions}
-                value={selectedMonth}
-                onChange={setSelectedMonth}
-                isSearchable={false}
-                clearable={false}
-                styles={{
-                  option: (provided) => ({
-                    ...provided,
-                    fontFamily: "'Poppins', sans-serif",
-                  }),
-                }}
-              />
-              <label
-                htmlFor="yearSelect"
-                className="mr-5 bold ml-5 mt-2"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: "bold",
-                }}
-              >
-                Year:
-              </label>
-              <input
-                type="number"
-                id="yearSelect"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                className="border rounded px-3 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
-                required
-              />
-            </div>
-            <input
-              type="text"
-              placeholder="Search Customers"
-              value={searchText}
-              onChange={(e) => {
-                console.log("Search input value:", e.target.value);
-                handleSearchInputChange(e);
-              }}
-              className="px-4 py-2 border rounded focus:outline-none search-bar"
-              style={{ width: "100%", maxWidth: "800px", }}
-            />
-            {/* Add New button */}
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-                border: "none",
-                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
-              }}
-            >
-              Add New
-            </button>
-          </div>
-        </div>
+  <div
+    className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "space-between",
+      transition: "margin-left 0.3s ease",
+      marginTop: "-70px",
+      fontFamily: "'Poppins', sans-serif",
+    }}
+  >
+    {/* Month and Year Select */}
+    <div
+      className="flex mb-15 ml-2"
+      style={{
+        position: "relative",
+        zIndex: 2,
+        marginLeft: "20px",
+      }}
+    >
+      <label
+        htmlFor="monthSelect"
+        className="mr-3 bold ml-5 mt-2 poppins-font"
+        style={{
+          fontWeight: "bold",
+        }}
+      >
+        Month:
+      </label>
+      <Select
+        id="monthSelect"
+        options={monthOptions}
+        value={selectedMonth}
+        onChange={setSelectedMonth}
+        isSearchable={false}
+        clearable={false}
+        styles={{
+          option: (provided) => ({
+            ...provided,
+            fontFamily: "'Poppins', sans-serif",
+          }),
+          singleValue: (provided) => ({
+            ...provided,
+            fontFamily: "'Poppins', sans-serif", // Apply Poppins font to the selected value
+            color: '#333', // You can customize the color if needed
+          }),
+        }}
+      />
+      <label
+        htmlFor="yearSelect"
+        className="mr-3 bold ml-5 mt-2"
+        style={{
+          fontFamily: "'Poppins', sans-serif",
+          fontWeight: "bold",
+        }}
+      >
+        Year:
+      </label>
+      <input
+        type="number"
+        id="yearSelect"
+        value={selectedYear}
+        onChange={(e) => setSelectedYear(e.target.value)}
+        className="border rounded px-3 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
+        required
+      />
+    </div>
+
+    {/* Search Bar and Add New Button Container */}
+    <div
+      className="flex"
+      style={{
+        alignItems: "column", 
+        marginTop: "25px",
+        fontFamily: "'Poppins', sans-serif",
+        justifyContent: "flex-end"
+      }}
+    >
+      {/* Search Bar */}
+      <input
+        type="text"
+        placeholder="Search Customers"
+        value={searchText}
+        onChange={(e) => {
+          console.log("Search input value:", e.target.value);
+          handleSearchInputChange(e);
+        }}
+        className="px-4 py-2 border rounded focus:outline-none search-bar"
+        style={{ width: "80%", maxWidth: "900px" }}
+      />
+
+      {/* Add New button */}
+      <button
+        onClick={openModal}
+        className="px-4 py-2 text-white rounded focus:outline-none"
+        onMouseEnter={(e) => {
+          e.target.style.backgroundColor = "#C4A484";
+          e.target.style.transition = "background-color 0.3s ease";
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.backgroundColor = "#512615";
+          e.target.style.transition = "background-color 0.3s ease";
+        }}
+        style={{
+          backgroundColor: "#512615",
+          fontFamily: "'Poppins', sans-serif",
+          boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+          border: "none",
+          textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+        }}
+      >
+        Add New
+      </button>
+    </div>
+  </div>
+</div>
 
         <div className="table-container">
           <div

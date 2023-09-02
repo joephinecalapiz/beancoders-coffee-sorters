@@ -126,6 +126,9 @@ const Sorters = () => {
               >
                 Sorters
               </h1>
+              <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
+                Total Sorter: {totalSorters}
+              </div>
             </div>
             <br />
             <br />
@@ -137,20 +140,21 @@ const Sorters = () => {
             className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
             style={{
               display: "flex",
-              justifyContent: "space-between",
+              justifyContent: "row",
               alignItems: "center",
               transition: "margin-left 0.3s ease",
               marginTop: "-80px",
+              marginLeft: "270px",
               fontFamily: "'Poppins', sans-serif",
             }}
           >
-            Total: {totalSorters}
             <input
               type="text"
               placeholder="Search Sorters"
               value={searchText}
               onChange={handleSearchInputChange}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
+              style={{ width: "80%", maxWidth: "800px", }}
             />
             {/* Add New button */}
             <button
