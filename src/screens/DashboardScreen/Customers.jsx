@@ -202,14 +202,14 @@ const Customers = () => {
             className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
             style={{
               display: "flex",
-              flexDirection: "row", // Place items in a column
-              alignItems: "center",
+              flexDirection: "column",
+              alignItems: "space-between",
               transition: "margin-left 0.3s ease",
               marginTop: "-70px",
               fontFamily: "'Poppins', sans-serif",
             }}
           >
-            {/* select month */}
+            {/* Month and Year Select */}
             <div
               className="flex mb-15 ml-2"
               style={{
@@ -220,9 +220,8 @@ const Customers = () => {
             >
               <label
                 htmlFor="monthSelect"
-                className="mr-5 bold ml-5 mt-2"
+                className="mr-3 bold ml-5 mt-2 poppins-font"
                 style={{
-                  fontFamily: "'Poppins', sans-serif",
                   fontWeight: "bold",
                 }}
               >
@@ -240,11 +239,16 @@ const Customers = () => {
                     ...provided,
                     fontFamily: "'Poppins', sans-serif",
                   }),
+                  singleValue: (provided) => ({
+                    ...provided,
+                    fontFamily: "'Poppins', sans-serif", // Apply Poppins font to the selected value
+                    color: "#333", // You can customize the color if needed
+                  }),
                 }}
               />
               <label
                 htmlFor="yearSelect"
-                className="mr-5 bold ml-5 mt-2"
+                className="mr-3 bold ml-5 mt-2"
                 style={{
                   fontFamily: "'Poppins', sans-serif",
                   fontWeight: "bold",
@@ -261,39 +265,53 @@ const Customers = () => {
                 required
               />
             </div>
-            <input
-              type="text"
-              placeholder="Search Customers"
-              value={searchText}
-              onChange={(e) => {
-                console.log("Search input value:", e.target.value);
-                handleSearchInputChange(e);
-              }}
-              className="px-4 py-2 border rounded focus:outline-none search-bar"
-              style={{ width: "100%", maxWidth: "800px" }}
-            />
-            {/* Add New button */}
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
+
+            {/* Search Bar and Add New Button Container */}
+            <div
+              className="flex"
               style={{
-                backgroundColor: "#512615",
+                alignItems: "column",
+                marginTop: "25px",
                 fontFamily: "'Poppins', sans-serif",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-                border: "none",
-                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+                justifyContent: "flex-end",
               }}
             >
-              Add New
-            </button>
+              {/* Search Bar */}
+              <input
+                type="text"
+                placeholder="Search Customers"
+                value={searchText}
+                onChange={(e) => {
+                  console.log("Search input value:", e.target.value);
+                  handleSearchInputChange(e);
+                }}
+                className="px-4 py-2 border rounded focus:outline-none search-bar"
+                style={{ width: "80%", maxWidth: "900px" }}
+              />
+
+              {/* Add New button */}
+              <button
+                onClick={openModal}
+                className="px-4 py-2 text-white rounded focus:outline-none"
+                onMouseEnter={(e) => {
+                  e.target.style.backgroundColor = "#C4A484";
+                  e.target.style.transition = "background-color 0.3s ease";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.backgroundColor = "#512615";
+                  e.target.style.transition = "background-color 0.3s ease";
+                }}
+                style={{
+                  backgroundColor: "#512615",
+                  fontFamily: "'Poppins', sans-serif",
+                  boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                  border: "none",
+                  textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+                }}
+              >
+                Add New
+              </button>
+            </div>
           </div>
         </div>
 
@@ -460,7 +478,7 @@ const Customers = () => {
                   required
                 />
               </div>
-              <div className="mb-4">
+              {/* <div className="mb-4">
                 <label
                   htmlFor="kiloOfBeans"
                   className="block font-medium poppins-font"
@@ -475,7 +493,7 @@ const Customers = () => {
                   className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
                   required
                 />
-              </div>
+              </div> */}
 
               <div className="flex justify-between">
                 <button
