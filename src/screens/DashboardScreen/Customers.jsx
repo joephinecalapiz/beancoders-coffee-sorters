@@ -181,6 +181,16 @@ const Customers = () => {
               >
                 Customers
               </h1>
+              <div
+                className="ml-auto"
+                style={{
+                  marginTop: "50px",
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: "19px",
+                }}
+              >
+                Total Customer: {totalCustomers}
+              </div>
             </div>
             <br />
             <br />
@@ -192,24 +202,25 @@ const Customers = () => {
             className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
             style={{
               display: "flex",
-              justifyContent: "space-between",
+              flexDirection: "row", // Place items in a column
               alignItems: "center",
               transition: "margin-left 0.3s ease",
-              marginTop: "-80px",
+              marginTop: "-70px",
               fontFamily: "'Poppins', sans-serif",
             }}
           >
             {/* select month */}
             <div
-              className="flex mb-15 ml-6"
+              className="flex mb-15 ml-2"
               style={{
-                position: "relative", // Add relative positioning to the container
-                zIndex: 2, // Higher z-index value to appear above the table
+                position: "relative",
+                zIndex: 2,
+                marginLeft: "20px",
               }}
             >
               <label
                 htmlFor="monthSelect"
-                className="mr-2 bold"
+                className="mr-5 bold ml-5 mt-2"
                 style={{
                   fontFamily: "'Poppins', sans-serif",
                   fontWeight: "bold",
@@ -233,7 +244,7 @@ const Customers = () => {
               />
               <label
                 htmlFor="yearSelect"
-                className="mr-2 bold ml-4"
+                className="mr-5 bold ml-5 mt-2"
                 style={{
                   fontFamily: "'Poppins', sans-serif",
                   fontWeight: "bold",
@@ -250,7 +261,6 @@ const Customers = () => {
                 required
               />
             </div>
-            Total: {totalCustomers}
             <input
               type="text"
               placeholder="Search Customers"
@@ -260,6 +270,7 @@ const Customers = () => {
                 handleSearchInputChange(e);
               }}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
+              style={{ width: "100%", maxWidth: "800px" }}
             />
             {/* Add New button */}
             <button
