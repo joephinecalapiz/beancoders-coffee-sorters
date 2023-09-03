@@ -388,6 +388,7 @@ const Customers = () => {
                       <td className="poppins-font">
                         <button
                           onClick={() => {
+                            sessionStorage.setItem('customerId', customer.id)
                             navigate(
                               `/customerstatus/${customer.customerName}`
                             );

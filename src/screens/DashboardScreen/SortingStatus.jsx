@@ -7,14 +7,32 @@ import "../.././css/sorting_status.css";
 import "../.././css/Sidebar.css";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
-
+import axios from "axios";
+import api_endpoint from "../../config";
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
   const { customerName } = useParams();
+  const [allHistory, setAllHistory] = useState([]);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
+    const customerId = sessionStorage.getItem('customerId');
+    axios.get(
+      api_endpoint + '/fetch-history/' + user_id + '/' + customerId, {
+        headers : {
+          'Authorization': 'Bearer ' + token
+        }
+      }
+    ).then((response) => {
+      const history = response.data;
+      setAllHistory(history.history);
+    })
+  }, []);
 
   useEffect(() => {
     document.title = "Customer Status";
@@ -175,13 +193,14 @@ const SortingStatus = () => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                <tr>
-                  <td className="poppins-font">10/12/22</td>
-
-                  <td className="poppins-font">Joephine</td>
-                  <td className="poppins-font">2 kilo</td>
-                  <td className="poppins-font">Cancelled</td>
-                </tr>
+                {allHistory.map((historyItem) => (
+                  <tr key={historyItem.id}>
+                    <td className="poppins-font">{historyItem.date}</td>
+                    <td className="poppins-font">{historyItem.sorterName}</td>
+                    <td className="poppins-font">{historyItem.kiloOfBeans} kilo</td>
+                    <td className="poppins-font">Status</td> 
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
