@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import Modal from "../../component/Modal"; // Import the Modal component

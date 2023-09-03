@@ -125,6 +125,7 @@ const Receipt = ({ toggleSidebar }) => {
                       <h2 className="receipt-name">
                         Customer Name: {customerId}
                       </h2>
+
                       <h2 className="receipt-date">Date: December 2, 2020</h2>
                     </div>
 
@@ -149,13 +150,6 @@ const Receipt = ({ toggleSidebar }) => {
                             <td>Beans</td>
                             <td>5.00</td>
                             <td>5.00</td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>lbs</td>
-                            <td>Coffee</td>
-                            <td>10.00</td>
-                            <td>20.00</td>
                           </tr>
                         </tbody>
                       </table>
