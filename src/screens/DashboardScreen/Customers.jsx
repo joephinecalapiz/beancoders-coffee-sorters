@@ -145,8 +145,8 @@ const Customers = () => {
           // month: selectedMonthValue, // Use the selected month value
         }),
       });
-      if(response.status === 422){
-        alert('Customer is already in the database');
+      if (response.status === 422) {
+        alert("Customer is already in the database");
       }
       if (!response.ok) {
         throw new Error("Fail to add customer");
@@ -274,7 +274,7 @@ const Customers = () => {
               className="flex"
               style={{
                 alignItems: "column",
-                marginTop: "25px",
+                marginTop: "16px",
                 fontFamily: "'Poppins', sans-serif",
                 justifyContent: "flex-end",
               }}
@@ -388,7 +388,7 @@ const Customers = () => {
                       <td className="poppins-font">
                         <button
                           onClick={() => {
-                            sessionStorage.setItem('customerId', customer.id)
+                            sessionStorage.setItem("customerId", customer.id);
                             navigate(
                               `/customerstatus/${customer.customerName}`
                             );
