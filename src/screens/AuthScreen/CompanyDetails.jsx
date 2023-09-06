@@ -51,13 +51,14 @@ const CompanyDetails = () => {
 
     //---kanang console.log eh change rana para eh connect sa database
     const onSubmitHandler = (data) => {
-        setLoading(true); // Set loading state to true when form is submitted
+        setLoading(true);
         const formData = new FormData()
         formData.append("user_id", user_id)
         formData.append("companyName", data.companyName)
         formData.append("companyNumber", data.companyNumber)
         formData.append("companyLocation", data.companyLocation)
-        formData.append("images", data.images)
+        formData.append("images", file)
+        console.log(file)
         axios
             .post(api_endpoint + "/add-info", data, {
                 headers: {
@@ -68,9 +69,9 @@ const CompanyDetails = () => {
             .then((response) => {
                 if (response.status === 200) {
                     setTimeout(() => {
-                        setLoading(false); // Set loading to false when the operation is complete
+                        setLoading(false);
                         navigate("/dashboard");
-                      }, 2000); // Simulate a 2-second delay
+                      }, 2000); 
                 }
             })
             .catch((error) => {
@@ -182,8 +183,8 @@ const CompanyDetails = () => {
                             <input
                                 type="file"
                                 onChange={handleImageChange}
-                                id="file-upload"
-                                name="file-upload"
+                                id="images"
+                                name="images"
                                 accept="image/*"
                                 {...register("images", {
                                     //required: "Company Image is required",
