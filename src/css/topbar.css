@@ -25,3 +25,9 @@
     margin: 10px 15px;
   }
 }
+
+@media only screen and (max-width: 640px) {
+  .admin-user{
+    display: none;
+  }
+}

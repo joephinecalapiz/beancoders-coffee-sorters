@@ -24,7 +24,7 @@
 
 /* kilos or pieces */
 .data-size {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: bold;
   color: #7f1f19;
   font-family: "Poppins", sans-serif;
@@ -45,6 +45,27 @@
 @media (max-width: 640px) {
   .grid-item {
     /* Adjust styles for smaller screens */
+  }
+  .data-title {
+    font-size: 24px; /* Adjust the font size for smaller screens */
+  }
+
+  .data-size {
+    font-size: 32px; /* Adjust the font size for smaller screens */
+  }
+}
+
+/* Media query for small screens */
+@media (max-width: 400px) {
+  .grid-item {
+    /* Adjust styles for smaller screens */
+  }
+  .data-title {
+    font-size: 18px; /* Adjust the font size for smaller screens */
+  }
+
+  .data-size {
+    font-size: 20px; /* Adjust the font size for smaller screens */
   }
 }
 

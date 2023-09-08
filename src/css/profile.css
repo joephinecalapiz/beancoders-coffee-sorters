@@ -26,7 +26,7 @@
   margin-bottom: 0px;
   margin-top: 10px;
   flex-direction: column;
-  /* background-color: #d4d4d4; */
+  /* background-color: black; */
 
 }
 
@@ -232,7 +232,7 @@
 }
 
 .admin-picture {
-  width: 100%;
+  /* width: 100%; */
   height: auto;
   border-radius: 50%;
 }

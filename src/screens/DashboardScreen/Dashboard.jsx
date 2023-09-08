@@ -168,6 +168,7 @@ const Dashboard = () => {
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
       <div className={`App ${navVisible ? "content-shift-right" : ""}`}
+      style={{ backgroundColor: '#d4d4d4'}}
       >
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
@@ -181,8 +182,8 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-9">
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title">Pieces of Bad Beans</h1>
-                  <h1 className="text-black data-size">
+                  <h1 className="text-black data-title m-auto">Pieces of Bad Beans</h1>
+                  <h1 className="text-black data-size m-auto">
                     {beanCount && beanCount.bad !== null
                       ? `${beanCount.bad} pieces`
                       : "0"}
@@ -191,10 +192,10 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title">
+                  <h1 className="text-black data-title m-auto">
                     Pieces of Good Beans
                   </h1>
-                  <h1 className="text-black data-size">
+                  <h1 className="text-black data-size m-auto">
                     {beanCount && beanCount.good !== null
                       ? `${beanCount.good} pieces`
                       : "0"}
@@ -203,8 +204,8 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title">KG of Bad Beans</h1>
-                  <h1 className="text-black data-size">
+                  <h1 className="text-black data-title m-auto">KG of Bad Beans</h1>
+                  <h1 className="text-black data-size m-auto">
                     {beanCount && beanCount.kilograms !== null
                       ? `${beanCount.kilograms} kilograms`
                       : "0"}
@@ -216,8 +217,6 @@ const Dashboard = () => {
           <ChartComponent />
         </div>
       </div>
-
-
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}

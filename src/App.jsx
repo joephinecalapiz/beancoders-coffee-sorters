@@ -19,6 +19,7 @@ import Receipt from "./screens/ReceiptScreen/Receipt";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
+  
   const [authenticated, setAuthenticated] = useState(null);
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -98,7 +99,7 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile s/>} />
         <Route
           path="/customerstatus/:customerName"
           element={<SortingStatus />}

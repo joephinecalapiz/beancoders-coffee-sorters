@@ -29,7 +29,6 @@ body,
 }
 
 .App {
-  flex-basis: 100%;
   display: flex;
   flex-direction: column;
   transition: margin-left 1s;

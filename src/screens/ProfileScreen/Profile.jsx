@@ -10,7 +10,7 @@ import beansLogo from "../../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../../config";
 
 const Profile = () => {
-  const [navVisible, showNavbar] = useState(false);
+  const [navVisible, showNavbar] = useState(true);
   const [isEditing, setEditing] = useState(false);
   const [userInfo, setUserInfo] = useState('');
 
@@ -246,10 +246,10 @@ const Profile = () => {
               </div>
               {/* company pic */}
               <div
-                className={`p-5 ${navVisible ? "ml-0" : "sm:ml-10"}`}
+                className={`p-0 ${navVisible ? "ml-0" : "sm:ml-10"}`}
                 style={{
                   transition: "margin-left 0.3s ease",
-                  marginTop: "-50px",
+                  marginTop: "-100px",
                 }}
               >
                 <div
@@ -280,15 +280,15 @@ const Profile = () => {
             <div className="profile-buttons">
               {isEditing ? (
                 <div className="profile-edit-buttons">
-                  <button className="save-button" onClick={handleSaveClick}>
+                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2" onClick={handleSaveClick}>
                     Save
                   </button>
-                  <button className="cancel-button" onClick={handleCancelClick}>
+                  <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full" onClick={handleCancelClick}>
                     Cancel
                   </button>
                 </div>
               ) : (
-                <button className="edit-button" onClick={handleEditClick}>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={handleEditClick}>
                   Edit Profile
                 </button>
               )}

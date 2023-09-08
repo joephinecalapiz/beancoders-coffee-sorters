@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from ".././assets/beansLogo.png";
 import api_endpoint from "../config";
+import topbar from "../css/topbar.css";
+import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 
 const Topbar = ({ collapsed, handleToggleSidebar}) => {
@@ -87,7 +89,7 @@ const Topbar = ({ collapsed, handleToggleSidebar}) => {
         </h1>
       </div>
       <div className="flex bg-black items-center">
-        <div className="flex items-center mr-8 relative" ref={dropdownRef}>
+        <div className="flex items-center relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={toggleDropdown}
@@ -156,7 +158,7 @@ const Topbar = ({ collapsed, handleToggleSidebar}) => {
           )}
         </div>
         <h1
-          className="text-white text-14px mr-8"
+          className="admin-user text-white text-14px mr-8 ml-8"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
           Admin
