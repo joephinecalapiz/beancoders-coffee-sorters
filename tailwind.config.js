@@ -7,8 +7,12 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
-      'mobile': '390px',
+      'mobile': '400px',
       // => @media (min-width: 390px) { ... }
+
+      'tablet': '500px',
+      // => @media (min-width: 500px) { ... }
+
       'sm': '640px',
       // => @media (min-width: 640px) { ... }
 

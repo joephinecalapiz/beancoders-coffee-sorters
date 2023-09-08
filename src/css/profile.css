@@ -99,14 +99,14 @@
 }
 
 .input-field {
-  width: 200px;
-  padding: 12px;
+  /* width: 200px; */
+  padding: 2px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  margin-right: 100px;
+  /* margin-right: 100px;
   margin-top: 15px;
-  margin-bottom: 13px;
-  font-family: "Poppins", sans-serif;
+  margin-bottom: 13px; */
+  /* font-family: "Poppins", sans-serif; */
 }
 
 /* display text without clicking edit button DATA */
@@ -128,8 +128,8 @@
 }
 
 .profile-edit-buttons {
-  align-self: flex-center;
-  margin-top: 30px;
+  /* align-self: flex-center;
+  margin-top: 50px; */
 }
 
 .save-button {
@@ -160,7 +160,7 @@
   transition: background-color 0.3s ease;
 }
 
-.edit-button {
+/* .edit-button {
   margin-left: 400px;
   margin-top: -65px;
   scroll-margin-right: 18px;
@@ -173,7 +173,7 @@
   background-color: #7f1f19;
   color: white;
   transition: background-color 0.3s ease;
-}
+} */
 
 /* ADMIN PROFILE SETTINGS */
 .profile-picture-label {
