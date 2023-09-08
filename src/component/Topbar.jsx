@@ -78,7 +78,7 @@ const Topbar = () => {
   };
 
   return (
-    <div className="z-10 poppins-font fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
+    <div className="z-20 poppins-font fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
       <div className="poppins-font bg-black h-full w-full flex items-center">
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
         <h1

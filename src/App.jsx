@@ -63,7 +63,7 @@ function App() {
           path="/customers"
           element={
             authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                 <Customers />
               </div>
             ) : (

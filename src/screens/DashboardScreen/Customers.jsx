@@ -167,9 +167,9 @@ const Customers = () => {
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}>
+      <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
+          <div className={`p-5 ${navVisible ? "mx-10" : "mobile:ml-44"}`}>
             <div className="flex items-center">
               <h1
                 style={{
@@ -188,114 +188,118 @@ const Customers = () => {
         </div>
 
         <div className="search-and-button">
-          <div
-            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              transition: "margin-left 0.3s ease",
-              marginTop: "-80px",
-              fontFamily: "'Poppins', sans-serif",
-            }}
-          >
-            {/* select month */}
-            <div
-              className="flex mb-15 ml-6"
-              style={{
-                position: "relative", // Add relative positioning to the container
-                zIndex: 2, // Higher z-index value to appear above the table
-              }}
-            >
-              <label
-                htmlFor="monthSelect"
-                className="mr-2 bold"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: "bold",
-                }}
-              >
-                Month:
-              </label>
-              <Select
-                id="monthSelect"
-                options={monthOptions}
-                value={selectedMonth}
-                onChange={setSelectedMonth}
-                isSearchable={false}
-                clearable={false}
-                styles={{
-                  option: (provided) => ({
-                    ...provided,
+          <div className={`${navVisible ? "mx-10" : "mobile:ml-44"}`}>
+            <div className="p-5 grid grid-cols-2 grid-rows-2 lg:grid-cols-7 lg:grid-rows-1 place-items-center">
+              {/* calendar */}
+              <div className="flex z-10 mb-5 md:mb-0">
+                {/* month */}
+                <div className="mb-2">
+                  <label
+                    htmlFor="monthSelect"
+                    className="font-bold"
+                    style={{
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    Month:
+                  </label>
+                  <Select
+                    id="monthSelect"
+                    options={monthOptions}
+                    value={selectedMonth}
+                    onChange={setSelectedMonth}
+                    isSearchable={false}
+                    clearable={false}
+                    styles={{
+                      option: (provided) => ({
+                        ...provided,
+                        fontFamily: "'Poppins', sans-serif",
+                      }),
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-5 md:mb-0">
+                {/* year */}
+                <div className="">
+                  <label
+                    htmlFor="yearSelect"
+                    className="font-bold items-center"
+                    style={{
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    Year:
+                  </label>
+                  <input
+                    type="number"
+                    id="yearSelect"
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                    className="border rounded px-3 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* total customer */}
+              <div className="hidden lg:block">
+                Total: {totalCustomers}
+              </div>
+
+              {/* search customer */}
+              <div className="md:mb-0 col-span-2">
+                <input
+                  type="text"
+                  placeholder="Search Customers"
+                  value={searchText}
+                  onChange={(e) => {
+                    console.log("Search input value:", e.target.value);
+                    handleSearchInputChange(e);
+                  }}
+                  className="px-4 py-2 border rounded focus:outline-none search-bar"
+                />
+              </div>
+
+              {/* Add New button */}
+              <div className="md:mb-0 col-span-2 justify-center lg:justify-self-end">
+                <button
+                  onClick={openModal}
+                  className="px-4 py-2 text-white rounded focus:outline-none"
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#C4A484";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#512615";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  style={{
+                    backgroundColor: "#512615",
                     fontFamily: "'Poppins', sans-serif",
-                  }),
-                }}
-              />
-              <label
-                htmlFor="yearSelect"
-                className="mr-2 bold ml-4"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: "bold",
-                }}
-              >
-                Year:
-              </label>
-              <input
-                type="number"
-                id="yearSelect"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                className="border rounded px-3 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
-                required
-              />
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                    border: "none",
+                    textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+                  }}
+                >
+                  Add New
+                </button>
+              </div>
             </div>
-            Total: {totalCustomers}
-            <input
-              type="text"
-              placeholder="Search Customers"
-              value={searchText}
-              onChange={(e) => {
-                console.log("Search input value:", e.target.value);
-                handleSearchInputChange(e);
-              }}
-              className="px-4 py-2 border rounded focus:outline-none search-bar"
-            />
-            {/* Add New button */}
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-                border: "none",
-                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
-              }}
-            >
-              Add New
-            </button>
           </div>
         </div>
 
         <div className="table-container">
           <div
-            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+            className={`p-5 ${navVisible ? "" : "mobile:ml-44"}`}
             style={{
               transition: "margin-left 0.3s ease",
               marginTop: "-20px",
             }}
           >
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 customers-table">
+            <div className="shadow mx-auto overflow-x-auto scrollbar-hide order-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                 <thead>
                   <tr>
                     <th
