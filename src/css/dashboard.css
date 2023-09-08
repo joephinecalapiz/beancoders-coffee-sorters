@@ -41,6 +41,7 @@
   background-color: #c4a484;
 }
 
+
 /* Media query for small screens */
 @media (max-width: 640px) {
   .grid-item {
@@ -53,13 +54,14 @@
   .data-size {
     font-size: 32px; /* Adjust the font size for smaller screens */
   }
+  .sm\:ml-64 {
+    margin-left: 14rem;
+  }
+    
 }
 
 /* Media query for small screens */
 @media (max-width: 400px) {
-  .grid-item {
-    /* Adjust styles for smaller screens */
-  }
   .data-title {
     font-size: 18px; /* Adjust the font size for smaller screens */
   }

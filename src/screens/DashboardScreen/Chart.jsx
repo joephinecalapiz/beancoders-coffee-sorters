@@ -7,6 +7,7 @@ import axios from 'axios';
 import api_endpoint from '../../config';
 import Sidebar from '../../component/Sidebar';
 import Topbar from '../../component/Topbar';
+import "../.././css/Dashboard.css";
 
 const ChartComponent = () => {
     const [navVisible, showNavbar] = useState(false);
@@ -109,31 +110,31 @@ const ChartComponent = () => {
     return (
         <>
          <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-100"}`}
+          className={`p-0 ${navVisible ? "ml-0" : "sm:ml-0"}`}
           style={{
             transition: "margin-left 0.3s ease",
             marginTop: "-20px",
           }}
         >
-            <div className="d-flex flex-wrap align-items-start pt-3 pb-2 mb-3 border-bottom m-10">
-                <div className="btn-toolbar mb-2 mb-md-0">
-                    <div className="btn-group me-2">
-                        <span data-feather="calendar" className="calendar-icon"></span>
-                        <DatePicker
-                            selected={selectedDate}
-                            onChange={handleDateChange}
-                            className="flex btn btn-sm m-2 btn-outline-secondary"
-                            dateFormat="MMMM d, yyyy"
-                            peekNextMonth
-                            showMonthDropdown
-                            placeholderText="mm-dd-yyyy"
-                            showYearDropdown
-                            dropdownMode="select"
-                        />
+            <div className="d-flex flex-wrap align-items-start border-bottom m-10">
+                    <div className="btn-toolbar mb-2 mb-md-0">
+                        <div className="btn-group me-2">
+                            <span data-feather="calendar" className="calendar-icon"></span>
+                            {/* <DatePicker
+                                selected={selectedDate}
+                                onChange={handleDateChange}
+                                className="relative btn btn-sm mt-3 btn-outline-secondary"
+                                dateFormat="MMMM d, yyyy"
+                                peekNextMonth
+                                showMonthDropdown
+                                placeholderText="mm-dd-yyyy"
+                                showYearDropdown
+                                dropdownMode="select"
+                            /> */}
                     </div>
                 </div>
             </div>
-            <canvas className="my-4 w-100 m-3" id="myChart" width="500" height="150"></canvas>
+            <canvas className="chart my-4 w-100 m-3" id="myChart" width="500" height="150"></canvas>
         </div>
         </>
     );

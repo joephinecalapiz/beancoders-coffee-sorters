@@ -120,36 +120,31 @@ const Profile = () => {
 
   return (
     <>
+      <div class="max-w-8xl mx-auto pl-16">
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} />
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
-      >
-        <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
-          <div className="flex items-center">
-            <h1
-              style={{
-                fontSize: "32px",
-                fontWeight: "bold",
-                fontFamily: "'Poppins', sans-serif",
-              }}
-              className="text-black mt-16 mb-3"
-            >
-              Profile
-            </h1>
-
-          </div>
-        </div>
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginTop: "-20px",
-          }}
+        <Topbar onToggleSidebar={toggleSidebar} />
+        <div className={`Profile  ${navVisible ? "profile-shift-right" : ""}`}
+        //  style={{ backgroundColor: '#d4d4d4' }}
         >
-          <div className={`flex items-center justify-center profile-content`}>
-            <div className=" profile-section">
-              <div className="profile-picture-container">
-                <div className="circular-profile">
+          <div className={`p-5 pl-12 ${navVisible ? "mx-5" : "mobile:ml-40"}`}>
+            <div className="flex items-center">
+              <h1
+                style={{
+                  fontSize: "32px",
+                  fontWeight: "bold",
+                  fontFamily: "'Poppins', sans-serif",
+                }}
+                className="text-black mt-16 mb-3"
+              >
+                Profile
+              </h1>
+
+            </div>
+          </div>
+          <div className={`p-5 ${navVisible ? "" : "ml-36"}`}>
+            <div class="contentNav max-w-2xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden lg:max-w-full">
+              <div class="flex flex-col items-center justify-center ">
+                <div className="top relative circular-profile object-none object-top overflow-visible">
                   <label
                     htmlFor="profilePicture"
                     className="profile-picture-label"
@@ -169,129 +164,9 @@ const Profile = () => {
                     style={{ display: "none" }}
                   />
                 </div>
-                <div className="admin-label">
-                  <label className="poppins-font">Admin</label>
-                </div>
+                <label className="admin-name poppins-font justify-center">{profileData.name}</label>
+                <label className="admin-label poppins-font mb-5 justify-center">Admin</label>
               </div>
-              {/* profile details */}
-              <div
-                className={`p-5 ${navVisible ? "ml-0" : "sm:ml-10"}`}
-                style={{
-                  transition: "margin-left 0.3s ease",
-                  marginTop: "-20px",
-                }}
-              >
-                <div className="profile-details">
-                  <div className="input-text">
-                    <label className="poppins-font">Admin Name:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="name"
-                        value={editableContent.name}
-                        onChange={handleInputChange}
-                        className="input-field"
-                      />
-                    ) : (
-                      <p className="profile-data-text">{isEditing ? editableContent.name : profileData.name}</p>
-                    )}
-                  </div>
-                  <div className="input-text">
-                    <label className="poppins-font">Company Name:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="companyName"
-                        value={editableContent.companyName}
-                        onChange={handleInputChange}
-                        className="input-field"
-                      />
-                    ) : (
-                      <p className="profile-data-text">
-                        {profileData.companyName}
-                      </p>
-                    )}
-                  </div>
-                  <div className="input-text">
-                    <label className="poppins-font">Company Phone Number:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="companyPhoneNumber"
-                        value={editableContent.companyPhoneNumber}
-                        onChange={handleInputChange}
-                        className="input-field"
-                      />
-                    ) : (
-                      <p className="profile-data-text">
-                        {profileData.companyPhoneNumber}
-                      </p>
-                    )}
-                  </div>
-                  <div className="input-text">
-                    <label className="poppins-font">Company Address:</label>
-                    {isEditing ? (
-                      <input
-                        type="text"
-                        name="address"
-                        value={editableContent.address}
-                        onChange={handleInputChange}
-                        className="input-field"
-                      />
-                    ) : (
-                      <p className="profile-data-text">{profileData.address}</p>
-                    )}
-                  </div>
-                </div>
-              </div>
-              {/* company pic */}
-              <div
-                className={`p-0 ${navVisible ? "ml-0" : "sm:ml-10"}`}
-                style={{
-                  transition: "margin-left 0.3s ease",
-                  marginTop: "-100px",
-                }}
-              >
-                <div
-                  className={`profile-picture-container-right ${isEditing ? "editing" : ""
-                    }`}
-                >
-                  <label htmlFor="profilePicture" className="company-pic">
-                    <img
-                      src={profileData.profilePicture}
-                      alt="Profile"
-                      className={`company-picture ${isEditing ? "editing" : ""}`}
-                      onClick={handleProfilePictureClick}
-                    />
-                  </label>
-                  {isEditing && (
-                    <input
-                      type="file"
-                      id="profilePictureInput"
-                      name="profilePicture"
-                      onChange={handleInputChange}
-                      style={{ display: "none" }}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-            {/* buttons */}
-            <div className="profile-buttons">
-              {isEditing ? (
-                <div className="profile-edit-buttons">
-                  <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full mr-2" onClick={handleSaveClick}>
-                    Save
-                  </button>
-                  <button className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full" onClick={handleCancelClick}>
-                    Cancel
-                  </button>
-                </div>
-              ) : (
-                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onClick={handleEditClick}>
-                  Edit Profile
-                </button>
-              )}
             </div>
           </div>
         </div>

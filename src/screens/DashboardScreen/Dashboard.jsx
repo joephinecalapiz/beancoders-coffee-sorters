@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
@@ -10,6 +10,10 @@ import axios from "axios";
 import api_endpoint from "../../config";
 import ChartComponent from "./Chart";
 import Modal from "../../component/Modal";
+import { Chart } from 'chart.js/auto';
+import feather from 'feather-icons';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -22,6 +26,28 @@ const Dashboard = () => {
   const [companyPhoneNumber, setCompanyPhoneNumber] = useState('');
   const [profileImage, setProfileImage] = useState(null);
   const [companyImage, setCompanyImage] = useState(null);
+
+  useEffect(() => {
+    // Function to check the screen width and update navVisible
+    const handleResize = () => {
+      if (window.innerWidth <= 640) {
+        showNavbar(true);
+      } else {
+        showNavbar(false);
+      }
+    };
+
+    // Add an event listener for window resize
+    window.addEventListener("resize", handleResize);
+
+    // Initial check when the component mounts
+    handleResize();
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -168,7 +194,7 @@ const Dashboard = () => {
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
       <div className={`App ${navVisible ? "content-shift-right" : ""}`}
-      style={{ backgroundColor: '#d4d4d4'}}
+        // style={{ backgroundColor: '#d4d4d4' }}
       >
         <div
           className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
@@ -182,7 +208,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-9">
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title m-auto">Pieces of Bad Beans</h1>
+                  <h1 className="text-black data-title m-auto ml-5 mr-5">Pieces of Bad Beans</h1>
                   <h1 className="text-black data-size m-auto">
                     {beanCount && beanCount.bad !== null
                       ? `${beanCount.bad} pieces`
@@ -214,7 +240,20 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <ChartComponent />
+          {/* <DatePicker
+            selected={selectedDate}
+            onChange={handleDateChange}
+            className={`p-10 ${navVisible ? "ml-0" : "sm:ml-64"} d-flex relative grid-item btn btn-sm mt-3 btn-outline-secondary`}
+            // className="grid-item btn btn-sm mt-3 btn-outline-secondary"
+            dateFormat="MMMM d, yyyy"
+            peekNextMonth
+            showMonthDropdown
+            placeholderText="mm-dd-yyyy"
+            showYearDropdown
+            dropdownMode="select"
+          /> */}
+          {/* <canvas className="chart my-4 w-100 m-3" id="myChart" width="500" height="150"></canvas> */}
+         {/* <ChartComponent /> */}
         </div>
       </div>
       <Modal

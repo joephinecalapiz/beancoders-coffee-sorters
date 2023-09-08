@@ -51,7 +51,7 @@ function App() {
           path="/dashboard"
           element={
             authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <div className={!navVisible ? "page" : "page page-with-navbar"} >
                 <Dashboard />
               </div>
             ) : (

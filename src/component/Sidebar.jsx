@@ -22,7 +22,7 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
           <FaBars size={24} />
         </button>
       </div> */}
-      <nav className={collapsed ? "collapsed" : ""}>
+      <nav className={collapsed ? "collapsed" : "fixed z-20 inset-0 top-[3.4rem] left-[max(0px,calc(10%-100rem))] right-auto w-[12.5rem]"}>
         <button type="button" className="nav-btn" onClick={handleToggleSidebar}>
           {collapsed ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
         </button>

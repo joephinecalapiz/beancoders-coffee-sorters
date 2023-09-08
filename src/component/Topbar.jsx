@@ -8,7 +8,7 @@ import topbar from "../css/topbar.css";
 import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 
-const Topbar = ({ collapsed, handleToggleSidebar}) => {
+const Topbar = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -78,11 +78,11 @@ const Topbar = ({ collapsed, handleToggleSidebar}) => {
   };
 
   return (
-    <div className="poppins-font fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
+    <div className="z-10 poppins-font fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
       <div className="poppins-font bg-black h-full w-full flex items-center">
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
         <h1
-          className="text-white text-16px ml-2"
+          className="logo-title text-white text-16px ml-2"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
           BeanCoders
@@ -95,14 +95,14 @@ const Topbar = ({ collapsed, handleToggleSidebar}) => {
             onClick={toggleDropdown}
             className={`flex relative ${
               isDropdownOpen ? "bg-white-800" : "bg-black"
-            } dark:bg-gray-900`}
+            } bg-black`}
             aria-expanded={isDropdownOpen}
           >
             <span className="invisible">Dropdown user</span>
             <img
               src={BeansLogo}
               alt="BeansLogo"
-              className="w-12 h-12 rounded-full bg-white"
+              className="icon-logo w-12 h-12 rounded-full bg-white"
             />
           </button>
           {isDropdownOpen && (
