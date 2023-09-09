@@ -26,7 +26,9 @@
 }
 
 .search-bar {
-  width: 500px;
+  margin-left: 35px;
+  margin-right: 35px;
+  width: 100px;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

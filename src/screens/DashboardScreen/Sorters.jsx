@@ -186,43 +186,44 @@ const Sorters = () => {
             }}
           >
             <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 ">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Id num
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Sorter's Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Phone Number
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Address
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Date Hired
-                  </th>
-                </tr>
-
-                <tbody className="bg-white divide-y divide-gray-200">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50 text-center">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Id num
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Sorter's Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Phone Number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Address
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date Hired
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 sort-table">
                   {sortedFilteredSorters.map((sorter) => (
-                    <tr key={sorter.id} className="sort-table">
+                    <tr key={sorter.id}>
                       <td className="poppins-font">{sorter.id}</td>
                       <td className="poppins-font">{sorter.sorterName}</td>
                       <td className="poppins-font">{sorter.phoneNum}</td>

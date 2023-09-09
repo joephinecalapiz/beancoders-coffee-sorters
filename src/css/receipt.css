@@ -1,3 +1,6 @@
+/** @format */
+/** @format */
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 .header-text {
   margin-left: 10px;
@@ -8,21 +11,21 @@
   font-size: 16px;
   margin-bottom: 3px;
   font-weight: bold;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .company-address {
-  font-size: 10px; 
+  font-size: 10px;
   margin-bottom: 2px;
   font-weight: normal;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .contact-number {
-  font-size: 10px; 
+  font-size: 10px;
   margin-bottom: 1px;
   font-weight: normal;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .receipt-header {
@@ -32,7 +35,7 @@
   margin-bottom: 10px;
   text-align: center;
   font-weight: bold;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .receipt-name {
@@ -40,35 +43,35 @@
   margin-left: -120px;
   margin-bottom: 10px;
   font-weight: normal;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .receipt-date {
   font-size: 12px;
   margin-left: 10px;
   font-weight: normal;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .receipt-address {
   font-size: 12px;
   margin-left: -120px;
   font-weight: normal;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .receipt-sub-total {
   font-size: 12px;
   margin-left: -100px;
   font-weight: bold;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .receipt-total {
   font-size: 12px;
   margin-left: 215px;
   font-weight: bold;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 /* TABLE ABOVE*/
@@ -76,7 +79,7 @@
   width: 100%;
   margin-left: 20px;
   overflow-x: auto;
-  border: 1px solid #adadad;
+  /* border: 1px solid #adadad; */
 }
 
 .receipt-table {
@@ -88,18 +91,17 @@
   border-top: none;
   border-left: none;
   border-right: none;
-  
 }
 
 .receipt-table th {
   border: 1px solid #adadad;
   text-align: center;
   font-size: 12px;
-  font-family: 'Poppins', sans-serif;
-  border-top: 1px solid #adadad; 
+  font-family: "Poppins", sans-serif;
+  border-top: 1px solid #adadad;
   border-left: none;
   border-right: none;
-  border-bottom: 1px solid #adadad; 
+  border-bottom: 1px solid #adadad;
   padding-top: 7px;
   padding-bottom: 7px;
 }
@@ -109,11 +111,11 @@
   text-align: center;
   font-weight: normal;
   font-size: 12px;
-  font-family: 'Poppins', sans-serif;
-  border-top: none; 
+  font-family: "Poppins", sans-serif;
+  border-top: none;
   border-left: none;
   border-right: none;
-  border-bottom: none; 
+  border-bottom: none;
   padding-top: 7px;
   padding-bottom: 7px;
 }
@@ -135,11 +137,11 @@
   border: 1px solid #adadad;
   text-align: center;
   font-size: 12px;
-  font-family: 'Poppins', sans-serif;
-  border-top: 1px solid #adadad; 
+  font-family: "Poppins", sans-serif;
+  border-top: 1px solid #adadad;
   border-left: none;
   border-right: none;
-  border-bottom: none; 
+  border-bottom: none;
   padding-top: 7px;
   padding-bottom: 7px;
 }
@@ -149,17 +151,17 @@
   text-align: left;
   font-weight: normal;
   font-size: 12px;
-  font-family: 'Poppins', sans-serif;
-  border-top: 1px solid #adadad; 
+  font-family: "Poppins", sans-serif;
+  border-top: 1px solid #adadad;
   border-left: none;
   border-right: none;
-  border-bottom: none; 
+  border-bottom: none;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
 .receipt-table-low tbody > tr > td:first-child {
-  text-align: right; 
+  text-align: right;
   font-weight: bold;
   margin-right: 10px;
 }
@@ -170,15 +172,14 @@
 
 /* BUTTON */
 .btn {
-    background-color: #007BFF;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    font-family: 'Poppins', sans-serif;
-  }
-  
-.btn:hover {
-    background-color: #0056b3;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
 }
 
+.btn:hover {
+  background-color: #0056b3;
+}

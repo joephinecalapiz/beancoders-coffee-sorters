@@ -6,6 +6,7 @@ import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import api_endpoint from "../../config";
+import ForgotPasswordModal from "../../component/ForgotPasswordModal";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -37,7 +38,8 @@ const Login = () => {
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
 
-          navigate("/dashboard"); // Navigate immediately without delay
+          navigate("/dashboard");
+          window.location.reload();
         }
       })
       .catch((error) => {
@@ -52,6 +54,16 @@ const Login = () => {
   };
 
   const [loading, setLoading] = useState(false);
+
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
+
+  const openForgotPasswordModal = () => {
+    setShowForgotPasswordModal(true);
+  };
+
+  const closeForgotPasswordModal = () => {
+    setShowForgotPasswordModal(false);
+  };
 
   return (
     <>
@@ -153,9 +165,14 @@ const Login = () => {
                 <p
                   className="hover:underline cursor-pointer pt-1"
                   style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
+                  onClick={openForgotPasswordModal}
                 >
                   Forgot password?
                 </p>
+                <ForgotPasswordModal
+                  isOpen={showForgotPasswordModal}
+                  onClose={closeForgotPasswordModal}
+                />
               </div>
               <button
                 type="submit"

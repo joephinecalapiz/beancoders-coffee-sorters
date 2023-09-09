@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import api_endpoint from "../../config";
@@ -38,40 +40,40 @@ const Receipt = ({ toggleSidebar }) => {
 
   const handleConvertToPDF = () => {
     const pageContent = contentRef.current;
-  
+
     if (pageContent) {
       const originalBorderStyles = pageContent.style.border;
       pageContent.style.border = "none";
 
       const pdf = new jsPDF("p", "mm", "a4");
-  
+
       // Calculate the width and height of the PDF based on the page content's dimensions
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = pdf.internal.pageSize.getHeight();
-  
-      html2canvas(pageContent, { scale: 2, scrollY: -window.scrollY }).then((canvas) => {
-        const imgData = canvas.toDataURL("image/jpeg", 1.0);
-  
-        // Calculate the aspect ratio of the captured image
-        const imgAspectRatio = canvas.width / canvas.height;
-  
-        // Calculate the dimensions to fit the entire page width and maintain aspect ratio
-        const imgWidth = pdfWidth;
-        const imgHeight = pdfWidth / imgAspectRatio;
-  
-        // Calculate the vertical position to center the image on the page
-        const imgY = (pdfHeight - imgHeight) / 2;
-  
-        // Add the image to the PDF with correct dimensions and positioning
-        pdf.addImage(imgData, "JPEG", 0, imgY, imgWidth, imgHeight);
-  
-        // Save the PDF
-        pdf.save("receipt.pdf");
-      });
+
+      html2canvas(pageContent, { scale: 2, scrollY: -window.scrollY }).then(
+        (canvas) => {
+          const imgData = canvas.toDataURL("image/jpeg", 1.0);
+
+          // Calculate the aspect ratio of the captured image
+          const imgAspectRatio = canvas.width / canvas.height;
+
+          // Calculate the dimensions to fit the entire page width and maintain aspect ratio
+          const imgWidth = pdfWidth;
+          const imgHeight = pdfWidth / imgAspectRatio;
+
+          // Calculate the vertical position to center the image on the page
+          const imgY = (pdfHeight - imgHeight) / 2;
+
+          // Add the image to the PDF with correct dimensions and positioning
+          pdf.addImage(imgData, "JPEG", 0, imgY, imgWidth, imgHeight);
+
+          // Save the PDF
+          pdf.save("receipt.pdf");
+        }
+      );
     }
   };
-  
-  
 
   return (
     <>
@@ -110,9 +112,9 @@ const Receipt = ({ toggleSidebar }) => {
                   <div>
                     {/* HEADER TEXT */}
                     <div className="header-text">
-                    <p className="company-name">Company Name</p>
-                    <p className="company-address">Company Address</p>
-                    <p className="contact-number">Contact Number:</p>
+                      <p className="company-name">Company Name</p>
+                      <p className="company-address">Company Address</p>
+                      <p className="contact-number">Contact Number:</p>
                     </div>
 
                     {/* RECEIPT HEADER */}
@@ -120,7 +122,10 @@ const Receipt = ({ toggleSidebar }) => {
 
                     {/* RECEIPT NAME AND DATE */}
                     <div className="flex flex-row">
-                      <h2 className="receipt-name">Customer Name: {customerId}</h2>
+                      <h2 className="receipt-name">
+                        Customer Name: {customerId}
+                      </h2>
+
                       <h2 className="receipt-date">Date: December 2, 2020</h2>
                     </div>
 
@@ -146,40 +151,35 @@ const Receipt = ({ toggleSidebar }) => {
                             <td>5.00</td>
                             <td>5.00</td>
                           </tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <div className="receipt-table-container">
+                      <table className="receipt-table-low">
+                        <tbody>
                           <tr>
-                            <td>2</td>
-                            <td>lbs</td>
-                            <td>Coffee</td>
-                            <td>10.00</td>
-                            <td>20.00</td>
+                            <td>Sub Total </td>
+                            <td>25.00</td>
+                          </tr>
+                          <tr>
+                            <td>VAT 12% </td>
+                            <td>25.00</td>
+                          </tr>
+                          <tr>
+                            <td>PWD/SC Discount </td>
+                            <td>25.00</td>
+                          </tr>
+                          <tr>
+                            <td>Total Amount </td>
+                            <td>25.00</td>
                           </tr>
                         </tbody>
                       </table>
                     </div>
-                    
-                    <div className="receipt-table-container">
-                    <table className="receipt-table-low">
-                      <tbody>
-                        <tr>
-                          <td>Sub Total </td>
-                          <td>25.00</td>
-                        </tr>
-                        <tr>
-                          <td>VAT 12% </td>
-                          <td>25.00</td>
-                        </tr>
-                        <tr>
-                          <td>PWD/SC Discount </td>
-                          <td>25.00</td>
-                        </tr>
-                        <tr>
-                          <td>Total Amount </td>
-                          <td>25.00</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <h2 className="receipt-address">ASSISTED BY: Name sa admin or sorter</h2>
+                    <h2 className="receipt-address">
+                      ASSISTED BY: Name sa admin or sorter
+                    </h2>
                   </div>
                 </div>
               </div>

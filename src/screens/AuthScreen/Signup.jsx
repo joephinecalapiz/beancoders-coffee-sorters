@@ -1,13 +1,16 @@
 /** @format */
 
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import BeansLogo from "../../assets/beansLogo.png";
 import Navbar from "../../component/Navbar";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import api_endpoint from "../../config";
+import Modal from "../../component/Modal";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [popupMessage, setPopupMessage] = useState(null);
 
   const {
     register,
@@ -17,7 +20,38 @@ const Signup = () => {
 
   //---kanang console.log eh change rana para eh connect sa database
   const onSubmitHandler = (data) => {
-    console.log(data);
+    axios
+      .post(api_endpoint + "/register/users", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          setPopupMessage("Done registered your account, you can now login");
+
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 422) {
+          const error = err.response.data.error;
+          if (error.email) {
+            const emailError = error.email[0];
+            setPopupMessage("The email has already been taken");
+
+            // alert(emailError);
+          }
+
+          if (error.name) {
+            const nameError = error.name[0];
+            alert(nameError);
+          }
+        } else {
+          console.error("Error occured", err);
+        }
+      });
+    //console.log(data);
   };
 
   useEffect(() => {
@@ -135,6 +169,13 @@ const Signup = () => {
           </form>
         </section>
       </div>
+      <Modal
+        isOpen={popupMessage !== null}
+        onClose={() => setPopupMessage(null)}
+        showCloseButton={true}
+      >
+        {popupMessage}
+      </Modal>
     </>
   );
 };

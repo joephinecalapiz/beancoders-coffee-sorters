@@ -3,18 +3,35 @@
 import React, { useState, useEffect } from "react"; // Import useState
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
-import "../.././css/sorting_status.css";
 import "../.././css/Sidebar.css";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
-
+import axios from "axios";
+import api_endpoint from "../../config";
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
   const { customerName } = useParams();
+  const [allHistory, setAllHistory] = useState([]);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    const customerId = sessionStorage.getItem("customerId");
+    axios
+      .get(api_endpoint + "/fetch-history/" + user_id + "/" + customerId, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const history = response.data;
+        setAllHistory(history.history);
+      });
+  }, []);
 
   useEffect(() => {
     document.title = "Customer Status";
@@ -144,37 +161,51 @@ const SortingStatus = () => {
           </div>
 
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="status-table min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+            <table className="min-w-full divide-y divide-gray-200 customers-table">
+              <thead>
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Date
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    className="px-6 py-3  text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Sorter's Name
                   </th>
-
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    className="px-6 py-3 text-center   text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Kilo of Beans
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                   >
                     Status
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200"></tbody>
+              <tbody className="bg-white divide-y divide-gray-200 custom-table">
+                {allHistory.map((historyItem) => (
+                  <tr key={historyItem.id}>
+                    <td className="poppins-font text-center">
+                      {new Date(historyItem.date).toLocaleDateString()}
+                    </td>
+                    <td className="poppins-font text-center">
+                      {historyItem.sorterName}
+                    </td>
+                    <td className="poppins-font text-center">
+                      {historyItem.kiloOfBeans} kilo
+                    </td>
+                    <td className="poppins-font text-center">Status</td>
+                  </tr>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>

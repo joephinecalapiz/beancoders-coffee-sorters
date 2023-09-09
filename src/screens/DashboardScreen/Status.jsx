@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import Modal from "../../component/Modal"; // Import the Modal component
@@ -79,6 +79,8 @@ const Status = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSorterName, setNewSorterName] = useState("");
   const [newCustomerName, setNewCustomerName] = useState("");
+  const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
+
   const [newStatus, setNewStatus] = useState("");
 
   const handleStatusChange = (e) => {
@@ -113,6 +115,7 @@ const Status = () => {
       user_id: user_id,
       customerName: newCustomerName,
       sorterName: newSorterName,
+      kiloOfBeans: newCustomerKiloOfBeans,
       status: newStatus,
     };
 
@@ -327,6 +330,22 @@ const Status = () => {
                 </option>
               ))}
             </select>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="kiloOfBeans"
+              className="block font-medium poppins-font"
+            >
+              Kilo of Beans:
+            </label>
+            <input
+              type="text"
+              id="newCustomerKiloOfBeans"
+              value={newCustomerKiloOfBeans}
+              onChange={(e) => setKiloOfBeans(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
           </div>
           {/* STATUS   */}
           <div className="mb-4">
