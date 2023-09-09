@@ -172,7 +172,7 @@ const Customers = () => {
       <Topbar onToggleSidebar={toggleSidebar} />
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div className={`p-5 ${navVisible ? "mx-10" : "mobile:ml-44"}`}>
+          <div className={`p-5 ${navVisible ? "mobile:mx-10" : "mobile:ml-44"}`}>
             <div className="flex items-center">
               <h1
                 style={{
@@ -185,7 +185,7 @@ const Customers = () => {
                 Customers
               </h1>
               <div
-                className="ml-auto"
+                className="ml-auto hidden lg:block mt-50"
                 style={{
                   marginTop: "50px",
                   fontFamily: "'Poppins', sans-serif",
@@ -201,106 +201,116 @@ const Customers = () => {
         </div>
 
         <div className="search-and-button">
-          <div
-            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              transition: "margin-left 0.3s ease",
-              marginTop: "-80px",
-              fontFamily: "'Poppins', sans-serif",
-            }}
+          <div className={`${navVisible ? "" : "mobile:ml-44"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-50px",
+          }}
           >
-            {/* select month */}
-            <div
-              className="flex mb-15 ml-6"
-              style={{
-                position: "relative", // Add relative positioning to the container
-                zIndex: 2, // Higher z-index value to appear above the table
-              }}
-            >
-              <label
-                htmlFor="monthSelect"
-                className="mr-2 bold"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: "bold",
-                }}
-              >
-                Month:
-              </label>
-              <Select
-                id="monthSelect"
-                options={monthOptions}
-                value={selectedMonth}
-                onChange={setSelectedMonth}
-                isSearchable={false}
-                clearable={false}
-                styles={{
-                  option: (provided) => ({
-                    ...provided,
+            
+            <div className="p-5 mx-10 grid grid-cols-1 grid-rows-2 gap-3 md:grid-cols-8 md:grid-rows-1 place-items-center">
+              {/* calendar */}
+              <div className="relative laptop:justify-self-start z-10 col-span-2 md:mb-0">
+                {/* month */}
+                <div className="mb-2 relative">
+                  <label
+                    htmlFor="monthSelect"
+                    className="font-bold"
+                    style={{
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                  Month:
+                  </label>
+                  <Select
+                    id="monthSelect"
+                    options={monthOptions}
+                    value={selectedMonth}
+                    onChange={setSelectedMonth}
+                    isSearchable={false}
+                    clearable={false}
+                    styles={{
+                      option: (provided) => ({
+                        ...provided,
+                        fontFamily: "'Poppins', sans-serif",
+                      }),
+                      singleValue: (provided) => ({
+                        ...provided,
+                        fontFamily: "'Poppins', sans-serif", // Apply Poppins font to the selected value
+                        color: "#333", // You can customize the color if needed
+                      }),
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="mb-5 md:mb-0">
+                {/* year */}
+                <div className="relative ml-4 ">
+                  <label
+                    htmlFor="yearSelect"
+                    className="font-bold items-center"
+                    style={{
+                      fontFamily: "'Poppins', sans-serif",
+                    }}
+                  >
+                    Year:
+                  </label>
+                  <input
+                    type="number"
+                    id="yearSelect"
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                    className="border rounded px-2 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
+                    required
+                  />
+                </div>
+              </div>
+
+              {/* total customer */}
+              <div className="">
+                {/* Total: {totalCustomers} */}
+              </div>
+
+              {/* search customer */}
+              <div className="md:mb-0 col-span-2 hidden mobile:block">
+                <input
+                  type="text"
+                  placeholder="Search Customers"
+                  value={searchText}
+                  onChange={(e) => {
+                    console.log("Search input value:", e.target.value);
+                    handleSearchInputChange(e);
+                  }}
+                  className="px-4 py-2 border rounded focus:outline-none search-bar"
+                />
+              </div>
+
+              {/* Add New button */}
+              <div className="md:mb-0 col-span-2 justify-center laptop:justify-self-end">
+                <button
+                  onClick={openModal}
+                  className="px-4 py-2 text-white rounded focus:outline-none"
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#C4A484";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#512615";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  style={{
+                    backgroundColor: "#512615",
                     fontFamily: "'Poppins', sans-serif",
-                  }),
-                  singleValue: (provided) => ({
-                    ...provided,
-                    fontFamily: "'Poppins', sans-serif", // Apply Poppins font to the selected value
-                    color: "#333", // You can customize the color if needed
-                  }),
-                }}
-              />
-              <label
-                htmlFor="yearSelect"
-                className="mr-2 bold ml-4"
-                style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontWeight: "bold",
-                }}
-              >
-                Year:
-              </label>
-              <input
-                type="number"
-                id="yearSelect"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-                className="border rounded px-3 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
-                required
-              />
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                    border: "none",
+                    textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+                  }}
+                >
+                  Add New
+                </button>
+              </div>
             </div>
-            Total: {totalCustomers}
-            <input
-              type="text"
-              placeholder="Search Customers"
-              value={searchText}
-              onChange={(e) => {
-                console.log("Search input value:", e.target.value);
-                handleSearchInputChange(e);
-              }}
-              className="px-4 py-2 border rounded focus:outline-none search-bar"
-            />
-            {/* Add New button */}
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-                border: "none",
-                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
-              }}
-            >
-              Add New
-            </button>
           </div>
         </div>
 
