@@ -78,7 +78,7 @@ const Landing = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col justify-center items-center bg-BgLanding bg-cover h-full w-full">
+      <div className="flex flex-col justify-center items-center bg-BgLanding bg-cover h-screen w-full">
         <div className="text-white font-bold text-2xl">
           <p
             style={{
@@ -117,7 +117,7 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="bg-black">
+      <div className="bg-black h-full">
         <div className="text-center justify-center items-center">
           <h1
             style={{ 
@@ -132,7 +132,7 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-4 gap-4 justify-items-center items-center mb-8 ml-8 mr-8">
+        <div className="grid grid-cols-4 gap-4 justify-items-center items-center ml-8 mr-8">
           {establishmentData.map((establishment, index) => (
             <div
               key={index}

@@ -13,11 +13,15 @@ body,
 #root,
 .app,
 .content {
-  min-height: 100vh;
+  /* height: 100%; */
   width: 100%;
   font-family: "HelveticaNeue", sans-serif;
   /* background-color: #d4d4d4; */
   color: black;
+}
+
+#root{
+  min-height: 100vh;
 }
 
 .app {

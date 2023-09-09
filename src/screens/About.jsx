@@ -39,7 +39,7 @@ const About = () => {
           </h3>
           <h3
             style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-            className="font-bold text-[18px] ml-14 mr-14"
+            className="font-bold text-[18px] ml-14 mr-14 mb-10"
           >
             The sorter uses advanced technology, such as optical sensors, to
             identify and categorize the beans accurately. As the coffee beans
