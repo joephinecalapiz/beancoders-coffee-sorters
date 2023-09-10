@@ -7,15 +7,15 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="absolute flex flex-row justify-end w-full text-white
-    text-[20px]
-    "
-    >
-      <ul className="flex flex-row justify-between mr-[75px] w-[480px] mt-5">
+    <div className="absolute flex flex-row justify-end w-full text-white text-[20px]">
+      <ul className="flex flex-row justify-between mt-5 space-x-6 sm:space-x-8">
+        {/* Mobile styles */}
         <li
-          className="my-4 hover:text-[#FF3535] cursor-pointer onClick hover:underline"
-          style={{ fontFamily: "Poppins, sans-serif" }}
+          className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline"
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "20px", // Additional size for mobile
+          }}
           onClick={() => {
             navigate("/");
           }}
@@ -24,7 +24,10 @@ const Navbar = () => {
         </li>
         <li
           className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline"
-          style={{ fontFamily: "Poppins, sans-serif" }}
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "20px", // Additional size for mobile
+          }}
           onClick={() => {
             navigate("/aboutus");
           }}
@@ -33,7 +36,10 @@ const Navbar = () => {
         </li>
         <li
           className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline"
-          style={{ fontFamily: "Poppins, sans-serif" }}
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "20px", // Additional size for mobile
+          }}
           onClick={() => {
             navigate("/signup");
           }}
@@ -41,15 +47,22 @@ const Navbar = () => {
           Register
         </li>
         <li
-          className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline"
-          style={{ fontFamily: "Poppins, sans-serif" }}
+          className="my-4 hover:text-[#FF3535] cursor-pointer hover:underline items-center"
+          style={{
+            fontFamily: "Poppins, sans-serif",
+            fontSize: "20px", // Additional size for mobile
+          }}
           onClick={() => {
             navigate("/login");
           }}
         >
-          Login
+          {/* Web styles */}
+          <span className=" sm:mr-[75px]">Login</span>
         </li>
       </ul>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };

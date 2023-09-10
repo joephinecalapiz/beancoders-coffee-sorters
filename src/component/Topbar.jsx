@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from ".././assets/beansLogo.png";
 import api_endpoint from "../config";
-import topbar from "../css/topbar.css";
+import "../css/topbar.css";
 import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 

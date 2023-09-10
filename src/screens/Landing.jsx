@@ -8,8 +8,6 @@ import Navbar from "../component/Navbar.jsx";
 const Landing = () => {
   const [authenticated, setAuthenticated] = useState(null);
   const navigate = useNavigate();
-  const borderRadius = "26px";
-  const margin = "10px";
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -37,145 +35,89 @@ const Landing = () => {
       address: "Makati City, Metro Manila",
       phone: "123-456-7890",
     },
-    {
-      name: "Bean & Brews",
-      address: "Quezon City, Metro Manila",
-      phone: "987-654-3210",
-    },
-    {
-      name: "Kape Kabitenyo",
-      address: "Cavite City, Cavite",
-      phone: "555-123-4567",
-    },
-    {
-      name: "Baguio Beans",
-      address: "Baguio City, Benguet",
-      phone: "888-555-9999",
-    },
-    {
-      name: "Batangas Brew",
-      address: "Batangas City, Batangas",
-      phone: "777-333-1111",
-    },
-    {
-      name: "Cebu Coffee Co.",
-      address: "Cebu City, Cebu",
-      phone: "444-777-2222",
-    },
-    {
-      name: "Davao Delight",
-      address: "Davao City, Davao del Sur",
-      phone: "666-888-4444",
-    },
-    {
-      name: "Iloilo Infusion",
-      address: "Iloilo City, Iloilo",
-      phone: "999-222-8888",
-    },
     // Add more establishment objects here
+    {
+      name: "The Coffee Haven",
+      address: "Makati City, Metro Manila",
+      phone: "123-456-7890",
+    },
+    {
+      name: "The Coffee Haven",
+      address: "Makati City, Metro Manila",
+      phone: "123-456-7890",
+    },
+    {
+      name: "The Coffee Haven",
+      address: "Makati City, Metro Manila",
+      phone: "123-456-7890",
+    },
+    {
+      name: "The Coffee Haven",
+      address: "Makati City, Metro Manila",
+      phone: "123-456-7890",
+    },
+    {
+      name: "The Coffee Haven",
+      address: "Makati City, Metro Manila",
+      phone: "123-456-7890",
+    },
+    {
+      name: "The Coffee Haven",
+      address: "Makati City, Metro Manila",
+      phone: "123-456-7890",
+    },
+    {
+      name: "The Coffee Haven",
+      address: "Makati City, Metro Manila",
+      phone: "123-456-7890",
+    },
   ];
 
   return (
     <>
       <Navbar />
-      <div className="flex flex-col justify-center items-center bg-BgLanding bg-cover h-screen w-full">
-        <div className="text-white font-bold text-2xl">
-          <p
-            style={{
-              fontSize: "40px",
-              marginBottom: "1px",
-              position: "absolute",
-              top: "55%",
-              left: "48%",
-              fontFamily: "Poppins, sans-serif",
-            }}
-          >
-            BeanCoders:
-          </p>
-          <p
-            style={{
-              fontSize: "48px",
-              position: "absolute",
-              top: "65%",
-              left: "55%",
-              fontFamily: "Poppins, sans-serif",
-            }}
-          >
-            Quality Bean Sorter
-          </p>
-        </div>
-        <div
-          className="logocontainer"
-          style={{
-            position: "absolute",
-            top: "38%",
-            left: "57%",
-            transform: "translate(-50%, -50%)",
-          }}
-        >
-          <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-1" />
+      <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
+        <div className="text-white font-bold text-2xl text-center py-4 md:py-16 flex flex-col items-center">
+          <div className="md:ml-4 mt-1">
+            <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-5" />
+          </div>
+          <div className="text-center md:ml-32 px-4">
+            <p className="text-4xl mb-4 md:text-5xl md:mb-12 font-poppins md:block hidden">
+              BeanCoders:
+            </p>
+            <p className=" mb-4 text-4xl md:text-6xl md:ml-96 font-poppins">
+              Quality Bean Sorter
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="bg-black h-full">
+      <div className="bg-black ">
         <div className="text-center justify-center items-center">
-          <h1
-            style={{
-              color: "white",
-              marginBottom: "20px",
-              fontFamily: "Poppins, sans-serif",
-            }}
-            className="mt-0 font-bold text-[40px]"
-          >
+          <h1 className="text-white mb-8 md:mb-20 font-poppins text-3xl md:text-5xl mt-0 font-bold">
             Coffee Sorting Establishments
           </h1>
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-4 gap-4 justify-items-center items-center mb-8 ml-8 mr-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 justify-items-center items-center mb-8 mx-4 md:mx-8">
           {establishmentData.map((establishment, index) => (
             <div
               key={index}
-              className="bg-gray-200 h-59 w-74 rounded-lg p-4"
-              style={{ borderRadius: "26px", margin: "10px" }}
+              className="bg-gray-200 h-59 w-full md:w-74 rounded-lg p-4 border border-gray-300"
             >
               <img
                 src={BeansLogo}
                 alt="beansLogo"
-                className="h-25 w-25 mb-1"
-                style={{ position: "relative", top: "-45px", left: "1px" }}
+                className="h-25 w-25 mb-1 relative top-[-45px] md:left-0 md:mt-0"
               />
-              <p
-                className="text-black font-bold"
-                style={{
-                  position: "relative",
-                  top: "-70px",
-                  fontSize: "24px",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
+              <p className="text-black font-bold relative top-[-70px] text-3xl font-poppins">
                 {establishment.name}
               </p>
-              <p
-                className="text-black"
-                style={{
-                  position: "relative",
-                  top: "-45px",
-                  fontSize: "24px",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
+              <p className="text-black relative top-[-45px] text-3xl font-poppins">
                 {establishment.address}
               </p>
-              <p
-                className="text-black"
-                style={{
-                  position: "relative",
-                  top: "-20px",
-                  fontSize: "24px",
-                  fontFamily: "Poppins, sans-serif",
-                }}
-              >
+              <p className="text-black relative top-[-20px] text-3xl font-poppins">
                 {establishment.phone}
               </p>
             </div>
