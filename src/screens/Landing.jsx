@@ -120,10 +120,10 @@ const Landing = () => {
       <div className="bg-black h-full">
         <div className="text-center justify-center items-center">
           <h1
-            style={{ 
-              color: "white", 
-              marginBottom: "20px", 
-              fontFamily: "Poppins, sans-serif", 
+            style={{
+              color: "white",
+              marginBottom: "20px",
+              fontFamily: "Poppins, sans-serif",
             }}
             className="mt-0 font-bold text-[40px]"
           >
@@ -132,7 +132,7 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-4 gap-4 justify-items-center items-center ml-8 mr-8">
+        <div className="grid grid-cols-4 gap-4 justify-items-center items-center mb-8 ml-8 mr-8">
           {establishmentData.map((establishment, index) => (
             <div
               key={index}
