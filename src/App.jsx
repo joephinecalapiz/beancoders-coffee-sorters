@@ -16,6 +16,7 @@ import Status from "./screens/DashboardScreen/Status";
 import Profile from "./screens/ProfileScreen/Profile";
 import SortingStatus from "./screens/DashboardScreen/SortingStatus";
 import Receipt from "./screens/ReceiptScreen/Receipt";
+import CompanyDetails from "./screens/AuthScreen/CompanyDetails";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -99,7 +100,8 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile s/>} />
+        <Route path="/company" element={<CompanyDetails />} />
+        <Route path="/profile" element={<Profile />} />
         <Route
           path="/customerstatus/:customerName"
           element={<SortingStatus />}

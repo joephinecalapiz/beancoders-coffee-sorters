@@ -28,9 +28,8 @@ const Signup = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          setPopupMessage("Done registered your account, you can now login");
-
-          navigate("/login");
+          // setPopupMessage("Done registered your account, you can now login");
+          navigate("/company");
         }
       })
       .catch((err) => {
