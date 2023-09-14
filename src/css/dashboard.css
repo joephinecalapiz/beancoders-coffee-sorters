@@ -16,7 +16,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-
 /* title of the box */
 .data-title {
   font-size: 24px;
@@ -33,7 +32,7 @@
 /* Boxes */
 .grid-item {
   border-radius: 25px;
-  background-color: #cdcdcd;
+  background-color: white;
   text-align: center;
   transition: background-color 0.3s;
 }
@@ -41,7 +40,6 @@
 .grid-item:hover {
   background-color: #c4a484;
 }
-
 
 /* Media query for small screens */
 @media (max-width: 640px) {
@@ -58,7 +56,6 @@
   .sm\:ml-64 {
     margin-left: 14rem;
   }
-    
 }
 
 /* Media query for small screens */

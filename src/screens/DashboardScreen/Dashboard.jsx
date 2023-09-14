@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
@@ -10,20 +10,20 @@ import axios from "axios";
 import api_endpoint from "../../config";
 import ChartComponent from "./Chart";
 import Modal from "../../component/Modal";
-import { Chart } from 'chart.js/auto';
-import feather from 'feather-icons';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { Chart } from "chart.js/auto";
+import feather from "feather-icons";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
-  const [userInfo, setUserInfo] = useState('');
+  const [userInfo, setUserInfo] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCompanyInfoMissing, setCompanyInfoMissing] = useState(false);
   const [modalStep, setModalStep] = useState(1); // Track the current step of the modal
-  const [companyName, setCompanyName] = useState('');
-  const [companyAddress, setCompanyAddress] = useState('');
-  const [companyPhoneNumber, setCompanyPhoneNumber] = useState('');
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [companyPhoneNumber, setCompanyPhoneNumber] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [companyImage, setCompanyImage] = useState(null);
 
@@ -76,11 +76,11 @@ const Dashboard = () => {
   };
 
   const handleNextStep = () => {
-    setModalStep(step => step + 1);
+    setModalStep((step) => step + 1);
   };
 
   const handlePreviousStep = () => {
-    setModalStep(step => step - 1);
+    setModalStep((step) => step - 1);
   };
 
   const handleSubmitCompanyInfo = async (e) => {
@@ -114,21 +114,21 @@ const Dashboard = () => {
       }
 
       const formData = new FormData();
-      formData.append('image', companyImage);
+      formData.append("image", companyImage);
 
-      const response = await axios.post(api_endpoint + '/user', formData, {
+      const response = await axios.post(api_endpoint + "/user", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
       if (response.status === 200) {
         // Profile image updated successfully
         // You can update the user's profile image state here if needed
-        console.log('Company image updated');
+        console.log("Company image updated");
       }
     } catch (error) {
-      console.error('Error updating company image:', error);
+      console.error("Error updating company image:", error);
     }
   };
 
@@ -139,21 +139,21 @@ const Dashboard = () => {
       }
 
       const formData = new FormData();
-      formData.append('image', profileImage);
+      formData.append("image", profileImage);
 
-      const response = await axios.post(api_endpoint + '/user', formData, {
+      const response = await axios.post(api_endpoint + "/user", formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
 
       if (response.status === 200) {
         // Profile image updated successfully
         // You can update the user's profile image state here if needed
-        console.log('Profile image updated');
+        console.log("Profile image updated");
       }
     } catch (error) {
-      console.error('Error updating profile image:', error);
+      console.error("Error updating profile image:", error);
     }
   };
 
@@ -171,7 +171,7 @@ const Dashboard = () => {
   }, []);
 
   const fetchUserInfo = async () => {
-    let token = localStorage.getItem('token');
+    let token = localStorage.getItem("token");
     try {
       const response = await fetch(api_endpoint + "/user", {
         headers: {
@@ -193,22 +193,29 @@ const Dashboard = () => {
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} />
-      <div className={`App ${navVisible ? "content-shift-right" : ""}`}
+      <div
+        className={`App ${navVisible ? "content-shift-right" : ""}`}
         // style={{ backgroundColor: '#d4d4d4' }}
       >
         <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+          className={`p-4 ${navVisible ? "ml-0" : "sm:ml-64"}`}
           style={{
             transition: "margin-left 0.3s ease",
           }}
         >
-          <h1 className="text-black mb-5 dashboard-title">Dashboard</h1>
+          <div className="p-0.5 mb-16 w-full mt-6 relative">
+            <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              Dashboard
+            </h1>
+          </div>
 
-          <div className="grid grid-cols-1 gap-12 mb-4">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-9">
+          <div className="grid grid-cols-1 gap-12 mb-4 ">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title m-auto ml-5 mr-5">Pieces of Bad Beans</h1>
+                  <h1 className="text-black  data-title m-auto ml-5 mr-5">
+                    Pieces of Bad Beans
+                  </h1>
                   <h1 className="text-black data-size m-auto">
                     {beanCount && beanCount.bad !== null
                       ? `${beanCount.bad} pieces`
@@ -230,7 +237,9 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title m-auto">KG of Bad Beans</h1>
+                  <h1 className="text-black data-title m-auto">
+                    KG of Bad Beans
+                  </h1>
                   <h1 className="text-black data-size m-auto">
                     {beanCount && beanCount.kilograms !== null
                       ? `${beanCount.kilograms} kilograms`
@@ -253,7 +262,7 @@ const Dashboard = () => {
             dropdownMode="select"
           /> */}
           {/* <canvas className="chart my-4 w-100 m-3" id="myChart" width="500" height="150"></canvas> */}
-         {/* <ChartComponent /> */}
+          {/* <ChartComponent /> */}
         </div>
       </div>
       <Modal
@@ -272,7 +281,9 @@ const Dashboard = () => {
 
           {modalStep === 1 && (
             <>
-              <h2 className="text-2xl font-semibold mb-4 text-center">Upload Profile Avatar</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Upload Profile Avatar
+              </h2>
               <input
                 type="file"
                 onChange={handleProfileImageChange}
@@ -284,7 +295,10 @@ const Dashboard = () => {
                 {/* <button onClick={handlePreviousStep} className="bg-blue-500 text-white rounded px-4 py-2 mr-2">
             Previous
           </button> */}
-                <button onClick={handleUpdateProfileImage} className="bg-green-500 text-white rounded px-4 py-2">
+                <button
+                  onClick={handleUpdateProfileImage}
+                  className="bg-green-500 text-white rounded px-4 py-2"
+                >
                   Upload Image
                 </button>
                 <button
@@ -299,7 +313,9 @@ const Dashboard = () => {
 
           {modalStep === 2 && (
             <>
-              <h2 className="text-2xl font-semibold mb-4 text-center">Upload Company Image</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Upload Company Image
+              </h2>
               <input
                 type="file"
                 onChange={handleCompanyImageChange}
@@ -314,7 +330,10 @@ const Dashboard = () => {
                 >
                   Previous
                 </button>
-                <button onClick={handleUpdateCompanyImage} className="bg-green-500 text-white rounded px-4 py-2">
+                <button
+                  onClick={handleUpdateCompanyImage}
+                  className="bg-green-500 text-white rounded px-4 py-2"
+                >
                   Upload Image
                 </button>
                 <button
@@ -329,7 +348,9 @@ const Dashboard = () => {
 
           {modalStep === 3 && (
             <>
-              <h2 className="text-2xl font-semibold mb-4 text-center">Enter Company Name</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Enter Company Name
+              </h2>
               <input
                 type="text"
                 value={companyName}
@@ -355,7 +376,9 @@ const Dashboard = () => {
 
           {modalStep === 4 && (
             <>
-              <h2 className="text-2xl font-semibold mb-4 text-center">Company Phone Number</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Company Phone Number
+              </h2>
               <input
                 type="text"
                 value={companyPhoneNumber}
@@ -381,7 +404,9 @@ const Dashboard = () => {
 
           {modalStep === 5 && (
             <>
-              <h2 className="text-2xl font-semibold mb-4 text-center">Company Address</h2>
+              <h2 className="text-2xl font-semibold mb-4 text-center">
+                Company Address
+              </h2>
               <input
                 type="text"
                 value={companyAddress}

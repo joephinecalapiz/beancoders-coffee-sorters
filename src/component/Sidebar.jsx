@@ -1,10 +1,8 @@
 /** @format */
-import { NavLink } from "react-router-dom";
-import "./../css/sidebar.css";
+
 import React from "react";
+import { NavLink } from "react-router-dom";
 import {
-  FaAngleRight,
-  FaAngleLeft,
   FaChartBar,
   FaThLarge,
   FaUsers,
@@ -12,22 +10,29 @@ import {
   FaBars,
 } from "react-icons/fa";
 
-  const ICON_SIZE = 20;
+const ICON_SIZE = 20;
 
 function Sidebar({ collapsed, handleToggleSidebar }) {
   return (
     <>
-      {/* <div className="mobile-nav">
-        <button className="mobile-nav-btn" onClick={handleToggleSidebar}>
-          <FaBars size={24} />
-        </button>
-      </div> */}
-      <nav className={collapsed ? "collapsed" : "fixed z-20 inset-0 top-[3.4rem] left-[max(0px,calc(10%-100rem))] right-auto w-[12.5rem]"}>
-        <button type="button" className="nav-btn" onClick={handleToggleSidebar}>
-          {collapsed ? <FaAngleRight size={30} /> : <FaAngleLeft size={30} />}
-        </button>
+      <nav
+        className={`fixed z-20 inset-0 top-[2rem] left-[max(0px,calc(10%-100rem))] w-[15rem] ${
+          collapsed ? "collapsed" : ""
+        }`}
+      >
+        <div className="flex justify-between items-center">
+          <div>{/* Your logo or other content here */}</div>
+          <button
+            type="button"
+            onClick={handleToggleSidebar}
+            className={`text-white transform transition-transform duration-300 ${
+              collapsed ? "rotate-0" : "rotate-180" // Adjust the rotation value as needed
+            }`}
+          >
+            <FaBars size={20} />
+          </button>
+        </div>
         <div>
-          {/* Your logo NavLink (commented out for this example) */}
           <div className="links nav-top">
             <NavLink to="/dashboard" className="nav-link">
               <span className="icon">
@@ -83,4 +88,4 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
   );
 }
 
-  export default Sidebar;
+export default Sidebar;

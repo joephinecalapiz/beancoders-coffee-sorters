@@ -115,18 +115,13 @@ const Sorters = () => {
 
         <div className="header">
           <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
-            <div className="flex items-center">
-              <h1
-                style={{
-                  fontSize: "32px",
-                  fontWeight: "bold",
-                  fontFamily: "'Poppins', sans-serif",
-                }}
-                className="text-black mt-16 mb-3"
-              >
+            <div className="p-0.5 mb-2 w-full mt-6 relative">
+              <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorters
               </h1>
             </div>
+
+            <div className="flex items-center"></div>
             <br />
             <br />
           </div>

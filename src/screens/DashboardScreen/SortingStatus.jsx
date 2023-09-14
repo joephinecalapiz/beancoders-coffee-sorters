@@ -75,15 +75,8 @@ const SortingStatus = () => {
             transition: "margin-left 0.3s ease",
           }}
         >
-          <div className="flex items-center justify-center mb-1">
-            <h1
-              style={{
-                fontSize: "32px",
-                fontWeight: "bold",
-                fontFamily: "'Poppins', sans-serif",
-              }}
-              className="text-black mt-16 mb-1"
-            >
+          <div className="p-0.5 mb-2 w-full mt-6 relative">
+            <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
               History Customer Status
             </h1>
           </div>
