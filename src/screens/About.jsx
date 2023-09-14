@@ -23,13 +23,13 @@ const About = () => {
         <div className="text-center">
           <h1
             style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-            className="mt-1 mb-14 font-bold text-[40px]"
+            className="mt-1 mb-14 font-bold md:text-[40px] text-[30px]"
           >
             About Arabica Coffee Beans Sorter
           </h1>
           <h3
             style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-            className="mb-12 font-bold text-[18px] ml-20 mr-20"
+            className="mb-12 font-bold md:text-[18px] text-[16px] md:ml-20 md:mr-20 ml-22 mr-22"
           >
             The Arabica coffee beans sorter is a sophisticated machine designed
             to separate coffee beans based on their size, shape, and color. This
@@ -39,7 +39,7 @@ const About = () => {
           </h3>
           <h3
             style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-            className="font-bold text-[18px] ml-14 mr-14 mb-10"
+            className="font-bold md:text-[18px] text-[16px] md:ml-14 md:mr-14 ml-22 mr-22 mb-10"
           >
             The sorter uses advanced technology, such as optical sensors, to
             identify and categorize the beans accurately. As the coffee beans

@@ -28,9 +28,8 @@ const Signup = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          setPopupMessage("Done registered your account, you can now login");
-
-          navigate("/login");
+          // setPopupMessage("Done registered your account, you can now login");
+          navigate("/company");
         }
       })
       .catch((err) => {
@@ -61,17 +60,14 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-2 bg-bgLogin bg-cover h-[100vh] w-full">
-        <section className="flex flex-cols w-full justify-center items-center mt-5">
+      <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
+        <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             onSubmit={handleSubmit(onSubmitHandler)}
-            className="rounded-[30px] w-[440px]"
+            className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="w-[85%] mx-auto">
-              <h1
-                className="text-center font-bold text-[30px] mt-8 mb-5"
-                style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-              >
+            <div className="md:w-[150%] w-[250%] mx-auto">
+              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-10">
                 Create Account
               </h1>
               <input

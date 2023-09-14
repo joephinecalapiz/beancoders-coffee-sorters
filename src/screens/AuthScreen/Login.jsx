@@ -68,17 +68,14 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-2 bg-bgLogin bg-cover h-[100vh] w-full">
-        <section className="flex flex-cols w-full justify-center items-center mt-5">
+      <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
+        <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             onSubmit={handleSubmit(onSubmitHandler)}
-            className="rounded-[40px] w-[400px]"
+            className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="w-[85%] mx-auto">
-              <h1
-                className="text-center font-bold text-[30px] mt-8 mb-5"
-                style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-              >
+            <div className="w-[120%] mx-auto">
+              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12">
                 Login
               </h1>
               <label
@@ -143,7 +140,7 @@ const Login = () => {
                 <p className="text-red-500 ml-2">{errors.password.message}</p>
               )} */}
 
-              <div className=" flex justify-between mx-auto mb-5 w-[95%]">
+              <div className="flex justify-between mx-auto mb-5 w-[95%]">
                 <div className="flex flex-row items-center">
                   <input
                     type="checkbox"
@@ -152,19 +149,12 @@ const Login = () => {
                     checked={checkboxStatus}
                     onChange={(e) => setCheckboxStatus(e.target.checked)}
                   />
-                  <span
-                    className="ml-2 pt-1"
-                    style={{
-                      color: "white",
-                      fontFamily: "Poppins, sans-serif",
-                    }}
-                  >
+                  <span className="ml-2 mr-4 pt-1 text-white font-Poppins">
                     Remember me
                   </span>
                 </div>
                 <p
-                  className="hover:underline cursor-pointer pt-1"
-                  style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
+                  className="hover:underline cursor-pointer pt-1 text-white font-Poppins"
                   onClick={openForgotPasswordModal}
                 >
                   Forgot password?
@@ -174,6 +164,7 @@ const Login = () => {
                   onClose={closeForgotPasswordModal}
                 />
               </div>
+
               <button
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white"
