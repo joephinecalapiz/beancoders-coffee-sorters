@@ -8,7 +8,7 @@ import "../css/topbar.css";
 import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 
-const Topbar = () => {
+const Topbar = ({handleToggleSidebar, collapsed}) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -80,6 +80,15 @@ const Topbar = () => {
   return (
     <div className="z-20 poppins-font fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
       <div className="poppins-font bg-black h-full w-full flex items-center">
+      <button
+            type="button"
+            onClick={handleToggleSidebar}
+            className={`ml-6 text-white transform transition-transform duration-300 ${
+              collapsed ? "collapsed" : "" // Adjust the rotation value as needed
+            }`}
+          >
+            <FaBars size={20} />
+          </button>
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
         <h1
           className="logo-title text-white text-16px ml-2"

@@ -169,7 +169,7 @@ const Customers = () => {
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar}/>
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
           <div

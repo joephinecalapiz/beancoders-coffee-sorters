@@ -22,15 +22,6 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
       >
         <div className="flex justify-between items-center">
           <div>{/* Your logo or other content here */}</div>
-          <button
-            type="button"
-            onClick={handleToggleSidebar}
-            className={`text-white transform transition-transform duration-300 ${
-              collapsed ? "rotate-0" : "rotate-180" // Adjust the rotation value as needed
-            }`}
-          >
-            <FaBars size={20} />
-          </button>
         </div>
         <div>
           <div className="links nav-top">

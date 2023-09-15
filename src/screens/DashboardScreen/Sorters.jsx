@@ -111,7 +111,7 @@ const Sorters = () => {
         style={{ backgroundColor: "#d4d4d4" }}
       >
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar onToggleSidebar={toggleSidebar} />
+        <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
 
         <div className="header">
           <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>

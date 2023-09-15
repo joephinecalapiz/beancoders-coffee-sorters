@@ -192,7 +192,7 @@ const Dashboard = () => {
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <div
         className={`App ${navVisible ? "content-shift-right" : ""}`}
         // style={{ backgroundColor: '#d4d4d4' }}
