@@ -26,11 +26,16 @@
 }
 
 .search-bar {
-  margin-left: 35px;
-  margin-right: 35px;
+  align-self: start;
   width: 100px;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 500px){
+  .search-bar {
+    display: none;
+}
 }
 
 /* Table - Cell Data (below the header) */
@@ -154,3 +159,5 @@
 .see-more-button:hover {
   background-color: #292c30;
 }
+
+
