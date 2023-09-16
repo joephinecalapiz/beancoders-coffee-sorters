@@ -91,7 +91,7 @@ const Topbar = ({handleToggleSidebar, collapsed}) => {
           </button>
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
         <h1
-          className="logo-title text-white text-16px ml-2"
+          className="logo-title text-white text-16px ml-10"
           style={{ fontFamily: "Poppins, sans-serif" }}
         >
           BeanCoders
