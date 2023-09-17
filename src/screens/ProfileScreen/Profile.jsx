@@ -129,7 +129,7 @@ const Profile = () => {
 
   return (
     <>
-      <div class="max-w-8xl mx-auto pl-16">
+      <div className="max-w-8xl mx-auto pl-16">
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <div
@@ -239,7 +239,7 @@ const Profile = () => {
                                     type="text"
                                     name="name"
                                     id="name"
-                                    autocomplete="name"
+                                    autoComplete="name"
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.name}
                                   />
@@ -268,7 +268,7 @@ const Profile = () => {
                                     type="text"
                                     name="email"
                                     id="email"
-                                    autocomplete="email"
+                                    autoComplete="email"
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.email}
                                   />
@@ -307,7 +307,7 @@ const Profile = () => {
                                     type="email"
                                     name="companyName"
                                     id="companyName"
-                                    autocomplete="companyName"
+                                    autoComplete="companyName"
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyName}
                                   />
@@ -340,7 +340,7 @@ const Profile = () => {
                                     type="number"
                                     name="phoneNumber"
                                     id="phoneNumber"
-                                    autocomplete="phoneNumber"
+                                    autoComplete="phoneNumber"
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyPhoneNumber}
                                   />
@@ -361,7 +361,7 @@ const Profile = () => {
                                     type="text"
                                     name="address"
                                     id="address"
-                                    autocomplete="address"
+                                    autoComplete="address"
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.address}
                                   />
