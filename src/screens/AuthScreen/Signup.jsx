@@ -10,6 +10,7 @@ import Modal from "../../component/Modal";
 
 const Signup = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [popupMessage, setPopupMessage] = useState(null);
 
   const {
@@ -20,6 +21,7 @@ const Signup = () => {
 
   //---kanang console.log eh change rana para eh connect sa database
   const onSubmitHandler = (data) => {
+    setLoading(true); // Set loading state to true when form is submitted
     axios
       .post(api_endpoint + "/register/users", data, {
         headers: {
@@ -33,7 +35,10 @@ const Signup = () => {
           const user_id = response.data.user.id;
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
-          navigate("/company");
+          setTimeout(() => {
+            setLoading(false); // Set loading to false when the operation is complete
+            navigate("/company");
+          }, 2000); // Simulate a 2-second delay
         }
       })
       .catch((err) => {
@@ -67,7 +72,7 @@ const Signup = () => {
       <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
         <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
-            onSubmit={handleSubmit(onSubmitHandler)}
+            // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
             <div className="md:w-[150%] w-[250%] mx-auto">
@@ -139,8 +144,30 @@ const Signup = () => {
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white"
                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
+                disabled={loading}
+                onClick={handleSubmit(onSubmitHandler)}
               >
-                REGISTER
+                {loading ? (
+                  <svg
+                    className="animate-spin h-5 w-5 mr-3 text-white"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
+                    ></path>
+                  </svg>
+                ) : null}
+                {loading ? "Processing..." : "Register"}
               </button>
               <p
                 className="text-center my-7"

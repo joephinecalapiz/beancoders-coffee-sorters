@@ -51,6 +51,7 @@ const CompanyDetails = () => {
 
     //---kanang console.log eh change rana para eh connect sa database
     const onSubmitHandler = (data) => {
+        setLoading(true); // Set loading state to true when form is submitted
         const formData = new FormData()
         formData.append("user_id", user_id)
         formData.append("companyName", data.companyName)
@@ -66,9 +67,10 @@ const CompanyDetails = () => {
             })
             .then((response) => {
                 if (response.status === 200) {
-
-                    navigate("/dashboard");
-                    window.location.reload();
+                    setTimeout(() => {
+                        setLoading(false); // Set loading to false when the operation is complete
+                        navigate("/dashboard");
+                      }, 2000); // Simulate a 2-second delay
                 }
             })
             .catch((error) => {
@@ -195,11 +197,32 @@ const CompanyDetails = () => {
                             )}
                             <button
                                 type="submit"
-                                className="btn w-full btn-primary mt-10 text-white"
+                                className="btn w-full btn-primary mt-7 text-white"
                                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
-                                disabled={loading} // Disable the button when loading is true
+                                disabled={loading}
+                                onClick={handleSubmit(onSubmitHandler)}
                             >
-                                {loading ? "Logging in..." : "Submit"}
+                                {loading ? (
+                                    <svg
+                                        className="animate-spin h-5 w-5 mr-3 text-white"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <circle
+                                            className="opacity-25"
+                                            cx="12"
+                                            cy="12"
+                                            r="10"
+                                            stroke="currentColor"
+                                            strokeWidth="4"
+                                        ></circle>
+                                        <path
+                                            className="opacity-75"
+                                            fill="currentColor"
+                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
+                                        ></path>
+                                    </svg>
+                                ) : null}
+                                {loading ? "Processing..." : "Sign up"}
                             </button>
                         </div>
                     </form>
