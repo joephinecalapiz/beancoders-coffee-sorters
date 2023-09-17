@@ -46,20 +46,26 @@ const CompanyDetails = () => {
         formState: { errors },
     } = useForm();
 
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+
     //---kanang console.log eh change rana para eh connect sa database
     const onSubmitHandler = (data) => {
+        const formData = new FormData()
+        formData.append("user_id", user_id)
+        formData.append("companyName", data.companyName)
+        formData.append("companyNumber", data.companyNumber)
+        formData.append("companyLocation", data.companyLocation)
+        formData.append("images", data.images)
         axios
-            .post(api_endpoint + "/details", data, {
+            .post(api_endpoint + "/add-info", data, {
                 headers: {
-                    "Content-Type": "application/json",
+                    "Content-Type": "multipart/form-data",
+                    Authorization: 'Bearer ' + token
                 },
             })
             .then((response) => {
                 if (response.status === 200) {
-                    const token = response.data.token;
-                    const user_id = response.data.user.id;
-                    localStorage.setItem("token", token);
-                    localStorage.setItem("user_id", user_id);
 
                     navigate("/dashboard");
                     window.location.reload();
@@ -101,10 +107,16 @@ const CompanyDetails = () => {
                                 Enter your company information below.
                             </h5>
                             <input
+                            type="hidden"
+                            name="user_id"
+                            value={user_id}
+                            {...register("user_id")} // Register the hidden field
+                            />
+                            <input
                                 name="companyName"
                                 type="text"
                                 placeholder="Enter your Company Name"
-                                {...register("name", {
+                                {...register("companyName", {
                                     required: "Company Name is required",
                                     pattern: {
                                         value: /^[a-zA-Z ]{2,30}$/,
@@ -172,7 +184,7 @@ const CompanyDetails = () => {
                                 name="file-upload"
                                 accept="image/*"
                                 {...register("images", {
-                                    required: "Company Image is required",
+                                    //required: "Company Image is required",
                                 })}
                                 className={`w-full rounded-[10px] h-10 text-white px-4 ${errors.images ? "mb-2" : "mb-5"
                                     }`}

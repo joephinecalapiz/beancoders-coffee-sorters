@@ -29,6 +29,10 @@ const Signup = () => {
       .then((response) => {
         if (response.status === 200) {
           // setPopupMessage("Done registered your account, you can now login");
+          const token = response.data.token;
+          const user_id = response.data.user.id;
+          localStorage.setItem("token", token);
+          localStorage.setItem("user_id", user_id);
           navigate("/company");
         }
       })
