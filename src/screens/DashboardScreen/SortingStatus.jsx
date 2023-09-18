@@ -63,143 +63,142 @@ const SortingStatus = () => {
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <div
-        className={`App ${navVisible ? "content-shift-right" : ""}`}
-        style={{ backgroundColor: "#d4d4d4" }}
-      >
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-          }}
-        >
-          <div className="p-0.5 mb-2 w-full mt-6 relative">
-            <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-              History Customer Status
-            </h1>
-          </div>
-        </div>
+      <div className="max-w-8xl mx-auto pl-16">
+        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <div className={`mx-auto ${navVisible ? "" : ""}`}>
+          <div className="header">
+            <div
+              className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+            >
+              <div className="p-0.5 mb-2 w-full mt-6 relative">
+                <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                  History Customer Status
+                </h1>
+              </div>
 
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginTop: "-30px",
-            fontFamily: "'Poppins', sans-serif",
-          }}
-        >
-          <div className="flex items-center justify-end mb-15 mr-6">
-            <label
-              htmlFor="monthSelect"
-              className="mr-2 bold"
+              <div className="flex items-center"></div>
+              <br />
+              <br />
+            </div>
+          </div>
+          <div className="search-and-button">
+            <div
+              className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+            ${navVisible ? "px-10" : "sm:ml-44"}`}
+
+            >
+              <div style={{ fontFamily: "'Poppins', sans-serif" }}>
+                <span
+                  style={{
+                    display: "block",
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: "24px",
+                    marginBottom: "1px",
+                  }}
+                >
+                  Customer's Name:
+                </span>
+                <span
+                  style={{
+                    display: "block",
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: "20px",
+                    textDecoration: "underline",
+                    fontWeight: "bold",
+                    marginBottom: "20px",
+                  }}
+                >
+                  {customerName}
+                </span>
+              </div>
+
+              <div className="flex items-center justify-end mb-15 mr-6 z-10">
+                <label
+                  htmlFor="monthSelect"
+                  className="mr-2 bold"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Month:
+                </label>
+
+                <Select
+                  id="monthSelect"
+                  options={monthOptions}
+                  value={selectedMonth}
+                  onChange={setSelectedMonth}
+                  isSearchable={false} // Add this line to disable keyboard input
+                  clearable={false}
+                  styles={{
+                    option: (provided) => ({
+                      ...provided,
+                      fontFamily: "'Poppins', sans-serif",
+                    }),
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="table-container">
+            <div
+              className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
               style={{
-                fontFamily: "'Poppins', sans-serif",
-                fontWeight: "bold",
+                transition: "margin-left 0.3s ease",
+                marginTop: "-20px",
               }}
             >
-              Month:
-            </label>
-
-            <Select
-              id="monthSelect"
-              options={monthOptions}
-              value={selectedMonth}
-              onChange={setSelectedMonth}
-              isSearchable={false} // Add this line to disable keyboard input
-              clearable={false}
-              styles={{
-                option: (provided) => ({
-                  ...provided,
-                  fontFamily: "'Poppins', sans-serif",
-                }),
-              }}
-            />
-          </div>
-        </div>
-
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginTop: "-40px",
-            fontSize: "15px",
-            fontFamily: "'Poppins', sans-serif",
-          }}
-        >
-          <div style={{ fontFamily: "'Poppins', sans-serif" }}>
-            <span
-              style={{
-                display: "block",
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: "24px",
-                marginBottom: "1px",
-              }}
-            >
-              Customer's Name:
-            </span>
-            <span
-              style={{
-                display: "block",
-                fontFamily: "'Poppins', sans-serif",
-                fontSize: "20px",
-                textDecoration: "underline",
-                fontWeight: "bold",
-                marginBottom: "20px",
-              }}
-            >
-              {customerName}
-            </span>
-          </div>
-
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="min-w-full divide-y divide-gray-200 customers-table">
-              <thead>
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Date
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3  text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Sorter's Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center   text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Kilo of Beans
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200 custom-table">
-                {allHistory.map((historyItem) => (
-                  <tr key={historyItem.id}>
-                    <td className="poppins-font text-center">
-                      {new Date(historyItem.date).toLocaleDateString()}
-                    </td>
-                    <td className="poppins-font text-center">
-                      {historyItem.sorterName}
-                    </td>
-                    <td className="poppins-font text-center">
-                      {historyItem.kiloOfBeans} kilo
-                    </td>
-                    <td className="poppins-font text-center">Status</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+              <div className="shadow overflow-hidden  overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200 customers-table">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3  text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Sorter's Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center   text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Kilo of Beans
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200 custom-table">
+                    {allHistory.map((historyItem) => (
+                      <tr key={historyItem.id}>
+                        <td className="poppins-font text-center">
+                          {new Date(historyItem.date).toLocaleDateString()}
+                        </td>
+                        <td className="poppins-font text-center">
+                          {historyItem.sorterName}
+                        </td>
+                        <td className="poppins-font text-center">
+                          {historyItem.kiloOfBeans} kilo
+                        </td>
+                        <td className="poppins-font text-center">Status</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

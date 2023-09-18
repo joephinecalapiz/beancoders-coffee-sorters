@@ -10,10 +10,10 @@ import "../../css/receipt.css";
 import jsPDF from "jspdf";
 import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 
-const Receipt = ({ toggleSidebar }) => {
+const Receipt = () => {
   const { customerId } = useParams();
   const [receiptDetails, setReceiptDetails] = useState([]);
-  const [navVisible, setNavVisible] = useState(false);
+  const [navVisible, showNavbar] = useState(false);
   const contentRef = useRef(null);
 
   useEffect(() => {
@@ -33,10 +33,10 @@ const Receipt = ({ toggleSidebar }) => {
     }
   };
 
-  const handleToggleSidebar = () => {
-    setNavVisible(!navVisible);
-    toggleSidebar();
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
   };
+
 
   const handleConvertToPDF = () => {
     const pageContent = contentRef.current;
@@ -78,11 +78,8 @@ const Receipt = ({ toggleSidebar }) => {
   return (
     <>
       <div>
-        <Sidebar
-          collapsed={navVisible}
-          handleToggleSidebar={handleToggleSidebar}
-        />
-        <Topbar onToggleSidebar={handleToggleSidebar} />
+        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
 
         <div
           className={`App ${navVisible ? "content-shift-right" : ""}`}
@@ -108,7 +105,6 @@ const Receipt = ({ toggleSidebar }) => {
                       }}
                     />
                   </div>
-
                   <div>
                     {/* HEADER TEXT */}
                     <div className="header-text">
@@ -116,10 +112,8 @@ const Receipt = ({ toggleSidebar }) => {
                       <p className="company-address">Company Address</p>
                       <p className="contact-number">Contact Number:</p>
                     </div>
-
                     {/* RECEIPT HEADER */}
                     <h1 className="receipt-header">OFFICIAL RECEIPT</h1>
-
                     {/* RECEIPT NAME AND DATE */}
                     <div className="flex flex-row">
                       <h2 className="receipt-name">
@@ -128,9 +122,9 @@ const Receipt = ({ toggleSidebar }) => {
 
                       <h2 className="receipt-date">Date: December 2, 2020</h2>
                     </div>
-
-                    {/* address */}
+                    {/* ADDRESS */}
                     <h2 className="receipt-address">Address:</h2>
+                    {/* TABLE */}
                     <div className="receipt-table-container">
                       <table className="receipt-table">
                         <thead>
@@ -154,7 +148,6 @@ const Receipt = ({ toggleSidebar }) => {
                         </tbody>
                       </table>
                     </div>
-
                     <div className="receipt-table-container">
                       <table className="receipt-table-low">
                         <tbody>
@@ -184,6 +177,7 @@ const Receipt = ({ toggleSidebar }) => {
                 </div>
               </div>
             </div>
+            {/* convert button */}
             <div style={{ textAlign: "center", marginTop: "-70px" }}>
               <button className="btn" onClick={handleConvertToPDF}>
                 Convert to PDF
