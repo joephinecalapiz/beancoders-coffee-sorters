@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import api_endpoint from "../../config";
+
 const Sorters = () => {
   const [navVisible, showNavbar] = useState(false);
 
@@ -26,6 +27,8 @@ const Sorters = () => {
   const [allSorters, setAllSorters] = useState([]);
 
   useEffect(() => {
+    document.title = "Sorters";
+
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
     const headers = {
@@ -37,7 +40,7 @@ const Sorters = () => {
         const sorters = response.data;
         setAllSorters(sorters.sorters);
       });
-  }, []);
+  }, [allSorters]);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -87,10 +90,6 @@ const Sorters = () => {
     closeModal();
   };
 
-  useEffect(() => {
-    document.title = "Sorters";
-  }, []);
-
   const [searchText, setSearchText] = useState("");
 
   const filteredSorters = allSorters.filter((sorter) =>
@@ -107,12 +106,14 @@ const Sorters = () => {
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar
+        onToggleSidebar={toggleSidebar}
+        collapsed={navVisible}
+        handleToggleSidebar={toggleSidebar}
+      />
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-          >
+          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
               <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorters
@@ -128,11 +129,9 @@ const Sorters = () => {
           <div
             className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
             ${navVisible ? "px-10" : "sm:ml-44"}`}
-            
           >
             {/* Total number of sorters */}
             Total: {totalSorters}
-
             {/* Search bar */}
             <input
               type="text"
@@ -141,7 +140,6 @@ const Sorters = () => {
               onChange={handleSearchInputChange}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
             />
-
             {/* Add New button */}
             <button
               onClick={openModal}

@@ -11,6 +11,7 @@ import Select from "react-select";
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
+  const [allCustomers, setAllCustomers] = useState([]);
 
   const monthOptions = [
     { value: 1, label: "January" },
@@ -26,22 +27,13 @@ const Customers = () => {
     { value: 11, label: "November" },
     { value: 12, label: "December" },
   ];
-
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1; // Adding 1 to match your month options (1 - 12)
-
   const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState({
     value: currentMonth,
     label: monthOptions[currentMonth - 1].label, // Get the label for the current month
   });
-
-  useEffect(() => {
-    document.title = "Customers";
-    if (selectedMonth !== null && selectedYear !== null) {
-      fetchCustomers();
-    }
-  }, [selectedMonth, selectedYear]);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -51,8 +43,6 @@ const Customers = () => {
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
-
-  const [allCustomers, setAllCustomers] = useState([]);
 
   const fetchCustomers = async () => {
     try {
@@ -73,6 +63,13 @@ const Customers = () => {
       console.error("Error fetching customer data:", error);
     }
   };
+
+  useEffect(() => {
+    document.title = "Customers";
+    if (selectedMonth !== null && selectedYear !== null) {
+      fetchCustomers();
+    }
+  }, [selectedMonth, selectedYear, fetchCustomers]);
 
   const [searchText, setSearchText] = useState("");
 
@@ -169,12 +166,14 @@ const Customers = () => {
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar
+        onToggleSidebar={toggleSidebar}
+        collapsed={navVisible}
+        handleToggleSidebar={toggleSidebar}
+      />
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-          >
+          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
               <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Customers
@@ -190,11 +189,9 @@ const Customers = () => {
           <div
             className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
             ${navVisible ? "px-10" : "sm:ml-44"}`}
-
           >
             {/* Total number of customer */}
             Total: {totalCustomers}
-
             {/* Search bar */}
             <input
               type="text"
@@ -203,7 +200,6 @@ const Customers = () => {
               onChange={handleSearchInputChange}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
             />
-
             {/* Add New button */}
             <button
               onClick={openModal}
@@ -229,9 +225,7 @@ const Customers = () => {
           </div>
         </div>
         <div className="calendar">
-          <div
-            className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}
-          >
+          <div className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}>
             <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
               <div className="relative mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
                 <label
