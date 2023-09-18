@@ -193,23 +193,26 @@ const Dashboard = () => {
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <div
-        className={`App ${navVisible ? "content-shift-right" : ""}`}
-        // style={{ backgroundColor: '#d4d4d4' }}
-      >
-        <div
-          className={`p-4 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-          }}
-        >
-          <div className="p-0.5 mb-16 w-full mt-6 relative">
-            <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-              Dashboard
-            </h1>
+      <div className={`mx-auto ${navVisible ? "" : ""}`}>
+          <div className="header">
+          <div
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+          >
+            <div className="p-0.5 mb-2 w-full mt-6 relative">
+              <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                Dashboard
+              </h1>
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 gap-12 mb-4 ">
+        </div>
+        <div
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+            style={{
+              transition: "margin-left 0.3s ease",
+              marginTop: "-20px",
+            }}
+          >
+             <div className="grid grid-cols-1 gap-12 mb-4 ">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
@@ -249,6 +252,8 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
+          </div>
+         
           {/* <DatePicker
             selected={selectedDate}
             onChange={handleDateChange}
@@ -263,7 +268,6 @@ const Dashboard = () => {
           /> */}
           {/* <canvas className="chart my-4 w-100 m-3" id="myChart" width="500" height="150"></canvas> */}
           {/* <ChartComponent /> */}
-        </div>
       </div>
       <Modal
         isOpen={isModalOpen}

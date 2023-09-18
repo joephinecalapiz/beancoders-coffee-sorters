@@ -169,11 +169,11 @@ const Customers = () => {
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar}/>
+      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
           <div
-            className={`p-5 ${navVisible ? "mobile:mx-10" : "mobile:ml-44"}`}
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
           >
             <div className="p-0.5 mb-2 w-full mt-6 relative">
               <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
@@ -181,39 +181,59 @@ const Customers = () => {
               </h1>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="md:mb-0 hidden mobile:block ">
-                <input
-                  type="text"
-                  placeholder="Search Customers"
-                  value={searchText}
-                  onChange={(e) => {
-                    console.log("Search input value:", e.target.value);
-                    handleSearchInputChange(e);
-                  }}
-                  className="px-4 py-2 border rounded focus:outline-none search-bar"
-                />
-              </div>
-
-              <div className="text-right">
-                <div className="hidden lg:flex lg:justify-end mt-4 mr-10 mb-9 font-bold font-poppins text-lg">
-                  Total Customer: {totalCustomers}
-                </div>
-              </div>
-            </div>
+            <div className="flex items-center"></div>
+            <br />
+            <br />
           </div>
         </div>
-
         <div className="search-and-button">
           <div
-            className={`${navVisible ? "" : "mobile:ml-44"}`}
-            style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-50px",
-            }}
+            className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+            ${navVisible ? "px-10" : "sm:ml-44"}`}
+
           >
-            <div className="p-8 grid grid-rows-2 gap-3 md:grid-cols-8 md:grid-rows-1 place-items-center">
-              <div className="relative laptop:justify-self-start z-10 col-span-2 md:mb-0 flex items-center">
+            {/* Total number of customer */}
+            Total: {totalCustomers}
+
+            {/* Search bar */}
+            <input
+              type="text"
+              placeholder="Search Customers"
+              value={searchText}
+              onChange={handleSearchInputChange}
+              className="px-4 py-2 border rounded focus:outline-none search-bar"
+            />
+
+            {/* Add New button */}
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white rounded focus:outline-none"
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#C4A484";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#512615";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              style={{
+                backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
+                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                border: "none",
+                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+              }}
+            >
+              Add New
+            </button>
+          </div>
+        </div>
+        <div className="calendar">
+          <div
+            className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}
+          >
+            <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
+              <div className="relative mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
                 <label
                   htmlFor="monthSelect"
                   className="font-bold"
@@ -245,8 +265,7 @@ const Customers = () => {
                   />
                 </div>
               </div>
-
-              <div className="mb-5 md:mb-0 flex items-center">
+              <div className="mb-5 md:mb-0 mobile:justify-self-center  flex items-center">
                 <label
                   htmlFor="yearSelect"
                   className="font-bold"
@@ -267,28 +286,19 @@ const Customers = () => {
                   />
                 </div>
               </div>
-
-              <div className="md:mb-0 col-span-2 flex laptop:justify-end">
-                <button
-                  onClick={openModal}
-                  className="px-4 py-2 text-white rounded focus:outline-none transition-colors duration-300 hover:bg-[#C4A484] bg-[#512615] font-poppins shadow-md border-none text-shadow-sm"
-                >
-                  Add New
-                </button>
-              </div>
             </div>
           </div>
         </div>
 
         <div className="table-container">
           <div
-            className={`p-5 ${navVisible ? "" : "mobile:ml-44"}`}
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             style={{
               transition: "margin-left 0.3s ease",
               marginTop: "-20px",
             }}
           >
-            <div className="shadow mx-auto overflow-x-auto scrollbar-hide order-b border-gray-200 sm:rounded-lg">
+            <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                 <thead>
                   <tr>

@@ -52,7 +52,7 @@ function App() {
           path="/dashboard"
           element={
             authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"} >
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"} >
                 <Dashboard />
               </div>
             ) : (
@@ -76,7 +76,7 @@ function App() {
           path="/sorters"
           element={
             authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                 <Sorters />
               </div>
             ) : (
@@ -88,7 +88,7 @@ function App() {
           path="/status"
           element={
             authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                 <Status />
               </div>
             ) : (

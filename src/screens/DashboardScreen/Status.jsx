@@ -15,6 +15,12 @@ const Status = () => {
   const [customers, setCustomer] = useState([]);
   const [sorters, setSorter] = useState([]);
   const [status, setAllStatus] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearchInputChange = (e) => {
+    console.log("Search input changed:", e.target.value);
+    setSearchText(e.target.value);
+  };
 
   useEffect(() => {
     const user_id = localStorage.getItem("user_id");
@@ -144,129 +150,133 @@ const Status = () => {
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <div
-        className={`App ${navVisible ? "content-shift-right" : ""}`}
-        style={{ backgroundColor: "#d4d4d4" }}
-      >
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-          }}
-        >
-          {" "}
-          <div className="p-0.5 mb-2 w-full mt-6 relative">
-            <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-              Sorting Status
-            </h1>
+      <div className={`mx-auto ${navVisible ? "" : ""}`}>
+        <div className="header">
+          <div
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+          >
+            <div className="p-0.5 mb-2 w-full mt-6 relative">
+              <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                Sorting Status
+              </h1>
+            </div>
+
+            <div className="flex items-center"></div>
+            <br />
+            <br />
+          </div>
+        </div>
+        <div className="search-and-button">
+          <div
+            className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+            ${navVisible ? "px-10" : "sm:ml-44"}`}
+
+          >
+
+            {/* Search bar */}
+            <input
+              type="text"
+              placeholder="Search Sorters"
+              value={searchText}
+              onChange={handleSearchInputChange}
+              className="px-4 py-2 border rounded focus:outline-none search-bar"
+            />
+
+            {/* Add New button */}
+            <button
+              onClick={openModal}
+              className="px-4 py-2 text-white rounded focus:outline-none"
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#C4A484";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#512615";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              style={{
+                backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
+                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                border: "none",
+                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+              }}
+            >
+              Add New
+            </button>
           </div>
         </div>
 
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            transition: "margin-left 0.3s ease",
-            marginTop: "-30px",
-          }}
-        >
-          <input
-            type="text"
-            placeholder="Search Sorters"
-            className="px-4 py-2 border rounded focus:outline-none search-bar"
-          />
-
-          <button
-            onClick={openModal}
-            className="px-4 py-2 text-white rounded focus:outline-none"
-            onMouseEnter={(e) => {
-              e.target.style.backgroundColor = "#C4A484";
-              e.target.style.transition = "background-color 0.3s ease";
-            }}
-            onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
-              e.target.style.transition = "background-color 0.3s ease";
-            }}
+        <div className="table-container">
+          <div
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             style={{
-              backgroundColor: "#512615",
-              fontFamily: "'Poppins', sans-serif",
+              transition: "margin-left 0.3s ease",
+              marginTop: "-20px",
             }}
           >
-            Add New
-          </button>
-        </div>
-
-        <div
-          className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginTop: "-20px",
-          }}
-        >
-          {" "}
-          <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-            <table className="sorted-table min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Date
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Customer's Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Sorter's Name
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    Status
-                  </th>
-                  <th
-                    scope="col"
-                    className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                  >
-                    receipt
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
-                {status.map((sorted) => (
-                  <tr key={sorted.id} className="sort-table">
-                    <td className="poppins-font">
-                      {new Date(sorted.created_at).toLocaleDateString()}
-                    </td>
-
-                    <td className="poppins-font">{sorted.customerName}</td>
-                    <td className="poppins-font">{sorted.sorterName}</td>
-                    <td className="poppins-font">{sorted.status}</td>
-                    <td className="poppins-font">
-                      <button
-                        onClick={() => {
-                          navigate(`/receipt/${sorted.customerName}`);
-                          // navigate(`/customerstatus/${sorted.customerName}`);
-                        }}
-                        className="see-more-button focus:outline-none"
-                      >
-                        Receipt
-                      </button>
-                    </td>
+            <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Customer's Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Sorter's Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      receipt
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                  {status.map((sorted) => (
+                    <tr key={sorted.id} className="sort-table">
+                      <td className="poppins-font">
+                        {new Date(sorted.created_at).toLocaleDateString()}
+                      </td>
+
+                      <td className="poppins-font">{sorted.customerName}</td>
+                      <td className="poppins-font">{sorted.sorterName}</td>
+                      <td className="poppins-font">{sorted.status}</td>
+                      <td className="poppins-font">
+                        <button
+                          onClick={() => {
+                            navigate(`/receipt/${sorted.customerName}`);
+                            // navigate(`/customerstatus/${sorted.customerName}`);
+                          }}
+                          className="see-more-button focus:outline-none"
+                        >
+                          Receipt
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

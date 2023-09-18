@@ -106,15 +106,13 @@ const Sorters = () => {
 
   return (
     <>
-      <div
-        className={`App ${navVisible ? "content-shift-right" : ""}`}
-        style={{ backgroundColor: "#d4d4d4" }}
-      >
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
+          <div
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+          >
             <div className="p-0.5 mb-2 w-full mt-6 relative">
               <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorters
@@ -126,20 +124,16 @@ const Sorters = () => {
             <br />
           </div>
         </div>
-
         <div className="search-and-button">
           <div
-            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              transition: "margin-left 0.3s ease",
-              marginTop: "-80px",
-              fontFamily: "'Poppins', sans-serif",
-            }}
+            className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+            ${navVisible ? "px-10" : "sm:ml-44"}`}
+            
           >
+            {/* Total number of sorters */}
             Total: {totalSorters}
+
+            {/* Search bar */}
             <input
               type="text"
               placeholder="Search Sorters"
@@ -147,6 +141,7 @@ const Sorters = () => {
               onChange={handleSearchInputChange}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
             />
+
             {/* Add New button */}
             <button
               onClick={openModal}
@@ -171,18 +166,17 @@ const Sorters = () => {
             </button>
           </div>
         </div>
-
         <div className="table-container">
           <div
-            className={`p-5 ${navVisible ? "ml-0" : "sm:ml-64"}`}
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             style={{
               transition: "margin-left 0.3s ease",
               marginTop: "-20px",
             }}
           >
-            <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50 text-center">
+            <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 table-auto">
+                <thead>
                   <tr>
                     <th
                       scope="col"

@@ -16,7 +16,7 @@ function Sidebar({ collapsed, handleToggleSidebar }) {
   return (
     <>
       <nav
-        className={`fixed z-20 inset-0 top-[2rem] left-[max(0px,calc(10%-100rem))] w-[15rem] ${
+        className={`fixed z-20 inset-0 mt-2 left-[max(0px,calc(10%-100rem))] w-[15rem] ${
           collapsed ? "collapsed" : ""
         }`}
       >

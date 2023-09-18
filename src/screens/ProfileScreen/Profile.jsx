@@ -13,9 +13,11 @@ const Profile = () => {
   const [navVisible, showNavbar] = useState(true);
   const [isEditing, setEditing] = useState(false);
   const [userInfo, setUserInfo] = useState("");
+  const [compInfo, setCompInfo] = useState("");
 
   useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts
+    fetchCompanyInfo();
   }, []);
 
   // Update profileData when userInfo changes
@@ -24,6 +26,9 @@ const Profile = () => {
       ...prevProfileData,
       name: userInfo.name,
       email: userInfo.email,
+      companyPhoneNumber: compInfo.companyPhoneNumber,
+      address: compInfo.companyLocation,
+      companyName: compInfo.companyName,
     }));
   }, [userInfo]);
 
@@ -33,6 +38,9 @@ const Profile = () => {
       ...prevProfileData,
       name: userInfo.name,
       email: userInfo.email,
+      companyPhoneNumber: compInfo.companyPhoneNumber,
+      address: compInfo.companyLocation,
+      companyName: compInfo.companyName,
     }));
   }, [userInfo]);
 
@@ -55,13 +63,33 @@ const Profile = () => {
     }
   };
 
+  const fetchCompanyInfo = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch company details data");
+      }
+      const data = await response.json();
+      setCompInfo(data.details);
+    } catch (error) {
+      console.error("Error fetching company details data:", error);
+    }
+  };
+
   const [profileData, setProfileData] = useState({
     profilePicture: "assets/beansLogo.png",
     name: userInfo.name,
     email: userInfo.email,
-    companyPhoneNumber: "9518052760",
-    address: "123 Main St, City",
-    companyName: "ABC Corporation",
+    companyPhoneNumber: compInfo.companyPhoneNumber,
+    address: compInfo.companyLocation,
+    companyName: compInfo.companyName,
   });
 
   const [editableContent, setEditableContent] = useState({
@@ -134,10 +162,10 @@ const Profile = () => {
         <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <div
           className={`Profile  ${navVisible ? "profile-shift-right" : ""}`}
-          //  style={{ backgroundColor: '#d4d4d4' }}
+        //  style={{ backgroundColor: '#d4d4d4' }}
         >
           <div className={`p-4 ${navVisible ? "ml-0" : "sm:ml-48"}`}>
-            <div className="p-0.5 mb-16 w-full mt-6 relative">
+            <div className="p-0.5 mb-5 w-full mt-7 relative">
               <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Profile
               </h1>
