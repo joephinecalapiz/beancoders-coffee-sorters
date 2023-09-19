@@ -267,7 +267,16 @@ const Dashboard = () => {
             dropdownMode="select"
           /> */}
           {/* <canvas className="chart my-4 w-100 m-3" id="myChart" width="500" height="150"></canvas> */}
-          {/* <ChartComponent /> */}
+          <div
+            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+            style={{
+              transition: "margin-left 0.3s ease",
+              marginTop: "-20px",
+            }}
+          >
+            <ChartComponent />
+          </div>
+          
       </div>
       <Modal
         isOpen={isModalOpen}

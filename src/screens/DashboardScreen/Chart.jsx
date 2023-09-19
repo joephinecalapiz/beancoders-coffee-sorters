@@ -120,7 +120,7 @@ const ChartComponent = () => {
                     <div className="btn-toolbar mb-2 mb-md-0">
                         <div className="btn-group me-2">
                             <span data-feather="calendar" className="calendar-icon"></span>
-                            {/* <DatePicker
+                            <DatePicker
                                 selected={selectedDate}
                                 onChange={handleDateChange}
                                 className="relative btn btn-sm mt-3 btn-outline-secondary"
@@ -130,7 +130,7 @@ const ChartComponent = () => {
                                 placeholderText="mm-dd-yyyy"
                                 showYearDropdown
                                 dropdownMode="select"
-                            /> */}
+                            />
                     </div>
                 </div>
             </div>
