@@ -66,6 +66,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     // Clear the user data from state, if necessary
     setUserInfo(null);
 
+    // Check for saved email and password in localStorage
+    localStorage.getItem("savedEmail");
+    localStorage.getItem("savedPassword");
+
     // Close the confirmation modal
     setConfirmationModalOpen(false);
 

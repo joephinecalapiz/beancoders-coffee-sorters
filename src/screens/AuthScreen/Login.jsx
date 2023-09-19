@@ -19,9 +19,22 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+  const [rememberMe, setRememberMe] = useState(true);
+  const [savedEmail, setSavedEmail] = useState("");
+  const [savedPassword, setSavedPassword] = useState("");
 
   useEffect(() => {
     document.title = "Login";
+
+    // Check for saved email and password in localStorage
+    const savedEmail = localStorage.getItem("savedEmail");
+    const savedPassword = localStorage.getItem("savedPassword");
+
+    if (savedEmail && savedPassword) {
+      setRememberMe(true);
+      setSavedEmail(savedEmail);
+      setSavedPassword(savedPassword);
+    }
   }, []);
 
   const onSubmitHandler = (data) => {
@@ -38,11 +51,14 @@ const Login = () => {
           const user_id = response.data.user.id;
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
-         // Simulate an API call or any asynchronous operation
-         setTimeout(() => {
-          setLoading(false); // Set loading to false when the operation is complete
-          navigate("/dashboard");
-        }, 2000); // Simulate a 2-second delay
+          localStorage.getItem("savedEmail");
+          localStorage.getItem("savedPassword");
+          // Simulate an API call or any asynchronous operation
+          setTimeout(() => {
+            setLoading(false); // Set loading to false when the operation is complete
+            navigate("/dashboard");
+            // window.location.reload();
+          }, 2000); // Simulate a 2-second delay
           // window.location.reload();
         }
       })
@@ -96,6 +112,11 @@ const Login = () => {
                     message: "Invalid email address",
                   },
                 })}
+                value={savedEmail}
+                onChange={(e) => {
+                  setSavedEmail(e.target.value);
+                  localStorage.setItem("savedEmail", e.target.value);
+                }}
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.email ? "mb-2" : "mb-5"
                   }`}
                 style={{ fontFamily: "Poppins, sans-serif" }}
@@ -121,6 +142,11 @@ const Login = () => {
                     message: "Password must be at least 8 characters long",
                   },
                 })}
+                value={savedPassword}
+                onChange={(e) => {
+                  setSavedPassword(e.target.value);
+                  localStorage.setItem("savedPassword", e.target.value);
+                }}
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.password ? "mb-2" : "mb-5"
                   }`}
                 style={{ fontFamily: "Poppins, sans-serif" }}
@@ -144,12 +170,19 @@ const Login = () => {
                     type="checkbox"
                     name="checkbox"
                     className="checkbox h-5 w-5 rounded-[5px] border-white border-2"
-                    checked={checkboxStatus}
-                    onChange={(e) => setCheckboxStatus(e.target.checked)}
+                    checked={rememberMe}
+                    onChange={(e) => {
+                      setRememberMe(e.target.checked);
+                      if (!e.target.checked) {
+                        // Clear saved email and password when unchecked
+                        // setSavedEmail("");
+                        // setSavedPassword("");
+                        localStorage.removeItem("savedEmail");
+                        localStorage.removeItem("savedPassword");
+                      }
+                    }}
                   />
-                  <span className="ml-2 mr-4 pt-1 text-white font-Poppins">
-                    Remember me
-                  </span>
+                  <span className="ml-2 mr-4 pt-1 text-white font-Poppins">Remember me</span>
                 </div>
                 <p
                   className="hover:underline cursor-pointer pt-1 text-white font-Poppins"
