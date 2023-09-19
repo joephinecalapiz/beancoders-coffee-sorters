@@ -8,10 +8,13 @@ import Select from "react-select";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import api_endpoint from "../../config";
+import Skeleton from 'react-loading-skeleton'
+
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
   const { customerName } = useParams();
   const [allHistory, setAllHistory] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -21,6 +24,7 @@ const SortingStatus = () => {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
     const customerId = sessionStorage.getItem("customerId");
+  
     axios
       .get(api_endpoint + "/fetch-history/" + user_id + "/" + customerId, {
         headers: {
@@ -30,8 +34,10 @@ const SortingStatus = () => {
       .then((response) => {
         const history = response.data;
         setAllHistory(history.history);
+        setIsLoading(false); // Data fetching is complete
       });
   }, []);
+  
 
   useEffect(() => {
     document.title = "Customer Status";
@@ -71,12 +77,19 @@ const SortingStatus = () => {
             <div
               className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             >
-              <div className="p-0.5 mb-2 w-full mt-6 relative">
-                <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                  History Customer Status
-                </h1>
-              </div>
-
+             {isLoading ? (
+                // Render skeleton loading here while data is loading
+                <div>
+                  <Skeleton height={16} width="75%" className="mb-4 rounded" />
+                  <Skeleton height={40} width="100%" className="mb-2 w-full mt-6 relative" />
+                </div>
+              ) : (
+                <div className="p-0.5 mb-2 w-full mt-6 relative">
+                  <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                    History Customer Status
+                  </h1>
+                </div>
+              )}
               <div className="flex items-center"></div>
               <br />
               <br />
