@@ -1,7 +1,5 @@
 /** @format */
 
-/** @format */
-
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import api_endpoint from "../../config";
@@ -88,94 +86,106 @@ const Receipt = () => {
         />
 
         <div
-          className={`App ${navVisible ? "content-shift-right" : ""}`}
+          className={`Page ${navVisible ? "content-shift-right" : ""}`}
           style={{ backgroundColor: "#d4d4d4" }}
         >
-          <div className={`p-10 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
-            <div className="flex justify-center items-center h-screen">
-              <div
-                className="border rounded p-10 mb-10 bg-white whole-receipt"
-                ref={contentRef}
-              >
-                <div className="header-container">
-                  <div className="logo">
-                    <img
-                      src={BeansLogo}
-                      alt="Beans Logo"
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        marginTop: "-20px",
-                        marginRight: "20px",
-                      }}
-                    />
+          {/* Container for both page content and white box */}
+          <div className="page-container">
+            {/* Page content */}
+            <div className={`p-10 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
+              <div className="flex justify-center items-center h-screen">
+                <div
+                  className="border rounded p-10 mb-10 bg-white whole-receipt"
+                  ref={contentRef}
+                >
+                  <div className="header-container">
+                    <div className="logo">
+                      <img
+                        src={BeansLogo}
+                        alt="Beans Logo"
+                        style={{
+                          width: "100px",
+                          height: "100px",
+                          marginTop: "-20px",
+                          marginRight: "20px",
+                        }}
+                      />
+                    </div>
+                    <div className="company-info">
+                      <p className="company-name">Company Name</p>
+                      <p className="company-details">Company Address</p>
+                      <p className="company-details">Contact Number:</p>
+                    </div>
                   </div>
-                  <div className="company-info">
-                    <p className="company-name">Company Name</p>
-                    <p className="company-details">Company Address</p>
-                    <p className="company-details">Contact Number:</p>
+                  <div className="receipt-header">OFFICIAL RECEIPT</div>
+                  <div className="receipt-info-container">
+                    <div className="receipt-name">
+                      Customer Name: {customerId}
+                    </div>
+                    <div className="receipt-date">Date: December 2, 2020</div>
                   </div>
-                </div>
-                <div className="receipt-header">OFFICIAL RECEIPT</div>
-                <div className="receipt-info-container">
-                  <div className="receipt-name">Customer Name: {customerId}</div>
-                  <div className="receipt-date">Date: December 2, 2020</div>
-                </div>
-                <div className="receipt-address">Address:</div>
-                <div className="receipt-table-container">
-                <table className="receipt-table">
-                  <thead>
-                    <tr>
-                      <th className="qty">Qty</th>
-                      <th className="unit">Unit</th>
-                      <th className="item">Item</th>
-                      <th className="price">U/Price</th>
-                      <th className="amount">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {/* Add table rows with data here */}
-                    <tr>
-                      <td className="qty">1</td>
-                      <td className="unit">Kg</td>
-                      <td className="item">Beans</td>
-                      <td className="price">5.00</td>
-                      <td className="amount">5.00</td>
-                    </tr>
-                  </tbody>
-                </table>
-                </div>
-                <div className="receipt-table-container">
-                  <table className="receipt-table-low">
-                    <tbody>
-                      <tr>
-                        <td className="description">Sub Total</td>
-                        <td className="amount">25.00</td>
-                      </tr>
-                      <tr>
-                        <td className="description">VAT 12%</td>
-                        <td className="amount">25.00</td>
-                      </tr>
-                      <tr>
-                        <td className="description">PWD/SC Discount</td>
-                        <td className="amount">25.00</td>
-                      </tr>
-                      <tr>
-                        <td className="description">Total Amount</td>
-                        <td className="amount">25.00</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="receipt-assisted">
-                  ASSISTED BY: Name sa admin or sorter
+                  <div className="receipt-address">Address:</div>
+                  <div className="receipt-table-container">
+                    <table className="receipt-table">
+                      <thead>
+                        <tr>
+                          <th className="qty">Qty</th>
+                          <th className="unit">Unit</th>
+                          <th className="item">Item</th>
+                          <th className="price">U/Price</th>
+                          <th className="amount">Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {/* Add table rows with data here */}
+                        <tr>
+                          <td className="qty">1</td>
+                          <td className="unit">Kg</td>
+                          <td className="item">Beans</td>
+                          <td className="price">5.00</td>
+                          <td className="amount">5.00</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="receipt-table-container">
+                    <table className="receipt-table-low">
+                      <tbody>
+                        <tr>
+                          <td className="description">Sub Total</td>
+                          <td className="amount">25.00</td>
+                        </tr>
+                        <tr>
+                          <td className="description">VAT 12%</td>
+                          <td className="amount">25.00</td>
+                        </tr>
+                        <tr>
+                          <td className="description">PWD/SC Discount</td>
+                          <td className="amount">25.00</td>
+                        </tr>
+                        <tr>
+                          <td className="description">Total Amount</td>
+                          <td className="amount">25.00</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div className="receipt-assisted">
+                    ASSISTED BY: Name sa admin or sorter
+                  </div>
                 </div>
               </div>
             </div>
-            {/* Convert button */}
-            <div style={{ textAlign: "center", marginTop: "-70px" }}>
-              <button className="btn" onClick={handleConvertToPDF}>
-                Convert to PDF
+            {/* White box for PDF options */}
+            <div className="white-box">
+              <div className="white-box-greeting">
+                Hi, <span className="bold-customer-id">{customerId}</span>!
+              </div>
+              <div className="white-box-text">
+                Would you like to save this as a PDF file?
+              </div>
+              <button className="btn white-box-button custom-button" onClick={handleConvertToPDF}>
+                Click here
               </button>
             </div>
           </div>
