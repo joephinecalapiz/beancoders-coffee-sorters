@@ -118,9 +118,9 @@ const Sorters = () => {
               <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorters
               </h1>
-              <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
+              {/* <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
                 Total Sorter: {totalSorters}
-              </div>
+              </div> */}
             </div>
 
             <div className="flex items-center"></div>

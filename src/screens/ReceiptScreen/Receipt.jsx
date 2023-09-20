@@ -13,7 +13,6 @@ import jsPDF from "jspdf";
 import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 
 const Receipt = () => {
-const Receipt = () => {
   const { customerId } = useParams();
   const [receiptDetails, setReceiptDetails] = useState([]);
   const [navVisible, showNavbar] = useState(false);
@@ -186,4 +185,4 @@ const Receipt = () => {
   );
 };
 
-export default Receipt;
+export default Receipt
