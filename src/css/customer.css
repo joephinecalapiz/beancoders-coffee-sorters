@@ -26,8 +26,8 @@
 }
 
 .search-bar {
-  align-self: start;
-  width: 100px;
+  margin-left: 35px;
+  margin-right: 50px;
   border-radius: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

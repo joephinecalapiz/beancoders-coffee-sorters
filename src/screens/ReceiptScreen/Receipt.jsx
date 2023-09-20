@@ -1,5 +1,7 @@
 /** @format */
 
+/** @format */
+
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import api_endpoint from "../../config";
@@ -10,6 +12,7 @@ import "../../css/receipt.css";
 import jsPDF from "jspdf";
 import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 
+const Receipt = () => {
 const Receipt = () => {
   const { customerId } = useParams();
   const [receiptDetails, setReceiptDetails] = useState([]);
@@ -79,7 +82,11 @@ const Receipt = () => {
     <>
       <div>
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar
+          onToggleSidebar={toggleSidebar}
+          collapsed={navVisible}
+          handleToggleSidebar={toggleSidebar}
+        />
 
         <div
           className={`App ${navVisible ? "content-shift-right" : ""}`}
@@ -89,11 +96,10 @@ const Receipt = () => {
             <div className="flex justify-center items-center h-screen">
               <div
                 className="border rounded p-10 mb-10 bg-white whole-receipt"
-                style={{ width: "450px", height: "600px" }}
                 ref={contentRef}
               >
-                <div className="flex flex-row text-black font-bold">
-                  <div className="printable-content">
+                <div className="header-container">
+                  <div className="logo">
                     <img
                       src={BeansLogo}
                       alt="Beans Logo"
@@ -105,79 +111,69 @@ const Receipt = () => {
                       }}
                     />
                   </div>
-                  <div>
-                    {/* HEADER TEXT */}
-                    <div className="header-text">
-                      <p className="company-name">Company Name</p>
-                      <p className="company-address">Company Address</p>
-                      <p className="contact-number">Contact Number:</p>
-                    </div>
-                    {/* RECEIPT HEADER */}
-                    <h1 className="receipt-header">OFFICIAL RECEIPT</h1>
-                    {/* RECEIPT NAME AND DATE */}
-                    <div className="flex flex-row">
-                      <h2 className="receipt-name">
-                        Customer Name: {customerId}
-                      </h2>
-
-                      <h2 className="receipt-date">Date: December 2, 2020</h2>
-                    </div>
-                    {/* ADDRESS */}
-                    <h2 className="receipt-address">Address:</h2>
-                    {/* TABLE */}
-                    <div className="receipt-table-container">
-                      <table className="receipt-table">
-                        <thead>
-                          <tr>
-                            <th>Qty</th>
-                            <th>Unit</th>
-                            <th>Item</th>
-                            <th>U/Price</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {/* Add table rows with data here */}
-                          <tr>
-                            <td>1</td>
-                            <td>Kg</td>
-                            <td>Beans</td>
-                            <td>5.00</td>
-                            <td>5.00</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <div className="receipt-table-container">
-                      <table className="receipt-table-low">
-                        <tbody>
-                          <tr>
-                            <td>Sub Total </td>
-                            <td>25.00</td>
-                          </tr>
-                          <tr>
-                            <td>VAT 12% </td>
-                            <td>25.00</td>
-                          </tr>
-                          <tr>
-                            <td>PWD/SC Discount </td>
-                            <td>25.00</td>
-                          </tr>
-                          <tr>
-                            <td>Total Amount </td>
-                            <td>25.00</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                    <h2 className="receipt-address">
-                      ASSISTED BY: Name sa admin or sorter
-                    </h2>
+                  <div className="company-info">
+                    <p className="company-name">Company Name</p>
+                    <p className="company-details">Company Address</p>
+                    <p className="company-details">Contact Number:</p>
                   </div>
+                </div>
+                <div className="receipt-header">OFFICIAL RECEIPT</div>
+                <div className="receipt-info-container">
+                  <div className="receipt-name">Customer Name: {customerId}</div>
+                  <div className="receipt-date">Date: December 2, 2020</div>
+                </div>
+                <div className="receipt-address">Address:</div>
+                <div className="receipt-table-container">
+                <table className="receipt-table">
+                  <thead>
+                    <tr>
+                      <th className="qty">Qty</th>
+                      <th className="unit">Unit</th>
+                      <th className="item">Item</th>
+                      <th className="price">U/Price</th>
+                      <th className="amount">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Add table rows with data here */}
+                    <tr>
+                      <td className="qty">1</td>
+                      <td className="unit">Kg</td>
+                      <td className="item">Beans</td>
+                      <td className="price">5.00</td>
+                      <td className="amount">5.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+                </div>
+                <div className="receipt-table-container">
+                  <table className="receipt-table-low">
+                    <tbody>
+                      <tr>
+                        <td className="description">Sub Total</td>
+                        <td className="amount">25.00</td>
+                      </tr>
+                      <tr>
+                        <td className="description">VAT 12%</td>
+                        <td className="amount">25.00</td>
+                      </tr>
+                      <tr>
+                        <td className="description">PWD/SC Discount</td>
+                        <td className="amount">25.00</td>
+                      </tr>
+                      <tr>
+                        <td className="description">Total Amount</td>
+                        <td className="amount">25.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="receipt-assisted">
+                  ASSISTED BY: Name sa admin or sorter
                 </div>
               </div>
             </div>
-            {/* convert button */}
+            {/* Convert button */}
             <div style={{ textAlign: "center", marginTop: "-70px" }}>
               <button className="btn" onClick={handleConvertToPDF}>
                 Convert to PDF

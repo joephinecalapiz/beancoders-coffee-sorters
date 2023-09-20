@@ -118,6 +118,9 @@ const Sorters = () => {
               <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorters
               </h1>
+              <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
+                Total Sorter: {totalSorters}
+              </div>
             </div>
 
             <div className="flex items-center"></div>
@@ -139,6 +142,7 @@ const Sorters = () => {
               value={searchText}
               onChange={handleSearchInputChange}
               className="px-4 py-2 border rounded focus:outline-none search-bar"
+              style={{ width: "80%", maxWidth: "800px", }}
             />
             {/* Add New button */}
             <button
