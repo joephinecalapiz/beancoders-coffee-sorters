@@ -34,6 +34,15 @@ export default {
           800: "#512615", // Replace this with your desired brown color code
         },
       },
+      textColor: {
+        dark: "#ffffff", // Set the text color for dark mode
+      },
+      backgroundColor: {
+        dark: "#121212", // Set the background color for dark mode
+      },
+      fontFamily: {
+        display: 'Poppins, sans-serif', // Adds a new `font-display` class
+      }
     },
     backgroundImage: {
       CoffeeBeans: "url('./assets/background.png')",

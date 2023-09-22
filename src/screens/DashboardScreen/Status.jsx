@@ -207,7 +207,7 @@ const Status = () => {
           </div>
         </div>
 
-        <div className="table-container">
+        <div className="px-4">
           <div
             className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             style={{

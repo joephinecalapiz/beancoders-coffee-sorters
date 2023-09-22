@@ -98,7 +98,7 @@ const Customers = () => {
     );
   });
 
-  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => b.id - a.id);
+  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.id - b.id);
 
   const totalCustomers = allCustomers.length;
 
@@ -284,7 +284,7 @@ const Customers = () => {
           </div>
         </div>
 
-        <div className="table-container">
+        <div className="px-4">
           <div
             className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             style={{

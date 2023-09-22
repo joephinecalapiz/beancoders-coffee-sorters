@@ -216,7 +216,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
               <div className="flex items-center justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black  data-title m-auto ml-5 mr-5">
+                  <h1 className="text-black data-title m-auto ml-5 mr-5">
                     Pieces of Bad Beans
                   </h1>
                   <h1 className="text-black data-size m-auto">

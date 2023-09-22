@@ -20,8 +20,8 @@ import CompanyDetails from "./screens/AuthScreen/CompanyDetails";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
-  
   const [authenticated, setAuthenticated] = useState(null);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -30,6 +30,16 @@ function App() {
       setAuthenticated(false);
     }
   }, []);
+
+  // useEffect(() => {
+  //   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  //   if (prefersDarkMode) {
+  //     document.body.classList.add('dark:bg-dark');
+  //   } else {
+  //     document.body.classList.remove('dark:bg-dark');
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (authenticated && window.location.pathname === "/login") {

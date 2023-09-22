@@ -14,6 +14,12 @@
   border: 1px solid #adadad;
 }
 
+@media (max-width: 500px) {
+  .whole-receipt{
+    display: none;
+  }
+}
+
 /* Header text and logo container */
 .header-container {
   display: flex;
@@ -93,9 +99,9 @@
 
 /* Table container */
 .receipt-table-container {
-  flex-grow: 1; /* Allows the table to occupy remaining space */
-  overflow: auto; /* Enables scrolling if content overflows */
-  width: 80%;
+  flex-grow: 1;
+  /* overflow: auto; */
+  width: 100%;
 }
 
 /* Receipt table */
@@ -164,11 +170,11 @@
 }
 /* assisted by */
 .receipt-assisted {
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   font-size: 12px;
   font-weight: normal;
   font-family: "Poppins", sans-serif;
-  align-items: center;
+  /* align-items: center; */
 }
 
 /* Convert button */
@@ -183,15 +189,15 @@
   height: 210px;
   background-color: white;
   position: relative;
-  right: -1035px;
-  top: -500px;
+  /* right: -100px; */
+  /* top: -500px; */
   border: 1px solid #adadad;
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 12px;
-  z-index: 100;
+  /* z-index: 100; */
 }
 
 /* Greetings to Customer */

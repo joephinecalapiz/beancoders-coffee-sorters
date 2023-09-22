@@ -95,7 +95,7 @@ const Sorters = () => {
   const filteredSorters = allSorters.filter((sorter) =>
     sorter.sorterName.toLowerCase().includes(searchText.toLowerCase())
   );
-  const sortedFilteredSorters = filteredSorters.sort((a, b) => b.id - a.id);
+  const sortedFilteredSorters = filteredSorters.sort((a, b) => a.id - b.id);
 
   const handleSearchInputChange = (e) => {
     setSearchText(e.target.value);
@@ -168,7 +168,7 @@ const Sorters = () => {
             </button>
           </div>
         </div>
-        <div className="table-container">
+        <div className="px-4">
           <div
             className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             style={{
