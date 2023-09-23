@@ -31,15 +31,15 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  // useEffect(() => {
+  //   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-    if (prefersDarkMode) {
-      document.body.classList.add('dark:bg-dark');
-    } else {
-      document.body.classList.remove('dark:bg-dark');
-    }
-  }, []);
+  //   if (prefersDarkMode) {
+  //     document.body.classList.add('dark:bg-dark');
+  //   } else {
+  //     document.body.classList.remove('dark:bg-dark');
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (authenticated && window.location.pathname === "/login") {
