@@ -14,6 +14,22 @@ const Profile = () => {
   const [isEditing, setEditing] = useState(false);
   const [userInfo, setUserInfo] = useState("");
   const [compInfo, setCompInfo] = useState("");
+  const [profileData, setProfileData] = useState({
+    profilePicture: "assets/beansLogo.png",
+    name: userInfo.name,
+    email: userInfo.email,
+    companyPhoneNumber: compInfo.companyNumber,
+    companyLocation: compInfo.companyLocation,
+    companyName: compInfo.companyName,
+  });
+
+  const [editableContent, setEditableContent] = useState({
+    name: profileData.name,
+    email: profileData.email,
+    companyName: profileData.companyName,
+    companyNumber: profileData.companyNumber,
+    companyLocation: profileData.companyLocation,
+  });
 
   useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts
@@ -26,8 +42,8 @@ const Profile = () => {
       ...prevProfileData,
       name: userInfo.name,
       email: userInfo.email,
-      companyPhoneNumber: compInfo.companyPhoneNumber,
-      address: compInfo.companyLocation,
+      companyNumber: compInfo.companyNumber,
+      companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
     }));
   }, [userInfo]);
@@ -38,8 +54,8 @@ const Profile = () => {
       ...prevProfileData,
       name: userInfo.name,
       email: userInfo.email,
-      companyPhoneNumber: compInfo.companyPhoneNumber,
-      address: compInfo.companyLocation,
+      companyNumber: compInfo.companyNumber,
+      companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
     }));
   }, [userInfo]);
@@ -68,37 +84,45 @@ const Profile = () => {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
-        method: "GET",
         headers: {
           Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
         },
       });
       if (!response.ok) {
         throw new Error("Failed to fetch company details data");
       }
-      const data = await response.json();
-      setCompInfo(data.details);
+      const compData = await response.json();
+      setCompInfo(compData.details);
     } catch (error) {
       console.error("Error fetching company details data:", error);
     }
   };
 
-  const [profileData, setProfileData] = useState({
-    profilePicture: "assets/beansLogo.png",
-    name: userInfo.name,
-    email: userInfo.email,
-    companyPhoneNumber: compInfo.companyPhoneNumber,
-    address: compInfo.companyLocation,
-    companyName: compInfo.companyName,
-  });
-
-  const [editableContent, setEditableContent] = useState({
-    name: profileData.name,
-    email: profileData.email,
-    companyName: profileData.companyName,
-    companyPhoneNumber: profileData.companyPhoneNumber,
-    address: profileData.address,
-  });
+  const updateCompanyDetails = async (newDetails) => {
+    try {
+      const token = localStorage.getItem("token");
+      const user_id = localStorage.getItem("user_id");
+      const response = await fetch(api_endpoint + `/edit-info/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newDetails),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to update company details");
+      }
+  
+      // Handle success response
+      console.log("Company details updated successfully");
+    } catch (error) {
+      console.error("Error updating company details:", error);
+    }
+  };
+  
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -130,26 +154,34 @@ const Profile = () => {
       name: editableContent.name,
       email: editableContent.email,
       companyName: editableContent.companyName,
-      companyPhoneNumber: editableContent.companyPhoneNumber,
-      address: editableContent.address,
+      companyNumber: editableContent.companyNumber,
+      companyLocation: editableContent.companyLocation,
     });
+    // update the details on the server
+  updateCompanyDetails(editableContent);
   };
 
   const handleCancelClick = () => {
     setEditing(false);
+    // Reset the editableContent to match the current profileData
+    setEditableContent({
+      name: profileData.name,
+      email: profileData.email,
+      companyName: profileData.companyName,
+      companyNumber: profileData.companyNumber,
+      companyLocation: profileData.companyLocation,
+    });
   };
+  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditableContent((prevContent) => ({
       ...prevContent,
       [name]: value,
-      [email]: value,
-      [companyName]: value,
-      [companyPhoneNumber]: value,
-      [address]: value,
     }));
   };
+  
 
   const handleProfilePictureClick = () => {
     document.getElementById("profilePictureInput").click();
@@ -332,10 +364,12 @@ const Profile = () => {
                               {isEditing ? (
                                 <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                   <input
-                                    type="email"
+                                    type="name"
                                     name="companyName"
                                     id="companyName"
                                     autoComplete="companyName"
+                                    value={editableContent.companyName}
+                                    onChange={handleInputChange}
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyName}
                                   />
@@ -366,16 +400,18 @@ const Profile = () => {
                                 <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                   <input
                                     type="number"
-                                    name="phoneNumber"
+                                    name="companyNumber"
                                     id="phoneNumber"
                                     autoComplete="phoneNumber"
+                                    value={editableContent.companyNumber}
+                                    onChange={handleInputChange}
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder={profileData.companyPhoneNumber}
+                                    placeholder={profileData.companyNumber}
                                   />
                                 </div>
                               ) : (
                                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
-                                  {profileData.companyPhoneNumber}
+                                  {profileData.companyNumber}
                                 </dd>
                               )}
                             </div>
@@ -387,16 +423,18 @@ const Profile = () => {
                                 <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                                   <input
                                     type="text"
-                                    name="address"
+                                    name="companyLocation"
                                     id="address"
                                     autoComplete="address"
+                                    value={editableContent.companyLocation}
+                                    onChange={handleInputChange}
                                     className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                    placeholder={profileData.address}
+                                    placeholder={profileData.companyLocation}
                                   />
                                 </div>
                               ) : (
                                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
-                                  {profileData.address}
+                                  {profileData.companyLocation}
                                 </dd>
                               )}
                             </div>
