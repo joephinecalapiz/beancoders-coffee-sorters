@@ -85,7 +85,7 @@ const SortingStatus = () => {
                 </div>
               ) : (
                 <div className="p-0.5 mb-2 w-full mt-6 relative">
-                  <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                  <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                     History Customer Status
                   </h1>
                 </div>
@@ -101,32 +101,13 @@ const SortingStatus = () => {
             ${navVisible ? "px-10" : "sm:ml-44"}`}
 
             >
-              <div style={{ fontFamily: "'Poppins', sans-serif" }}>
-                <span
-                  style={{
-                    display: "block",
-                    fontFamily: "'Poppins', sans-serif",
-                    fontSize: "24px",
-                    marginBottom: "1px",
-                  }}
-                >
-                  Customer's Name:
-                </span>
-                <span
-                  style={{
-                    display: "block",
-                    fontFamily: "'Poppins', sans-serif",
-                    fontSize: "20px",
-                    textDecoration: "underline",
-                    fontWeight: "bold",
-                    marginBottom: "20px",
-                  }}
-                >
-                  {customerName}
-                </span>
+              <div className="font-poppins">
+                <span className="block text-24px mb-1 dark:text-textTitle">Customer's Name:</span>
+                <span className="block text-20px underline font-bold mb-20 dark:text-textDesc">{customerName}</span>
               </div>
 
-              <div className="flex items-center justify-end mb-15 mr-6 z-10">
+
+              <div className="flex dark:text-textTitle items-center justify-end mb-15 mr-6 z-10">
                 <label
                   htmlFor="monthSelect"
                   className="mr-2 bold"
@@ -155,7 +136,7 @@ const SortingStatus = () => {
               </div>
             </div>
           </div>
-          <div className="table-container">
+          <div className="px-4">
             <div
               className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
               style={{
@@ -163,7 +144,7 @@ const SortingStatus = () => {
                 marginTop: "-20px",
               }}
             >
-              <div className="shadow overflow-hidden  overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+              <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
                 <table className="min-w-full divide-y divide-gray-200 customers-table">
                   <thead>
                     <tr>

@@ -26,13 +26,13 @@
 .data-size {
   font-size: 24px;
   font-weight: bold;
-  color: #7f1f19;
+  /* color: #7f1f19; */
   font-family: "Poppins", sans-serif;
 }
 /* Boxes */
 .grid-item {
   border-radius: 25px;
-  background-color: white;
+  /* background-color: white; */
   text-align: center;
   transition: background-color 0.3s;
 }

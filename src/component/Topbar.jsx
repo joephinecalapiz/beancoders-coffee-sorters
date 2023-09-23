@@ -84,7 +84,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
 
   return (
     <div className="z-20 fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
-      <div className="bg-black h-full w-full flex items-center">
+      <div className="bg-black dark:bg-gray h-full w-full flex items-center">
         <button
           type="button"
           onClick={handleToggleSidebar}
@@ -95,18 +95,18 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           <FaBars size={20} />
         </button>
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
-        <h1 className="logo-title poppins-font text-white text-16px ml-10">
+        {/* <h1 className="logo-title poppins-font text-white text-16px ml-10">
           BeanCoders
-        </h1>
+        </h1> */}
       </div>
-      <div className="flex bg-black items-center">
+      <div className="flex bg-black dark:bg-gray items-center">
         <div className="flex items-center relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={toggleDropdown}
             className={`flex relative ${
-              isDropdownOpen ? "bg-white-800" : "bg-black"
-            } bg-black`}
+              isDropdownOpen ? "bg-white-800" : "bg-black dark:bg-gray"
+            } bg-black dark:bg-gray`}
             aria-expanded={isDropdownOpen}
           >
             <span className="invisible">Dropdown user</span>
@@ -118,20 +118,20 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           </button>
           {isDropdownOpen && (
             <div
-              className="z-50 absolute top-12 right-0 my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600"
+              className="z-50 absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-gray divide-y divide-gray-100 rounded shadow"
               id="dropdown-user"
             >
               {/* Dropdown content */}
               <div className="px-4 py-3" role="none">
                 <p
-                  className="text-sm text-gray-900 dark:text-white poppins-font"
+                  className="text-sm poppins-font dark:text-textTitle"
                   role="none"
                 >
                   {userInfo.name}
                 </p>
                 {userInfo && (
                   <p
-                    className="text-sm font-medium text-gray-900 truncate dark:text-gray-300 poppins-font"
+                    className="text-sm dark:text-textDesc truncate poppins-font"
                     role="none"
                   >
                     {userInfo.email}
@@ -146,7 +146,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="block px-4 py-2 poppins-font text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
                   >
                     Profile
@@ -154,7 +154,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 </li>
                 <li onClick={handleSignOut}>
                   <a
-                    className="block px-4 py-2 text-sm poppins-font text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                    className="block px-4 py-2 text-sm poppins-font dark:text-textTitle hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
                   >
                     Sign out

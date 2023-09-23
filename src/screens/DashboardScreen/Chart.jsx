@@ -123,7 +123,7 @@ const ChartComponent = () => {
                             <DatePicker
                                 selected={selectedDate}
                                 onChange={handleDateChange}
-                                className="relative btn btn-sm mt-3 btn-outline-secondary"
+                                className="relative btn btn-sm mt-3 ml-3 dark:bg-container btn-outline-secondary"
                                 dateFormat="MMMM d, yyyy"
                                 peekNextMonth
                                 showMonthDropdown

@@ -194,56 +194,56 @@ const Dashboard = () => {
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
-          <div className="header">
+        <div className="header">
           <div
             className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
           >
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Dashboard
               </h1>
             </div>
           </div>
         </div>
         <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-            style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
-            }}
-          >
-             <div className="grid grid-cols-1 gap-12 mb-4 ">
+          className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          <div className="grid grid-cols-1 gap-12 mb-4 ">
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
-              <div className="flex items-center justify-center h-28 grid-item">
+              <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
                 <div>
                   <h1 className="text-black data-title m-auto ml-5 mr-5">
                     Pieces of Bad Beans
                   </h1>
-                  <h1 className="text-black data-size m-auto">
+                  <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
                     {beanCount && beanCount.bad !== null
                       ? `${beanCount.bad} pieces`
                       : "0"}
                   </h1>
                 </div>
               </div>
-              <div className="flex items-center justify-center h-28 grid-item">
+              <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
                 <div>
                   <h1 className="text-black data-title m-auto">
                     Pieces of Good Beans
                   </h1>
-                  <h1 className="text-black data-size m-auto">
+                  <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
                     {beanCount && beanCount.good !== null
                       ? `${beanCount.good} pieces`
                       : "0"}
                   </h1>
                 </div>
               </div>
-              <div className="flex items-center justify-center h-28 grid-item">
+              <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
                 <div>
                   <h1 className="text-black data-title m-auto">
                     KG of Bad Beans
                   </h1>
-                  <h1 className="text-black data-size m-auto">
+                  <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
                     {beanCount && beanCount.kilograms !== null
                       ? `${beanCount.kilograms} kilograms`
                       : "0"}
@@ -252,31 +252,17 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          </div>
-         
-          {/* <DatePicker
-            selected={selectedDate}
-            onChange={handleDateChange}
-            className={`p-10 ${navVisible ? "ml-0" : "sm:ml-64"} d-flex relative grid-item btn btn-sm mt-3 btn-outline-secondary`}
-            // className="grid-item btn btn-sm mt-3 btn-outline-secondary"
-            dateFormat="MMMM d, yyyy"
-            peekNextMonth
-            showMonthDropdown
-            placeholderText="mm-dd-yyyy"
-            showYearDropdown
-            dropdownMode="select"
-          /> */}
-          {/* <canvas className="chart my-4 w-100 m-3" id="myChart" width="500" height="150"></canvas> */}
-          <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-            style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
-            }}
-          >
-            <ChartComponent />
-          </div>
-          
+        </div>
+        <div
+          className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          <ChartComponent />
+        </div>
+
       </div>
       <Modal
         isOpen={isModalOpen}

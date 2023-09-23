@@ -158,7 +158,7 @@ const Status = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorting Status
               </h1>
             </div>
@@ -179,7 +179,7 @@ const Status = () => {
               placeholder="Search Sorters"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 border rounded focus:outline-none search-bar"
+              className="px-4 py-2 border dark:text-textTitle dark:bg-container rounded focus:outline-none search-bar"
             />
 
             {/* Add New button */}

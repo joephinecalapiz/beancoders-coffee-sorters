@@ -12,7 +12,6 @@ const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
-
   const monthOptions = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },
@@ -34,15 +33,15 @@ const Customers = () => {
     value: currentMonth,
     label: monthOptions[currentMonth - 1].label, // Get the label for the current month
   });
-
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
+
+  const toggleSidebar = () => {
+    showNavbar(!navVisible);
+  };
 
   const fetchCustomers = async () => {
     try {
@@ -161,7 +160,7 @@ const Customers = () => {
     closeModal();
   };
 
-  console.log(sortedFilteredCustomers);
+  console.log(sortedFilteredCustomers); //too many requests
 
   return (
     <>
@@ -175,7 +174,7 @@ const Customers = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Customers
               </h1>
             </div>
@@ -187,7 +186,7 @@ const Customers = () => {
         </div>
         <div className="search-and-button">
           <div
-            className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+            className={`dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
             ${navVisible ? "px-10" : "sm:ml-44"}`}
           >
             {/* Total number of customer */}
@@ -198,7 +197,7 @@ const Customers = () => {
               placeholder="Search Customers"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 border rounded focus:outline-none search-bar"
+              className="px-4 py-2 border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
             />
             {/* Add New button */}
             <button
@@ -227,7 +226,7 @@ const Customers = () => {
         <div className="calendar">
           <div className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}>
             <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
-              <div className="relative mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
+              <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
                 <label
                   htmlFor="monthSelect"
                   className="font-bold"
@@ -259,7 +258,7 @@ const Customers = () => {
                   />
                 </div>
               </div>
-              <div className="mb-5 md:mb-0 mobile:justify-self-center  flex items-center">
+              <div className="mb-5 dark:text-textTitle  md:mb-0 mobile:justify-self-center  flex items-center">
                 <label
                   htmlFor="yearSelect"
                   className="font-bold"
@@ -275,7 +274,7 @@ const Customers = () => {
                     id="yearSelect"
                     value={selectedYear}
                     onChange={(e) => setSelectedYear(e.target.value)}
-                    className="border rounded px-2 py-2 w-20 focus:outline-none focus:border-blue-400 poppins-font"
+                    className="border rounded px-2 py-2 w-20 dark:bg-container focus:outline-none focus:border-blue-400 poppins-font"
                     required
                   />
                 </div>
@@ -340,7 +339,7 @@ const Customers = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="custom-table">
+                <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
                   {sortedFilteredCustomers.map((customer) => (
                     <tr key={customer.id}>
                       <td className="poppins-font">{customer.id}</td>

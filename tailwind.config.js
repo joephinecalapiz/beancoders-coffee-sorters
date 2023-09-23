@@ -4,6 +4,7 @@
  */
 
 export default {
+  darkMode: 'class', // Enable dark mode
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     screens: {
@@ -33,12 +34,18 @@ export default {
         brown: {
           800: "#512615", // Replace this with your desired brown color code
         },
+        mainBrown: "#472214",
+        secondBrown: "#7f1f19"
       },
       textColor: {
         dark: "#ffffff", // Set the text color for dark mode
+        textDesc: "#9aa0a6",
+        textTitle: "#f3f3f4"
       },
       backgroundColor: {
-        dark: "#121212", // Set the background color for dark mode
+        dark: "#202124", // Set the background color for dark mode
+        gray: "#292a2d",
+        container: "#4d4f55",
       },
       fontFamily: {
         display: 'Poppins, sans-serif', // Adds a new `font-display` class

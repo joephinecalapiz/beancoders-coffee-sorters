@@ -11,7 +11,7 @@
 
 
 .table-header {
-  background-color: #512615;
+  background-color: #472214;
   color: white;
   text-align: left;
   font-size: 30px;
@@ -40,7 +40,7 @@
 
 /* Table - Cell Data (below the header) */
 .custom-table {
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   font-size: 16px;
   color: #333;
   text-align: center;
@@ -118,7 +118,7 @@
 
 /* Set a height for the container */
 .table-container {
-  background-color: #d4d4d4;
+  /* background-color: #d4d4d4; */
   max-height: calc(100vh - 200px); /* Adjust the height as needed */
   overflow-y: auto;
 }
@@ -127,7 +127,7 @@
 .customers-table th {
   position: sticky;
   top: 0;
-  background-color: #481c14;
+  background-color: #472214;
   color: white;
   font-weight: bold;
   text-align: center;

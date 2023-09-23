@@ -198,12 +198,12 @@ const Profile = () => {
         >
           <div className={`p-4 ${navVisible ? "ml-0" : "sm:ml-48"}`}>
             <div className="p-0.5 mb-5 w-full mt-7 relative">
-              <h1 className="text-black bg-white mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Profile
               </h1>
             </div>
             <div className={`p-4 ${navVisible ? "ml-0" : ""}`}>
-              <div className="max-w-2xl bg-white rounded-xl shadow-lg overflow-hidden lg:max-w-full">
+              <div className="max-w-2xl bg-white dark:bg-container rounded-xl shadow-lg overflow-hidden lg:max-w-full">
                 <div className="flex flex-col items-center justify-center ">
                   <div className="top relative circular-profile object-none object-top overflow-visible">
                     <label
@@ -225,10 +225,10 @@ const Profile = () => {
                       style={{ display: "none" }}
                     />
                   </div>
-                  <label className="admin-name poppins-font justify-center">
+                  <label className="admin-name text-black dark:text-textTitle poppins-font justify-center">
                     {profileData.name}
                   </label>
-                  <label className="admin-label poppins-font mb-5 justify-center">
+                  <label className="admin-label text-black dark:text-textDesc poppins-font mb-5 justify-center">
                     Admin
                   </label>
                 </div>
@@ -276,21 +276,21 @@ const Profile = () => {
               </div>
               <div className="max-w-2xl mt-5 overflow-hidden lg:max-w-full">
                 <div className="grid grid-cols-1 sm:grid-cols-3 grid-rows-1 gap-2">
-                  <div className="max-w-2xl sm:justify-self-start bg-white rounded-xl shadow-lg overflow-hidden lg:max-w-full">
+                  <div className="max-w-2xl sm:justify-self-start bg-white dark:bg-container rounded-xl shadow-lg overflow-hidden lg:max-w-full">
                     <div className="mobile:px-5 mt-5">
                       <div>
                         <div className="px-4 sm:px-0 align-center justify-center">
-                          <h3 className="text-base font-semibold leading-7 text-gray-900">
+                          <h3 className="text-base font-semibold leading-7 text-gray-900 dark:text-textTitle">
                             Admin Information
                           </h3>
-                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500 dark:text-textDesc">
                             Admin details.
                           </p>
                         </div>
                         <div className="mt-6 border-t border-gray-100">
                           <dl className="divide-y divide-gray-100">
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-semibold leading-6 text-gray-900">
+                              <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
                                 Full name
                               </dt>
                               {isEditing ? (
@@ -300,26 +300,26 @@ const Profile = () => {
                                     name="name"
                                     id="name"
                                     autoComplete="name"
-                                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-0 dark:text-textDesc bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.name}
                                   />
                                 </div>
                               ) : (
-                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
+                                <dd className="mt-1 text-sm dark:text-textDesc leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
                                   {profileData.name}
                                 </dd>
                               )}
                             </div>
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-semibold leading-6 text-gray-900">
+                              <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
                                 Role
                               </dt>
-                              <dd className="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 justify-self-end">
+                              <dd className="mt-1 text-sm leading-6 text-gray-900 dark:text-textDesc sm:col-span-2 sm:mt-0 justify-self-end">
                                 Admin
                               </dd>
                             </div>
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-semibold leading-6 text-gray-900">
+                              <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
                                 Email address
                               </dt>
                               {isEditing ? (
@@ -329,12 +329,12 @@ const Profile = () => {
                                     name="email"
                                     id="email"
                                     autoComplete="email"
-                                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-0 dark:text-textDesc bg-transparent py-1.5 pl-1 text-gray-900  placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.email}
                                   />
                                 </div>
                               ) : (
-                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
+                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
                                   {profileData.email}
                                 </dd>
                               )}
@@ -344,21 +344,21 @@ const Profile = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="max-w-2xl:mt-5 col-span-2 max-w-2xl bg-white rounded-xl shadow-lg overflow-hidden lg:max-w-full">
+                  <div className="max-w-2xl:mt-5 col-span-2 max-w-2xl bg-white dark:bg-container rounded-xl shadow-lg overflow-hidden lg:max-w-full">
                     <div className="mobile:px-5 mt-5">
                       <div>
                         <div className="px-4 sm:px-0 align-center justify-center">
-                          <h3 className="text-base font-semibold leading-7 text-gray-900">
+                          <h3 className="text-base font-semibold leading-7 text-gray-900 dark:text-textTitle">
                             Company Information
                           </h3>
-                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
+                          <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500 dark:text-textDesc">
                             Company details.
                           </p>
                         </div>
                         <div className="mt-6 border-t border-gray-100">
                           <dl className="divide-y divide-gray-100">
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-semibold leading-6 text-gray-900 align-center self-center">
+                              <dt className="text-sm font-semibold leading-6 text-gray-900 align-center self-center dark:text-textTitle">
                                 Company Name
                               </dt>
                               {isEditing ? (
@@ -370,12 +370,12 @@ const Profile = () => {
                                     autoComplete="companyName"
                                     value={editableContent.companyName}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyName}
                                   />
                                 </div>
                               ) : (
-                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
+                                <dd className="mt-1 text-sm leading-6 dark:text-textDesc sm:col-span-2 sm:mt-0 justify-self-end">
                                   {profileData.companyName}
                                 </dd>
                               )}
@@ -393,7 +393,7 @@ const Profile = () => {
                             )} */}
                             </div>
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-semibold leading-6 text-gray-900">
+                              <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
                                 Phone Number
                               </dt>
                               {isEditing ? (
@@ -405,18 +405,18 @@ const Profile = () => {
                                     autoComplete="phoneNumber"
                                     value={editableContent.companyNumber}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyNumber}
                                   />
                                 </div>
                               ) : (
-                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
+                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
                                   {profileData.companyNumber}
                                 </dd>
                               )}
                             </div>
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                              <dt className="text-sm font-semibold leading-6 text-gray-900">
+                              <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
                                 Address
                               </dt>
                               {isEditing ? (
@@ -428,12 +428,12 @@ const Profile = () => {
                                     autoComplete="address"
                                     value={editableContent.companyLocation}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyLocation}
                                   />
                                 </div>
                               ) : (
-                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
+                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
                                   {profileData.companyLocation}
                                 </dd>
                               )}
