@@ -178,13 +178,13 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </p>
             <div className="flex justify-end">
               <button
-                className="bg-red-500 text-white poppins-font px-4 py-2 rounded mr-2"
+                className="bg-red-500 text-white dark:bg-container poppins-font px-4 py-2 rounded mr-2"
                 onClick={handleLogoutConfirmed}
               >
-                Yes
+                Logout
               </button>
               <button
-                className="bg-gray-500 text-white poppins-font px-4 py-2 rounded"
+                className="bg-gray text-white poppins-font px-4 py-2 rounded"
                 onClick={handleLogoutCancelled}
               >
                 Cancel
