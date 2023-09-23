@@ -264,7 +264,7 @@ const Status = () => {
                       <td className="poppins-font">
                         <button
                           onClick={() => {
-                            navigate(`/receipt/${sorted.customerName}`);
+                            navigate(`status/receipt/${sorted.customerName}`);
                             // navigate(`/customerstatus/${sorted.customerName}`);
                           }}
                           className="see-more-button focus:outline-none"

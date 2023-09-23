@@ -113,10 +113,10 @@ function App() {
         <Route path="/company" element={<CompanyDetails />} />
         <Route path="/profile" element={<Profile />} />
         <Route
-          path="/customerstatus/:customerName"
+          path="customer/customerstatus/:customerName"
           element={<SortingStatus />}
         />
-        <Route path="/receipt/:customerId" element={<Receipt />} />
+        <Route path="status/receipt/:customerId" element={<Receipt />} />
       </Routes>
     </BrowserRouter>
   );

@@ -13,7 +13,7 @@ import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 const Receipt = () => {
   const { customerId } = useParams();
   const [receiptDetails, setReceiptDetails] = useState([]);
-  const [navVisible, showNavbar] = useState(false);
+  const [navVisible, showNavbar] = useState(true);
   const contentRef = useRef(null);
 
   useEffect(() => {

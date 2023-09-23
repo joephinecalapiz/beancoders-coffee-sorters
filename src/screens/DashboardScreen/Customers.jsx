@@ -355,7 +355,7 @@ const Customers = () => {
                           onClick={() => {
                             sessionStorage.setItem("customerId", customer.id);
                             navigate(
-                              `/customerstatus/${customer.customerName}`
+                              `customer/customerstatus/${customer.customerName}`
                             );
                           }}
                           className="see-more-button focus:outline-none"
