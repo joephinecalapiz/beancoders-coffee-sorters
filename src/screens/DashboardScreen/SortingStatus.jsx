@@ -186,7 +186,9 @@ const SortingStatus = () => {
                         <td className="poppins-font text-center">
                           {historyItem.kiloOfBeans} kilo
                         </td>
-                        <td className="poppins-font text-center">Status</td>
+                        <td className="poppins-font text-center">
+                        {historyItem.status}
+                        </td>
                       </tr>
                     ))}
                   </tbody>
