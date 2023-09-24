@@ -15,6 +15,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const navigate = useNavigate();
   const [userInfo, setUserInfo] = useState(null);
   const dropdownRef = useRef();
+  const [isRotated, setRotated] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen((prevState) => !prevState);
@@ -82,6 +83,11 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     setConfirmationModalOpen(false);
   };
 
+  const handleRotate = () => {
+    // Toggle the rotation state
+    setRotated(!isRotated);
+  };
+
   return (
     <div className="z-20 fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
       <div className="bg-black dark:bg-gray h-full w-full flex items-center">
@@ -89,11 +95,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           type="button"
           onClick={handleToggleSidebar}
           className={`ml-6 text-white transform transition-transform duration-300 ${
-            collapsed ? "collapsed" : ""
+            collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
           }`}
         >
           <FaBars size={20} />
         </button>
+
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
         {/* <h1 className="logo-title poppins-font text-white text-16px ml-10">
           BeanCoders
