@@ -111,18 +111,20 @@ const Landing = () => {
                 alt="beansLogo"
                 className="h-25 w-25 mb-1 relative top-[-45px] md:left-0 md:mt-0"
               />
-              <p className="text-black font-bold relative top-[-70px] text-3xl font-poppins">
+              <p className="text-black dark:text-textTitle font-bold relative top-[-70px] text-3xl font-poppins">
                 {establishment.name}
               </p>
-              <p className="text-black relative top-[-45px] text-3xl font-poppins">
+              <p className="text-black dark:text-textDesc relative top-[-45px] text-3xl font-poppins">
                 {establishment.address}
               </p>
-              <p className="text-black relative top-[-20px] text-3xl font-poppins">
+              <p className="text-black dark:text-textDesc relative top-[-20px] text-3xl font-poppins">
                 {establishment.phone}
               </p>
             </div>
           ))}
         </div>
+        <div className="flex items-center"></div>
+            <br />
       </div>
     </>
   );
