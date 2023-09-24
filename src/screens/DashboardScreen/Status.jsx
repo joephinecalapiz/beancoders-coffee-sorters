@@ -251,7 +251,7 @@ const Status = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="sort-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
+                <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
                   {status.map((sorted) => (
                     <tr key={sorted.id}>
                       <td className="poppins-font">
