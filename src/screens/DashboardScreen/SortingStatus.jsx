@@ -174,7 +174,7 @@ const SortingStatus = () => {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 custom-table">
+                  <tbody className="bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200 custom-table">
                     {allHistory.map((historyItem) => (
                       <tr key={historyItem.id}>
                         <td className="poppins-font text-center">

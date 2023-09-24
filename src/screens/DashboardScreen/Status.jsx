@@ -251,9 +251,9 @@ const Status = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="sort-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
                   {status.map((sorted) => (
-                    <tr key={sorted.id} className="sort-table">
+                    <tr key={sorted.id}>
                       <td className="poppins-font">
                         {new Date(sorted.created_at).toLocaleDateString()}
                       </td>

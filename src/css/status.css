@@ -28,7 +28,7 @@
 
 /* Table - Cell Data (below the header) */
 .sort-table {
-  background-color: #f2f2f2;
+  /* background-color: #f2f2f2; */
   font-size: 16px;
   color: #333;
   text-align: left;
