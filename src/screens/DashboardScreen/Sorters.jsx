@@ -9,6 +9,8 @@ import "../.././css/datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
+import AxiosRateLimit from "axios-rate-limit";
+
 import api_endpoint from "../../config";
 
 const Sorters = () => {
@@ -17,6 +19,10 @@ const Sorters = () => {
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
+  const axiosInstance = AxiosRateLimit(axios.create(), {
+    maxRequests: 5,
+    perMilliseconds: 1000,
+  }); // Example: 5 requests per second
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -34,7 +40,7 @@ const Sorters = () => {
     const headers = {
       Authorization: "Bearer " + token,
     };
-    axios
+    axiosInstance
       .get(api_endpoint + "/sorters/" + user_id, { headers })
       .then((response) => {
         const sorters = response.data;
@@ -59,7 +65,7 @@ const Sorters = () => {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
     try {
-      const response = await axios.post(
+      const response = await axiosInstance.post(
         api_endpoint + "/add/sorter",
         {
           user_id: user_id,
@@ -142,7 +148,7 @@ const Sorters = () => {
               value={searchText}
               onChange={handleSearchInputChange}
               className="px-4 py-2 dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
-              style={{ width: "80%", maxWidth: "800px", }}
+              style={{ width: "80%", maxWidth: "800px" }}
             />
             {/* Add New button */}
             <button
