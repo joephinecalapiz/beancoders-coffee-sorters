@@ -94,7 +94,7 @@ const Profile = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+      const response = await fetch(`${api_endpoint}/fetch-info/${user_id}` , {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
