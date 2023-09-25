@@ -4,9 +4,11 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from "../assets/beansLogo.png";
 import Navbar from "../component/Navbar.jsx";
-
+import axios from "axios";
+import api_endpoint from "../config";
 const Landing = () => {
   const [authenticated, setAuthenticated] = useState(null);
+  const [companyData, setCompanyData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +20,13 @@ const Landing = () => {
     }
     document.title = "Home";
   }, []);
-
+  useEffect(()=>{
+   axios.get(api_endpoint + '/companies')
+    .then((response)=> {
+      const data = response.data;
+      setCompanyData(data.companies.map((company) => company.details[0]));
+    });
+  },[]);
   useEffect(() => {
     if (authenticated) {
       navigate("/dashboard");
@@ -101,7 +109,7 @@ const Landing = () => {
 
         {/* Row 1*/}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 justify-items-center items-center mb-8 mx-4 md:mx-8">
-          {establishmentData.map((establishment, index) => (
+          {companyData.map((detail, index) => (
             <div
               key={index}
               className="bg-gray-200 h-59 w-full md:w-74 rounded-lg p-4 border border-gray-300"
@@ -112,13 +120,13 @@ const Landing = () => {
                 className="h-25 w-25 mb-1 relative top-[-45px] md:left-0 md:mt-0"
               />
               <p className="text-black dark:text-textTitle font-bold relative top-[-70px] text-3xl font-poppins">
-                {establishment.name}
+                {detail.companyName}
               </p>
               <p className="text-black dark:text-textDesc relative top-[-45px] text-3xl font-poppins">
-                {establishment.address}
+                {detail.companyLocation}
               </p>
               <p className="text-black dark:text-textDesc relative top-[-20px] text-3xl font-poppins">
-                {establishment.phone}
+                {detail.companyNumber}
               </p>
             </div>
           ))}
