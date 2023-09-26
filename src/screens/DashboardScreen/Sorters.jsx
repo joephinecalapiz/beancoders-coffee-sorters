@@ -15,15 +15,25 @@ import api_endpoint from "../../config";
 
 const Sorters = () => {
   const [navVisible, showNavbar] = useState(false);
-
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
   const axiosInstance = AxiosRateLimit(axios.create(), {
     maxRequests: 5,
     perMilliseconds: 1000,
-  }); // Example: 5 requests per second
+  });
 
+  axiosInstance.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+      if (error.response && error.response.status === 429) {
+        const retryAfter = parseInt(error.response.headers["retry-after"]) || 1;
+        await new Promise((resolve) => setTimeout(resolve, retryAfter * 1000));
+        return await axiosInstance.request(error.config);
+      }
+      return Promise.reject(error);
+    }
+  );
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSorterName, setNewSorterName] = useState("");
@@ -31,22 +41,28 @@ const Sorters = () => {
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [allSorters, setAllSorters] = useState([]);
-
+  const [reloadSorterData, setReloadSorterData] = useState(null);
   useEffect(() => {
     document.title = "Sorters";
-
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
-    const headers = {
-      Authorization: "Bearer " + token,
-    };
-    axiosInstance
-      .get(api_endpoint + "/sorters/" + user_id, { headers })
-      .then((response) => {
-        const sorters = response.data;
-        setAllSorters(sorters.sorters);
+    //const cachedSorterData = localStorage.getItem("sorterData");
+    // if(cachedSorterData){
+    //   setAllSorters(JSON.parse(cachedSorterData));
+    // }
+    // else{
+      const token = localStorage.getItem("token");
+      const user_id = localStorage.getItem("user_id");
+      const headers = {
+        Authorization: "Bearer " + token,
+      };
+      axiosInstance
+        .get(api_endpoint + "/sorters/" + user_id, { headers })
+        .then((response) => {
+          const sorters = response.data;
+          setAllSorters(sorters.sorters);
+          //localStorage.setItem('sorterData', JSON.stringify(sorters.sorters))
       });
-  }, [allSorters]);
+   // }
+  }, []);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -82,10 +98,12 @@ const Sorters = () => {
         }
       );
 
-      console.log(response.status);
-      console.log(token);
-      console.log(user_id);
-      closeModal();
+      if(response.status === 200){
+        setAllSorters([...allSorters, response.data.sorter]);
+        const reloadSorterData = [...allSorters, response.data.sorter];
+        //localStorage.setItem('customerData', JSON.stringify(reloadSorterData))
+        closeModal();
+      }
     } catch (error) {
       console.error("Error adding sorter:", error);
       // Handle error scenarios if needed
@@ -219,7 +237,7 @@ const Sorters = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                  {sortedFilteredSorters.map((sorter) => (
+                  {(reloadSorterData || sortedFilteredSorters).map((sorter) => (
                     <tr key={sorter.id}>
                       <td className="poppins-font">{sorter.id}</td>
                       <td className="poppins-font">{sorter.sorterName}</td>
@@ -230,7 +248,7 @@ const Sorters = () => {
                       </td>
                     </tr>
                   ))}
-                </tbody>
+              </tbody>
               </table>
             </div>
           </div>
