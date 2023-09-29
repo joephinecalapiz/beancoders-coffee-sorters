@@ -20,13 +20,12 @@ const Landing = () => {
     }
     document.title = "Home";
   }, []);
-  useEffect(()=>{
-   axios.get(api_endpoint + '/companies')
-    .then((response)=> {
+  useEffect(() => {
+    axios.get(api_endpoint + "/companies").then((response) => {
       const data = response.data;
       setCompanyData(data.companies.map((company) => company.details[0]));
     });
-  },[]);
+  }, []);
   useEffect(() => {
     if (authenticated) {
       navigate("/dashboard");
@@ -132,7 +131,7 @@ const Landing = () => {
           ))}
         </div>
         <div className="flex items-center"></div>
-            <br />
+        <br />
       </div>
     </>
   );
