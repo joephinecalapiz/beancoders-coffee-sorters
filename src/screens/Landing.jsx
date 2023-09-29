@@ -24,6 +24,8 @@ const Landing = () => {
     axios.get(api_endpoint + "/companies").then((response) => {
       const data = response.data;
       setCompanyData(data.companies.map((company) => company.details[0]));
+
+      console.log(companyData);
     });
   }, []);
   useEffect(() => {
@@ -108,27 +110,35 @@ const Landing = () => {
 
         {/* Row 1*/}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 justify-items-center items-center mb-8 mx-4 md:mx-8">
-          {companyData.map((detail, index) => (
-            <div
-              key={index}
-              className="bg-gray-200 h-59 w-full md:w-74 rounded-lg p-4 border border-gray-300"
-            >
-              <img
-                src={BeansLogo}
-                alt="beansLogo"
-                className="h-25 w-25 mb-1 relative top-[-45px] md:left-0 md:mt-0"
-              />
-              <p className="text-black dark:text-textTitle font-bold relative top-[-70px] text-3xl font-poppins">
-                {detail.companyName}
-              </p>
-              <p className="text-black dark:text-textDesc relative top-[-45px] text-3xl font-poppins">
-                {detail.companyLocation}
-              </p>
-              <p className="text-black dark:text-textDesc relative top-[-20px] text-3xl font-poppins">
-                {detail.companyNumber}
-              </p>
-            </div>
-          ))}
+          {companyData.length > 0 ? (
+            companyData.map((detail, index) => (
+              <div
+                key={index}
+                className="bg-gray-200 h-59 w-full md:w-74 rounded-lg p-4 border border-gray-300"
+              >
+                <img
+                  src={BeansLogo}
+                  alt="beansLogo"
+                  className="h-25 w-25 mb-1 relative top-[-45px] md:left-0 md:mt-0"
+                />
+                {detail && (
+                  <>
+                    <p className="text-black dark:text-textTitle font-bold relative top-[-70px] text-3xl font-poppins">
+                      {detail.companyName}
+                    </p>
+                    <p className="text-black dark:text-textDesc relative top-[-45px] text-3xl font-poppins">
+                      {detail.companyLocation}
+                    </p>
+                    <p className="text-black dark:text-textDesc relative top-[-20px] text-3xl font-poppins">
+                      {detail.companyNumber}
+                    </p>
+                  </>
+                )}
+              </div>
+            ))
+          ) : (
+            <div>No company data available.</div>
+          )}
         </div>
         <div className="flex items-center"></div>
         <br />
