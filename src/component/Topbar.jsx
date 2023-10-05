@@ -60,15 +60,14 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   };
 
   // Function to clear session storage on logout
-function clearSessionStorage() {
-  sessionStorage.clear(); // This will remove all data from session storage
-}
+  function clearSessionStorage() {
+    sessionStorage.clear(); // This will remove all data from session storage
+  }
 
   const handleLogoutConfirmed = () => {
-     // Clear session storage
-  clearSessionStorage();
-  
-  
+    // Clear session storage
+    clearSessionStorage();
+
     // Clear the user's token from local storage
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");

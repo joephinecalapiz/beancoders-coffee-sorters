@@ -12,6 +12,7 @@ const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
+  const [isFetching, setIsFetching] = useState(false);
   const monthOptions = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },
@@ -38,13 +39,18 @@ const Customers = () => {
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
-
+  const [reloadCustomerData, setReloadCustomerData] = useState(null);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
 
   const fetchCustomers = async () => {
     try {
+      // const cachedCustomerData = localStorage.getItem("customerData");
+      // if (cachedCustomerData) {
+      //   setAllCustomers(JSON.parse(cachedCustomerData));
+      // }
+
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/customers/" + user_id, {
@@ -53,11 +59,14 @@ const Customers = () => {
           Authorization: "Bearer " + token,
         },
       });
+
       if (!response.ok) {
         throw new Error("Failed to fetch customer data");
       }
+
       const data = await response.json();
       setAllCustomers(data.customer);
+      //localStorage.setItem("customerData", JSON.stringify(data.customer));
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
@@ -68,7 +77,7 @@ const Customers = () => {
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
-  }, [selectedMonth, selectedYear, fetchCustomers]);
+  }, [selectedMonth, selectedYear]);
 
   const [searchText, setSearchText] = useState("");
 
@@ -147,9 +156,13 @@ const Customers = () => {
       if (!response.ok) {
         throw new Error("Fail to add customer");
       }
-      const newCustomer = await response.json();
-      setAllCustomers([...allCustomers, newCustomer]);
-      navigate(".");
+      if(response.status === 200){
+        const newCustomer = await response.json();
+        setAllCustomers([...allCustomers, newCustomer.customer]);
+        //localStorage.setItem('customerData', JSON.stringify(data.customer));
+        closeModal();
+        //navigate(".");
+      }
     } catch (error) {
       console.error(error);
     }
@@ -160,7 +173,7 @@ const Customers = () => {
     closeModal();
   };
 
-  console.log(sortedFilteredCustomers); //too many requests
+  //console.log(sortedFilteredCustomers); //too many requests
 
   return (
     <>
@@ -341,7 +354,7 @@ const Customers = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                  {sortedFilteredCustomers.map((customer) => (
+                  {(reloadCustomerData || sortedFilteredCustomers).map((customer) => (
                     <tr key={customer.id}>
                       <td className="poppins-font">{customer.id}</td>
                       <td className="poppins-font">

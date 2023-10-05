@@ -44,7 +44,9 @@ const Navbar = () => {
     <div className="relative text-white">
       {/* Mobile menu button */}
       <div
-        className="md:hidden absolute top-6 right-4 cursor-pointer z-50"
+        className={`md:hidden absolute top-6 right-4 cursor-pointer z-50 transition-transform transform ${
+          menuOpen ? "rotate-clockwise" : ""
+        }`}
         onClick={toggleMenu}
       >
         <svg
@@ -65,7 +67,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <ul className="md:hidden flex flex-col justify-center items-center absolute top-0 left-0 w-screen h-screen bg-black bg-opacity-90">
+        <ul className="md:hidden flex flex-col justify-center items-start p-20 absolute left-40 right-0 w-96 h-screen bg-black ">
           {navigation.map((item) => (
             <li
               key={item.href}
@@ -85,12 +87,13 @@ const Navbar = () => {
       )}
 
       {/* Desktop menu */}
-      <div className="top-0 bg-black bg-opacity-5 backdrop-blur-md absolute flex flex-row justify-between w-full text-white px-16">
-        <img
+      {/* <div className="top-0 bg-black bg-opacity-5 backdrop-blur-md absolute flex flex-row justify-end w-full text-white px-16"> */}
+      <div className="top-0 bg-black bg-opacity-5 absolute flex flex-row justify-end w-full text-white px-16">
+        {/* <img
           src={BeansLogo}
           alt="BeansLogo"
           className="h-20 w-20 md:mt-5 md:space-x-8"
-        />
+        /> */}
         <ul className="hidden md:flex md:flex-row md:justify-between md:mt-5 md:space-x-8">
           {navigation.map((item) => (
             <li

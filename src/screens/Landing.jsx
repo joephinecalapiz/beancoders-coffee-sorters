@@ -4,9 +4,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from "../assets/beansLogo.png";
 import Navbar from "../component/Navbar.jsx";
+import axios from "axios";
+import api_endpoint from "../config";
+import image_endpoint from "../image-config";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { faBuilding } from "@fortawesome/free-solid-svg-icons";
+import { faPhone } from "@fortawesome/free-solid-svg-icons";
 
 const Landing = () => {
   const [authenticated, setAuthenticated] = useState(null);
+  const [companyData, setCompanyData] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +26,22 @@ const Landing = () => {
     }
     document.title = "Home";
   }, []);
+  useEffect(() => {
+    axios.get(api_endpoint + "/companies").then((response) => {
+      const data = response.data;
+      setCompanyData(
+        data.companies.map((company) => {
+          const detail = company.details[0];
+          if (detail && detail.images) {
+            detail.images = detail.images.replace(/[\[\]\\\"]/g, "");
+          }
+          return detail;
+        })
+      );
 
+      console.log(companyData);
+    });
+  }, []);
   useEffect(() => {
     if (authenticated) {
       navigate("/dashboard");
@@ -28,50 +51,6 @@ const Landing = () => {
   if (authenticated === null) {
     return <div>Loading...</div>;
   }
-
-  const establishmentData = [
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-    // Add more establishment objects here
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-    {
-      name: "The Coffee Haven",
-      address: "Makati City, Metro Manila",
-      phone: "123-456-7890",
-    },
-  ];
 
   return (
     <>
@@ -100,31 +79,59 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 justify-items-center items-center mb-8 mx-4 md:mx-8">
-          {establishmentData.map((establishment, index) => (
-            <div
-              key={index}
-              className="bg-gray-200 h-59 w-full md:w-74 rounded-lg p-4 border border-gray-300"
-            >
-              <img
-                src={BeansLogo}
-                alt="beansLogo"
-                className="h-25 w-25 mb-1 relative top-[-45px] md:left-0 md:mt-0"
-              />
-              <p className="text-black dark:text-textTitle font-bold relative top-[-70px] text-3xl font-poppins">
-                {establishment.name}
-              </p>
-              <p className="text-black dark:text-textDesc relative top-[-45px] text-3xl font-poppins">
-                {establishment.address}
-              </p>
-              <p className="text-black dark:text-textDesc relative top-[-20px] text-3xl font-poppins">
-                {establishment.phone}
-              </p>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 justify-items-center items-center mb-14 mx-4 md:mx-8">
+          {companyData.length > 0 ? (
+            companyData.map((detail, index) => (
+              <div
+                key={index}
+                className="bg-brown md:min-h-[450px] md:w-76 rounded-lg p-2  flex flex-col relative shadow-4xl z-100"
+              >
+                {detail && detail.images ? (
+                  <img
+                    src={`${image_endpoint}/storage/${detail.images}`}
+                    alt="beansLogo"
+                    className="h-25 w-25 max-h-full max-w-full mb-4 items-center "
+                  />
+                ) : (
+                  <div>No image available</div>
+                )}
+
+                <div className="text-white dark:text-textTitle font-bold text-3xl font-poppins mt-3 flex items-center">
+                  <FontAwesomeIcon icon={faBuilding} className="mr-10" />
+                  <span className="flex-grow">{detail.companyName}</span>
+                </div>
+
+                {detail && (
+                  <div className="text-white dark:text-textDesc text-3xl font-poppins mt-5 flex items-center">
+                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-10" />
+                    <a
+                      href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
+                        detail.companyLocation
+                      )}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-grow cursor-pointer"
+                    >
+                      {detail.companyLocation}
+                    </a>
+                  </div>
+                )}
+
+                {detail && (
+                  <div className="text-white dark:text-textDesc text-3xl font-poppins mt-5 flex items-center">
+                    <FontAwesomeIcon icon={faPhone} className="mr-10" />
+                    <span className="flex-grow">{detail.companyNumber}</span>
+                  </div>
+                )}
+              </div>
+            ))
+          ) : (
+            <div>No company data available.</div>
+          )}
         </div>
+
         <div className="flex items-center"></div>
-            <br />
+        <br />
       </div>
     </>
   );
