@@ -17,6 +17,8 @@ import Profile from "./screens/ProfileScreen/Profile";
 import SortingStatus from "./screens/DashboardScreen/SortingStatus";
 import Receipt from "./screens/ReceiptScreen/Receipt";
 import CompanyDetails from "./screens/AuthScreen/CompanyDetails";
+import ManageUsers from "./superadmin/users/ManageUsers";
+import api_endpoint from "./config";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -31,6 +33,8 @@ function App() {
     }
   }, []);
 
+
+
   // useEffect(() => {
   //   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
@@ -41,11 +45,7 @@ function App() {
   //   }
   // }, []);
 
-  useEffect(() => {
-    if (authenticated && window.location.pathname === "/login") {
-      window.location.replace("/dashboard");
-    }
-  }, [authenticated]);
+
 
   if (authenticated === null) {
     return (
@@ -106,17 +106,65 @@ function App() {
             )
           }
         />
+        <Route
+          path="/profile"
+          element={
+            authenticated ? (
+              <div>
+                <Profile />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/customers/customerstatus/:customerName"
+          element={
+            authenticated ? (
+              <div>
+                <SortingStatus />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/status/receipt/:customerId"
+          element={
+            authenticated ? (
+              <div>
+                <Receipt />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
         <Route path="/" element={<Landing />} />
         <Route path="/aboutus" element={<About />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/company" element={<CompanyDetails />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route
+        {/* <Route path="/profile" element={<Profile />} /> */}
+        {/* <Route
           path="/customers/customerstatus/:customerName"
           element={<SortingStatus />}
+        /> */}
+        {/* <Route path="/status/receipt/:customerId" element={<Receipt />} /> */}
+        <Route
+          path="/manageusers"
+          element={
+            authenticated ? (
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                <ManageUsers />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
         />
-        <Route path="/status/receipt/:customerId" element={<Receipt />} />
       </Routes>
     </BrowserRouter>
   );

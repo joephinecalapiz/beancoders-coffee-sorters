@@ -248,6 +248,7 @@ const Customers = () => {
                       option: (provided) => ({
                         ...provided,
                         fontFamily: "'Poppins', sans-serif",
+                        color: "#000"
                       }),
                       singleValue: (provided) => ({
                         ...provided,
