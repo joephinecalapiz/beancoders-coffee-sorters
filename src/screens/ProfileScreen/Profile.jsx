@@ -60,18 +60,8 @@ const Profile = () => {
     }));
   }, [userInfo]);
 
-  let lastRequestTime = 0;
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
-    const requestInterval = 1000;
-    const currentTime = Date.now();
-    const timeSinceLastRequest = currentTime - lastRequestTime;
-
-    if (timeSinceLastRequest < requestInterval) {
-      const waitTime = requestInterval - timeSinceLastRequest;
-      await new Promise((resolve) => setTimeout(resolve, waitTime));
-    }
-
     try {
       const response = await fetch(api_endpoint + "/user", {
         headers: {
@@ -84,7 +74,6 @@ const Profile = () => {
       }
       const data = await response.json();
       setUserInfo(data.user);
-      lastRequestTime = Date.now()
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
@@ -94,7 +83,7 @@ const Profile = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(`${api_endpoint}/fetch-info/${user_id}` , {
+      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -465,3 +454,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
