@@ -42,6 +42,7 @@ const Landing = () => {
       console.log(companyData);
     });
   }, []);
+
   useEffect(() => {
     if (authenticated) {
       navigate("/dashboard");
@@ -96,10 +97,19 @@ const Landing = () => {
                   <div>No image available</div>
                 )}
 
-                <div className="text-white dark:text-textTitle font-bold text-3xl font-poppins mt-3 flex items-center">
+                {detail && detail.companyName ? (
+                  <div className="text-white dark:text-textTitle font-bold text-3xl font-poppins mt-3 flex items-center">
+                    <FontAwesomeIcon icon={faBuilding} className="mr-10" />
+                    <span className="flex-grow">{detail.companyName}</span>
+                  </div>
+                ) : (
+                  <div>No data available</div>
+                )}
+
+                {/* <div className="text-white dark:text-textTitle font-bold text-3xl font-poppins mt-3 flex items-center">
                   <FontAwesomeIcon icon={faBuilding} className="mr-10" />
                   <span className="flex-grow">{detail.companyName}</span>
-                </div>
+                </div> */}
 
                 {detail && (
                   <div className="text-white dark:text-textDesc text-3xl font-poppins mt-5 flex items-center">
