@@ -12,11 +12,11 @@ import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 
 const Receipt = () => {
   const { customerId } = useParams();
+
   const [receiptDetails, setReceiptDetails] = useState([]);
   const [navVisible, showNavbar] = useState(true);
   const contentRef = useRef(null);
   const [compInfo, setCompInfo] = useState("");
-
 
   useEffect(() => {
     fetchReceiptDetails();
@@ -59,7 +59,6 @@ const Receipt = () => {
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
-
 
   const handleConvertToPDF = () => {
     const pageContent = contentRef.current;
@@ -108,9 +107,26 @@ const Receipt = () => {
           handleToggleSidebar={toggleSidebar}
         />
         <div className={`p-4 mt-10 ${navVisible ? "ml-20" : "sm:ml-44"}`}>
-          <div className="grid grid-cols-1 tablet:grid-cols-2 gap-2 mt-10 justify-center">
+          <div className="md:ml-32 md:grid md:tablet:grid-cols-3 tablet:grid-cols-2 gap-20 mt-10 ">
+            <div className="flex self-center">
+              <div className="white-box">
+                <div className="white-box-greeting">
+                  Hi, <span className="bold-customer-id">{customerId}</span>!
+                </div>
+                <div className="white-box-text">
+                  Would you like to save this as a PDF file?
+                </div>
+                <button
+                  className="btn white-box-button custom-button"
+                  onClick={handleConvertToPDF}
+                >
+                  Click here
+                </button>
+              </div>
+            </div>
+
             <div
-              className="flex hidden sm:block justify-self-end border rounded p-10 bg-white whole-receipt"
+              className="md:flex flex-col sm:flex-row border rounded p-2 mt-4 bg-white whole-receipt"
               ref={contentRef}
             >
               <div className="">
@@ -129,8 +145,12 @@ const Receipt = () => {
                   </div>
                   <div className="company-info">
                     <p className="company-name">{compInfo.companyName}</p>
-                    <p className="company-details">Address: {compInfo.companyLocation}</p>
-                    <p className="company-details">Contact Number: {compInfo.companyNumber}</p>
+                    <p className="company-details">
+                      Address: {compInfo.companyLocation}
+                    </p>
+                    <p className="company-details">
+                      Contact Number: {compInfo.companyNumber}
+                    </p>
                   </div>
                 </div>
                 <div className="receipt-header">OFFICIAL RECEIPT</div>
@@ -187,24 +207,11 @@ const Receipt = () => {
                   </table>
                 </div>
                 <div className="receipt-assisted items-end mt-20">
-                  ASSISTED BY: Name sa admin or sorter
+                  ASSISTED BY: {customerId}
                 </div>
               </div>
             </div>
             {/* White box for PDF options */}
-            <div className="flex self-center">
-              <div className="white-box">
-                <div className="white-box-greeting">
-                  Hi, <span className="bold-customer-id">{customerId}</span>!
-                </div>
-                <div className="white-box-text">
-                  Would you like to save this as a PDF file?
-                </div>
-                <button className="btn white-box-button custom-button" onClick={handleConvertToPDF}>
-                  Click here
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
@@ -212,4 +219,4 @@ const Receipt = () => {
   );
 };
 
-export default Receipt
+export default Receipt;

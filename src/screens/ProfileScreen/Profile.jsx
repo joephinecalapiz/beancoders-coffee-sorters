@@ -109,39 +109,27 @@ const Profile = () => {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newDetails),
+        body: JSON.stringify(newDetails), // Make sure newDetails contains the updated data
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to update company details");
       }
-  
+
       // Handle success response
       console.log("Company details updated successfully");
     } catch (error) {
       console.error("Error updating company details:", error);
     }
   };
-  
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
 
-  // useEffect(() => {
-  //   document.title = "Profile";
-
-  //   if (navVisible) {
-  //     document.body.style.overflow = "hidden"; // Disable scrolling
-  //   } else {
-  //     document.body.style.overflow = "auto"; // Enable scrolling
-  //   }
-
-  //   return () => {
-  //     // Clean up the effect when the component unmounts
-  //     document.body.style.overflow = "auto"; // Enable scrolling
-  //   };
-  // }, [navVisible]);
+  useEffect(() => {
+    document.title = "Profile";
+  }, []);
 
   const handleEditClick = () => {
     setEditing(true);
@@ -158,7 +146,7 @@ const Profile = () => {
       companyLocation: editableContent.companyLocation,
     });
     // update the details on the server
-  updateCompanyDetails(editableContent);
+    updateCompanyDetails(editableContent);
   };
 
   const handleCancelClick = () => {
@@ -172,7 +160,6 @@ const Profile = () => {
       companyLocation: profileData.companyLocation,
     });
   };
-  
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -181,7 +168,6 @@ const Profile = () => {
       [name]: value,
     }));
   };
-  
 
   const handleProfilePictureClick = () => {
     document.getElementById("profilePictureInput").click();
@@ -191,10 +177,14 @@ const Profile = () => {
     <>
       <div className="max-w-8xl mx-auto pl-16">
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar
+          onToggleSidebar={toggleSidebar}
+          collapsed={navVisible}
+          handleToggleSidebar={toggleSidebar}
+        />
         <div
           className={`Profile  ${navVisible ? "profile-shift-right" : ""}`}
-        //  style={{ backgroundColor: '#d4d4d4' }}
+          //  style={{ backgroundColor: '#d4d4d4' }}
         >
           <div className={`p-4 ${navVisible ? "ml-0" : "sm:ml-48"}`}>
             <div className="p-0.5 mb-5 w-full mt-7 relative">
@@ -274,9 +264,9 @@ const Profile = () => {
                   </div>
                 </div>
               </div>
-              <div className="max-w-2xl mt-5 overflow-hidden lg:max-w-full">
+              <div className="max-w-2xl mt-5 overflow-hidden space-x-36 lg:max-w-full">
                 <div className="grid grid-cols-1 sm:grid-cols-3 grid-rows-1 gap-2">
-                  <div className="max-w-2xl sm:justify-self-start bg-white dark:bg-container rounded-xl shadow-lg overflow-hidden lg:max-w-full">
+                  <div className="sm:w-11/12 w-11/12 ml-2 sm:justify-self-start bg-white dark:bg-container rounded-xl shadow-lg overflow-hidden ">
                     <div className="mobile:px-5 mt-5">
                       <div>
                         <div className="px-4 sm:px-0 align-center justify-center">
@@ -288,13 +278,13 @@ const Profile = () => {
                           </p>
                         </div>
                         <div className="mt-6 border-t border-gray-100">
-                          <dl className="divide-y divide-gray-100">
+                          <div className="divide-y divide-gray-100">
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                               <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
                                 Full name
                               </dt>
                               {isEditing ? (
-                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end relative">
                                   <input
                                     type="text"
                                     name="name"
@@ -302,7 +292,9 @@ const Profile = () => {
                                     autoComplete="name"
                                     className="block flex-1 border-0 dark:text-textDesc bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.name}
+                                    style={{ outline: "none" }}
                                   />
+                                  <div className="absolute inset-x-0 bottom-0 h-1 bg-gray"></div>
                                 </div>
                               ) : (
                                 <dd className="mt-1 text-sm dark:text-textDesc leading-6 sm:col-span-2 sm:mt-0 justify-self-end">
@@ -323,7 +315,8 @@ const Profile = () => {
                                 Email address
                               </dt>
                               {isEditing ? (
-                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end relative">
+                                  {" "}
                                   <input
                                     type="text"
                                     name="email"
@@ -331,7 +324,9 @@ const Profile = () => {
                                     autoComplete="email"
                                     className="block flex-1 border-0 dark:text-textDesc bg-transparent py-1.5 pl-1 text-gray-900  placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.email}
+                                    style={{ outline: "none" }}
                                   />
+                                  <div className="absolute inset-x-0 bottom-0 h-1 bg-black"></div>
                                 </div>
                               ) : (
                                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
@@ -339,7 +334,7 @@ const Profile = () => {
                                 </dd>
                               )}
                             </div>
-                          </dl>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -356,13 +351,13 @@ const Profile = () => {
                           </p>
                         </div>
                         <div className="mt-6 border-t border-gray-100">
-                          <dl className="divide-y divide-gray-100">
+                          <div className="divide-y divide-gray-100">
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                               <dt className="text-sm font-semibold leading-6 text-gray-900 align-center self-center dark:text-textTitle">
                                 Company Name
                               </dt>
                               {isEditing ? (
-                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end relative">
                                   <input
                                     type="name"
                                     name="companyName"
@@ -370,34 +365,24 @@ const Profile = () => {
                                     autoComplete="companyName"
                                     value={editableContent.companyName}
                                     onChange={handleInputChange}
-                                    className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    className="block flex-1 dark:text-textDesc py-1.5 pl-1 text-gray-900  sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyName}
+                                    style={{ outline: "none" }}
                                   />
+                                  <div className="absolute inset-x-0 bottom-0 h-1 bg-black"></div>
                                 </div>
                               ) : (
                                 <dd className="mt-1 text-sm leading-6 dark:text-textDesc sm:col-span-2 sm:mt-0 justify-self-end">
                                   {profileData.companyName}
                                 </dd>
                               )}
-                              {/* {isEditing ? (
-                              <input
-                                type="text"
-                                name="address"
-                                value={editableContent.companyName}
-                                onChange={handleInputChange}
-                                className="input-field outline-gray-500 mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 justify-self-end "
-                              />
-
-                            ) : (
-                              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0 justify-self-end">{profileData.companyName}</dd>
-                            )} */}
                             </div>
                             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                               <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
                                 Phone Number
                               </dt>
                               {isEditing ? (
-                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end relative">
                                   <input
                                     type="number"
                                     name="companyNumber"
@@ -407,7 +392,9 @@ const Profile = () => {
                                     onChange={handleInputChange}
                                     className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyNumber}
+                                    style={{ outline: "none" }}
                                   />
+                                  <div className="absolute inset-x-0 bottom-0 h-1 bg-black"></div>
                                 </div>
                               ) : (
                                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
@@ -420,7 +407,7 @@ const Profile = () => {
                                 Address
                               </dt>
                               {isEditing ? (
-                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end relative">
                                   <input
                                     type="text"
                                     name="companyLocation"
@@ -430,7 +417,9 @@ const Profile = () => {
                                     onChange={handleInputChange}
                                     className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyLocation}
+                                    style={{ outline: "none" }}
                                   />
+                                  <div className="absolute inset-x-0 bottom-0 h-1 bg-black"></div>
                                 </div>
                               ) : (
                                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
@@ -438,7 +427,7 @@ const Profile = () => {
                                 </dd>
                               )}
                             </div>
-                          </dl>
+                          </div>
                         </div>
                       </div>
                     </div>
