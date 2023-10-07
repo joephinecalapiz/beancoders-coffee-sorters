@@ -66,6 +66,7 @@ const SortingStatus = () => {
     { value: 11, label: "November" },
     { value: 12, label: "December" },
   ];
+    
 
   return (
     <>
@@ -130,6 +131,7 @@ const SortingStatus = () => {
                     option: (provided) => ({
                       ...provided,
                       fontFamily: "'Poppins', sans-serif",
+                      color: "#000"
                     }),
                   }}
                 />
