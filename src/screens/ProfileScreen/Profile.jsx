@@ -8,6 +8,7 @@ import "../.././css/dashboard.css";
 import "../.././css/profile.css";
 import beansLogo from "../../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../../config";
+import image_endpoint from "../../image-config";
 
 const Profile = () => {
   const [navVisible, showNavbar] = useState(true);
@@ -18,9 +19,10 @@ const Profile = () => {
     profilePicture: "assets/beansLogo.png",
     name: userInfo.name,
     email: userInfo.email,
-    companyPhoneNumber: compInfo.companyNumber,
+    companyNumber: compInfo.companyNumber,
     companyLocation: compInfo.companyLocation,
     companyName: compInfo.companyName,
+    companyPic: compInfo.images
   });
 
   const [editableContent, setEditableContent] = useState({
@@ -29,6 +31,7 @@ const Profile = () => {
     companyName: profileData.companyName,
     companyNumber: profileData.companyNumber,
     companyLocation: profileData.companyLocation,
+    images: profileData.images
   });
 
   useEffect(() => {
@@ -45,6 +48,7 @@ const Profile = () => {
       companyNumber: compInfo.companyNumber,
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
+      images: compInfo.images
     }));
   }, [userInfo]);
 
@@ -57,6 +61,7 @@ const Profile = () => {
       companyNumber: compInfo.companyNumber,
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
+      images: compInfo.images
     }));
   }, [userInfo]);
 
@@ -144,6 +149,7 @@ const Profile = () => {
       companyName: editableContent.companyName,
       companyNumber: editableContent.companyNumber,
       companyLocation: editableContent.companyLocation,
+      images: editableContent.images
     });
     // update the details on the server
     updateCompanyDetails(editableContent);
@@ -158,6 +164,7 @@ const Profile = () => {
       companyName: profileData.companyName,
       companyNumber: profileData.companyNumber,
       companyLocation: profileData.companyLocation,
+      images: profileData.images
     });
   };
 
@@ -184,7 +191,7 @@ const Profile = () => {
         />
         <div
           className={`Profile  ${navVisible ? "profile-shift-right" : ""}`}
-          //  style={{ backgroundColor: '#d4d4d4' }}
+        //  style={{ backgroundColor: '#d4d4d4' }}
         >
           <div className={`p-4 ${navVisible ? "ml-0" : "sm:ml-48"}`}>
             <div className="p-0.5 mb-5 w-full mt-7 relative">
@@ -193,8 +200,14 @@ const Profile = () => {
               </h1>
             </div>
             <div className={`p-4 ${navVisible ? "ml-0" : ""}`}>
-              <div className="max-w-2xl bg-white dark:bg-container rounded-xl shadow-lg overflow-hidden lg:max-w-full">
-                <div className="flex flex-col items-center justify-center ">
+              <div className="max-w-2xl bg-white dark:bg-container object-fill rounded-xl shadow-lg overflow-hidden lg:max-w-full bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: profileData.images && profileData.images.length > 0
+                    ? `url("${image_endpoint}/storage/${profileData.images.slice(2, -2)}")`
+                    : ""
+                }}
+              >
+                <div className="flex flex-col items-center justify-center">
                   <div className="top relative circular-profile object-none object-top overflow-visible">
                     <label
                       htmlFor="profilePicture"
@@ -203,7 +216,7 @@ const Profile = () => {
                       <img
                         src={beansLogo}
                         alt="Beans Logo"
-                        className="admin-picture"
+                        className="admin-picture bg-white"
                         onClick={handleProfilePictureClick}
                       />
                     </label>
@@ -215,10 +228,10 @@ const Profile = () => {
                       style={{ display: "none" }}
                     />
                   </div>
-                  <label className="admin-name text-black dark:text-textTitle poppins-font justify-center">
+                  <label className="admin-name text-black dark:text-textTitle poppins-font justify-center drop-shadow-4xl shadow-indigo-500/50">
                     {profileData.name}
                   </label>
-                  <label className="admin-label text-black dark:text-textDesc poppins-font mb-5 justify-center">
+                  <label className="admin-label text-black dark:text-textDesc poppins-font mb-5 justify-center drop-shadow-4xl">
                     Admin
                   </label>
                 </div>
@@ -365,14 +378,14 @@ const Profile = () => {
                                     autoComplete="companyName"
                                     value={editableContent.companyName}
                                     onChange={handleInputChange}
-                                    className="block flex-1 dark:text-textDesc py-1.5 pl-1 text-gray-900  sm:text-sm sm:leading-6"
+                                    className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.companyName}
                                     style={{ outline: "none" }}
                                   />
                                   <div className="absolute inset-x-0 bottom-0 h-1 bg-black"></div>
                                 </div>
                               ) : (
-                                <dd className="mt-1 text-sm leading-6 dark:text-textDesc sm:col-span-2 sm:mt-0 justify-self-end">
+                                <dd className="mt-1 text-sm leading-6 bg-transparent dark:text-textDesc sm:col-span-2 sm:mt-0 justify-self-end">
                                   {profileData.companyName}
                                 </dd>
                               )}
