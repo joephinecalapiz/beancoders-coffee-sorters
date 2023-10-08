@@ -7,6 +7,7 @@ import "../.././css/customer.css";
 import "../.././css/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -40,9 +41,33 @@ const Customers = () => {
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
   const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
   const [reloadCustomerData, setReloadCustomerData] = useState(null);
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
+  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  const toggleDropdown = (customerId) => {
+    if (openDropdownId === customerId) {
+      // If the clicked dropdown is already open, close it
+      setOpenDropdownId(null);
+    } else {
+      // Close the previously open dropdown (if any)
+      setOpenDropdownId(customerId);
+    }
+  };
+
+  const handleShowUpdateModal = (customer) => {
+    setSelectedCustomer(customer);
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = () => {
+    setShowUpdateModal(false);
+  };
+
+
 
   const fetchCustomers = async () => {
     try {
@@ -156,7 +181,7 @@ const Customers = () => {
       if (!response.ok) {
         throw new Error("Fail to add customer");
       }
-      if(response.status === 200){
+      if (response.status === 200) {
         const newCustomer = await response.json();
         setAllCustomers([...allCustomers, newCustomer.customer]);
         //localStorage.setItem('customerData', JSON.stringify(data.customer));
@@ -349,7 +374,7 @@ const Customers = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      History
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -365,7 +390,7 @@ const Customers = () => {
                       <td className="poppins-font">{customer.address}</td>
                       {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
                       <td className="poppins-font">
-                        <button
+                        {/* <button
                           onClick={() => {
                             sessionStorage.setItem("customerId", customer.id);
                             navigate(
@@ -375,7 +400,59 @@ const Customers = () => {
                           className="see-more-button focus:outline-none"
                         >
                           See More...
+                        </button> */}
+                        <button
+                          onClick={() => toggleDropdown(customer.id)}
+                          className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                          type="button"
+                        >
+                          <svg
+                            className="w-5 h-5"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 16 3"
+                          >
+                            <path
+                              d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+                            />
+                          </svg>
                         </button>
+                        {openDropdownId === customer.id && (
+                          <div
+                            id="dropdownDotsHorizontal"
+                            className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-dark dark:divide-gray-600 mr-5"
+                            style={{ top: '100', right: '0' }}
+                          >
+                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
+                              <li>
+                                <button
+                                  onClick={() => {
+                                    // Navigate to the desired page
+                                    navigate(`/customers/customerstatus/${customer.customerName}`);
+                                  }}
+                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                  History
+                                </button>
+                              </li>
+                              <li>
+                                <button
+                                  onClick={() => handleShowUpdateModal(customer)}
+                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                  Update
+                                </button>
+                              </li>
+                              <li>
+                                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Archived</a>
+                              </li>
+                            </ul>
+                            <div className="py-2">
+                              <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                            </div>
+                          </div>
+                        )}
                         {/* <button
                           onClick={() => handleSeeMore(customer.customerName)}
                           className="see-more-button focus:outline-none"
@@ -387,17 +464,25 @@ const Customers = () => {
                   ))}
                 </tbody>
               </table>
+              {selectedCustomer && (
+                <UpdateCustomer
+                  show={showUpdateModal}
+                  onClose={handleCloseUpdateModal}
+                  customer={selectedCustomer}
+                />
+              )}
             </div>
           </div>
         </div>
       </div>
+
 
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div
             className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
-            onClick={closeModal}
+            onClick={openModal}
           ></div>
           <div className="modal-container bg-white p-8 max-w-sm mx-auto rounded z-50">
             <span
