@@ -9,6 +9,7 @@ import "../.././css/profile.css";
 import beansLogo from "../../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../../config";
 import image_endpoint from "../../image-config";
+import axios from "axios";
 
 const Profile = () => {
   const [navVisible, showNavbar] = useState(true);
@@ -31,7 +32,7 @@ const Profile = () => {
     companyName: profileData.companyName,
     companyNumber: profileData.companyNumber,
     companyLocation: profileData.companyLocation,
-    images: profileData.images
+    // images: profileData.images
   });
 
   useEffect(() => {
@@ -61,7 +62,7 @@ const Profile = () => {
       companyNumber: compInfo.companyNumber,
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
-      images: compInfo.images
+      // images: compInfo.images
     }));
   }, [userInfo]);
 
@@ -123,10 +124,12 @@ const Profile = () => {
 
       // Handle success response
       console.log("Company details updated successfully");
+      console.log(user_id);
     } catch (error) {
       console.error("Error updating company details:", error);
     }
   };
+  
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -149,7 +152,7 @@ const Profile = () => {
       companyName: editableContent.companyName,
       companyNumber: editableContent.companyNumber,
       companyLocation: editableContent.companyLocation,
-      images: editableContent.images
+      // images: editableContent.images
     });
     // update the details on the server
     updateCompanyDetails(editableContent);
@@ -164,7 +167,7 @@ const Profile = () => {
       companyName: profileData.companyName,
       companyNumber: profileData.companyNumber,
       companyLocation: profileData.companyLocation,
-      images: profileData.images
+      // images: profileData.images
     });
   };
 
