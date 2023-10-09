@@ -59,12 +59,14 @@ const Customers = () => {
   };
 
   const handleShowUpdateModal = (customer) => {
+    setOpenDropdownId(null);
     setSelectedCustomer(customer);
     setShowUpdateModal(true);
   };
 
-  const handleCloseUpdateModal = () => {
-    setShowUpdateModal(false);
+  const handleCloseUpdateModal = (customer) => {
+    setSelectedCustomer(customer);
+    handleShowUpdateModal(null);
   };
 
 

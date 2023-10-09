@@ -12,7 +12,6 @@ const UpdateCustomer = ({ show, onClose, customer }) => {
 
     const closeModal = () => {
         onClose();
-        console.log(onClose);
     };
     
     
@@ -24,7 +23,7 @@ const UpdateCustomer = ({ show, onClose, customer }) => {
             const currentDate = new Date().toISOString();
 
             const response = await fetch(api_endpoint + "/edit-customer/" + customerId, {
-                method: "PATH",
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: "Bearer " + token,
