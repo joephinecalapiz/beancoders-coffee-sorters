@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./screens/AuthScreen/Login";
 import Landing from "./screens/Landing";
-import About from "./screens/about";
 import "./index.css";
 // import ".../../css/index.css";
 import ".../.././css/Sidebar.css";
@@ -19,6 +18,7 @@ import Receipt from "./screens/ReceiptScreen/Receipt";
 import CompanyDetails from "./screens/AuthScreen/CompanyDetails";
 import ManageUsers from "./superadmin/users/ManageUsers";
 import api_endpoint from "./config";
+import About from "./screens/About";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -119,7 +119,7 @@ function App() {
           }
         />
         <Route
-          path="/customers/customerstatus/:customerName"
+          path="/customers/customerstatus/:customerName/:customerId"
           element={
             authenticated ? (
               <div>

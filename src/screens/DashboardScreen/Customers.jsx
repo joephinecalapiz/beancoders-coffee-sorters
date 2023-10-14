@@ -431,7 +431,7 @@ const Customers = () => {
                                 <button
                                   onClick={() => {
                                     // Navigate to the desired page
-                                    navigate(`/customers/customerstatus/${customer.customerName}`);
+                                    navigate(`/customers/customerstatus/${customer.customerName}/${customer.id}`);
                                   }}
                                   className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                 >

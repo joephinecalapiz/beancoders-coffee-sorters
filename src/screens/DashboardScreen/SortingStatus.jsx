@@ -12,7 +12,7 @@ import Skeleton from 'react-loading-skeleton'
 
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
-  const { customerName } = useParams();
+  const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -23,7 +23,7 @@ const SortingStatus = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
-    const customerId = sessionStorage.getItem("customerId");
+    // const customerId = sessionStorage.getItem("customerId");
   
     axios
       .get(api_endpoint + "/fetch-history/" + user_id + "/" + customerId, {
@@ -78,19 +78,11 @@ const SortingStatus = () => {
             <div
               className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
             >
-             {isLoading ? (
-                // Render skeleton loading here while data is loading
-                <div>
-                  <Skeleton height={16} width="75%" className="mb-4 rounded" />
-                  <Skeleton height={40} width="100%" className="mb-2 w-full mt-6 relative" />
-                </div>
-              ) : (
-                <div className="p-0.5 mb-2 w-full mt-6 relative">
+             <div className="p-0.5 mb-2 w-full mt-6 relative">
                   <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                     History Customer Status
                   </h1>
                 </div>
-              )}
               <div className="flex items-center"></div>
               <br />
               <br />
@@ -108,7 +100,7 @@ const SortingStatus = () => {
               </div>
 
 
-              <div className="flex dark:text-textTitle items-center justify-end mb-15 mr-6 z-10">
+              <div className="flex dark:text-textTitle items-center justify-end mr-6 z-10">
                 <label
                   htmlFor="monthSelect"
                   className="mr-2 bold"
