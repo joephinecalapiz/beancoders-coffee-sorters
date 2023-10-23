@@ -12,16 +12,9 @@ const Navbar = () => {
   // Initialize the navigation items
   const [navigation, setNavigation] = useState([
     { name: "Home", href: "/", current: location.pathname === "/" },
-    {
-      name: "About Us",
-      href: "/aboutus",
-      current: location.pathname === "/aboutus",
-    },
-    {
-      name: "Register",
-      href: "/signup",
-      current: location.pathname === "/signup",
-    },
+    { name: "About Us", href: "/aboutus", current: location.pathname === "/aboutus" },
+    { name: "Contact Us", href: "/contact-us", current: location.pathname === "/contact-us" },
+    { name: "Register", href: "/signup", current: location.pathname === "/signup" },
     { name: "Login", href: "/login", current: location.pathname === "/login" },
   ]);
 
@@ -67,7 +60,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <ul className="md:hidden flex flex-col justify-center items-start p-20 absolute left-40 right-0 w-96 h-screen bg-black ">
+        <ul className="md:hidden flex flex-col justify-center items-start p-20 absolute left-50 right-0 w-96 h-screen bg-black ">
           {navigation.map((item) => (
             <li
               key={item.href}
