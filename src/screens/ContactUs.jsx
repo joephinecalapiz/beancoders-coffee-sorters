@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Navbar from "../component/Navbar";
+import api_endpoint from "../config";
 
 const ContactUs = () => {
     const navigate = useNavigate();
@@ -16,10 +17,10 @@ const ContactUs = () => {
         formState: { errors },
     } = useForm();
     const [formData, setFormData] = useState({
-        name: '',
-        company: '',
-        phoneNumber: '',
-        message: '',
+        full_name: '',
+        companyName: '',
+        phoneNum: '',
+        coffee_bean_ai_sorter: '',
         email: '',
         machine: false,
         website: false,
@@ -39,12 +40,14 @@ const ContactUs = () => {
         document.title = "Contact Us";
     }, []);
 
-    const onSubmitHandler = async (e) => {
-        e.preventDefault();
+    const onSubmitHandler = async (formData) => {
+        // e.preventDefault();
         setLoading(true); // Set loading state to true when form is submitted
+
+        // console.log(formData);
     
         try {
-            const response = await axios.post(api_endpoint + "/contact-us", formData, {
+            const response = await axios.post(api_endpoint + "/post-feedback", formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -75,6 +78,7 @@ const ContactUs = () => {
                 <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
                     <form
                         className="rounded-[40px] p-8 max-w-xs w-full "
+                        onSubmit={handleSubmit(onSubmitHandler)}
                     >
                         <div className="w-[150%] mx-auto">
                             <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12">
@@ -88,24 +92,24 @@ const ContactUs = () => {
                                 Full Name
                             </label>
                             <input
-                                name="name"
+                                name="full_name"
                                 type="text"
                                 placeholder="Enter your Full Name"
-                                {...register("name", {
+                                {...register("full_name", {
                                     required: "Full Name is required",
                                     pattern: {
                                         value: /^[a-zA-Z ]{2,30}$/,
                                         message: "Invalid Name",
                                     },
                                 })}
-                                checked={formData.name}
+                                checked={formData.full_name}
                                 onChange={handleInputChange}
-                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.name ? "mb-2" : "mb-5"
+                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.full_name ? "mb-2" : "mb-5"
                                     }`}
                                 style={{ fontFamily: "Poppins, sans-serif" }}
                             />
-                            {errors.name && (
-                                <p className="text-red-500 ml-2">{errors.name.message}</p>
+                            {errors.full_name && (
+                                <p className="text-red-500 ml-2">{errors.full_name.message}</p>
                             )}
 
 <label
@@ -116,24 +120,24 @@ const ContactUs = () => {
                                 Company Name
                             </label>
                             <input
-                                name="company"
+                                name="companyName"
                                 type="text"
                                 placeholder="Enter your Company Name"
-                                {...register("company", {
+                                {...register("companyName", {
                                     required: "Company name is required",
                                     pattern: {
                                         value: /^[a-zA-Z ]{2,30}$/,
                                         message: "Invalid Name",
                                     },
                                 })}
-                                checked={formData.company}
+                                checked={formData.companyName}
                                 onChange={handleInputChange}
-                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.company ? "mb-2" : "mb-5"
+                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.companyName ? "mb-2" : "mb-5"
                                     }`}
                                 style={{ fontFamily: "Poppins, sans-serif" }}
                             />
-                            {errors.company && (
-                                <p className="text-red-500 ml-2">{errors.company.message}</p>
+                            {errors.companyName && (
+                                <p className="text-red-500 ml-2">{errors.companyName.message}</p>
                             )}
 
                             <label
@@ -144,24 +148,24 @@ const ContactUs = () => {
                                 Phone Number
                             </label>
                             <input
-                                name="phoneNumber"
+                                name="phoneNum"
                                 type="number"
                                 placeholder="Enter your Phone Number"
-                                {...register("phoneNumber", {
+                                {...register("phoneNum", {
                                     required: "Phone Number is required",
                                     pattern: {
                                         value: /^[\d-()+\s]*$/,
                                         message: "Invalid Phone Number",
                                     }
                                 })}
-                                checked={formData.phoneNumber}
+                                checked={formData.phoneNum}
                                 onChange={handleInputChange}
-                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.phoneNumber ? "mb-2" : "mb-5"
+                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.phoneNum ? "mb-2" : "mb-5"
                                     }`}
                                 style={{ fontFamily: "Poppins, sans-serif" }}
                             />
-                            {errors.phoneNumber && (
-                                <p className="text-red-500 ml-2">{errors.phoneNumber.message}</p>
+                            {errors.phoneNum && (
+                                <p className="text-red-500 ml-2">{errors.phoneNum.message}</p>
                             )}
 
                             <fieldset>
@@ -174,12 +178,12 @@ const ContactUs = () => {
                                     <div className="relative flex gap-x-3">
                                         <div className="flex h-6 items-center">
                                             <input
-                                                name="machine"
+                                                name="coffee_bean_ai_sorter"
                                                 type="checkbox"
                                                 className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                                {...register("machine", {
+                                                {...register("coffee_bean_ai_sorter", {
                                                 })}
-                                                checked={formData.machine}
+                                                checked={formData.coffee_bean_ai_sorter}
                                                 onChange={handleCheckboxChange}
                                             />
                                         </div>
@@ -261,7 +265,7 @@ const ContactUs = () => {
                                 className="btn w-full btn-primary mt-7 text-white"
                                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
                                 disabled={loading}
-                                onClick={handleSubmit(onSubmitHandler)}
+                                // onClick={handleSubmit(onSubmitHandler)}
                             >
                                 {loading ? (
                                     <svg
