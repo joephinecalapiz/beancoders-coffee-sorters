@@ -19,6 +19,7 @@ import CompanyDetails from "./screens/AuthScreen/CompanyDetails";
 import ManageUsers from "./superadmin/users/ManageUsers";
 import api_endpoint from "./config";
 import About from "./screens/About";
+import ContactUs from "./screens/ContactUs";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -144,6 +145,7 @@ function App() {
         />
         <Route path="/" element={<Landing />} />
         <Route path="/aboutus" element={<About />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/company" element={<CompanyDetails />} />

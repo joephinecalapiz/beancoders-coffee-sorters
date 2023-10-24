@@ -74,7 +74,6 @@ const ContactUs = () => {
             <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
                 <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
                     <form
-                        // onSubmit={handleSubmit(onSubmitHandler)}
                         className="rounded-[40px] p-8 max-w-xs w-full "
                     >
                         <div className="w-[150%] mx-auto">
