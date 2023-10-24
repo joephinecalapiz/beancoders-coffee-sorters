@@ -6,34 +6,8 @@ import { FaChartBar, FaThLarge, FaUsers, FaUserFriends } from "react-icons/fa";
 
 const ICON_SIZE = 20;
 
-function Sidebar({ collapsed }) {
+function AdminSidebar({ collapsed }) {
   const location = useLocation();
-  const [navigation, setNavigation] = useState([
-    {
-      name: "Dashboard",
-      href: "/dashboard",
-      current: location.pathname === "/dashboard",
-      icon: <FaThLarge size={ICON_SIZE} />,
-    },
-    {
-      name: "Customers",
-      href: "/customers",
-      current: location.pathname === "/customers",
-      icon: <FaUsers size={ICON_SIZE} />,
-    },
-    {
-      name: "Sorters",
-      href: "/sorters",
-      current: location.pathname === "/sorters",
-      icon: <FaUserFriends size={ICON_SIZE} />,
-    },
-    {
-      name: "Status",
-      href: "/status",
-      current: location.pathname === "/status",
-      icon: <FaChartBar size={ICON_SIZE} />,
-    },
-  ]);
   const [adminNav, setAdminNav] = useState([
     {
       name: "Manage User",
@@ -58,20 +32,6 @@ function Sidebar({ collapsed }) {
       prefersDarkMode || (storedDarkMode ? JSON.parse(storedDarkMode) : false)
     );
   });
-
-  // Add code to get the user_id from local storage
-  const role = localStorage.getItem("role");
-
-  const handleNavigationClick = (href) => {
-    const updatedNavigation = navigation.map((item) => ({
-      ...item,
-      current: item.href === href,
-    }));
-    setNavigation(updatedNavigation);
-
-    // Use the navigate function to navigate to the clicked item's href
-    navigate(href);
-  };
 
   const handleAdminNavigationClick = (href) => {
     const updatedNavigation = adminNav.map((item) => ({
@@ -112,8 +72,7 @@ function Sidebar({ collapsed }) {
       >
         <div className="mt-4">
           {/* sidebar navigation */}
-          {role === 1 ? (
-              <div className="mt-4">
+          <div className="mt-4">
                  {
                    adminNav.map((item) => (
                     <NavLink
@@ -134,31 +93,6 @@ function Sidebar({ collapsed }) {
                   ))
                 }
               </div>
-          ) :
-          (
-            <div className="mt-4">
-               {
-                   navigation.map((item) => (
-                    <NavLink
-                      to={item.href}
-                      // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
-                      className={`nav-link ${item.current ? "active-link" : "text-white"
-                        } poppins-font`}
-                      key={item.href}
-                    >
-                      <span className="icon">{item.icon}</span>
-                      <span
-                        className={!collapsed ? "text-visible" : ""}
-                        style={{ fontFamily: "Poppins, sans-serif" }}
-                      >
-                        {item.name}
-                      </span>
-                    </NavLink>
-                  ))
-                }
-              </div>
-          )
-          }
           {/* Dark mode toggle button */}
           <div className="fixed bottom-4 left-4">
             <button
@@ -225,4 +159,4 @@ function Sidebar({ collapsed }) {
   );
 }
 
-export default Sidebar;
+export default AdminSidebar;

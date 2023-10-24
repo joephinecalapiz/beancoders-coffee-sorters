@@ -12,6 +12,7 @@ import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 
 import api_endpoint from "../../config";
+import AdminSidebar from "../../component/AdminSidebar";
 
 const ManageUsers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -123,7 +124,7 @@ const ManageUsers = () => {
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}

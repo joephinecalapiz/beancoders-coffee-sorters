@@ -57,14 +57,14 @@ const Login = () => {
           setTimeout(() => {
             setLoading(false); // Set loading to false when the operation is complete
             navigate("/dashboard");
-            // window.location.reload();
+            window.location.reload();
           }, 2000); // Simulate a 2-second delay
           // window.location.reload();
         }
       })
       .catch((error) => {
-        console.error("Error", error.response.data);
-        if (error.response.status === 401) {
+        console.error("Error", error.response ? error.response.data : error);
+        if (error.response && error.response.status === 401) {
           setLoginError(true);
         }
       })
