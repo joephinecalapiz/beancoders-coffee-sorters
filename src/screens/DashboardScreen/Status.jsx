@@ -27,7 +27,7 @@ const Status = () => {
     const token = localStorage.getItem("token");
 
     axios
-      .get(api_endpoint + "/fetch-status/" + user_id, {
+      .get(`${api_endpoint}/fetch-status/${user_id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -45,7 +45,7 @@ const Status = () => {
     const user_id = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
     axios
-      .get(api_endpoint + "/customers/" + user_id, {
+      .get(`${api_endpoint}/customers/${user_id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -61,7 +61,7 @@ const Status = () => {
     const user_id = localStorage.getItem("user_id");
     const token = localStorage.getItem("token");
     axios
-      .get(api_endpoint + "/sorters/" + user_id, {
+      .get(`${api_endpoint}/sorters/${user_id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -264,7 +264,7 @@ const Status = () => {
                       <td className="poppins-font">
                         <button
                           onClick={() => {
-                            navigate(`/status/receipt/${sorted.customerName}`);
+                            navigate(`/status/receipt/${sorted.id}`);
                             // navigate(`/customerstatus/${sorted.customerName}`);
                           }}
                           className="see-more-button focus:outline-none"
