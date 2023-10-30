@@ -48,7 +48,7 @@ const Receipt = () => {
     const token = localStorage.getItem('token');
     const user_id = localStorage.getItem('user_id');
     try {
-      const response = await fetch(`${api_endpoint}/customer-receipt/1/${user_id}`,
+      const response = await fetch(`${api_endpoint}/customer-receipt/${customerId}/${user_id}`,
       {
         headers: {
           Authorization: `Bearer ${token}`
@@ -132,7 +132,7 @@ const Receipt = () => {
             <div className="flex self-center">
               <div className="white-box">
                 <div className="white-box-greeting">
-                  Hi, <span className="bold-customer-id">{customerId}</span>!
+                  Hi, <span className="bold-customer-id">{receiptDetails.customerName}</span>!
                 </div>
                 <div className="white-box-text">
                   Would you like to save this as a PDF file?
