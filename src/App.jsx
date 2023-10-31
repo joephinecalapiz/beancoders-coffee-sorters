@@ -20,6 +20,7 @@ import ManageUsers from "./superadmin/users/ManageUsers";
 import api_endpoint from "./config";
 import About from "./screens/About";
 import ContactUs from "./screens/ContactUs";
+import Archived from "./screens/Archived";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -77,6 +78,18 @@ function App() {
             authenticated ? (
               <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                 <Customers />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/archived"
+          element={
+            authenticated ? (
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                <Archived />
               </div>
             ) : (
               <Navigate to="/login" />

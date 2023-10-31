@@ -149,6 +149,39 @@ const Customers = () => {
     setKiloOfBeans("");
   };
 
+  const archivedCustomer = async (id) => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const currentDate = new Date().toISOString();
+
+      const response = await fetch(api_endpoint + "/archive-customer/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          customerName: newCustomerName,
+          phoneNum: newCustomerPhoneNumber,
+          address: newCustomerAddress,
+          registrationDate: currentDate,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Fail to archive customer");
+      }
+      if (response.status === 200) {
+        // const newCustomer = await response.json();
+        // setAllCustomers([...allCustomers, newCustomer.customer]);
+        setOpenDropdownId(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const getCustomerPostHistory = async (e) => {
     e.preventDefault();
     try {
@@ -346,7 +379,7 @@ const Customers = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Date
+                      Date Added
                     </th>
                     <th
                       scope="col"
@@ -423,7 +456,7 @@ const Customers = () => {
                         {openDropdownId === customer.id && (
                           <div
                             id="dropdownDotsHorizontal"
-                            className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-dark dark:divide-gray-600 mr-5"
+                            className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
                             style={{ top: '100', right: '0' }}
                           >
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
@@ -446,12 +479,17 @@ const Customers = () => {
                                   Update
                                 </button>
                               </li>
-                              <li>
+                              {/* <li>
                                 <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Archived</a>
-                              </li>
+                              </li> */}
                             </ul>
                             <div className="py-2">
-                              <a href="#" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete</a>
+                            <button
+                                  onClick={() => archivedCustomer(customer.id)}
+                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                >
+                                  Archived
+                                </button>
                             </div>
                           </div>
                         )}
