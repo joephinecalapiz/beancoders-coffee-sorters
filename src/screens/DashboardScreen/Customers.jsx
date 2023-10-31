@@ -103,6 +103,7 @@ const Customers = () => {
     document.title = "Customers";
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
+      archivedCustomer();
     }
   }, [selectedMonth, selectedYear]);
 
@@ -172,10 +173,11 @@ const Customers = () => {
       if (!response.ok) {
         throw new Error("Fail to archive customer");
       }
-      if (response.status === 200) {
-        // const newCustomer = await response.json();
-        // setAllCustomers([...allCustomers, newCustomer.customer]);
-        setOpenDropdownId(null);
+      // Update customer data after successful archive
+      await fetchCustomers();
+
+      if (!fetchResponse.ok) {
+        throw new Error("Failed to fetch archived customer data");
       }
     } catch (error) {
       console.error(error);
