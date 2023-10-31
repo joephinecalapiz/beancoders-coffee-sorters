@@ -96,6 +96,9 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     setRotated(!isRotated);
   };
 
+  // Add code to get the user_id from local storage
+  const user_id = localStorage.getItem("id");
+
   return (
     <div className="z-20 fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
       <div className="bg-black dark:bg-gray h-full w-full flex items-center">
@@ -157,7 +160,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 <li
                   onClick={() => {
                     navigate("/profile");
-                    console.log(userInfo.name);
                   }}
                 >
                   <a
@@ -165,6 +167,18 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     role="menuitem"
                   >
                     Profile
+                  </a>
+                </li>
+                <li
+                  onClick={() => {
+                    navigate("/archived");
+                  }}
+                >
+                  <a
+                    className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                    role="menuitem"
+                  >
+                    Archived
                   </a>
                 </li>
                 <li onClick={handleSignOut}>
@@ -179,9 +193,15 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
+       {user_id === 1 ? (
+         <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
+          Super Admin
+       </h1>
+       ):(
         <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
-          Admin
-        </h1>
+        Admin
+      </h1>
+       )}
       </div>
 
       {/* Confirmation Modal */}
