@@ -17,7 +17,8 @@ const Receipt = () => {
   const [navVisible, showNavbar] = useState(true);
   const contentRef = useRef(null);
   const [compInfo, setCompInfo] = useState("");
-
+  const [customerInfoReceipt, setcustomerInfoReceipt] = useState("");
+  const [pricesAndDiscounts, setPricesAndDiscounts] = useState("");
   useEffect(() => {
     fetchReceiptDetails();
     fetchCompanyInfo();
@@ -29,7 +30,7 @@ const Receipt = () => {
       let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -44,13 +45,24 @@ const Receipt = () => {
   };
 
   const fetchReceiptDetails = async () => {
+    const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
     try {
-      const response = await fetch(api_endpoint + `/receipts/${customerId}`);
+      const response = await fetch(`${api_endpoint}/customer-receipt/${customerId}/${user_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch receipt details");
       }
       const data = await response.json();
-      setReceiptDetails(data);
+      //console.log(data)
+      //console.log(data.customerInfo)
+      setReceiptDetails(data.customerStatus);
+      setcustomerInfoReceipt(data.customerInfo);
+      setPricesAndDiscounts(data.total);
     } catch (error) {
       console.error("Error fetching receipt details:", error);
     }
@@ -89,12 +101,21 @@ const Receipt = () => {
 
           // Add the image to the PDF with correct dimensions and positioning
           pdf.addImage(imgData, "JPEG", 0, imgY, imgWidth, imgHeight);
-
+          const date = new Date(receiptDetails.created_at);
+          const options = {year: 'numeric', month: 'long', day: 'numeric'};
+          const formattedDate = date.toLocaleString('en-US',options);
+          pdf.text(`Date:${formattedDate}`, 10, 10);
           // Save the PDF
           pdf.save("receipt.pdf");
-        }
+        } 
       );
     }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleString("en-US", options);
   };
 
   return (
@@ -111,7 +132,7 @@ const Receipt = () => {
             <div className="flex self-center">
               <div className="white-box">
                 <div className="white-box-greeting">
-                  Hi, <span className="bold-customer-id">{customerId}</span>!
+                  Hi, <span className="bold-customer-id">{receiptDetails.customerName}</span>!
                 </div>
                 <div className="white-box-text">
                   Would you like to save this as a PDF file?
@@ -156,11 +177,11 @@ const Receipt = () => {
                 <div className="receipt-header">OFFICIAL RECEIPT</div>
                 <div className="receipt-info-container">
                   <div className="receipt-name">
-                    Customer Name: {customerId}
+                    Customer Name: {receiptDetails.customerName}
                   </div>
-                  <div className="receipt-date">Date: December 2, 2020</div>
+                  <div className="receipt-date">Date: {formatDate(receiptDetails.created_at)}</div>
                 </div>
-                <div className="receipt-address">Address: {customerId}</div>
+                <div className="receipt-address">Address: {customerInfoReceipt.address}</div>
                 <div className="receipt-table-container">
                   <table className="receipt-table">
                     <thead>
@@ -175,11 +196,11 @@ const Receipt = () => {
                     <tbody>
                       {/* Add table rows with data here */}
                       <tr>
-                        <td className="qty">1</td>
+                        <td className="qty">{receiptDetails.kiloOfBeans}</td>
                         <td className="unit">Kg</td>
-                        <td className="item">Beans</td>
-                        <td className="price">5.00</td>
-                        <td className="amount">5.00</td>
+                        <td className="item">Arabica Coffee Beans</td>
+                        <td className="price">&#8369; {pricesAndDiscounts.unitPrice}.00</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.amount}.00</td>
                       </tr>
                     </tbody>
                   </table>
@@ -189,25 +210,25 @@ const Receipt = () => {
                     <tbody>
                       <tr>
                         <td className="description">Sub Total</td>
-                        <td className="amount">25.00</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.subTotal}</td>
                       </tr>
                       <tr>
                         <td className="description">VAT 12%</td>
-                        <td className="amount">25.00</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.vat}0</td>
                       </tr>
                       <tr>
                         <td className="description">PWD/SC Discount</td>
-                        <td className="amount">25.00</td>
+                        <td className="amount">&#8369; 25.00</td>
                       </tr>
                       <tr>
                         <td className="description">Total Amount</td>
-                        <td className="amount">25.00</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.amount}</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
                 <div className="receipt-assisted items-end mt-20">
-                  ASSISTED BY: {customerId}
+                  ASSISTED BY: {receiptDetails.sorterName}
                 </div>
               </div>
             </div>
