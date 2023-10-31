@@ -82,16 +82,53 @@ const Archived = () => {
         throw new Error("Failed to fetch customer archived data");
       }
       const data = await response.json();
-      setAllCustomers(data.customer);
+      setAllCustomers(data.archiveds);
     } catch (error) {
       console.error("Error fetching customer archived data:", error);
     }
   };
 
+  const deleteCustomer = async (id) => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = await fetch(api_endpoint + "/delete-customer/" + id, {
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to delete customer archived data");
+      }
+  
+      // After successful deletion, call the fetchArchiveds API
+      const fetchResponse = await fetch(api_endpoint + "/fetch-archiveds/" + user_id, {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+  
+      if (!fetchResponse.ok) {
+        throw new Error("Failed to fetch archived customer data");
+      }
+  
+      const data = await fetchResponse.json();
+      setAllCustomers(data.archiveds);
+  
+    } catch (error) {
+      console.error("Error deleting or fetching customer data:", error);
+    }
+  };
+  
+  
+
   useEffect(() => {
     document.title = "Archived";
     if (selectedMonth !== null && selectedYear !== null) {
-        getArchiveds();
+      fetchCustomers();
     }
   }, [selectedMonth, selectedYear]);
 
@@ -126,10 +163,6 @@ const Archived = () => {
 
   const totalCustomers = allCustomers.length;
 
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
   const closeModal = () => {
     setIsModalOpen(false);
     setNewCustomerName("");
@@ -138,56 +171,45 @@ const Archived = () => {
     setKiloOfBeans("");
   };
 
-  const handleCancel = () => {
-    closeModal();
-  };
+  // const deleteCustomer = async (id) => {
+  //   try {
+  //     let token = localStorage.getItem("token");
+  //     let user_id = localStorage.getItem("user_id");
+  //     const currentDate = new Date().toISOString();
 
-  const getArchiveds = async (e) => {
-    e.preventDefault();
-    try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-      const currentDate = new Date().toISOString();
+  //     // Get the selected year and month from the state
+  //     const selectedYearValue = selectedYear;
+  //     const selectedMonthValue = selectedMonth ? selectedMonth.value : null;
 
-      // Get the selected year and month from the state
-      const selectedYearValue = selectedYear;
-      const selectedMonthValue = selectedMonth ? selectedMonth.value : null;
-
-      const response = await fetch(api_endpoint + "/add-customer/" + user_id, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          user_id: user_id,
-          customerName: newCustomerName,
-          phoneNum: newCustomerPhoneNumber,
-          address: newCustomerAddress,
-          //kiloOfBeans: newCustomerKiloOfBeans,
-          registrationDate: currentDate,
-          // year: selectedYearValue, // Use the selected year
-          // month: selectedMonthValue, // Use the selected month value
-        }),
-      });
-      if (response.status === 422) {
-        alert("Customer is already in the database");
-      }
-      if (!response.ok) {
-        throw new Error("Fail to add customer");
-      }
-      if (response.status === 200) {
-        const newCustomer = await response.json();
-        setAllCustomers([...allCustomers, newCustomer.customer]);
-        //localStorage.setItem('customerData', JSON.stringify(data.customer));
-        closeModal();
-        //navigate(".");
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    closeModal();
-  };
+  //     const response = await fetch(api_endpoint + "/delete-customer/" + id, {
+  //       method: "DELETE",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + token,
+  //       },
+  //       body: JSON.stringify({
+  //         user_id: user_id,
+  //         customerName: newCustomerName,
+  //         phoneNum: newCustomerPhoneNumber,
+  //         address: newCustomerAddress,
+  //         //kiloOfBeans: newCustomerKiloOfBeans,
+  //         registrationDate: currentDate,
+  //         // year: selectedYearValue, // Use the selected year
+  //         // month: selectedMonthValue, // Use the selected month value
+  //       }),
+  //     });
+  //     if (response.status === 422) {
+  //       alert("Customer is already deleted in database");
+  //     }
+  //     if (!response.ok) {
+  //       throw new Error("Fail to delete customer");
+  //     }
+  //     const data = await response.json();
+  //     setAllCustomers(data.archiveds);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   //console.log(sortedFilteredCustomers); //too many requests
 
@@ -396,7 +418,7 @@ const Archived = () => {
                             <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
                               <li>
                                 <button
-                                  onClick={() => archivedCustomer(customer.id)}
+                                  onClick={() => deleteCustomer(customer.id)}
                                   className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                 >
                                   Permanent Delete
