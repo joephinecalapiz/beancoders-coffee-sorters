@@ -1,14 +1,14 @@
 /** @format */
 import React, { useState, useEffect } from "react";
-import ".././css/customer.css";
-import ".././css/Sidebar.css";
+import "../.././css/customer.css";
+import "../.././css/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import Topbar from "../component/Topbar";
-import Sidebar from "../component/Sidebar";
-import api_endpoint from "../config";
+import Topbar from "../../component/Topbar";
+import Sidebar from "../../component/Sidebar";
+import api_endpoint from "../../config";
 
-const Archived = () => {
+const CustomerArchived = () => {
   const [navVisible, showNavbar] = useState(true);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
@@ -167,7 +167,7 @@ const Archived = () => {
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
               <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Archived
+                Customer Archive
               </h1>
             </div>
 
@@ -381,4 +381,4 @@ const Archived = () => {
   );
 };
 
-export default Archived;
+export default CustomerArchived;

@@ -20,7 +20,7 @@ import ManageUsers from "./superadmin/users/ManageUsers";
 import api_endpoint from "./config";
 import About from "./screens/About";
 import ContactUs from "./screens/ContactUs";
-import Archived from "./screens/Archived";
+import CustomerArchived from "./screens/Archives/CustomerArchived";
 import StatusArchived from "./screens/Archives/StatusArchived";
 
 function App() {
@@ -90,7 +90,7 @@ function App() {
           element={
             authenticated ? (
               <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
-                <Archived />
+                <CustomerArchived />
               </div>
             ) : (
               <Navigate to="/login" />

@@ -96,6 +96,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     setRotated(!isRotated);
   };
 
+  const [isProfileMenuOpen, setProfileMenuOpen] = useState(false);
+
+  const toggleProfileMenu = () => {
+    setProfileMenuOpen((prevState) => !prevState);
+  };
+
   // Add code to get the user_id from local storage
   const user_id = localStorage.getItem("id");
 
@@ -105,9 +111,8 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         <button
           type="button"
           onClick={handleToggleSidebar}
-          className={`ml-6 text-white transform transition-transform duration-300 ${
-            collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
-          }`}
+          className={`ml-6 text-white transform transition-transform duration-300 ${collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
+            }`}
         >
           <FaBars size={20} />
         </button>
@@ -122,9 +127,8 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           <button
             type="button"
             onClick={toggleDropdown}
-            className={`flex relative ${
-              isDropdownOpen ? "bg-white-800" : "bg-black dark:bg-gray"
-            } bg-black dark:bg-gray`}
+            className={`flex relative ${isDropdownOpen ? "bg-white-800" : "bg-black dark:bg-gray"
+              } bg-black dark:bg-gray`}
             aria-expanded={isDropdownOpen}
           >
             <span className="invisible">Dropdown user</span>
@@ -157,7 +161,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 )}
               </div>
               <ul className="py-1" role="none">
-                <li
+              <li
                   onClick={() => {
                     navigate("/profile");
                   }}
@@ -165,34 +169,43 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   <a
                     className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
+                    aria-expanded={isProfileMenuOpen}
                   >
                     Profile
                   </a>
                 </li>
-                <li
-                  onClick={() => {
-                    navigate("/customer-archived");
-                  }}
+                <button
+                  type="button"
+                  onClick={toggleProfileMenu}
+                  className={`block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white ${isProfileMenuOpen ? "" : ""
+                    } `}
+                  aria-expanded={isProfileMenuOpen}
+                  role="menuitem"
                 >
-                  <a
-                    className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                  >
-                    Customer Archived
-                  </a>
-                </li>
-                <li
-                  onClick={() => {
-                    navigate("/status-archived");
-                  }}
-                >
-                  <a
-                    className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
-                    role="menuitem"
-                  >
-                    Status Archived
-                  </a>
-                </li>
+                  Archive
+                  <span className="arrow-down px-2 justify-self-end">&#9660;</span>
+                </button>
+                {isProfileMenuOpen && (
+                  <ul className="py-1" role="none">
+                    <li onClick={() => navigate("/customer-archived")}>
+                      <a
+                        className="block px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        role="menuitem"
+                      >
+                        Customer
+                      </a>
+                    </li>
+                    <li onClick={() => navigate("/status-archived")}>
+                      <a
+                        className="block px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                        role="menuitem"
+                      >
+                        Status
+                      </a>
+                    </li>
+                    {/* Add more sub-menu items as needed */}
+                  </ul>
+                )}
                 <li onClick={handleSignOut}>
                   <a
                     className="block px-4 py-2 text-sm poppins-font dark:text-textTitle hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -205,15 +218,15 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-       {user_id === 1 ? (
-         <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
-          Super Admin
-       </h1>
-       ):(
-        <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
-        Admin
-      </h1>
-       )}
+        {user_id === 1 ? (
+          <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
+            Super Admin
+          </h1>
+        ) : (
+          <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
+            Admin
+          </h1>
+        )}
       </div>
 
       {/* Confirmation Modal */}
