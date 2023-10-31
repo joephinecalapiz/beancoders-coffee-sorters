@@ -171,14 +171,26 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 </li>
                 <li
                   onClick={() => {
-                    navigate("/archived");
+                    navigate("/customer-archived");
                   }}
                 >
                   <a
                     className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
                     role="menuitem"
                   >
-                    Archived
+                    Customer Archived
+                  </a>
+                </li>
+                <li
+                  onClick={() => {
+                    navigate("/status-archived");
+                  }}
+                >
+                  <a
+                    className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white"
+                    role="menuitem"
+                  >
+                    Status Archived
                   </a>
                 </li>
                 <li onClick={handleSignOut}>

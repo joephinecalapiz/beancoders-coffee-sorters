@@ -21,6 +21,7 @@ import api_endpoint from "./config";
 import About from "./screens/About";
 import ContactUs from "./screens/ContactUs";
 import Archived from "./screens/Archived";
+import StatusArchived from "./screens/Archives/StatusArchived";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -85,11 +86,23 @@ function App() {
           }
         />
         <Route
-          path="/archived"
+          path="/customer-archived"
           element={
             authenticated ? (
               <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                 <Archived />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+         <Route
+          path="/status-archived"
+          element={
+            authenticated ? (
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                <StatusArchived />
               </div>
             ) : (
               <Navigate to="/login" />
