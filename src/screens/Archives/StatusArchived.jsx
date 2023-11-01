@@ -71,7 +71,7 @@ const StatusArchived = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/fetch-archive/" + user_id, {
+      const response = await fetch(api_endpoint + "/fetch-archive-status/" + user_id, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -92,7 +92,7 @@ const StatusArchived = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/delete-customer/" + id, {
+      const response = await fetch(api_endpoint + "/delete-archive-status/" + id, {
         method: "DELETE",
         headers: {
           Authorization: "Bearer " + token,
@@ -270,7 +270,7 @@ const StatusArchived = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Id number
+                      Customer Number
                     </th>
                     <th
                       scope="col"
@@ -288,13 +288,19 @@ const StatusArchived = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Phone Number
+                      Sorter Name
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Address
+                      Bean Weight
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Status
                     </th>
                     {/* <th
                       scope="col"
@@ -313,13 +319,14 @@ const StatusArchived = () => {
                 <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
                   {(reloadCustomerData || sortedFilteredCustomers).map((customer) => (
                     <tr key={customer.id}>
-                      <td className="poppins-font">{customer.id}</td>
+                      <td className="poppins-font">{customer.customer_id}</td>
                       <td className="poppins-font">
                         {new Date(customer.created_at).toLocaleDateString()}
                       </td>
                       <td className="poppins-font">{customer.customerName}</td>
-                      <td className="poppins-font">{customer.phoneNum}</td>
-                      <td className="poppins-font">{customer.address}</td>
+                      <td className="poppins-font">{customer.sorterName}</td>
+                      <td className="poppins-font">{customer.kiloOfBeans}</td>
+                      <td className="poppins-font">{customer.status}</td>
                       {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
                       <td className="poppins-font">
                         {/* <button
