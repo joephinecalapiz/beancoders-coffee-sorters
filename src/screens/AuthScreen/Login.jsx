@@ -55,13 +55,14 @@ const Login = () => {
           localStorage.getItem("savedPassword");
           // Simulate an API call or any asynchronous operation
           console.log(user_id)
-          if (user_id == 0){
+          if (user_id == 2){
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/dashboard");
               window.location.reload();
             }, 2000);
-          }else{
+          }
+          if (user_id == 1){
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/manageusers");
