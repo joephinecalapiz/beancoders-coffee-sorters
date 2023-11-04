@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Navbar from "../component/Navbar";
 import api_endpoint from "../config";
+import Footer from "./Footer";
 
 const ContactUs = () => {
     const navigate = useNavigate();
@@ -293,6 +294,7 @@ const ContactUs = () => {
                     </form>
                 </section>
             </div>
+            <Footer></Footer>
         </>
     );
 };

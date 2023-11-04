@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import BeansLogo from "../assets/beansLogo.png";
 import Navbar from "../component/Navbar";
+import Footer from "./Footer";
 
 const About = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const About = () => {
           </h1>
           <h3
             style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-            className="mb-12 font-bold md:text-[18px] text-[16px] md:ml-20 md:mr-20 ml-22 mr-22"
+            className="mb-12 md:text-[18px] text-[16px] md:ml-20 md:mr-20 ml-22 mr-22"
           >
             The Arabica coffee beans sorter is a sophisticated machine designed
             to separate coffee beans based on their size, shape, and color. This
@@ -39,7 +40,7 @@ const About = () => {
           </h3>
           <h3
             style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-            className="font-bold md:text-[18px] text-[16px] md:ml-14 md:mr-14 ml-22 mr-22 mb-10"
+            className=" md:text-[18px] text-[16px] md:ml-14 md:mr-14 ml-22 mr-22 mb-10"
           >
             The sorter uses advanced technology, such as optical sensors, to
             identify and categorize the beans accurately. As the coffee beans
@@ -52,6 +53,7 @@ const About = () => {
           </h3>
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 };

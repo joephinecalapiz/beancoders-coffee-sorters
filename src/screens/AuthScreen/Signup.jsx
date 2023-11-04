@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import api_endpoint from "../../config";
 import Modal from "../../component/Modal";
+import Footer from "../Footer";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -196,6 +197,7 @@ const Signup = () => {
           </form>
         </section>
       </div>
+      <Footer></Footer>
       <Modal
         isOpen={popupMessage !== null}
         onClose={() => setPopupMessage(null)}
@@ -203,6 +205,7 @@ const Signup = () => {
       >
         {popupMessage}
       </Modal>
+
     </>
   );
 };

@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import api_endpoint from "../../config";
 import ForgotPasswordModal from "../../component/ForgotPasswordModal";
+import Footer from "../Footer";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -258,6 +259,7 @@ const Login = () => {
           </form>
         </section>
       </div>
+      <Footer></Footer>
     </>
   );
 };

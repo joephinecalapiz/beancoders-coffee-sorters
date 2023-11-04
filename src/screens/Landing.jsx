@@ -11,47 +11,34 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import Footer from "./Footer.jsx";
 
 const Landing = () => {
-  const [authenticated, setAuthenticated] = useState(null);
   const [companyData, setCompanyData] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      setAuthenticated(true);
-    } else {
-      setAuthenticated(false);
-    }
     document.title = "Home";
   }, []);
+
   useEffect(() => {
     axios.get(api_endpoint + "/companies").then((response) => {
       const data = response.data;
-      setCompanyData(
-        data.companies.map((company) => {
-          const detail = company.details[0];
-          if (detail && detail.images) {
-            detail.images = detail.images.replace(/[\[\]\\\"]/g, "");
-          }
-          return detail;
-        })
-      );
-
+      if (data.companies) { // Check if data.companies is defined
+        setCompanyData(
+          data.companies.map((company) => {
+            const detail = company.details[0];
+            if (detail && detail.images) {
+              detail.images = detail.images.replace(/[\[\]\\\"]/g, "");
+            }
+            return detail;
+          })
+        );
+      } else {
+        setCompanyData([]); // Handle the case where data.companies is undefined or null
+      }
       console.log(companyData);
     });
   }, []);
-
-  useEffect(() => {
-    if (authenticated) {
-      navigate("/dashboard");
-    }
-  }, [authenticated]);
-
-  if (authenticated === null) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <>
@@ -72,7 +59,7 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="bg-black ">
+      <div className="bg-black">
         <div className="text-center justify-center items-center">
           <h1 className="text-white mb-8 md:mb-20 font-poppins text-3xl md:text-5xl mt-0 font-bold">
             Coffee Sorting Establishments
@@ -143,6 +130,7 @@ const Landing = () => {
         <div className="flex items-center"></div>
         <br />
       </div>
+      <Footer></Footer>
     </>
   );
 };
