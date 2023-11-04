@@ -60,7 +60,7 @@ function Sidebar({ collapsed }) {
   });
 
   // Add code to get the user_id from local storage
-  const role = localStorage.getItem("role");
+  const role = localStorage.getItem("user_id");
 
   const handleNavigationClick = (href) => {
     const updatedNavigation = navigation.map((item) => ({
@@ -112,52 +112,24 @@ function Sidebar({ collapsed }) {
       >
         <div className="mt-4">
           {/* sidebar navigation */}
-          {role === 1 ? (
-              <div className="mt-4">
-                 {
-                   adminNav.map((item) => (
-                    <NavLink
-                      to={item.href}
-                      // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
-                      className={`nav-link ${item.current ? "active-link" : "text-white"
-                        } poppins-font`}
-                      key={item.href}
-                    >
-                      <span className="icon">{item.icon}</span>
-                      <span
-                        className={!collapsed ? "text-visible" : ""}
-                        style={{ fontFamily: "Poppins, sans-serif" }}
-                      >
-                        {item.name}
-                      </span>
-                    </NavLink>
-                  ))
-                }
-              </div>
-          ) :
-          (
-            <div className="mt-4">
-               {
-                   navigation.map((item) => (
-                    <NavLink
-                      to={item.href}
-                      // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
-                      className={`nav-link ${item.current ? "active-link" : "text-white"
-                        } poppins-font`}
-                      key={item.href}
-                    >
-                      <span className="icon">{item.icon}</span>
-                      <span
-                        className={!collapsed ? "text-visible" : ""}
-                        style={{ fontFamily: "Poppins, sans-serif" }}
-                      >
-                        {item.name}
-                      </span>
-                    </NavLink>
-                  ))
-                }
-              </div>
-          )
+          {
+            navigation.map((item) => (
+              <NavLink
+                to={item.href}
+                // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
+                className={`nav-link ${item.current ? "active-link" : "text-white"
+                  } poppins-font`}
+                key={item.href}
+              >
+                <span className="icon">{item.icon}</span>
+                <span
+                  className={!collapsed ? "text-visible" : ""}
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  {item.name}
+                </span>
+              </NavLink>
+            ))
           }
           {/* Dark mode toggle button */}
           <div className="fixed bottom-4 left-4">
