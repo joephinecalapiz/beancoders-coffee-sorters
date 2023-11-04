@@ -21,15 +21,15 @@ const About = () => {
 
         <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-20" />
 
-        <div className="text-center">
+        <div className="text-center poppins-font">
           <h1
-            style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
-            className="mt-1 mb-14 font-bold md:text-[40px] text-[30px]"
+            style={{ color: "white", fontFamily: "Poppins, sans-serif"}}
+            className="mt-1 mb-14 md:text-[40px] text-[30px]"
           >
             About Arabica Coffee Beans Sorter
           </h1>
           <h3
-            style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
+            style={{ color: "white", fontFamily: "Poppins, sans-serif"}}
             className="mb-12 md:text-[18px] text-[16px] md:ml-20 md:mr-20 ml-22 mr-22"
           >
             The Arabica coffee beans sorter is a sophisticated machine designed
