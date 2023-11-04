@@ -49,10 +49,10 @@ const Landing = () => {
             <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-5" />
           </div>
           <div className="text-center md:ml-32 px-4">
-            <p className="text-4xl mb-4 md:text-5xl md:mb-12 font-poppins md:block hidden">
+            <p className="text-4xl mb-4 md:text-5xl md:mb-12 font-poppins md:block hidden poppins-font">
               BeanCoders:
             </p>
-            <p className=" mb-4 text-4xl md:text-6xl md:ml-96 font-poppins">
+            <p className=" mb-4 text-4xl md:text-6xl md:ml-96 poppins-font">
               Quality Bean Sorter
             </p>
           </div>
@@ -61,7 +61,7 @@ const Landing = () => {
 
       <div className="bg-black">
         <div className="text-center justify-center items-center">
-          <h1 className="text-white mb-8 md:mb-20 font-poppins text-3xl md:text-5xl mt-0 font-bold">
+          <h1 className="text-white mb-8 md:mb-20 poppins-font text-3xl md:text-5xl mt-0 font-bold">
             Coffee Sorting Establishments
           </h1>
         </div>
