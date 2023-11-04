@@ -32,7 +32,7 @@ const Error = () => {
                                     Oops! That page can’t be found
                                 </h4>
                                 <p className="mb-8 text-lg text-white">
-                                    The page you are looking for it maybe deleted or you may not authorize to view to page
+                                    The page you are looking for it maybe deleted or you may not authorize to view the page
                                 </p>
                                 <a
                                     href="/dashboard"
