@@ -54,12 +54,20 @@ const Login = () => {
           localStorage.getItem("savedEmail");
           localStorage.getItem("savedPassword");
           // Simulate an API call or any asynchronous operation
-          setTimeout(() => {
-            setLoading(false); // Set loading to false when the operation is complete
-            navigate("/dashboard");
-            window.location.reload();
-          }, 2000); // Simulate a 2-second delay
-          // window.location.reload();
+          console.log(user_id)
+          if (user_id == 0){
+            setTimeout(() => {
+              setLoading(false); // Set loading to false when the operation is complete
+              navigate("/dashboard");
+              window.location.reload();
+            }, 2000);
+          }else{
+            setTimeout(() => {
+              setLoading(false); // Set loading to false when the operation is complete
+              navigate("/manageusers");
+              window.location.reload();
+            }, 2000);
+          }
         }
       })
       .catch((error) => {

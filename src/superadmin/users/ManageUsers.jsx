@@ -65,8 +65,8 @@ const ManageUsers = () => {
     
     // Check if the user_id is not 1 and navigate back if necessary
     if (user_id !== "1") {
-      navigate(-1); // Go back to the previous page
-      window.location.reload();
+      navigate("/error404"); // Go back to the previous page
+      // window.location.reload();
     }
   }, []); // Empty dependency array, so this effect runs only once
 
