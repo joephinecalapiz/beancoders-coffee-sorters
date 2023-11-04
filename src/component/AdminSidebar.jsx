@@ -12,7 +12,13 @@ function AdminSidebar({ collapsed }) {
     {
       name: "Manage User",
       href: "/manageusers",
-      current: location.pathname === "/dashboard",
+      current: location.pathname === "/manageusers",
+      icon: <FaUsers size={ICON_SIZE} />
+    },
+    {
+      name: "Feedbacks",
+      href: "/feedbacks",
+      current: location.pathname === "/feedbacks",
       icon: <FaUsers size={ICON_SIZE} />
     }
   ])
