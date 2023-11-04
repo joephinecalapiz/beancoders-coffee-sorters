@@ -8,6 +8,10 @@ const Error = () => {
         showNavbar(!navVisible);
     };
 
+    useEffect(() => {
+        document.title = "Error Page";
+      }, []);
+
     return (
         <>
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
