@@ -221,14 +221,14 @@ const ManageUsers = () => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Date Hired
+                      Date Registered
                     </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                  {sortedFilteredSorters.map((user) => (
+                  {sortedFilteredSorters.map((user, index) => (
                     <tr key={user.id}>
-                      <td className="poppins-font">{user.id}</td>
+                      <td className="poppins-font">{index + 1}</td>
                       <td className="poppins-font">{user.name}</td>
                       <td className="poppins-font">{user.email}</td>
                       <td className="poppins-font">
