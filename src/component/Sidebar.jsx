@@ -107,7 +107,7 @@ function Sidebar({ collapsed }) {
   return (
     <>
       <nav
-        className={`bg-black dark:bg-gray  fixed z-20 inset-0 mt-2 left-[max(0px,calc(10%-100rem))] w-[15rem] ${collapsed ? "collapsed" : ""
+        className={`pl-4 pt-16 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-2 left-[max(0px,calc(10%-100rem))] w-[15rem] ${collapsed ? "collapsed" : ""
           }`}
       >
         <div className="mt-4">
