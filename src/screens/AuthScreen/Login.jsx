@@ -101,7 +101,7 @@ const Login = () => {
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
             <div className="w-[120%] mx-auto">
-              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12">
+              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 poppins-font">
                 Login
               </h1>
               <label
