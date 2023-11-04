@@ -416,9 +416,9 @@ const Customers = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                  {(reloadCustomerData || sortedFilteredCustomers).map((customer) => (
+                  {(reloadCustomerData || sortedFilteredCustomers).map((customer, index) => (
                     <tr key={customer.id}>
-                      <td className="poppins-font">{customer.id}</td>
+                      <td className="poppins-font">{index + 1}</td>
                       <td className="poppins-font">
                         {new Date(customer.created_at).toLocaleDateString()}
                       </td>

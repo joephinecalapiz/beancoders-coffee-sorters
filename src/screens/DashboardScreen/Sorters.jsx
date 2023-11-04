@@ -237,9 +237,9 @@ const Sorters = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                  {(reloadSorterData || sortedFilteredSorters).map((sorter) => (
+                  {(reloadSorterData || sortedFilteredSorters).map((sorter, index) => (
                     <tr key={sorter.id}>
-                      <td className="poppins-font">{sorter.id}</td>
+                      <td className="poppins-font">{index + 1}</td>
                       <td className="poppins-font">{sorter.sorterName}</td>
                       <td className="poppins-font">{sorter.phoneNum}</td>
                       <td className="poppins-font">{sorter.address}</td>
