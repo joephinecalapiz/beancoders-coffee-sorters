@@ -22,6 +22,7 @@ import About from "./screens/About";
 import ContactUs from "./screens/ContactUs";
 import CustomerArchived from "./screens/Archives/CustomerArchived";
 import StatusArchived from "./screens/Archives/StatusArchived";
+import Error from "./screens/error";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -174,6 +175,7 @@ function App() {
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        {/* <Route path="/error404" element={<Error />} /> */}
         <Route path="/company" element={<CompanyDetails />} />
         {/* <Route path="/profile" element={<Profile />} /> */}
         {/* <Route
@@ -193,6 +195,20 @@ function App() {
             )
           }
         />
+        {/* <Route from="**" to="/404" /> */}
+        <Route
+          path="/error404"
+          element={
+            authenticated ? (
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                <Error />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route path="*" element={<Error />}/>
       </Routes>
     </BrowserRouter>
   );
