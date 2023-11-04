@@ -77,7 +77,7 @@ const Signup = () => {
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
             <div className="md:w-[150%] w-[250%] mx-auto">
-              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-10">
+              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-10 poppins-font">
                 Create Account
               </h1>
               <input
