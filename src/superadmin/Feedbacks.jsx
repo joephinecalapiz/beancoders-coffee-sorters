@@ -42,7 +42,7 @@ const Feedbacks = () => {
   };
 
   // Add code to get the user_id from local storage
-  const user_id = localStorage.getItem("id");
+  const role = localStorage.getItem("role");
 
   const navigate = useNavigate();
 
@@ -58,7 +58,7 @@ const Feedbacks = () => {
       });
     
     // Check if the user_id is not 1 and navigate back if necessary
-    if (user_id !== "1") {
+    if (role !== "1") {
       navigate("/error404"); // Go back to the previous page
       // window.location.reload();
     }
