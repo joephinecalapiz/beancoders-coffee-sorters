@@ -68,9 +68,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     // Clear session storage
     clearSessionStorage();
 
-    // Clear the user's token from local storage
+    // Clear the user's local storage
     localStorage.removeItem("token");
     localStorage.removeItem("user_id");
+    localStorage.removeItem("role");
     localStorage.removeItem("isLoggedIn");
     // Clear the user data from state, if necessary
     setUserInfo(null);
@@ -161,7 +162,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 )}
               </div>
               <ul className="py-1" role="none">
-              <li
+                <li
                   onClick={() => {
                     navigate("/profile");
                   }}
@@ -183,8 +184,15 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   role="menuitem"
                 >
                   Archive
-                  <span className="arrow-down px-2 justify-self-end">&#9660;</span>
+
+                  <span
+                    className={`transform transition-transform duration-300 arrow-down px-2 ${isProfileMenuOpen ? "rotate-180" : "rotate-0"
+                      } `}
+                  >
+                  &#9660;
+                  </span>
                 </button>
+
                 {isProfileMenuOpen && (
                   <ul className="py-1" role="none">
                     <li onClick={() => navigate("/customer-archived")}>
