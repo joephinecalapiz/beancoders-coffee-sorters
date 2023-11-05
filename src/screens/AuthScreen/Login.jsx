@@ -50,20 +50,21 @@ const Login = () => {
         if (response.status === 200) {
           const token = response.data.token;
           const user_id = response.data.user.id;
+          const role = response.data.user.role;
+          localStorage.setItem("role", role);
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
           localStorage.getItem("savedEmail");
           localStorage.getItem("savedPassword");
-          // Simulate an API call or any asynchronous operation
-          console.log(user_id)
-          if (user_id == 2){
+          console.log(role, user_id);
+          if (role == 2){
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/dashboard");
               window.location.reload();
             }, 2000);
           }
-          if (user_id == 1){
+          if (role == 1){
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/manageusers");
