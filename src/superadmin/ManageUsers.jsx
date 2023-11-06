@@ -161,7 +161,7 @@ const ManageUsers = () => {
               style={{ width: "80%", maxWidth: "800px" }}
             />
             {/* Add New button */}
-            <button
+            {/* <button
               onClick={openModal}
               className="px-4 py-2 text-white rounded focus:outline-none"
               onMouseEnter={(e) => {
@@ -181,7 +181,7 @@ const ManageUsers = () => {
               }}
             >
               Add New
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="px-4">

@@ -116,7 +116,7 @@ const Dashboard = () => {
       const formData = new FormData();
       formData.append("image", companyImage);
 
-      const response = await axios.post(api_endpoint + "/user", formData, {
+      const response = await axios.post(api_endpoint + "/fetch-info", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -173,7 +173,7 @@ const Dashboard = () => {
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
     try {
-      const response = await fetch(api_endpoint + "/user", {
+      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
           Authorization: "Bearer " + token,
           "Content-Type": "application/json",
@@ -188,6 +188,7 @@ const Dashboard = () => {
       console.error("Error fetching user data:", error);
     }
   };
+  
 
   return (
     <>
@@ -260,7 +261,7 @@ const Dashboard = () => {
             marginTop: "-20px",
           }}
         >
-          <ChartComponent />
+          {/* <ChartComponent /> */}
         </div>
 
       </div>
