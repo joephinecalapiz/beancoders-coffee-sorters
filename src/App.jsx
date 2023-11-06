@@ -23,6 +23,8 @@ import ContactUs from "./screens/ContactUs";
 import CustomerArchived from "./screens/Archives/CustomerArchived";
 import StatusArchived from "./screens/Archives/StatusArchived";
 import Error from "./screens/error";
+import PermissionDenied from "./superadmin/Error";
+import Feedbacks from "./superadmin/Feedbacks";
 
 function App() {
   const [navVisible, showNavbar] = useState(false);
@@ -195,6 +197,18 @@ function App() {
             )
           }
         />
+        <Route
+          path="/feedbacks"
+          element={
+            authenticated ? (
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                <Feedbacks />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
         {/* <Route from="**" to="/404" /> */}
         <Route
           path="/error404"
@@ -202,6 +216,18 @@ function App() {
             authenticated ? (
               <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                 <Error />
+              </div>
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+        <Route
+          path="/permission-denied"
+          element={
+            authenticated ? (
+              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                <PermissionDenied />
               </div>
             ) : (
               <Navigate to="/login" />
