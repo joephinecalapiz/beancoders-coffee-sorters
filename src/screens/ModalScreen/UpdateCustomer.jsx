@@ -13,8 +13,8 @@ const UpdateCustomer = ({ show, onClose, customer }) => {
     const closeModal = () => {
         onClose();
     };
-    
-    
+
+
     const updateCustomerDetails = async (e) => {
         e.preventDefault();
         try {
@@ -44,7 +44,7 @@ const UpdateCustomer = ({ show, onClose, customer }) => {
             if (!response.ok) {
                 throw new Error("Fail to add customer");
             }
-            
+
         } catch (error) {
             console.error(error);
         }
@@ -52,7 +52,7 @@ const UpdateCustomer = ({ show, onClose, customer }) => {
     };
 
 
-      
+
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-30">
