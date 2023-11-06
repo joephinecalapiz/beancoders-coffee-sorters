@@ -10,7 +10,7 @@ import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
 import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/Topbar";
+import Topbar from "../component/AdminTopbar";
 
 const ManageUsers = () => {
   const [navVisible, showNavbar] = useState(false);

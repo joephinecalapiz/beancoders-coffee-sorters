@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/Topbar";
+import Topbar from "../component/AdminTopbar";
 
 const Error = () => {
     const [navVisible, showNavbar] = useState(true);

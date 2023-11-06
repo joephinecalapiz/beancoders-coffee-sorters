@@ -226,15 +226,9 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        {user_id === 1 ? (
-          <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
-            Super Admin
-          </h1>
-        ) : (
-          <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
+        <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
             Admin
-          </h1>
-        )}
+        </h1>
       </div>
 
       {/* Confirmation Modal */}

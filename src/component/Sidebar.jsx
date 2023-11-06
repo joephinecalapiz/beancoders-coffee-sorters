@@ -34,14 +34,6 @@ function Sidebar({ collapsed }) {
       icon: <FaChartBar size={ICON_SIZE} />,
     },
   ]);
-  const [adminNav, setAdminNav] = useState([
-    {
-      name: "Manage User",
-      href: "/manageusers",
-      current: location.pathname === "/dashboard",
-      icon: <FaUsers size={ICON_SIZE} />
-    }
-  ])
 
   // Initialize dark mode state based on localStorage or user preference
   const [darkMode, setDarkMode] = useState(() => {
@@ -68,17 +60,6 @@ function Sidebar({ collapsed }) {
       current: item.href === href,
     }));
     setNavigation(updatedNavigation);
-
-    // Use the navigate function to navigate to the clicked item's href
-    navigate(href);
-  };
-
-  const handleAdminNavigationClick = (href) => {
-    const updatedNavigation = adminNav.map((item) => ({
-      ...item,
-      current: item.href === href,
-    }));
-    setAdminNav(updatedNavigation);
 
     // Use the navigate function to navigate to the clicked item's href
     navigate(href);

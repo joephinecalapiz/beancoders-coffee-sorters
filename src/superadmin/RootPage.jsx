@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ManageUsers from "./ManageUsers";
 import Feedbacks from "./Feedbacks";
 import Error from "./Error";
+import Profile from "./Profile";
 
 function AdminRootPage() {
     const [navVisible, showNavbar] = useState(false);
@@ -24,6 +25,14 @@ function AdminRootPage() {
                 element={
                     <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                         <Feedbacks />
+                    </div>
+                }
+            />
+            <Route
+                path="/profile"
+                element={
+                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                        <Profile />
                     </div>
                 }
             />
