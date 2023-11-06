@@ -13,7 +13,7 @@ const Error = () => {
     };
 
     useEffect(() => {
-        document.title = "Error Page";
+        document.title = "404 Error";
       }, []);
 
     return (

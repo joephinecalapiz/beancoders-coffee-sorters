@@ -13,7 +13,7 @@ const PermissionDenied = () => {
     };
 
     useEffect(() => {
-        document.title = "Error Page";
+        document.title = "Denied Access";
       }, []);
 
     return (
