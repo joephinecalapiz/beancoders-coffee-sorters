@@ -41,25 +41,22 @@ const Feedbacks = () => {
     setSearchText(e.target.value);
   };
 
-  // Add code to get the user_id from local storage
-  const role = localStorage.getItem("role");
-
   const navigate = useNavigate();
 
   useEffect(() => {
     document.title = "Feedbacks";
 
     const user_id = localStorage.getItem("user_id");
+    const role = localStorage.getItem("role");
     axiosInstance
       .get(api_endpoint + "/fetch-feedback/" + user_id,)
       .then((response) => {
         const data = response.data.data;
         setAllSorters(data);
       });
-    
     // Check if the user_id is not 1 and navigate back if necessary
     if (role !== "1") {
-      navigate("/error404"); // Go back to the previous page
+      navigate("/permission-denied"); // Go back to the previous page
       // window.location.reload();
     }
   }, []); // Empty dependency array, so this effect runs only once
