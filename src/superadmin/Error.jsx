@@ -8,13 +8,17 @@ const PermissionDenied = () => {
         showNavbar(!navVisible);
     };
 
+    const goBack = () => {
+        window.history.back(); // Use the browser's history to navigate back
+    };
+
     useEffect(() => {
         document.title = "Error Page";
       }, []);
 
     return (
         <>
-        <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        {/* <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} /> */}
         <Topbar
                 onToggleSidebar={toggleSidebar}
                 collapsed={navVisible}
@@ -35,10 +39,10 @@ const PermissionDenied = () => {
                                     You don't have any permission to view the page
                                 </p>
                                 <a
-                                    href="/manageusers"
-                                    className="inline-block rounded-lg border border-white px-8 py-3 text-center text-base font-semibold text-white transition hover:bg-white hover:text-primary"
+                                    onClick={goBack}
+                                    className="inline-block rounded-lg border border-white px-8 py-3 text-center text-base font-semibold text-white transition hover:bg-white hover:text-primary cursor-pointer"
                                 >
-                                    Go To Home
+                                    Go back
                                 </a>
                             </div>
                         </div>

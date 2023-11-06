@@ -214,7 +214,7 @@ function App() {
           path="/error404"
           element={
             authenticated ? (
-              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+              <div className={!navVisible ? "max-w-8xl mx-auto" : "page page-with-navbar"}>
                 <Error />
               </div>
             ) : (
@@ -226,7 +226,7 @@ function App() {
           path="/permission-denied"
           element={
             authenticated ? (
-              <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+              <div className={!navVisible ? "max-w-8xl mx-auto" : "page page-with-navbar"}>
                 <PermissionDenied />
               </div>
             ) : (

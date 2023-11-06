@@ -8,6 +8,10 @@ const Error = () => {
         showNavbar(!navVisible);
     };
 
+    const goBack = () => {
+        window.history.back(); // Use the browser's history to navigate back
+    };
+
     useEffect(() => {
         document.title = "Error Page";
       }, []);
@@ -32,13 +36,13 @@ const Error = () => {
                                     Oops! That page can’t be found
                                 </h4>
                                 <p className="mb-8 text-lg text-white">
-                                    The page you are looking for it maybe deleted
+                                    The page you are looking for it maybe deleted or not exist at all.
                                 </p>
                                 <a
-                                    href="/dashboard"
-                                    className="inline-block rounded-lg border border-white px-8 py-3 text-center text-base font-semibold text-white transition hover:bg-white hover:text-primary"
+                                    onClick={goBack}
+                                    className="inline-block rounded-lg border border-white px-8 py-3 text-center text-base font-semibold text-white transition hover:bg-white hover:text-primary cursor-pointer"
                                 >
-                                    Go To Home
+                                    Go back
                                 </a>
                             </div>
                         </div>
