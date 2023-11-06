@@ -2,16 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import BeansLogo from "../assets/beansLogo.png";
-import Navbar from "../component/Navbar.jsx";
+import BeansLogo from "../../assets/beansLogo.png";
 import axios from "axios";
-import api_endpoint from "../config";
-import image_endpoint from "../image-config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { faBuilding } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import Footer from "./Footer.jsx";
+import api_endpoint from "../../config";
+import Navbar from "../../component/Navbar";
+import Footer from "./Footer";
+import image_endpoint from "../../image-config";
 
 const Landing = () => {
   const [companyData, setCompanyData] = useState([]);

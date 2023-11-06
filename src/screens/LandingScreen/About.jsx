@@ -2,8 +2,8 @@
 
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import BeansLogo from "../assets/beansLogo.png";
-import Navbar from "../component/Navbar";
+import BeansLogo from "../../assets/beansLogo.png";
+import Navbar from "../../component/Navbar";
 import Footer from "./Footer";
 
 const About = () => {

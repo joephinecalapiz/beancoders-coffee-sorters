@@ -2,17 +2,15 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
-import "../.././css/sorter.css";
-import "../.././css/datepicker.css";
+import ".././css/sorter.css";
+import ".././css/datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
-
-import api_endpoint from "../../config";
-import AdminSidebar from "../../component/AdminSidebar";
+import api_endpoint from "../config";
+import AdminSidebar from "../component/AdminSidebar";
+import Topbar from "../component/Topbar";
 
 const ManageUsers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -31,12 +29,11 @@ const ManageUsers = () => {
   const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
-  
   const [searchText, setSearchText] = useState("");
-
   const filteredSorters = allUsers.filter((users) =>
     users.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
   const sortedFilteredSorters = filteredSorters.sort((a, b) => a.id - b.id);
 
   const handleSearchInputChange = (e) => {
@@ -52,7 +49,7 @@ const ManageUsers = () => {
     document.title = "Manage Users";
 
     const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
+    const role = localStorage.getItem("role");
     const headers = {
       Authorization: "Bearer " + token,
     };
@@ -64,7 +61,7 @@ const ManageUsers = () => {
       });
     
     // Check if the user_id is not 1 and navigate back if necessary
-    if (user_id !== "1") {
+    if (role !== "1") {
       navigate("/permission-denied"); // Go back to the previous page
       // window.location.reload();
     }

@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import Navbar from "../component/Navbar";
-import api_endpoint from "../config";
+import Navbar from "../../component/Navbar";
+import api_endpoint from "../../config";
 import Footer from "./Footer";
 
 const ContactUs = () => {
