@@ -103,11 +103,7 @@ const CustomerArchived = () => {
         throw new Error("Failed to delete customer archived data");
       }
       // Update customer data after successful archive
-      await fetchCustomers();
-  
-      if (!fetchResponse.ok) {
-        throw new Error("Failed to fetch archived customer data");
-      }
+      fetchCustomers();
     } catch (error) {
       console.error("Error deleting or fetching customer data:", error);
     }
@@ -119,7 +115,6 @@ const CustomerArchived = () => {
     document.title = "Archived";
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
-      deleteCustomer();
     }
   }, [selectedMonth, selectedYear]);
 
