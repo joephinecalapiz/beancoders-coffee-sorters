@@ -111,9 +111,6 @@ const Status = () => {
 
   const handleAddNew = (event) => {
     event.preventDefault();
-    console.log("Customer Name:", newCustomerName);
-    console.log("Sorter Name:", newSorterName);
-    console.log("Status:", newStatus);
 
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
