@@ -7,6 +7,8 @@ import api_endpoint from "../config";
 import "../css/topbar.css";
 import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
+import { IoIosArrowDown } from "react-icons/io";
+
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
@@ -195,6 +197,16 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     &#9660;
                   </span>
                 </button>
+
+                {/* <button
+                  type="button"
+                  onClick={handleToggleSidebar}
+                  className={`ml-6 text-white transform transition-transform duration-300 ${
+                    collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
+                  }`}
+                >
+                  <FaBars size={20} />
+                </button> */}
 
                 {isProfileMenuOpen && (
                   <ul className="py-1" role="none">
