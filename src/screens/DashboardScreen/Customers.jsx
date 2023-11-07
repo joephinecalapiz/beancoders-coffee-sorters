@@ -103,7 +103,6 @@ const Customers = () => {
     document.title = "Customers";
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
-      archivedCustomer();
     }
   }, [selectedMonth, selectedYear]);
 
@@ -148,40 +147,6 @@ const Customers = () => {
     setNewCustomerPhoneNumber("");
     setNewCustomerAddress("");
     setKiloOfBeans("");
-  };
-
-  const archivedCustomer = async (id) => {
-    try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-      const currentDate = new Date().toISOString();
-
-      const response = await fetch(api_endpoint + "/archive-customer/" + id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          user_id: user_id,
-          customerName: newCustomerName,
-          phoneNum: newCustomerPhoneNumber,
-          address: newCustomerAddress,
-          registrationDate: currentDate,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Fail to archive customer");
-      }
-      // Update customer data after successful archive
-      await fetchCustomers();
-
-      if (!fetchResponse.ok) {
-        throw new Error("Failed to fetch archived customer data");
-      }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   const getCustomerPostHistory = async (e) => {
