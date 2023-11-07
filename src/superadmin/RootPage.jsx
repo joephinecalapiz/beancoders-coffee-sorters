@@ -37,7 +37,7 @@ function AdminRootPage() {
                 }
             />
             <Route
-                path="/error404"
+                path="/error"
                 element={
                     <div className={!navVisible ? "max-w-8xl mx-auto" : "page page-with-navbar"}>
                         <Error />

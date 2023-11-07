@@ -10,6 +10,7 @@ import beansLogo from "../../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../../config";
 import image_endpoint from "../../image-config";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
   const [navVisible, showNavbar] = useState(true);
@@ -34,6 +35,8 @@ const Profile = () => {
     companyLocation: profileData.companyLocation,
     // images: profileData.images
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts

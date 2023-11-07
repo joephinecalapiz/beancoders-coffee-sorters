@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import ".././css/Sidebar.css";
 import ".././css/dashboard.css";
 import ".././css/profile.css";
+import { useNavigate } from "react-router-dom";
 import beansLogo from "../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../config";
 import image_endpoint from "../image-config";
@@ -17,7 +18,7 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState("");
   const [compInfo, setCompInfo] = useState("");
   const [profileData, setProfileData] = useState({
-    profilePicture: "assets/beansLogo.png",
+    profilePicture: "../assets/beansLogo.png",
     name: userInfo.name,
     email: userInfo.email,
     companyNumber: compInfo.companyNumber,
@@ -35,6 +36,8 @@ const Profile = () => {
     // images: profileData.images
   });
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts
     fetchCompanyInfo();
@@ -42,7 +45,7 @@ const Profile = () => {
     const role = localStorage.getItem("role");
     // Check if the user_id is not 1 and navigate back if necessary
     if (role !== "1") {
-      navigate("/permission-denied"); // Go back to the previous page
+      navigate("/error"); // Go back to the previous page
       // window.location.reload();
     }
   }, []);
