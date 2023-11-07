@@ -20,6 +20,12 @@ function AdminSidebar({ collapsed }) {
       href: "/superadmin/feedbacks",
       current: location.pathname === "/feedbacks",
       icon: <FaUsers size={ICON_SIZE} />
+    },
+    {
+      name: "Generate Keys",
+      href: "/superadmin/generate-keys",
+      current: location.pathname === "/generate-keys",
+      icon: <FaUsers size={ICON_SIZE} />
     }
   ])
 

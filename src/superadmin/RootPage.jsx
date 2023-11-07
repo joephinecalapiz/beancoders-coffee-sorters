@@ -6,6 +6,7 @@ import ManageUsers from "./ManageUsers";
 import Feedbacks from "./Feedbacks";
 import Error from "./Error";
 import Profile from "./Profile";
+import GenerateKeys from "./GenerateKey";
 
 function AdminRootPage() {
     const [navVisible, showNavbar] = useState(false);
@@ -25,6 +26,14 @@ function AdminRootPage() {
                 element={
                     <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
                         <Feedbacks />
+                    </div>
+                }
+            />
+            <Route
+                path="/generate-keys"
+                element={
+                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                        <GenerateKeys />
                     </div>
                 }
             />
