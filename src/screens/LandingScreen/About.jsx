@@ -25,7 +25,7 @@ const About = () => {
           <h1 className="mt-1 mb-14 font-bold md:text-[40px] text-[30px]">
             About Arabica Coffee Beans Sorter
           </h1>
-          <h3 className="text-justify poppins-font mb-12 md:text-[18px] text-[16px] m-5 md:ml-20 md:mr-20 ml-22 mr-22 md:leading-[1.7] bg-yellow-500 bg-opacity-30 shadow-lg">
+          <h3 className="text-justify poppins-font mb-12 md:text-[18px] text-[16px] m-5 md:ml-20 md:mr-20 ml-22 mr-22 md:leading-[1.7]">
             The Arabica coffee beans sorter is a sophisticated machine designed
             to separate coffee beans based on their size, quality, and color.
             This sorting process is essential to remove defective or damaged
