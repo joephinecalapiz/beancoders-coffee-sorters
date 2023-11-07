@@ -23,7 +23,8 @@ const Landing = () => {
   useEffect(() => {
     axios.get(api_endpoint + "/companies").then((response) => {
       const data = response.data;
-      if (data.companies) { // Check if data.companies is defined
+      if (data.companies) {
+        // Check if data.companies is defined
         setCompanyData(
           data.companies.map((company) => {
             const detail = company.details[0];
@@ -72,13 +73,13 @@ const Landing = () => {
             companyData.map((detail, index) => (
               <div
                 key={index}
-                className="bg-brown md:min-h-[450px] md:w-76 rounded-lg p-2  flex flex-col relative shadow-4xl z-100"
+                className="bg-brown md:min-h-[450px] md:w-76  rounded-lg p-2  flex flex-col relative shadow-4xl z-100"
               >
                 {detail && detail.images ? (
                   <img
                     src={`${image_endpoint}/storage/${detail.images}`}
                     alt="beansLogo"
-                    className="h-25 w-25 max-h-full max-w-full mb-4 items-center "
+                    className=" w-70 h-64 max-h-full max-w-full mb-4 items-center "
                   />
                 ) : (
                   <div>No image available</div>
