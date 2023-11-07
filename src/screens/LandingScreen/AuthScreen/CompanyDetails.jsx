@@ -7,12 +7,75 @@ import axios from "axios";
 import api_endpoint from "../../../config";
 import Modal from "../../../component/Modal";
 
+const imageMimeType = /image\/(png|jpg|jpeg)/i;
+
 const CompanyDetails = () => {
     const navigate = useNavigate();
     const [popupMessage, setPopupMessage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [selectedImage, setSelectedImage] = useState();
     const [file, setFile] = useState();
+    const [profileImage, setProfileImage] = useState(null);
+    const [companyImage, setCompanyImage] = useState(null);
+    const [profileFileDataURL, setProfileFileDataURL] = useState(null);
+    const [companyFileDataURL, setCompanyFileDataURL] = useState(null);
+
+    const profileImageHandler = (e) => {
+        const selectedFile = e.target.files[0];
+        if (!selectedFile.type.match(imageMimeType)) {
+            alert("Image mime type is not valid");
+            return;
+        }
+        setProfileImage(selectedFile);
+    };
+
+    const companyImageHandler = (e) => {
+        const selectedFile = e.target.files[0];
+        if (!selectedFile.type.match(imageMimeType)) {
+            alert("Image mime type is not valid");
+            return;
+        }
+        setCompanyImage(selectedFile);
+    };
+
+    useEffect(() => {
+        let profileFileReader, companyFileReader;
+        let isProfileCancel = false, isCompanyCancel = false;
+
+        if (profileImage) {
+            profileFileReader = new FileReader();
+            profileFileReader.onload = (e) => {
+                const { result } = e.target;
+                if (result && !isProfileCancel) {
+                    setProfileFileDataURL(result);
+                }
+            };
+            profileFileReader.readAsDataURL(profileImage);
+        }
+
+        if (companyImage) {
+            companyFileReader = new FileReader();
+            companyFileReader.onload = (e) => {
+                const { result } = e.target;
+                if (result && !isCompanyCancel) {
+                    setCompanyFileDataURL(result);
+                }
+            };
+            companyFileReader.readAsDataURL(companyImage);
+        }
+
+        return () => {
+            isProfileCancel = true;
+            isCompanyCancel = true;
+
+            if (profileFileReader && profileFileReader.readyState === 1) {
+                profileFileReader.abort();
+            }
+            if (companyFileReader && companyFileReader.readyState === 1) {
+                companyFileReader.abort();
+            }
+        };
+    }, [profileImage, companyImage]);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -56,8 +119,10 @@ const CompanyDetails = () => {
         formData.append("companyName", data.companyName)
         formData.append("companyNumber", data.companyNumber)
         formData.append("companyLocation", data.companyLocation)
-        formData.append("images", file)
-        console.log(file)
+        formData.append("images", data.images)
+        formData.append("profileAvatar", data.profileAvatar)
+        console.log(companyFileDataURL)
+        console.log(profileFileDataURL)
         axios
             .post(api_endpoint + "/add-info", data, {
                 headers: {
@@ -77,6 +142,7 @@ const CompanyDetails = () => {
                 console.error("Error", error.response.data);
                 if (error.response.status === 401) {
                     setLoginError(true);
+                    setLoading(false);
                 }
             })
             .finally(() => {
@@ -172,16 +238,40 @@ const CompanyDetails = () => {
                             {errors.companyLocation && (
                                 <p className="text-red-500 ml-2">{errors.companyLocation.message}</p>
                             )}
-
-                            {/* Company Image */}
-                            <img
-                                    src={selectedImage}
-                                    alt="Preview"
-                                    className="mt-4 mx-auto h-24 w-24 object-contain"
-                                />
+                            {/* Profile Image */}
+                            {profileFileDataURL ?
+                            <p className="">
+                                {
+                                    <img src={profileFileDataURL} alt="preview" />
+                                }
+                            </p> : null}
                             <input
                                 type="file"
-                                onChange={handleImageChange}
+                                onChange={profileImageHandler}
+                                id="profileAvatar"
+                                name="profileAvatar"
+                                accept="image/*"
+                                {...register("profileAvatar", {
+                                    //required: "Company Image is required",
+                                })}
+                                className={`w-full rounded-[10px] h-10 text-white px-4 ${errors.profileAvatar ? "mb-2" : "mb-5"
+                                    }`}
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            />
+                            {errors.profileAvatar && (
+                                <p className="text-red-500 ml-2">{errors.profileAvatar.message}</p>
+                            )}
+
+                            {/* Company Image */}
+                            {companyFileDataURL ?
+                            <p className="">
+                                {
+                                    <img src={companyFileDataURL} alt="preview" />
+                                }
+                            </p> : null}
+                            <input
+                                type="file"
+                                onChange={companyImageHandler}
                                 id="images"
                                 name="images"
                                 accept="image/*"

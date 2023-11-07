@@ -11,13 +11,13 @@ function AdminSidebar({ collapsed }) {
   const [adminNav, setAdminNav] = useState([
     {
       name: "Manage User",
-      href: "/manageusers",
+      href: "/superadmin/manageusers",
       current: location.pathname === "/manageusers",
       icon: <FaUsers size={ICON_SIZE} />
     },
     {
       name: "Feedbacks",
-      href: "/feedbacks",
+      href: "/superadmin/feedbacks",
       current: location.pathname === "/feedbacks",
       icon: <FaUsers size={ICON_SIZE} />
     }

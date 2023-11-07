@@ -10,7 +10,7 @@ import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
 import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/Topbar";
+import Topbar from "../component/AdminTopbar";
 
 const ManageUsers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -161,7 +161,7 @@ const ManageUsers = () => {
               style={{ width: "80%", maxWidth: "800px" }}
             />
             {/* Add New button */}
-            <button
+            {/* <button
               onClick={openModal}
               className="px-4 py-2 text-white rounded focus:outline-none"
               onMouseEnter={(e) => {
@@ -181,7 +181,7 @@ const ManageUsers = () => {
               }}
             >
               Add New
-            </button>
+            </button> */}
           </div>
         </div>
         <div className="px-4">

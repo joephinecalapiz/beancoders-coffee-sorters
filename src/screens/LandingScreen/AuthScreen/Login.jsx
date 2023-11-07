@@ -68,7 +68,7 @@ const Login = () => {
           if (role == 1){
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
-              navigate("/manageusers");
+              navigate("/superadmin/manageusers");
               window.location.reload();
             }, 2000);
           }
