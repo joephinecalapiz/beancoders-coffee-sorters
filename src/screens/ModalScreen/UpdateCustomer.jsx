@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import api_endpoint from "../../config";
 
-const UpdateCustomer = ({ show, onClose, customer }) => {
+const UpdateCustomer = ({ show, onClose, customer, update }) => {
     const [allCustomers, setAllCustomers] = useState([]);
     const [customerId, setCustomerId] = useState(customer.id);
     const [newCustomerName, setNewCustomerName] = useState(customer.customerName);
@@ -41,6 +41,9 @@ const UpdateCustomer = ({ show, onClose, customer }) => {
             if (response.status === 422) {
                 alert("Customer is already in the database");
             }
+
+            update();
+
             if (!response.ok) {
                 throw new Error("Fail to add customer");
             }

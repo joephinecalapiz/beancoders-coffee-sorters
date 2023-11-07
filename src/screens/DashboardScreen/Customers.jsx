@@ -36,6 +36,7 @@ const Customers = () => {
     label: monthOptions[currentMonth - 1].label, // Get the label for the current month
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [newCustomerName, setNewCustomerName] = useState("");
   const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
   const [newCustomerAddress, setNewCustomerAddress] = useState("");
@@ -69,7 +70,12 @@ const Customers = () => {
     handleShowUpdateModal(null);
   };
 
-
+  useEffect(() => {
+    document.title = "Customers";
+    if (selectedMonth !== null && selectedYear !== null) {
+      fetchCustomers();
+    }
+  }, [selectedMonth, selectedYear]);
 
   const fetchCustomers = async () => {
     try {
@@ -98,13 +104,6 @@ const Customers = () => {
       console.error("Error fetching customer data:", error);
     }
   };
-
-  useEffect(() => {
-    document.title = "Customers";
-    if (selectedMonth !== null && selectedYear !== null) {
-      fetchCustomers();
-    }
-  }, [selectedMonth, selectedYear]);
 
   const [searchText, setSearchText] = useState("");
 
@@ -143,6 +142,18 @@ const Customers = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setNewCustomerName("");
+    setNewCustomerPhoneNumber("");
+    setNewCustomerAddress("");
+    setKiloOfBeans("");
+  };
+
+  const openUpdateModal = () => {
+    setIsUpdateModalOpen(true);
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
     setNewCustomerName("");
     setNewCustomerPhoneNumber("");
     setNewCustomerAddress("");
@@ -194,6 +205,75 @@ const Customers = () => {
       console.error(error);
     }
     closeModal();
+  };
+
+  const updateCustomerDetails = async (id) => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const currentDate = new Date().toISOString();
+
+      const response = await fetch(api_endpoint + "/edit-customer/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          customerName: newCustomerName,
+          phoneNum: newCustomerPhoneNumber,
+          address: newCustomerAddress,
+          registrationDate: currentDate,
+        }),
+      });
+      if (response.status === 422) {
+        alert("Customer is already in the database");
+      }
+
+      fetchCustomers();
+
+      if (!response.ok) {
+        throw new Error("Fail to add customer");
+      }
+
+    } catch (error) {
+      console.error(error);
+    }
+    closeUpdateModal();
+  };
+
+  const archivedCustomer = async (id) => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const currentDate = new Date().toISOString();
+
+      const response = await fetch(api_endpoint + "/archive-customer/" + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          user_id: user_id,
+          customerName: newCustomerName,
+          phoneNum: newCustomerPhoneNumber,
+          address: newCustomerAddress,
+          registrationDate: currentDate,
+        }),
+      });
+      if (!response.ok) {
+        throw new Error("Fail to archive customer");
+      }
+      // Update customer data after successful archive
+      await fetchCustomers();
+
+      if (!fetchResponse.ok) {
+        throw new Error("Failed to fetch archived customer data");
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleCancel = () => {
@@ -451,12 +531,12 @@ const Customers = () => {
                               </li> */}
                             </ul>
                             <div className="py-2">
-                            <button
-                                  onClick={() => archivedCustomer(customer.id)}
-                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >
-                                  Archive
-                                </button>
+                              <button
+                                onClick={() => archivedCustomer(customer.id)}
+                                className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                Archive
+                              </button>
                             </div>
                           </div>
                         )}
@@ -476,6 +556,7 @@ const Customers = () => {
                   show={showUpdateModal}
                   onClose={handleCloseUpdateModal}
                   customer={selectedCustomer}
+                  update={fetchCustomers}
                 />
               )}
             </div>
@@ -484,7 +565,7 @@ const Customers = () => {
       </div>
 
 
-      {/* Modal */}
+      {/* Add Customer Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div
