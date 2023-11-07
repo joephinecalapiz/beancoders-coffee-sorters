@@ -266,7 +266,7 @@ const Customers = () => {
         throw new Error("Fail to archive customer");
       }
       // Update customer data after successful archive
-      await fetchCustomers();
+      fetchCustomers();
 
       if (!fetchResponse.ok) {
         throw new Error("Failed to fetch archived customer data");
