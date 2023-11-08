@@ -26,9 +26,17 @@ const Activities = () => {
             })
             .then((response) => {
                 const data = response.data;
-                setAllHistory(data.history);
+                sessionStorage.setItem("activityData", JSON.stringify(data.history));
+                setAllHistory(data.history)
                 setIsLoading(false); // Data fetching is complete
             });
+    }, []);
+
+    useEffect(() => {
+        const cachedCustomerData = sessionStorage.getItem("activityData");
+        if (cachedCustomerData) {
+            setAllHistory(JSON.parse(cachedCustomerData));
+          }
     }, []);
 
 
