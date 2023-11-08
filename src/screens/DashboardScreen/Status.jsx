@@ -34,6 +34,7 @@ const Status = () => {
       })
       .then((response) => {
         const fetchAllStatus = response.data.status;
+        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
         setAllStatus(fetchAllStatus);
       })
       .catch((error) => {
@@ -80,6 +81,13 @@ const Status = () => {
   useEffect(() => {
     document.title = "Status";
   }, []);
+
+  useEffect(() => {
+    const cachedCustomerData = sessionStorage.getItem("statusData");
+    if (cachedCustomerData) {
+      setAllStatus(JSON.parse(cachedCustomerData));
+      }
+}, []);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
