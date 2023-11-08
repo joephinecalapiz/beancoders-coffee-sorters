@@ -15,6 +15,7 @@ import feather from "feather-icons";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
+import Activities from "./Activities";
 
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -173,6 +174,13 @@ const Dashboard = () => {
           }}
         >
           {/* <ChartComponent /> */}
+          <div>
+          <h1 className="text-black dark:text-textTitle mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                Recent Activities
+              </h1>
+            <Activities />
+          </div>
+          
         </div>
         <UpdateCompanyInfo
         show={isModalOpen}
