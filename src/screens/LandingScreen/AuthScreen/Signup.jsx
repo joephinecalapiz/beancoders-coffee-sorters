@@ -34,7 +34,9 @@ const Signup = () => {
           // setPopupMessage("Done registered your account, you can now login");
           const token = response.data.token;
           const user_id = response.data.user.id;
+          const role = response.data.role;
           localStorage.setItem("token", token);
+          localStorage.setItem("role", role);
           localStorage.setItem("user_id", user_id);
           setTimeout(() => {
             setLoading(false); // Set loading to false when the operation is complete
