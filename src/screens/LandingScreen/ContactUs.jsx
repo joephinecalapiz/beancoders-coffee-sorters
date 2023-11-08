@@ -81,7 +81,7 @@ const ContactUs = () => {
                         className="rounded-[40px] p-8 max-w-xs w-full "
                         onSubmit={handleSubmit(onSubmitHandler)}
                     >
-                        <div className="w-[150%] mx-auto">
+                        <div className="w-[120%] mx-auto">
                             <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12">
                                 Contact Us
                             </h1>
@@ -95,7 +95,7 @@ const ContactUs = () => {
                             <input
                                 name="full_name"
                                 type="text"
-                                placeholder="Enter your Full Name"
+                                placeholder=""
                                 {...register("full_name", {
                                     required: "Full Name is required",
                                     pattern: {
@@ -123,7 +123,7 @@ const ContactUs = () => {
                             <input
                                 name="companyName"
                                 type="text"
-                                placeholder="Enter your Company Name"
+                                placeholder=""
                                 {...register("companyName", {
                                     required: "Company name is required",
                                     pattern: {
@@ -151,7 +151,7 @@ const ContactUs = () => {
                             <input
                                 name="phoneNum"
                                 type="number"
-                                placeholder="Enter your Phone Number"
+                                placeholder=""
                                 {...register("phoneNum", {
                                     required: "Phone Number is required",
                                     pattern: {
@@ -220,14 +220,14 @@ const ContactUs = () => {
                                 htmlFor="message"
                                 style={{ fontFamily: "Poppins, sans-serif" }}
                             >
-                                Your Message
+                                Message
                             </label>
                             <textarea
                                     name="message"
                                     rows={3}
                                     className="block w-full mb-5 px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                     defaultValue={''}
-                                    placeholder="Enter your issues, feedbacks, or suggestions"
+                                    placeholder="Explain here the issues, feedbacks, or your suggestions"
                                     {...register("message", {
                                     })}
                                     checked={formData.message}
@@ -239,12 +239,12 @@ const ContactUs = () => {
                                 htmlFor="email"
                                 style={{ fontFamily: "Poppins, sans-serif" }}
                             >
-                                Enter your Email
+                                Email Address
                             </label>
                             <input
                                 name="email"
                                 type="email"
-                                placeholder="Enter your Email"
+                                placeholder="you@domain.com"
                                 {...register("email", {
                                     required: "Email is required",
                                     pattern: {

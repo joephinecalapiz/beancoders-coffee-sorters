@@ -158,22 +158,29 @@ const CompanyDetails = () => {
     return (
         <>
             {/* <Navbar /> */}
-            <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
+            <div className="md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
                 <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
                     <form
                         onSubmit={handleSubmit(onSubmitHandler)}
                         className="rounded-[40px] p-8 max-w-xs w-full"
                     >
-                        <div className="md:w-[150%] w-[250%] mx-auto">
-                            <h1 className="text-center text-white font-bold text-[30px] md:mt-25 md:mb-5 mt-20 mb-5">
+                        <div className="w-[120%] mx-auto">
+                            <h1 className="text-center text-white font-bold text-[30px] md:mt-25 md:mb-5 mt-20">
                                 Complete Registration
                             </h1>
                             <h5
-                                className="text-center text-[15px] mb-5"
+                                className="text-center text-[15px] mb-10"
                                 style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
                             >
                                 Enter your company information below.
                             </h5>
+                            <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Company Name
+              </label>
                             <input
                             type="hidden"
                             name="user_id"
@@ -183,7 +190,7 @@ const CompanyDetails = () => {
                             <input
                                 name="companyName"
                                 type="text"
-                                placeholder="Enter your Company Name"
+                                placeholder=""
                                 {...register("companyName", {
                                     required: "Company Name is required",
                                     pattern: {
@@ -199,11 +206,17 @@ const CompanyDetails = () => {
                             {errors.companyName && (
                                 <p className="text-red-500 ml-2">{errors.companyName.message}</p>
                             )}
-
+                            <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Phone Number
+              </label>
                             <input
                                 name="companyNumber"
                                 type="number"
-                                placeholder="Enter your Phone Number"
+                                placeholder=""
                                 {...register("companyNumber", {
                                     required: "Phone Number is required",
                                     pattern: {
@@ -218,11 +231,17 @@ const CompanyDetails = () => {
                             {errors.companyNumber && (
                                 <p className="text-red-500 ml-2">{errors.companyNumber.message}</p>
                             )}
-
+                            <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Company Address
+              </label>
                             <input
                                 name="companyLocation"
                                 type="text"
-                                placeholder="Enter your Location"
+                                placeholder=""
                                 {...register("companyLocation", {
                                     required: "Location is required",
                                     pattern: {
@@ -239,6 +258,13 @@ const CompanyDetails = () => {
                                 <p className="text-red-500 ml-2">{errors.companyLocation.message}</p>
                             )}
                             {/* Profile Image */}
+                            <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Profile Avatar
+              </label>
                             {profileFileDataURL ?
                             <p className="">
                                 {
@@ -263,6 +289,13 @@ const CompanyDetails = () => {
                             )}
 
                             {/* Company Image */}
+                            <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Company Photo
+              </label>
                             {companyFileDataURL ?
                             <p className="">
                                 {
@@ -278,7 +311,7 @@ const CompanyDetails = () => {
                                 {...register("images", {
                                     //required: "Company Image is required",
                                 })}
-                                className={`w-full rounded-[10px] h-10 text-white px-4 ${errors.images ? "mb-2" : "mb-5"
+                                className={`w-full rounded-[10px] h-10 text-white px-4 ${errors.images ? "mb-2" : ""
                                     }`}
                                 style={{ fontFamily: "Poppins, sans-serif" }}
                             />
@@ -287,7 +320,7 @@ const CompanyDetails = () => {
                             )}
                             <button
                                 type="submit"
-                                className="btn w-full btn-primary mt-7 text-white"
+                                className="btn w-full mt-2 btn-primary text-white"
                                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
                                 disabled={loading}
                                 onClick={handleSubmit(onSubmitHandler)}

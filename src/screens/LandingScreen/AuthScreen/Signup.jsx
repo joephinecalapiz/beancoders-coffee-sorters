@@ -70,20 +70,27 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
+      <div className="md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
         <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="md:w-[150%] w-[250%] mx-auto">
+            <div className="w-[120%] mx-auto">
               <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-10 poppins-font">
                 Create Account
               </h1>
+              <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Full name
+              </label>
               <input
                 name="name"
                 type="text"
-                placeholder="Enter your Name"
+                placeholder=""
                 {...register("name", {
                   required: "Name is required",
                   pattern: {
@@ -100,11 +107,17 @@ const Signup = () => {
               {errors.name && (
                 <p className="text-red-500 ml-2">{errors.name.message}</p>
               )}
-
+              <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Email Address
+              </label>
               <input
                 name="email"
                 type="email"
-                placeholder="Enter your Email"
+                placeholder="you@domain.com"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -120,11 +133,17 @@ const Signup = () => {
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
               )}
-
+              <label
+                className="block text-white mb-2"
+                htmlFor="email"
+                style={{ fontFamily: "Poppins, sans-serif" }}
+              >
+                Password
+              </label>
               <input
                 name="password"
                 type="password"
-                placeholder="Enter your Password"
+                placeholder=""
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
