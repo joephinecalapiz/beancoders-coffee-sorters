@@ -60,7 +60,7 @@ const Navbar = () => {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <ul className="md:hidden flex flex-col justify-center items-start p-20 absolute left-50 right-0 w-96 h-screen bg-black ">
+        <ul className="md:hidden flex flex-col justify-center items-center p-20 absolute left-50 right-0 w-96 max-h-screen w-full bg-black z-100">
           {navigation.map((item) => (
             <li
               key={item.href}
