@@ -14,7 +14,7 @@ const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState(true); //experimental --erickson
   const monthOptions = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },
@@ -73,6 +73,12 @@ const Customers = () => {
 
   useEffect(() => {
     document.title = "Customers";
+    const cachedCustomerData = sessionStorage.getItem("customerData");
+  
+    if (cachedCustomerData) {
+      setAllCustomers(JSON.parse(cachedCustomerData));
+    }
+
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
@@ -197,10 +203,15 @@ const Customers = () => {
       }
       if (response.status === 200) {
         const newCustomer = await response.json();
-        setAllCustomers([...allCustomers, newCustomer.customer]);
-        //localStorage.setItem('customerData', JSON.stringify(data.customer));
+        setIsFetching(true)
+        setAllCustomers((prevCustomers) => {
+          // Update state with the new customer data
+          const updatedCustomers = [...prevCustomers, newCustomer.customer];
+          // Update session storage with the updated data
+          sessionStorage.setItem("customerData", JSON.stringify(updatedCustomers));
+          return updatedCustomers;
+        });
         closeModal();
-        //navigate(".");
       }
     } catch (error) {
       console.error(error);
@@ -231,12 +242,27 @@ const Customers = () => {
         alert("Customer is already in the database");
       }
 
-      fetchCustomers();
-
-      if (!response.ok) {
-        throw new Error("Fail to add customer");
+      //fetchCustomers();
+      if (response.status === 200) {
+        // Update the customer data in both state and session storage
+        setAllCustomers((prevCustomers) => {
+          const updatedCustomers = prevCustomers.map((customer) => {
+            if (customer.id === id) {
+              // Update the customer details
+              return {
+                ...customer,
+                customerName: newCustomerName,
+                phoneNum: newCustomerPhoneNumber,
+                address: newCustomerAddress,
+              };
+            }
+            return customer;
+          });
+          // Update session storage with the updated data
+          sessionStorage.setItem("customerData", JSON.stringify(updatedCustomers));
+          return updatedCustomers;
+        });
       }
-
     } catch (error) {
       console.error(error);
     }
