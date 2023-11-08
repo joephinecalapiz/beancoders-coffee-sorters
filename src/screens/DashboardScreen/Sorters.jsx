@@ -59,7 +59,9 @@ const Sorters = () => {
       .then((response) => {
         const sorters = response.data;
         setAllSorters(sorters.sorters);
-        //sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
+        if (sessionStorage.getItem("sorterData") === null) {
+          sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
+        }
       });
   }, []);
 
