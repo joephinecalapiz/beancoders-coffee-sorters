@@ -79,7 +79,7 @@ const Landing = () => {
                   <img
                     src={`${image_endpoint}/storage/${detail.images}`}
                     alt="beansLogo"
-                    className=" w-70 h-64 max-h-full max-w-full mb-4 items-center "
+                    className="w-70 h-64 max-h-full max-w-full mb-4 items-center rounded-lg"
                   />
                 ) : (
                   <div>No image available</div>
