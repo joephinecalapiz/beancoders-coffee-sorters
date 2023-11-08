@@ -59,7 +59,7 @@ const Sorters = () => {
       .then((response) => {
         const sorters = response.data;
         setAllSorters(sorters.sorters);
-        sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
+        //sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
       });
   }, []);
 
@@ -100,7 +100,7 @@ const Sorters = () => {
       if (response.status === 200) {
         setAllSorters((prevSorters) => {
           const updatedSorters = [...prevSorters, response.data.sorter];
-          localStorage.setItem("sorterData", JSON.stringify(updatedSorters));
+          sessionStorage.setItem("sorterData", JSON.stringify(updatedSorters));
 
           return updatedSorters;
         });
