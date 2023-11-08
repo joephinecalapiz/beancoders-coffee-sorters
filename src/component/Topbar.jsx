@@ -198,16 +198,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   </span>
                 </button>
 
-                {/* <button
-                  type="button"
-                  onClick={handleToggleSidebar}
-                  className={`ml-6 text-white transform transition-transform duration-300 ${
-                    collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
-                  }`}
-                >
-                  <FaBars size={20} />
-                </button> */}
-
                 {isProfileMenuOpen && (
                   <ul className="py-1" role="none">
                     <li onClick={() => navigate("/customer-archived")}>
