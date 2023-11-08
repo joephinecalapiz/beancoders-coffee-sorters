@@ -74,7 +74,7 @@ const Customers = () => {
   useEffect(() => {
     document.title = "Customers";
     const cachedCustomerData = sessionStorage.getItem("customerData");
-  
+
     if (cachedCustomerData) {
       setAllCustomers(JSON.parse(cachedCustomerData));
     }
@@ -203,12 +203,15 @@ const Customers = () => {
       }
       if (response.status === 200) {
         const newCustomer = await response.json();
-        setIsFetching(true)
+        setIsFetching(true);
         setAllCustomers((prevCustomers) => {
           // Update state with the new customer data
           const updatedCustomers = [...prevCustomers, newCustomer.customer];
           // Update session storage with the updated data
-          sessionStorage.setItem("customerData", JSON.stringify(updatedCustomers));
+          sessionStorage.setItem(
+            "customerData",
+            JSON.stringify(updatedCustomers)
+          );
           return updatedCustomers;
         });
         closeModal();
@@ -259,7 +262,10 @@ const Customers = () => {
             return customer;
           });
           // Update session storage with the updated data
-          sessionStorage.setItem("customerData", JSON.stringify(updatedCustomers));
+          sessionStorage.setItem(
+            "customerData",
+            JSON.stringify(updatedCustomers)
+          );
           return updatedCustomers;
         });
       }
@@ -395,7 +401,7 @@ const Customers = () => {
                       option: (provided) => ({
                         ...provided,
                         fontFamily: "'Poppins', sans-serif",
-                        color: "#000"
+                        color: "#000",
                       }),
                       singleValue: (provided) => ({
                         ...provided,
@@ -440,66 +446,70 @@ const Customers = () => {
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Id number
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Date Added
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Customer Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Phone Number
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Address
-                    </th>
-                    {/* <th
+              <div className="max-h-[450px] overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Id number
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Date Added
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Customer Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Phone Number
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Address
+                      </th>
+                      {/* <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
                       Kilo beans
                     </th> */}
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                  {(reloadCustomerData || sortedFilteredCustomers).map((customer, index) => (
-                    <tr key={customer.id}>
-                      <td className="poppins-font">{index + 1}</td>
-                      <td className="poppins-font">
-                        {new Date(customer.created_at).toLocaleDateString()}
-                      </td>
-                      <td className="poppins-font">{customer.customerName}</td>
-                      <td className="poppins-font">{customer.phoneNum}</td>
-                      <td className="poppins-font">{customer.address}</td>
-                      {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
-                      <td className="poppins-font">
-                        {/* <button
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
+                    {(reloadCustomerData || sortedFilteredCustomers).map(
+                      (customer, index) => (
+                        <tr key={customer.id}>
+                          <td className="poppins-font">{index + 1}</td>
+                          <td className="poppins-font">
+                            {new Date(customer.created_at).toLocaleDateString()}
+                          </td>
+                          <td className="poppins-font">
+                            {customer.customerName}
+                          </td>
+                          <td className="poppins-font">{customer.phoneNum}</td>
+                          <td className="poppins-font">{customer.address}</td>
+                          {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
+                          <td className="poppins-font">
+                            {/* <button
                           onClick={() => {
                             sessionStorage.setItem("customerId", customer.id);
                             navigate(
@@ -510,74 +520,83 @@ const Customers = () => {
                         >
                           See More...
                         </button> */}
-                        <button
-                          onClick={() => toggleDropdown(customer.id)}
-                          className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                          type="button"
-                        >
-                          <svg
-                            className="w-5 h-5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 16 3"
-                          >
-                            <path
-                              d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-                            />
-                          </svg>
-                        </button>
-                        {openDropdownId === customer.id && (
-                          <div
-                            id="dropdownDotsHorizontal"
-                            className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                            style={{ top: '100', right: '0' }}
-                          >
-                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
-                              <li>
-                                <button
-                                  onClick={() => {
-                                    // Navigate to the desired page
-                                    navigate(`/customers/customerstatus/${customer.customerName}/${customer.id}`);
-                                  }}
-                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            <button
+                              onClick={() => toggleDropdown(customer.id)}
+                              className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                              type="button"
+                            >
+                              <svg
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                viewBox="0 0 16 3"
+                              >
+                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                              </svg>
+                            </button>
+                            {openDropdownId === customer.id && (
+                              <div
+                                id="dropdownDotsHorizontal"
+                                className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                                style={{ top: "100", right: "0" }}
+                              >
+                                <ul
+                                  className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                  aria-labelledby="dropdownMenuIconHorizontalButton"
                                 >
-                                  History
-                                </button>
-                              </li>
-                              <li>
-                                <button
-                                  onClick={() => handleShowUpdateModal(customer)}
-                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >
-                                  Update
-                                </button>
-                              </li>
-                              {/* <li>
+                                  <li>
+                                    <button
+                                      onClick={() => {
+                                        // Navigate to the desired page
+                                        navigate(
+                                          `/customers/customerstatus/${customer.customerName}/${customer.id}`
+                                        );
+                                      }}
+                                      className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                      History
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button
+                                      onClick={() =>
+                                        handleShowUpdateModal(customer)
+                                      }
+                                      className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                      Update
+                                    </button>
+                                  </li>
+                                  {/* <li>
                                 <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Archived</a>
                               </li> */}
-                            </ul>
-                            <div className="py-2">
-                              <button
-                                onClick={() => archivedCustomer(customer.id)}
-                                className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                Archive
-                              </button>
-                            </div>
-                          </div>
-                        )}
-                        {/* <button
+                                </ul>
+                                <div className="py-2">
+                                  <button
+                                    onClick={() =>
+                                      archivedCustomer(customer.id)
+                                    }
+                                    className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    Archive
+                                  </button>
+                                </div>
+                              </div>
+                            )}
+                            {/* <button
                           onClick={() => handleSeeMore(customer.customerName)}
                           className="see-more-button focus:outline-none"
                         >
                           Receipt
                         </button> */}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+                          </td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
               {selectedCustomer && (
                 <UpdateCustomer
                   show={showUpdateModal}
@@ -598,58 +617,58 @@ const Customers = () => {
         </h2>
         {/* form for adding a new customer */}
         <form onSubmit={getCustomerPostHistory}>
-              <div className="mb-4">
-                <label
-                  htmlFor="newCustomerName"
-                  className="block font-medium poppins-font"
-                >
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  id="newCustomerName"
-                  value={newCustomerName}
-                  onChange={(e) => setNewCustomerName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
+          <div className="mb-4">
+            <label
+              htmlFor="newCustomerName"
+              className="block font-medium poppins-font"
+            >
+              Name:
+            </label>
+            <input
+              type="text"
+              id="newCustomerName"
+              value={newCustomerName}
+              onChange={(e) => setNewCustomerName(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="newCustomerPhoneNumber"
-                  className="block font-medium poppins-font"
-                >
-                  Phone Number:
-                </label>
-                <input
-                  type="text"
-                  id="newCustomerPhoneNumber"
-                  value={newCustomerPhoneNumber}
-                  onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
+          <div className="mb-4">
+            <label
+              htmlFor="newCustomerPhoneNumber"
+              className="block font-medium poppins-font"
+            >
+              Phone Number:
+            </label>
+            <input
+              type="text"
+              id="newCustomerPhoneNumber"
+              value={newCustomerPhoneNumber}
+              onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="newCustomerAddress"
-                  className="block font-medium poppins-font"
-                >
-                  Address:
-                </label>
-                <textarea
-                  id="newCustomerAddress"
-                  value={newCustomerAddress}
-                  onChange={(e) => setNewCustomerAddress(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  rows={4}
-                  style={{ height: "70px", wordWrap: "break-word" }}
-                  required
-                />
-              </div>
-              {/* <div className="mb-4">
+          <div className="mb-4">
+            <label
+              htmlFor="newCustomerAddress"
+              className="block font-medium poppins-font"
+            >
+              Address:
+            </label>
+            <textarea
+              id="newCustomerAddress"
+              value={newCustomerAddress}
+              onChange={(e) => setNewCustomerAddress(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              rows={4}
+              style={{ height: "70px", wordWrap: "break-word" }}
+              required
+            />
+          </div>
+          {/* <div className="mb-4">
                 <label
                   htmlFor="kiloOfBeans"
                   className="block font-medium poppins-font"
@@ -666,22 +685,22 @@ const Customers = () => {
                 />
               </div> */}
 
-              <div className="flex justify-between">
-                <button
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Add Customer
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Add Customer
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </Modal>
     </>
   );
