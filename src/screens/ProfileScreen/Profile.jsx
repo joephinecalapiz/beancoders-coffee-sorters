@@ -12,11 +12,16 @@ import image_endpoint from "../../image-config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const imageMimeType = /image\/(png|jpg|jpeg)/i;
+
 const Profile = () => {
   const [navVisible, showNavbar] = useState(true);
   const [isEditing, setEditing] = useState(false);
   const [userInfo, setUserInfo] = useState("");
   const [compInfo, setCompInfo] = useState("");
+  const [selectedImage, setSelectedImage] = useState();
+  const [file, setFile] = useState();
+  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     profilePicture: "assets/beansLogo.png",
     name: userInfo.name,
@@ -24,20 +29,45 @@ const Profile = () => {
     companyNumber: compInfo.companyNumber,
     companyLocation: compInfo.companyLocation,
     companyName: compInfo.companyName,
-    companyPic: compInfo.images,
+    images: compInfo.images,
     profileAvatar: compInfo.profileAvatar
   });
-
   const [editableContent, setEditableContent] = useState({
-    name: profileData.name,
-    email: profileData.email,
     companyName: profileData.companyName,
     companyNumber: profileData.companyNumber,
     companyLocation: profileData.companyLocation,
-    // images: profileData.images
+    images: file,
+    profileAvatar: profileData.images,
+  });
+  const [editableProfile, setEditableProfile] = useState({
+    name: profileData.name,
+    email: profileData.email,
   });
 
-  const navigate = useNavigate();
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+            const dataURL = e.target.result;
+            setSelectedImage(dataURL); // Set selectedImage to display the preview
+        };
+
+        reader.readAsDataURL(file);
+
+        // Set the file state
+        setFile(file);
+
+        // Print the file name
+        console.log("Selected file name:", file);
+    } else {
+        setSelectedImage(null); // Clear the image preview if no file is selected
+        setFile(null); // Clear the file state
+    }
+};
+
 
   useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts
@@ -69,12 +99,16 @@ const Profile = () => {
   useEffect(() => {
     setEditableContent((prevProfileData) => ({
       ...prevProfileData,
-      name: userInfo.name,
-      email: userInfo.email,
       companyNumber: compInfo.companyNumber,
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
-      // images: compInfo.images
+      images: compInfo.images,
+      profileAvatar: compInfo.profileAvatar
+    }));
+    setEditableProfile((prevProfileData) => ({
+      ...prevProfileData,
+      name: userInfo.name,
+      email: userInfo.email,
     }));
   }, [userInfo]);
 
@@ -142,6 +176,27 @@ const Profile = () => {
     }
   };
 
+  const updateProfileInfo = async (newDetails) => {
+    try {
+      const token = localStorage.getItem("token");
+      const user_id = localStorage.getItem("user_id");
+      const response = await fetch(api_endpoint + `/update-user/${user_id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newDetails), // Make sure newDetails contains the updated data
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile details");
+      }
+    } catch (error) {
+      console.error("Error updating profile details:", error);
+    }
+  };
+
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -159,33 +214,43 @@ const Profile = () => {
     setEditing(false);
     setProfileData({
       ...profileData,
-      name: editableContent.name,
-      email: editableContent.email,
+      name: editableProfile.name,
+      email: editableProfile.email,
       companyName: editableContent.companyName,
       companyNumber: editableContent.companyNumber,
       companyLocation: editableContent.companyLocation,
-      // images: editableContent.images
+      images: editableContent.images,
+      profileAvatar: editableContent.profileAvatar,
     });
     // update the details on the server
     updateCompanyDetails(editableContent);
+    console.log(editableContent)
+    updateProfileInfo(editableProfile);
   };
 
   const handleCancelClick = () => {
     setEditing(false);
     // Reset the editableContent to match the current profileData
     setEditableContent({
-      name: profileData.name,
-      email: profileData.email,
       companyName: profileData.companyName,
       companyNumber: profileData.companyNumber,
       companyLocation: profileData.companyLocation,
-      // images: profileData.images
+      images: profileData.images,
+      profileAvatar: profileData.profileAvatar,
+    });
+    setEditableProfile({
+      name: profileData.name,
+      email: profileData.email,
     });
   };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setEditableContent((prevContent) => ({
+      ...prevContent,
+      [name]: value,
+    }));
+    setEditableProfile((prevContent) => ({
       ...prevContent,
       [name]: value,
     }));
@@ -233,17 +298,8 @@ const Profile = () => {
                         }
                         alt="profile picture"
                         className="admin-picture bg-white"
-                        onClick={handleProfilePictureClick}
                       />
                     </label>
-
-                    <input
-                      type="file"
-                      id="profilePictureInput"
-                      name="profilePicture"
-                      onChange={handleInputChange}
-                      style={{ display: "none" }}
-                    />
                   </div>
                   <label className="admin-name text-black dark:text-textTitle poppins-font justify-center bg-gray-1000 drop-shadow-2xl">
                     {profileData.name}
@@ -320,7 +376,9 @@ const Profile = () => {
                                     type="text"
                                     name="name"
                                     id="name"
+                                    value={editableProfile.name}
                                     autoComplete="name"
+                                    onChange={handleInputChange}
                                     className="block flex-1 border-0 dark:text-textDesc bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.name}
                                     style={{ outline: "none" }}
@@ -352,6 +410,8 @@ const Profile = () => {
                                     type="text"
                                     name="email"
                                     id="email"
+                                    value={editableProfile.email}
+                                    onChange={handleInputChange}
                                     autoComplete="email"
                                     className="block flex-1 border-0 dark:text-textDesc bg-transparent py-1.5 pl-1 text-gray-900  placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                     placeholder={profileData.email}
@@ -455,6 +515,29 @@ const Profile = () => {
                               ) : (
                                 <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
                                   {profileData.companyLocation}
+                                </dd>
+                              )}
+                            </div>
+                            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                              <dt className="text-sm font-semibold leading-6 text-gray-900 dark:text-textTitle">
+                                Company Image
+                              </dt>
+                              {isEditing ? (
+                                <div className="flex sm:col-span-2 sm:mt-0 justify-self-end relative">
+                                  <input
+                                    type="file"
+                                    name="image"
+                                    id="image"
+                                    accept="image/*"
+                                    onChange={handleImageChange}
+                                    className="block flex-1 border-0 bg-transparent dark:text-textDesc py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                    style={{ outline: "none" }}
+                                  />
+                                  <div className="absolute inset-x-0 bottom-0 h-1 bg-black"></div>
+                                </div>
+                              ) : (
+                                <dd className="mt-1 text-sm leading-6 sm:col-span-2 dark:text-textDesc sm:mt-0 justify-self-end">
+                                  Insert Image
                                 </dd>
                               )}
                             </div>
