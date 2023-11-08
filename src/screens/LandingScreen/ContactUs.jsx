@@ -75,7 +75,7 @@ const ContactUs = () => {
     return (
         <>
             <Navbar />
-            <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
+            <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
                 <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
                     <form
                         className="rounded-[40px] p-8 max-w-xs w-full "

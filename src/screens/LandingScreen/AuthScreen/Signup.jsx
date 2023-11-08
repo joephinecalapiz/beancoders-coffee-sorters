@@ -70,13 +70,13 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-      <div className="md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
+      <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
         <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="w-[120%] mx-auto">
+            <div className="md:w-[150%] w-[250%] mx-auto">
               <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-10 poppins-font">
                 Create Account
               </h1>
