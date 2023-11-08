@@ -36,8 +36,8 @@ const Profile = () => {
     companyName: profileData.companyName,
     companyNumber: profileData.companyNumber,
     companyLocation: profileData.companyLocation,
-    images: file,
-    profileAvatar: profileData.images,
+    images: profileData.images,
+    profileAvatar: profileData.profileAvatar,
   });
   const [editableProfile, setEditableProfile] = useState({
     name: profileData.name,
@@ -60,13 +60,26 @@ const Profile = () => {
         // Set the file state
         setFile(file);
 
+        // Set the selected image in editableContent
+        setEditableContent((prevEditableContent) => ({
+            ...prevEditableContent,
+            images: file.name, // Use the selected file here
+        }));
+
         // Print the file name
         console.log("Selected file name:", file);
     } else {
         setSelectedImage(null); // Clear the image preview if no file is selected
         setFile(null); // Clear the file state
+
+        // Clear the selected image in editableContent
+        setEditableContent((prevEditableContent) => ({
+            ...prevEditableContent,
+            images: null,
+        }));
     }
 };
+
 
 
   useEffect(() => {
@@ -162,8 +175,9 @@ const Profile = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newDetails), // Make sure newDetails contains the updated data
+        
       });
-
+      console.log(newDetails)
       if (!response.ok) {
         throw new Error("Failed to update company details");
       }
