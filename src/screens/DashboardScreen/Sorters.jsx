@@ -45,24 +45,22 @@ const Sorters = () => {
   const [reloadSorterData, setReloadSorterData] = useState(null);
   useEffect(() => {
     document.title = "Sorters";
-    //const cachedSorterData = localStorage.getItem("sorterData");
-    // if(cachedSorterData){
-    //   setAllSorters(JSON.parse(cachedSorterData));
-    // }
-    // else{
+    const cachedSorterData = sessionStorage.getItem("sorterData");
+    if(cachedSorterData){
+      setAllSorters(JSON.parse(cachedSorterData));
+    }
       const token = localStorage.getItem("token");
       const user_id = localStorage.getItem("user_id");
       const headers = {
         Authorization: "Bearer " + token,
       };
       axiosInstance
-        .get(api_endpoint + "/sorters/" + user_id, { headers })
+        .get(`${api_endpoint}/sorters/${user_id}`, { headers })
         .then((response) => {
           const sorters = response.data;
           setAllSorters(sorters.sorters);
-          //localStorage.setItem('sorterData', JSON.stringify(sorters.sorters))
+          sessionStorage.setItem('sorterData', JSON.stringify(sorters.sorters))
       });
-   // }
   }, []);
 
   const openModal = () => {
@@ -100,9 +98,12 @@ const Sorters = () => {
       );
 
       if(response.status === 200){
-        setAllSorters([...allSorters, response.data.sorter]);
-        const reloadSorterData = [...allSorters, response.data.sorter];
-        //localStorage.setItem('customerData', JSON.stringify(reloadSorterData))
+        setAllSorters((prevSorters) => {
+          const updatedSorters = [...prevSorters, response.data.sorter];
+          localStorage.setItem("sorterData", JSON.stringify(updatedSorters));
+  
+          return updatedSorters;
+        });
         closeModal();
       }
     } catch (error) {
