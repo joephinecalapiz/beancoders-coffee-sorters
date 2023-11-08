@@ -185,6 +185,7 @@ const Status = () => {
               value={searchText}
               onChange={handleSearchInputChange}
               className="px-4 py-2 border dark:text-textTitle dark:bg-container rounded focus:outline-none search-bar"
+              style={{ width: "80%", maxWidth: "800px" }}
             />
 
             {/* Add New button */}

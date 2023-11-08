@@ -342,8 +342,9 @@ const Customers = () => {
             className={`dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
             ${navVisible ? "px-10" : "sm:ml-44"}`}
           >
-            {/* Total number of customer */}
-            Total: {totalCustomers}
+            <div className="poppins-font font-bold">
+              Total: {totalCustomers}
+            </div>
             {/* Search bar */}
             <input
               type="text"
@@ -351,6 +352,7 @@ const Customers = () => {
               value={searchText}
               onChange={handleSearchInputChange}
               className="px-4 py-2 border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+              style={{ width: "80%", maxWidth: "800px" }}
             />
             {/* Add New button */}
             <button
@@ -446,7 +448,7 @@ const Customers = () => {
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-              <div className="max-h-[450px] overflow-y-auto">
+              <div className="max-h-[390px] overflow-y-auto">
                 <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                   <thead>
                     <tr>

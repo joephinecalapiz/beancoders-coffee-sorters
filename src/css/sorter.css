@@ -16,9 +16,12 @@
   font-family: "Poppins", sans-serif;
 }
 
-.sorters-table {
+.sorters-table th {
+  position: sticky;
+  top: 0;
   width: 1000px;
   text-align: center;
+  z-index: 1; /* Ensure the headers appear above the content */
 }
 
 .search-bar {
