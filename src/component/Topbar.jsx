@@ -190,11 +190,11 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 >
                   Archive
                   <span
-                    className={`transform transition-transform duration-300 arrow-down px-2 ${
+                    className={`transform transition-transform duration-300 inline-block ${
                       isProfileMenuOpen ? "rotate-180" : "rotate-0"
                     } `}
                   >
-                    &#9660;
+                    <IoIosArrowDown size={20} className="inline" />
                   </span>
                 </button>
 
