@@ -8,7 +8,7 @@ import Select from "react-select";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import api_endpoint from "../../config";
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from "react-loading-skeleton";
 
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -24,7 +24,7 @@ const SortingStatus = () => {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
     // const customerId = sessionStorage.getItem("customerId");
-  
+
     axios
       .get(api_endpoint + "/fetch-history/" + user_id + "/" + customerId, {
         headers: {
@@ -37,7 +37,6 @@ const SortingStatus = () => {
         setIsLoading(false); // Data fetching is complete
       });
   }, []);
-  
 
   useEffect(() => {
     document.title = "Customer Status";
@@ -66,23 +65,24 @@ const SortingStatus = () => {
     { value: 11, label: "November" },
     { value: 12, label: "December" },
   ];
-    
 
   return (
     <>
       <div className="max-w-8xl mx-auto pl-16">
         <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        <Topbar
+          onToggleSidebar={toggleSidebar}
+          collapsed={navVisible}
+          handleToggleSidebar={toggleSidebar}
+        />
         <div className={`mx-auto ${navVisible ? "" : ""}`}>
           <div className="header">
-            <div
-              className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-            >
-             <div className="p-0.5 mb-2 w-full mt-6 relative">
-                  <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                    History Customer Status
-                  </h1>
-                </div>
+            <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
+              <div className="p-0.5 mb-2 w-full mt-6 relative">
+                <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                  History Customer Status
+                </h1>
+              </div>
               <div className="flex items-center"></div>
               <br />
               <br />
@@ -92,13 +92,15 @@ const SortingStatus = () => {
             <div
               className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
             ${navVisible ? "px-10" : "sm:ml-44"}`}
-
             >
               <div className="font-poppins">
-                <span className="block text-24px mb-1 dark:text-textTitle">Customer's Name:</span>
-                <span className="block text-20px underline font-bold mb-20 dark:text-textDesc">{customerName}</span>
+                <span className="block text-24px mb-1 dark:text-textTitle">
+                  Customer's Name:
+                </span>
+                <span className="block text-20px underline font-bold mb-20 dark:text-textDesc">
+                  {customerName}
+                </span>
               </div>
-
 
               <div className="flex dark:text-textTitle items-center justify-end mr-6 z-10">
                 <label
@@ -123,7 +125,7 @@ const SortingStatus = () => {
                     option: (provided) => ({
                       ...provided,
                       fontFamily: "'Poppins', sans-serif",
-                      color: "#000"
+                      color: "#000",
                     }),
                   }}
                 />
@@ -139,54 +141,56 @@ const SortingStatus = () => {
               }}
             >
               <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-200 customers-table">
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3  text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Sorter's Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center   text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Kilo of Beans
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200 custom-table">
-                    {allHistory.map((historyItem) => (
-                      <tr key={historyItem.id}>
-                        <td className="poppins-font text-center">
-                          {new Date(historyItem.date).toLocaleDateString()}
-                        </td>
-                        <td className="poppins-font text-center">
-                          {historyItem.sorterName}
-                        </td>
-                        <td className="poppins-font text-center">
-                          {historyItem.kiloOfBeans} kilo
-                        </td>
-                        <td className="poppins-font text-center">
-                        {historyItem.status}
-                        </td>
+                <div className="max-h-[450px] overflow-y-auto">
+                  <table className="min-w-full divide-y divide-gray-200 customers-table">
+                    <thead>
+                      <tr>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        >
+                          Date
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3  text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        >
+                          Sorter's Name
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center   text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        >
+                          Kilo of Beans
+                        </th>
+                        <th
+                          scope="col"
+                          className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        >
+                          Status
+                        </th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody className="bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200 custom-table">
+                      {allHistory.map((historyItem) => (
+                        <tr key={historyItem.id}>
+                          <td className="poppins-font text-center">
+                            {new Date(historyItem.date).toLocaleDateString()}
+                          </td>
+                          <td className="poppins-font text-center">
+                            {historyItem.sorterName}
+                          </td>
+                          <td className="poppins-font text-center">
+                            {historyItem.kiloOfBeans} kilo
+                          </td>
+                          <td className="poppins-font text-center">
+                            {historyItem.status}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
