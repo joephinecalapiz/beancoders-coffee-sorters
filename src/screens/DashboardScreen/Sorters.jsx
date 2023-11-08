@@ -46,20 +46,20 @@ const Sorters = () => {
   useEffect(() => {
     document.title = "Sorters";
     const cachedSorterData = sessionStorage.getItem("sorterData");
-    if(cachedSorterData){
+    if (cachedSorterData) {
       setAllSorters(JSON.parse(cachedSorterData));
     }
-      const token = localStorage.getItem("token");
-      const user_id = localStorage.getItem("user_id");
-      const headers = {
-        Authorization: "Bearer " + token,
-      };
-      axiosInstance
-        .get(`${api_endpoint}/sorters/${user_id}`, { headers })
-        .then((response) => {
-          const sorters = response.data;
-          setAllSorters(sorters.sorters);
-          sessionStorage.setItem('sorterData', JSON.stringify(sorters.sorters))
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem("user_id");
+    const headers = {
+      Authorization: "Bearer " + token,
+    };
+    axiosInstance
+      .get(`${api_endpoint}/sorters/${user_id}`, { headers })
+      .then((response) => {
+        const sorters = response.data;
+        setAllSorters(sorters.sorters);
+        sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
       });
   }, []);
 
@@ -97,11 +97,11 @@ const Sorters = () => {
         }
       );
 
-      if(response.status === 200){
+      if (response.status === 200) {
         setAllSorters((prevSorters) => {
           const updatedSorters = [...prevSorters, response.data.sorter];
           localStorage.setItem("sorterData", JSON.stringify(updatedSorters));
-  
+
           return updatedSorters;
         });
         closeModal();
@@ -202,56 +202,61 @@ const Sorters = () => {
               marginTop: "-20px",
             }}
           >
+            <br />
             <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 table-auto">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Id num
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Sorter's Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Phone Number
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Address
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Date Hired
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                  {(reloadSorterData || sortedFilteredSorters).map((sorter, index) => (
-                    <tr key={sorter.id}>
-                      <td className="poppins-font">{index + 1}</td>
-                      <td className="poppins-font">{sorter.sorterName}</td>
-                      <td className="poppins-font">{sorter.phoneNum}</td>
-                      <td className="poppins-font">{sorter.address}</td>
-                      <td className="poppins-font">
-                        {new Date(sorter.dateHired).toLocaleDateString()}
-                      </td>
+              <div className="max-h-[450px] overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-200 table-auto">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Id num
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Sorter's Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Phone Number
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Address
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Date Hired
+                      </th>
                     </tr>
-                  ))}
-              </tbody>
-              </table>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
+                    {(reloadSorterData || sortedFilteredSorters).map(
+                      (sorter, index) => (
+                        <tr key={sorter.id}>
+                          <td className="poppins-font">{index + 1}</td>
+                          <td className="poppins-font">{sorter.sorterName}</td>
+                          <td className="poppins-font">{sorter.phoneNum}</td>
+                          <td className="poppins-font">{sorter.address}</td>
+                          <td className="poppins-font">
+                            {new Date(sorter.dateHired).toLocaleDateString()}
+                          </td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -264,90 +269,90 @@ const Sorters = () => {
         </h2>
         {/* form for adding a new sorter */}
         <form onSubmit={handleAddNewSorter}>
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterName"
-                  className="block font-medium poppins-font"
-                >
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  id="newSorterName"
-                  value={newSorterName}
-                  onChange={(e) => setNewSorterName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
+          <div className="mb-4">
+            <label
+              htmlFor="newSorterName"
+              className="block font-medium poppins-font"
+            >
+              Name:
+            </label>
+            <input
+              type="text"
+              id="newSorterName"
+              value={newSorterName}
+              onChange={(e) => setNewSorterName(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterPhoneNumber"
-                  className="block font-medium poppins-font"
-                >
-                  Phone Number:
-                </label>
-                <input
-                  type="text"
-                  id="newSorterPhoneNumber"
-                  value={newSorterPhoneNumber}
-                  onChange={(e) => setNewSorterPhoneNumber(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
+          <div className="mb-4">
+            <label
+              htmlFor="newSorterPhoneNumber"
+              className="block font-medium poppins-font"
+            >
+              Phone Number:
+            </label>
+            <input
+              type="text"
+              id="newSorterPhoneNumber"
+              value={newSorterPhoneNumber}
+              onChange={(e) => setNewSorterPhoneNumber(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterAddress"
-                  className="block font-medium poppins-font"
-                >
-                  Address:
-                </label>
-                <input
-                  type="text"
-                  id="newSorterAddress"
-                  value={newSorterAddress}
-                  onChange={(e) => setNewSorterAddress(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
+          <div className="mb-4">
+            <label
+              htmlFor="newSorterAddress"
+              className="block font-medium poppins-font"
+            >
+              Address:
+            </label>
+            <input
+              type="text"
+              id="newSorterAddress"
+              value={newSorterAddress}
+              onChange={(e) => setNewSorterAddress(e.target.value)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
 
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterDateHired"
-                  className="block font-medium poppins-font"
-                >
-                  Date Hired:
-                </label>
-                {/*DatePicker*/}
-                <DatePicker
-                  id="newSorterDateHired"
-                  selected={newSorterDateHired}
-                  onChange={(date) => setNewSorterDateHired(date)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
+          <div className="mb-4">
+            <label
+              htmlFor="newSorterDateHired"
+              className="block font-medium poppins-font"
+            >
+              Date Hired:
+            </label>
+            {/*DatePicker*/}
+            <DatePicker
+              id="newSorterDateHired"
+              selected={newSorterDateHired}
+              onChange={(date) => setNewSorterDateHired(date)}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              required
+            />
+          </div>
 
-              <div className="flex justify-between">
-                <button
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Add Sorter
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
+          <div className="flex justify-between">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Add Sorter
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
       </Modal>
     </>
   );

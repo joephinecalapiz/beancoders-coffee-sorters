@@ -86,8 +86,8 @@ const Status = () => {
     const cachedCustomerData = sessionStorage.getItem("statusData");
     if (cachedCustomerData) {
       setAllStatus(JSON.parse(cachedCustomerData));
-      }
-}, []);
+    }
+  }, []);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -221,66 +221,68 @@ const Status = () => {
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Date
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Customer's Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Sorter's Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Status
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      receipt
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
-                  {status.map((sorted) => (
-                    <tr key={sorted.id}>
-                      <td className="poppins-font">
-                        {new Date(sorted.created_at).toLocaleDateString()}
-                      </td>
-
-                      <td className="poppins-font">{sorted.customerName}</td>
-                      <td className="poppins-font">{sorted.sorterName}</td>
-                      <td className="poppins-font">{sorted.status}</td>
-                      <td className="poppins-font">
-                        <button
-                          onClick={() => {
-                            navigate(`/status/receipt/${sorted.id}`);
-                            // navigate(`/customerstatus/${sorted.customerName}`);
-                          }}
-                          className="see-more-button focus:outline-none"
-                        >
-                          Receipt
-                        </button>
-                      </td>
+              <div className="max-h-[450px] overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Customer's Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Sorter's Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Status
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        receipt
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
+                    {status.map((sorted) => (
+                      <tr key={sorted.id}>
+                        <td className="poppins-font">
+                          {new Date(sorted.created_at).toLocaleDateString()}
+                        </td>
+
+                        <td className="poppins-font">{sorted.customerName}</td>
+                        <td className="poppins-font">{sorted.sorterName}</td>
+                        <td className="poppins-font">{sorted.status}</td>
+                        <td className="poppins-font">
+                          <button
+                            onClick={() => {
+                              navigate(`/status/receipt/${sorted.id}`);
+                              // navigate(`/customerstatus/${sorted.customerName}`);
+                            }}
+                            className="see-more-button focus:outline-none"
+                          >
+                            Receipt
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
