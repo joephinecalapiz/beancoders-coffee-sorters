@@ -22,7 +22,6 @@ const Dashboard = () => {
   const [userInfo, setUserInfo] = useState("");
   const [beanCount, setBeanCount] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
 
   useEffect(() => {
     fetchUserInfo();
@@ -31,7 +30,6 @@ const Dashboard = () => {
   const openModal = () => {
     setIsModalOpen(true);
   };
-
 
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
@@ -51,7 +49,7 @@ const Dashboard = () => {
       setUserInfo(data.details);
 
       // Now that userInfo is set, you can check companyName
-      if (data.details.companyName === '') {
+      if (data.details.companyName === "") {
         console.log("No company info yet");
         openModal();
       }
@@ -101,16 +99,17 @@ const Dashboard = () => {
     document.title = "Dashboard";
   }, []);
 
-
   return (
     <>
       <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar onToggleSidebar={toggleSidebar} collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar
+        onToggleSidebar={toggleSidebar}
+        collapsed={navVisible}
+        handleToggleSidebar={toggleSidebar}
+      />
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-          >
+          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
               <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Dashboard
@@ -173,19 +172,17 @@ const Dashboard = () => {
             marginTop: "-20px",
           }}
         >
-          {/* <ChartComponent /> */}
           <div>
-          <h1 className="text-black dark:text-textTitle mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Recent Activities
-              </h1>
+            <h1 className="text-black dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
+              Recent Activities
+            </h1>
             <Activities />
           </div>
-          
         </div>
         <UpdateCompanyInfo
-        show={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+          show={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+        />
       </div>
     </>
   );
