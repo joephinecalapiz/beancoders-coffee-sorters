@@ -8,12 +8,13 @@ import "../.././css/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import UpdateCustomer from "../ModalScreen/UpdateCustomer";
+import Modal from "../../component/Modal";
 
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
-  const [isFetching, setIsFetching] = useState(false);
+  const [isFetching, setIsFetching] = useState(true); //experimental --erickson
   const monthOptions = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },
@@ -72,6 +73,12 @@ const Customers = () => {
 
   useEffect(() => {
     document.title = "Customers";
+    const cachedCustomerData = sessionStorage.getItem("customerData");
+  
+    if (cachedCustomerData) {
+      setAllCustomers(JSON.parse(cachedCustomerData));
+    }
+
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
@@ -196,10 +203,15 @@ const Customers = () => {
       }
       if (response.status === 200) {
         const newCustomer = await response.json();
-        setAllCustomers([...allCustomers, newCustomer.customer]);
-        //localStorage.setItem('customerData', JSON.stringify(data.customer));
+        setIsFetching(true)
+        setAllCustomers((prevCustomers) => {
+          // Update state with the new customer data
+          const updatedCustomers = [...prevCustomers, newCustomer.customer];
+          // Update session storage with the updated data
+          sessionStorage.setItem("customerData", JSON.stringify(updatedCustomers));
+          return updatedCustomers;
+        });
         closeModal();
-        //navigate(".");
       }
     } catch (error) {
       console.error(error);
@@ -230,12 +242,27 @@ const Customers = () => {
         alert("Customer is already in the database");
       }
 
-      fetchCustomers();
-
-      if (!response.ok) {
-        throw new Error("Fail to add customer");
+      //fetchCustomers();
+      if (response.status === 200) {
+        // Update the customer data in both state and session storage
+        setAllCustomers((prevCustomers) => {
+          const updatedCustomers = prevCustomers.map((customer) => {
+            if (customer.id === id) {
+              // Update the customer details
+              return {
+                ...customer,
+                customerName: newCustomerName,
+                phoneNum: newCustomerPhoneNumber,
+                address: newCustomerAddress,
+              };
+            }
+            return customer;
+          });
+          // Update session storage with the updated data
+          sessionStorage.setItem("customerData", JSON.stringify(updatedCustomers));
+          return updatedCustomers;
+        });
       }
-
     } catch (error) {
       console.error(error);
     }
@@ -564,25 +591,13 @@ const Customers = () => {
         </div>
       </div>
 
-
-      {/* Add Customer Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div
-            className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
-            onClick={openModal}
-          ></div>
-          <div className="modal-container bg-white p-8 max-w-sm mx-auto rounded z-50">
-            <span
-              className="modal-close absolute top-4 right-4 text-xl cursor-pointer"
-              onClick={closeModal}
-            >
-              &times;
-            </span>
-            <h2 className="text-2xl font-semibold mb-4 poppins-font">
-              Add New Customer
-            </h2>
-            <form onSubmit={getCustomerPostHistory}>
+      {/* Modal */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+          Customer
+        </h2>
+        {/* form for adding a new customer */}
+        <form onSubmit={getCustomerPostHistory}>
               <div className="mb-4">
                 <label
                   htmlFor="newCustomerName"
@@ -667,9 +682,7 @@ const Customers = () => {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
+      </Modal>
     </>
   );
 };

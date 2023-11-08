@@ -24,7 +24,8 @@ const Profile = () => {
     companyNumber: compInfo.companyNumber,
     companyLocation: compInfo.companyLocation,
     companyName: compInfo.companyName,
-    companyPic: compInfo.images
+    companyPic: compInfo.images,
+    profileAvatar: compInfo.profileAvatar
   });
 
   const [editableContent, setEditableContent] = useState({
@@ -59,7 +60,8 @@ const Profile = () => {
       companyNumber: compInfo.companyNumber,
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
-      images: compInfo.images
+      images: compInfo.images,
+      profileAvatar: compInfo.profileAvatar
     }));
   }, [userInfo]);
 
@@ -139,7 +141,7 @@ const Profile = () => {
       console.error("Error updating company details:", error);
     }
   };
-  
+
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -222,17 +224,19 @@ const Profile = () => {
               >
                 <div className="flex flex-col items-center justify-center">
                   <div className="top relative circular-profile object-none object-top overflow-visible">
-                    <label
-                      htmlFor="profilePicture"
-                      className="profile-picture-label"
-                    >
+                    <label htmlFor="profilePicture" className="profile-picture-label">
                       <img
-                        src={beansLogo}
-                        alt="Beans Logo"
+                        src={
+                          profileData.profileAvatar && profileData.profileAvatar.length > 0
+                            ? `${image_endpoint}/storage/${profileData.profileAvatar.slice(2, -2)}`
+                            : beansLogo
+                        }
+                        alt="profile picture"
                         className="admin-picture bg-white"
                         onClick={handleProfilePictureClick}
                       />
                     </label>
+
                     <input
                       type="file"
                       id="profilePictureInput"

@@ -111,12 +111,12 @@ const Login = () => {
                 htmlFor="email"
                 style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                Enter your Email
+                Email Address
               </label>
               <input
                 name="email"
                 type="email"
-                placeholder="Enter your Email"
+                placeholder="you@domain.com"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -141,12 +141,12 @@ const Login = () => {
                 htmlFor="password"
                 style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                Enter your Password
+                Password
               </label>
               <input
                 name="password"
                 type="password"
-                placeholder="Enter your Password"
+                placeholder=""
                 {...register("password", {
                   required: "Password is required",
                   minLength: {

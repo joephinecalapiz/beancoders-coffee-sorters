@@ -280,8 +280,8 @@ const Status = () => {
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2 className="text-2xl font-semibold mb-4 poppins-font">
-          Add New Customer
+        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+          Status
         </h2>
         {/* Add your form or content for adding a new customer */}
         <form onSubmit={handleAddNew}>
