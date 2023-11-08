@@ -8,6 +8,7 @@ import "../.././css/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import UpdateCustomer from "../ModalScreen/UpdateCustomer";
+import Modal from "../../component/Modal";
 
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -564,25 +565,13 @@ const Customers = () => {
         </div>
       </div>
 
-
-      {/* Add Customer Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div
-            className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
-            onClick={openModal}
-          ></div>
-          <div className="modal-container bg-white p-8 max-w-sm mx-auto rounded z-50">
-            <span
-              className="modal-close absolute top-4 right-4 text-xl cursor-pointer"
-              onClick={closeModal}
-            >
-              &times;
-            </span>
-            <h2 className="text-2xl font-semibold mb-4 poppins-font">
-              Add New Customer
-            </h2>
-            <form onSubmit={getCustomerPostHistory}>
+      {/* Modal */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+          Customer
+        </h2>
+        {/* form for adding a new customer */}
+        <form onSubmit={getCustomerPostHistory}>
               <div className="mb-4">
                 <label
                   htmlFor="newCustomerName"
@@ -667,9 +656,7 @@ const Customers = () => {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
+      </Modal>
     </>
   );
 };

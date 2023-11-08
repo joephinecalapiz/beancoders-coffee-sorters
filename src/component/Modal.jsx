@@ -23,7 +23,7 @@ const Modal = ({ isOpen, onClose, children, showCloseButton }) => {
             &times;
           </span>
         )}
-        <div className="mb-2 flex flex-col items-center text-black font-bold text-1xl">
+        <div className="mb-2 flex flex-col items-center font-bold text-1xl">
           {children}
         </div>
         <br />

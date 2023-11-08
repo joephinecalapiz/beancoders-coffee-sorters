@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
+import Modal from "../../component/Modal";
 
 import api_endpoint from "../../config";
 
@@ -256,24 +257,12 @@ const Sorters = () => {
       </div>
 
       {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div
-            className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
-            onClick={closeModal}
-          ></div>
-          <div className="modal-container bg-white p-10 max-w-sm mx-auto rounded z-50">
-            <span
-              className="modal-close absolute top-4 right-4 text-xl cursor-pointer"
-              onClick={closeModal}
-            >
-              &times;
-            </span>
-            <h2 className="text-2xl font-semibold mb-4 poppins-font">
-              Add New Sorter
-            </h2>
-
-            <form onSubmit={handleAddNewSorter}>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+          Sorter
+        </h2>
+        {/* form for adding a new sorter */}
+        <form onSubmit={handleAddNewSorter}>
               <div className="mb-4">
                 <label
                   htmlFor="newSorterName"
@@ -358,9 +347,7 @@ const Sorters = () => {
                 </button>
               </div>
             </form>
-          </div>
-        </div>
-      )}
+      </Modal>
     </>
   );
 };
