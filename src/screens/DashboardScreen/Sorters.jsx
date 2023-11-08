@@ -144,9 +144,6 @@ const Sorters = () => {
               <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorters
               </h1>
-              {/* <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
-                Total Sorter: {totalSorters}
-              </div> */}
             </div>
 
             <div className="flex items-center"></div>
@@ -159,9 +156,8 @@ const Sorters = () => {
             className={`p-5 dark:text-textTitle px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
             ${navVisible ? "px-10" : "sm:ml-44"}`}
           >
-            {/* Total number of sorters */}
-            Total: {totalSorters}
-            {/* Search bar */}
+            <div className="poppins-font font-bold">Total: {totalSorters}</div>
+
             <input
               type="text"
               placeholder="Search Sorters"
@@ -173,7 +169,7 @@ const Sorters = () => {
             {/* Add New button */}
             <button
               onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
+              className="px-4 py-2 text-white rounded focus:outline-none poppins-font"
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = "#C4A484";
                 e.target.style.transition = "background-color 0.3s ease";
@@ -205,7 +201,7 @@ const Sorters = () => {
             <br />
             <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
               <div className="max-h-[450px] overflow-y-auto">
-                <table className="min-w-full divide-y divide-gray-200 table-auto">
+                <table className=" min-w-full divide-y divide-gray-200 sorters-table th table-auto ">
                   <thead>
                     <tr>
                       <th
