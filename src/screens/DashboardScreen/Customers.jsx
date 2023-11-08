@@ -107,6 +107,9 @@ const Customers = () => {
       const data = await response.json();
       setAllCustomers(data.customer);
       //localStorage.setItem("customerData", JSON.stringify(data.customer));
+      if (sessionStorage.getItem("customerData") === null) {
+        sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+      }
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
