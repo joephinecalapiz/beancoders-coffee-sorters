@@ -14,7 +14,15 @@ const Navbar = () => {
     { name: "Home", href: "/", current: location.pathname === "/" },
     { name: "About Us", href: "/aboutus", current: location.pathname === "/aboutus" },
     { name: "Contact Us", href: "/contact-us", current: location.pathname === "/contact-us" },
-    { name: "Register", href: "/signup", current: location.pathname === "/signup" },
+    // { name: "Register", href: "/signup", current: location.pathname === "/signup" },
+    { name: "Login", href: "/login", current: location.pathname === "/login" },
+  ]);
+
+  const [mobileNav, setMobileNav] = useState([
+    { name: "Home", href: "/", current: location.pathname === "/" },
+    { name: "About Us", href: "/aboutus", current: location.pathname === "/aboutus" },
+    { name: "Contact Us", href: "/contact-us", current: location.pathname === "/contact-us" },
+    { name: "Sign Up", href: "/signup", current: location.pathname === "/signup" },
     { name: "Login", href: "/login", current: location.pathname === "/login" },
   ]);
 
@@ -28,6 +36,17 @@ const Navbar = () => {
       current: item.href === href,
     }));
     setNavigation(updatedNavigation);
+
+    // Use the navigate function to navigate to the clicked item's href
+    navigate(href);
+  };
+
+  const handleMobileNavigationClick = (href) => {
+    const updatedNavigation = mobileNav.map((item) => ({
+      ...item,
+      current: item.href === href,
+    }));
+    setMobileNav(updatedNavigation);
 
     // Use the navigate function to navigate to the clicked item's href
     navigate(href);
@@ -61,14 +80,14 @@ const Navbar = () => {
       {/* Mobile menu */}
       {menuOpen && (
         <ul className="md:hidden flex flex-col justify-center items-center p-20 absolute left-50 right-0 w-96 max-h-screen w-full bg-black z-100">
-          {navigation.map((item) => (
+          {mobileNav.map((item) => (
             <li
               key={item.href}
               className={`my-4 hover:text-[#FF3535] cursor-pointer hover:underline md:text-[20px] ${
                 item.current ? "text-red-500" : ""
               } poppins-font`}
               onClick={() => {
-                handleNavigationClick(item.href);
+                handleMobileNavigationClick(item.href);
                 setMenuOpen(false);
                 // Add your navigation logic here, e.g., navigate(item.href);
               }}
@@ -81,12 +100,13 @@ const Navbar = () => {
 
       {/* Desktop menu */}
       {/* <div className="top-0 bg-black bg-opacity-5 backdrop-blur-md absolute flex flex-row justify-end w-full text-white px-16"> */}
-      <div className="top-0 bg-black bg-opacity-5 absolute flex flex-row justify-end w-full text-white px-16">
-        {/* <img
+      <div className="top-0 bg-black bg-opacity-5 absolute justify-between flex flex-row w-full text-white pl-8 pr-16">
+        <img
           src={BeansLogo}
           alt="BeansLogo"
-          className="h-20 w-20 md:mt-5 md:space-x-8"
-        /> */}
+          className="h-20 w-20 md:mt-2 md:space-x-8 justify-start"
+        />
+        <div className="justify-end">
         <ul className="hidden md:flex md:flex-row md:justify-between md:mt-5 md:space-x-8">
           {navigation.map((item) => (
             <li
@@ -101,7 +121,32 @@ const Navbar = () => {
               {item.name}
             </li>
           ))}
+          <button
+           onClick={() => {
+            navigate(`/signup`);
+            // navigate(`/customerstatus/${sorted.customerName}`);
+          }}
+              className="btn btn-primary px-5 py-2 mt-2 rounded-md text-white poppins-font"
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = "#C4A484";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = "#512615";
+                e.target.style.transition = "background-color 0.3s ease";
+              }}
+              style={{
+                backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
+                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                border: "none",
+                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+              }}
+            >
+              Sign Up
+            </button>
         </ul>
+        </div>
       </div>
     </div>
   );

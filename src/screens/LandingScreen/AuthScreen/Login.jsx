@@ -102,14 +102,13 @@ const Login = () => {
             // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="w-[120%] mx-auto">
+            <div className="w-[140%] mx-auto poppins-font">
               <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 poppins-font">
                 Login
               </h1>
               <label
                 className="block text-white mb-2"
                 htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
               >
                 Email Address
               </label>
@@ -131,7 +130,6 @@ const Login = () => {
                 }}
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.email ? "mb-2" : "mb-5"
                   }`}
-                style={{ fontFamily: "Poppins, sans-serif" }}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
@@ -139,7 +137,6 @@ const Login = () => {
               <label
                 className="block text-white mb-2"
                 htmlFor="password"
-                style={{ fontFamily: "Poppins, sans-serif" }}
               >
                 Password
               </label>
@@ -161,12 +158,10 @@ const Login = () => {
                 }}
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.password ? "mb-2" : "mb-5"
                   }`}
-                style={{ fontFamily: "Poppins, sans-serif" }}
               />
               {loginError && (
                 <p
                   className="text-red-500 ml-2"
-                  style={{ fontFamily: "Poppins, sans-serif" }}
                 >
                   Invalid email or password.
                 </p>
@@ -238,8 +233,7 @@ const Login = () => {
                 {loading ? "Loading..." : "Login"}
               </button>
               <p
-                className="text-center my-7"
-                style={{ color: "white", fontFamily: "Poppins, sans-serif" }}
+                className="text-white text-center my-7"
               >
                 Don't have and account?
                 <span

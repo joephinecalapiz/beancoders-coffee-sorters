@@ -13,7 +13,7 @@ import About from "./screens/LandingScreen/About";
 import ContactUs from "./screens/LandingScreen/ContactUs";
 import RootPage from "./screens/RootPage";
 import AdminRootPage from "./superadmin/RootPage";
-import beansLogo from './assets/beansLogo.png';
+import logo from './assets/logo.png';
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
@@ -44,7 +44,7 @@ function App() {
   if (authenticated === null) {
     return (
       <div className="flex items-center justify-center h-screen">
-            <img src={beansLogo} alt="Beans Logo" className="w-32 h-32 animate-spin" />
+            <img src={logo} alt="Beans Logo" className="w-32 h-32" />
       </div>
     );
   }

@@ -16,6 +16,17 @@ const Status = () => {
   const [sorters, setSorter] = useState([]);
   const [status, setAllStatus] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  const toggleDropdown = (sorted) => {
+    if (openDropdownId === sorted) {
+      // If the clicked dropdown is already open, close it
+      setOpenDropdownId(null);
+    } else {
+      // Close the previously open dropdown (if any)
+      setOpenDropdownId(sorted);
+    }
+  };
 
   const handleSearchInputChange = (e) => {
     console.log("Search input changed:", e.target.value);
@@ -52,7 +63,6 @@ const Status = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         const fetchCustomerData = response.data.customer;
         setCustomer(fetchCustomerData);
       });
@@ -68,7 +78,6 @@ const Status = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
         const fetchSorterData = response.data.sorters;
         setSorter(fetchSorterData);
       });
@@ -149,6 +158,105 @@ const Status = () => {
   const handleCancel = () => {
     // Close the modal when the "Cancel" button is clicked
     closeModal();
+  };
+
+  const setToOngoing = async (statusId) => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+
+      const response = await fetch(api_endpoint + "/update-status/" + statusId, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          status: 'Ongoing',
+        }),
+      });
+      if (response.status === 422) {
+        alert("Status is already updated in the database");
+      }
+      if (!response.ok) {
+        throw new Error("Fail to update the status");
+      }
+      if (response.status === 200) {
+        const fetchAllStatus = response.data.status;
+        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        setAllStatus(fetchAllStatus);
+        setOpenDropdownId(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setOpenDropdownId(null);
+  };
+
+  const setToFinished = async (statusId) => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+
+      const response = await fetch(api_endpoint + "/update-status/" + statusId, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          status: 'Finished',
+        }),
+      });
+      if (response.status === 422) {
+        alert("Status is already updated in the database");
+      }
+      if (!response.ok) {
+        throw new Error("Fail to update the status");
+      }
+      if (response.status === 200) {
+        const fetchAllStatus = response.data.status;
+        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        setAllStatus(fetchAllStatus);
+        setOpenDropdownId(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setOpenDropdownId(null);
+  };
+
+  const setToCancelled = async (statusId) => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+
+      const response = await fetch(api_endpoint + "/update-status/" + statusId, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          status: 'Cancelled',
+        }),
+      });
+      if (response.status === 422) {
+        alert("Status is already updated in the database");
+      }
+      if (!response.ok) {
+        throw new Error("Fail to update the status");
+      }
+      if (response.status === 200) {
+        const fetchAllStatus = response.data.status;
+        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        setAllStatus(fetchAllStatus);
+        setOpenDropdownId(null);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setOpenDropdownId(null);
   };
 
   return (
@@ -267,7 +375,59 @@ const Status = () => {
 
                         <td className="poppins-font">{sorted.customerName}</td>
                         <td className="poppins-font">{sorted.sorterName}</td>
-                        <td className="poppins-font">{sorted.status}</td>
+                        <td className="poppins-font">
+                        <button
+                              onClick={() => toggleDropdown(sorted.id)}
+                              className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                              type="button"
+                            >
+                              {sorted.status}
+                            </button>
+                            {openDropdownId === sorted.id && (
+                              <div
+                                id="dropdownDotsHorizontal"
+                                className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                                style={{ top: "50", left: "50" }}
+                              >
+                                <ul
+                                  className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                  aria-labelledby="dropdownMenuIconHorizontalButton"
+                                >
+                                  <li>
+                                  <button
+                                    onClick={() => setToOngoing(sorted.id)}
+                                    className={`block px-4 py-2 mx-auto w-full ${sorted.status === "Ongoing" ? "bg-brown hover:bg-gray-100" : ""
+                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                  >
+                                    Ongoing
+                                  </button>
+                                  </li>
+                                  <li>
+                                    <button
+                                      onClick={() =>
+                                        setToFinished(sorted.id)
+                                      }
+                                      className={`block px-4 py-2 mx-auto w-full ${sorted.status === "Finished" ? "bg-brown hover:bg-gray-100" : ""
+                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                  >
+                                      Finished
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button
+                                      onClick={() =>
+                                        setToCancelled(sorted.id)
+                                      }
+                                      className={`block px-4 py-2 mx-auto w-full ${sorted.status === "Cancelled" ? "bg-brown hover:bg-gray-100" : ""
+                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                  >
+                                      Cancelled
+                                    </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
+                        </td>
                         <td className="poppins-font">
                           <button
                             onClick={() => {

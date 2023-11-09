@@ -32,8 +32,8 @@ const Footer = () => {
       ];
 
     return (
-        <footer className="footer footer-center bg-black text-base-content text-white border-t-2">
-            <nav className="grid grid-flow-col gap-4 p-5">
+        <footer className="relative footer footer-center bg-black text-base-content text-white border-t-2">
+            <nav className="grid grid-flow-col grid-rows-1 desktop:grid-rows-2 gap-4 p-5">
                 {navigation.map((item) => (
                     <NavLink
                         to={item.href}
