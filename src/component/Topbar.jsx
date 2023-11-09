@@ -172,7 +172,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
@@ -182,7 +182,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 <button
                   type="button"
                   onClick={toggleProfileMenu}
-                  className={`block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white  ${
+                  className={`block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white  ${
                     isProfileMenuOpen ? "" : ""
                   } `}
                   aria-expanded={isProfileMenuOpen}
@@ -221,7 +221,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 )}
                 <li onClick={handleSignOut}>
                   <a
-                    className="block px-4 py-2 text-sm poppins-font dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                   >
                     Sign out
@@ -231,7 +231,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
+        <h1 className="admin-user text-white text-10px mr-8 poppins-font font-semibold  mt-4 ml-8">
           Admin
         </h1>
       </div>

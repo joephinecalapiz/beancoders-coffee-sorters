@@ -111,7 +111,7 @@ const Dashboard = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-10 text-base p-3 rounded-lg shadow-xl">
                 Dashboard
               </h1>
             </div>
@@ -128,7 +128,7 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
               <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title m-auto ml-5 mr-5">
+                  <h1 className="text-black poppins-font font-medium data-title m-auto ml-5 mr-5">
                     Pieces of Bad Beans
                   </h1>
                   <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
@@ -140,7 +140,7 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title m-auto">
+                  <h1 className="text-black poppins-font font-medium data-title m-auto">
                     Pieces of Good Beans
                   </h1>
                   <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
@@ -152,7 +152,7 @@ const Dashboard = () => {
               </div>
               <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
                 <div>
-                  <h1 className="text-black data-title m-auto">
+                  <h1 className="text-black poppins-font font-medium data-title m-auto">
                     KG of Bad Beans
                   </h1>
                   <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
@@ -173,7 +173,7 @@ const Dashboard = () => {
           }}
         >
           <div>
-            <h1 className="text-black dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
+            <h1 className="text-black poppins-font dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
               Recent Activities
             </h1>
             <Activities />

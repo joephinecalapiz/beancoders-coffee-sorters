@@ -41,7 +41,7 @@ const Activities = () => {
   return (
     <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
       <div className="max-h-[450px] overflow-y-auto">
-        <table className="min-w-full divide-y divide-gray-200 customers-table">
+        <table className="min-w-full divide-y divide-gray-200 customers-table poppins-font ">
           <thead>
             <tr>
               <th
