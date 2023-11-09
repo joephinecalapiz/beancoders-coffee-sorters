@@ -74,7 +74,7 @@ const Landing = () => {
               // {`w-[615px] h-[372px] ${index % 2 === 0 ? 'left-0 top-0' : 'left-[655px] top-[70px]`}
               <div key={index} className={`min-w-full h-96 relative flex-row`}>
                 <div className="min-w-full h-[372px] left-0 top-0 absolute bg-stone-950 rounded-[20px]" />
-                <div className={`absolute ${index % 2 === 0 ? 'left-[655px] top-[70px]' : ' justify-self-end top-0 ml-10 mt-10'}`}>
+                <div className={`absolute ${index % 2 === 0 ? 'left-[655px] top-[70px]' : 'left-0 top-0 ml-10 mt-10'}`}>
                   {detail && detail.companyName ? (
                     <div className="lg:w-[598px] lg:h-[41px] left-0 top-0 absolute text-white text-[40px] font-bold font-['Poppins']">
                       <FontAwesomeIcon icon={faBuilding} className="mr-10" />
@@ -111,7 +111,7 @@ const Landing = () => {
                   <img
                     src={`${image_endpoint}/storage/${detail.images}`}
                     alt="Coffee Beans"
-                    className={`lg:w-[615px] lg:h-[372px] absolute rounded-[20px] ${index % 2 === 0 ? 'left-0 top-0' : 'left-[700px] top-[0px]'}`}
+                    className={`lg:w-[615px] lg:h-[372px] absolute rounded-[20px] ${index % 2 === 0 ? 'left-0 top-0' : 'left-[770px] top-[0px]'}`}
                   />
                 ) : (
                   <div className="h-full bg-gray-400 rounded-lg flex items-center justify-center">
