@@ -79,20 +79,20 @@ const CompanyDetails = () => {
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
-    
+
         if (file) {
             const reader = new FileReader();
-    
+
             reader.onload = (e) => {
                 const dataURL = e.target.result;
                 setSelectedImage(dataURL); // Set selectedImage to display the preview
             };
-    
+
             reader.readAsDataURL(file);
-    
+
             // Set the file state
             setFile(file);
-    
+
             // Print the file name
             console.log("Selected file name:", file.name);
         } else {
@@ -100,7 +100,7 @@ const CompanyDetails = () => {
             setFile(null); // Clear the file state
         }
     };
-    
+
 
     const {
         register,
@@ -110,7 +110,8 @@ const CompanyDetails = () => {
 
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
-
+    const role = localStorage.getItem("role");
+    localStorage.setItem("role", role);
     //---kanang console.log eh change rana para eh connect sa database
     const onSubmitHandler = (data) => {
         setLoading(true);
@@ -135,7 +136,7 @@ const CompanyDetails = () => {
                     setTimeout(() => {
                         setLoading(false);
                         navigate("/dashboard");
-                      }, 2000); 
+                    }, 2000);
                 }
             })
             .catch((error) => {
@@ -158,13 +159,13 @@ const CompanyDetails = () => {
     return (
         <>
             {/* <Navbar /> */}
-            <div className="md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
+            <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
                 <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
                     <form
                         onSubmit={handleSubmit(onSubmitHandler)}
                         className="rounded-[40px] p-8 max-w-xs w-full"
                     >
-                        <div className="w-[120%] mx-auto">
+                        <div className="w-[140%] mx-auto">
                             <h1 className="text-center text-white font-bold text-[30px] md:mt-25 md:mb-5 mt-20">
                                 Complete Registration
                             </h1>
@@ -175,17 +176,17 @@ const CompanyDetails = () => {
                                 Enter your company information below.
                             </h5>
                             <label
-                className="block text-white mb-2"
-                htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Company Name
-              </label>
+                                className="block text-white mb-2"
+                                htmlFor="email"
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            >
+                                Company Name
+                            </label>
                             <input
-                            type="hidden"
-                            name="user_id"
-                            value={user_id}
-                            {...register("user_id")} // Register the hidden field
+                                type="hidden"
+                                name="user_id"
+                                value={user_id}
+                                {...register("user_id")} // Register the hidden field
                             />
                             <input
                                 name="companyName"
@@ -207,12 +208,12 @@ const CompanyDetails = () => {
                                 <p className="text-red-500 ml-2">{errors.companyName.message}</p>
                             )}
                             <label
-                className="block text-white mb-2"
-                htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Phone Number
-              </label>
+                                className="block text-white mb-2"
+                                htmlFor="email"
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            >
+                                Phone Number
+                            </label>
                             <input
                                 name="companyNumber"
                                 type="number"
@@ -232,12 +233,12 @@ const CompanyDetails = () => {
                                 <p className="text-red-500 ml-2">{errors.companyNumber.message}</p>
                             )}
                             <label
-                className="block text-white mb-2"
-                htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Company Address
-              </label>
+                                className="block text-white mb-2"
+                                htmlFor="email"
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            >
+                                Company Address
+                            </label>
                             <input
                                 name="companyLocation"
                                 type="text"
@@ -259,18 +260,18 @@ const CompanyDetails = () => {
                             )}
                             {/* Profile Image */}
                             <label
-                className="block text-white mb-2"
-                htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Profile Avatar
-              </label>
+                                className="block text-white mb-2"
+                                htmlFor="email"
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            >
+                                Profile Avatar
+                            </label>
                             {profileFileDataURL ?
-                            <p className="">
-                                {
-                                    <img src={profileFileDataURL} alt="preview" />
-                                }
-                            </p> : null}
+                                <p className="">
+                                    {
+                                        <img src={profileFileDataURL} alt="preview" />
+                                    }
+                                </p> : null}
                             <input
                                 type="file"
                                 onChange={profileImageHandler}
@@ -290,18 +291,18 @@ const CompanyDetails = () => {
 
                             {/* Company Image */}
                             <label
-                className="block text-white mb-2"
-                htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Company Photo
-              </label>
+                                className="block text-white mb-2"
+                                htmlFor="email"
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            >
+                                Company Photo
+                            </label>
                             {companyFileDataURL ?
-                            <p className="">
-                                {
-                                    <img src={companyFileDataURL} alt="preview" />
-                                }
-                            </p> : null}
+                                <p className="">
+                                    {
+                                        <img src={companyFileDataURL} alt="preview" />
+                                    }
+                                </p> : null}
                             <input
                                 type="file"
                                 onChange={companyImageHandler}
