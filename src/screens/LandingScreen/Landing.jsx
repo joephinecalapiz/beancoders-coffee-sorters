@@ -60,7 +60,7 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="bg-black">
+      <div className="relative bg-black">
         <div className="text-center justify-center items-center">
           <h1 className="text-white mb-8 md:mb-20 poppins-font text-3xl md:text-5xl mt-0 font-bold">
             Coffee Sorting Establishments
@@ -68,63 +68,60 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-1 gap-4 justify-items-center items-center mx-4 md:mx-8">
+        <div className="grid grid-cols-1 tablet:gap:10 sm:gap-10 md:gap-10 lg:gap-10 items-center md:mx-8">
           {companyData.length > 0 ? (
             companyData.map((detail, index) => (
-              // {`w-[615px] h-[372px] ${index % 2 === 0 ? 'left-0 top-0' : 'left-[655px] top-[70px]`}
-              <div key={index} className={`min-w-full h-96 relative flex-row`}>
-                <div className="min-w-full h-[372px] left-0 top-0 absolute bg-stone-950 rounded-[20px]" />
-                <div className={`absolute ${index % 2 === 0 ? 'left-[655px] top-[70px]' : 'left-0 top-0 ml-10 mt-10'}`}>
-                  {detail && detail.companyName ? (
-                    <div className="lg:w-[598px] lg:h-[41px] left-0 top-0 absolute text-white text-[40px] font-bold font-['Poppins']">
-                      <FontAwesomeIcon icon={faBuilding} className="mr-10" />
-                      <span>{detail.companyName}</span>
-                    </div>
-                  ) : (
-                    <div>No data available</div>
-                  )}
+              <div key={index} className={`mx-48 max-w-4xl h-64 relative col-span-3`}>
+                <div className="relative max-w-4xl lg:h-64 bg-stone-950 rounded-[20px]">
+                  <div className={`flex  text-white ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
+                    <div className="absolute text-[40px] mr-20 mt-10">
+                      {detail && (
+                        <div className="font-bold font-['Poppins']">
+                          <FontAwesomeIcon icon={faBuilding} className="mr-10" />
+                          <span>{detail.companyName}</span>
+                        </div>
+                      )}
 
-                  {detail && (
-                    <div className="lg:w-[431px] lg:h-[41.29px] left-0 top-[191px] absolute text-white text-4xl font-medium font-['Poppins']">
-                      <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-10" />
-                      <a
-                        href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
-                          detail.companyLocation
-                        )}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="cursor-pointer"
-                      >
-                        {detail.companyLocation}
-                      </a>
+                      {detail && (
+                        <div className="font-medium font-['Poppins']">
+                          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-10" />
+                          <a
+                            href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
+                              detail.companyLocation
+                            )}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="cursor-pointer"
+                          >
+                            {detail.companyLocation}
+                          </a>
+                        </div>
+                      )}
+                      {detail && (
+                        <div className="font-medium font-['Poppins']">
+                          <FontAwesomeIcon icon={faPhone} className="mr-10" />
+                          <span>{detail.companyNumber}</span>
+                        </div>
+                      )}
                     </div>
-                  )}
-
-                  {detail && (
-                    <div className="lg:w-[414.99px] lg:h-[41.29px] left-0 top-[98px] absolute text-white text-4xl font-medium font-['Poppins']">
-                      <FontAwesomeIcon icon={faPhone} className="mr-10" />
-                      <span>{detail.companyNumber}</span>
-                    </div>
-                  )}
-                </div>
-                {detail && detail.images ? (
-                  <img
-                    src={`${image_endpoint}/storage/${detail.images}`}
-                    alt="Coffee Beans"
-                    className={`lg:w-[615px] lg:h-[372px] absolute rounded-[20px] ${index % 2 === 0 ? 'left-0 top-0' : 'left-[770px] top-[0px]'}`}
-                  />
-                ) : (
-                  <div className="h-full bg-gray-400 rounded-lg flex items-center justify-center">
-                    No image available
                   </div>
-                )}
+                  <div className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                    {detail && (
+                      <img
+                        src={`${image_endpoint}/storage/${detail.images}`}
+                        alt="Coffee Beans"
+                        className="w-70 h-64 relative rounded-[20px]"
+                      />
+                    )}
+                  </div>
+                </div>
               </div>
             ))
           ) : (
             <div className="col-span-4 text-center">No company data available.</div>
           )}
           <div className="flex items-center"></div>
-        <br />
+          <br />
         </div>
       </div>
       <Footer></Footer>
