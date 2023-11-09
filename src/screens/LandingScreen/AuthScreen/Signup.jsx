@@ -66,28 +66,27 @@ const Signup = () => {
   };
 
   useEffect(() => {
-    document.title = "Register";
+    document.title = "Sign Up";
   }, []);
 
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover bg-CoffeeBeans  h-[100vh] w-full">
+      <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
         <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             // onSubmit={handleSubmit(onSubmitHandler)}
-            className="rounded-[40px] p-8 max-w-xs w-full "
+            className="rounded-[40px] p-8 max-w-xs w-full"
           >
-            <div className="md:w-[150%] w-[250%] mx-auto">
-              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-10 poppins-font">
+            <div className="w-[140%] mx-auto poppins-font">
+              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 poppins-font">
                 Create Account
               </h1>
               <label
                 className="block text-white mb-2"
                 htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                Full name
+                Full Name
               </label>
               <input
                 name="name"
@@ -103,7 +102,6 @@ const Signup = () => {
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.name ? "mb-2" : "mb-5"
                 }`}
-                style={{ fontFamily: "Poppins, sans-serif" }}
               />
 
               {errors.name && (
@@ -112,7 +110,6 @@ const Signup = () => {
               <label
                 className="block text-white mb-2"
                 htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
               >
                 Email Address
               </label>
@@ -130,15 +127,13 @@ const Signup = () => {
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
-                style={{ fontFamily: "Poppins, sans-serif" }}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
               )}
               <label
                 className="block text-white mb-2"
-                htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
+                htmlFor="password"
               >
                 Password
               </label>
@@ -156,12 +151,10 @@ const Signup = () => {
                 className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
-                style={{ fontFamily: "Poppins, sans-serif" }}
               />
               {errors.password && (
                 <p className="text-red-500 ml-2">{errors.password.message}</p>
               )}
-
               <button
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white"
@@ -189,20 +182,16 @@ const Signup = () => {
                     ></path>
                   </svg>
                 ) : null}
-                {loading ? "Processing..." : "Register"}
+                {loading ? "Loading..." : "Sign Up"}
               </button>
               <p
-                className="text-center my-7"
-                style={{
-                  color: "white",
-                  fontFamily: "Poppins, sans-serif",
-                }}
+                className="text-white text-center my-7"
               >
                 Already have an account?
                 <span
                   className="hover:underline cursor-pointer"
                   onClick={() => {
-                    navigate("/login");
+                    navigate("/signin");
                   }}
                   style={{
                     color: "#512615",

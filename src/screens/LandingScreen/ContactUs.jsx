@@ -26,12 +26,12 @@ const ContactUs = () => {
         machine: false,
         website: false,
     });
-    
+
     const handleCheckboxChange = (e) => {
         const { name, checked } = e.target;
         setFormData({ ...formData, [name]: checked });
     };
-    
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -46,14 +46,14 @@ const ContactUs = () => {
         setLoading(true); // Set loading state to true when form is submitted
 
         // console.log(formData);
-    
+
         try {
             const response = await axios.post(api_endpoint + "/post-feedback", formData, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
             });
-    
+
             if (response.status === 200) {
                 // Simulate an API call or any asynchronous operation
                 setTimeout(() => {
@@ -75,13 +75,13 @@ const ContactUs = () => {
     return (
         <>
             <Navbar />
-            <div className="grid grid-cols-2 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
+            <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
                 <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
                     <form
                         className="rounded-[40px] p-8 max-w-xs w-full "
                         onSubmit={handleSubmit(onSubmitHandler)}
                     >
-                        <div className="w-[120%] mx-auto">
+                        <div className="w-[140%] mx-auto">
                             <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12">
                                 Contact Us
                             </h1>
@@ -113,7 +113,7 @@ const ContactUs = () => {
                                 <p className="text-red-500 ml-2">{errors.full_name.message}</p>
                             )}
 
-<label
+                            <label
                                 className="block text-white mb-2"
                                 htmlFor="company"
                                 style={{ fontFamily: "Poppins, sans-serif" }}
@@ -223,15 +223,15 @@ const ContactUs = () => {
                                 Message
                             </label>
                             <textarea
-                                    name="message"
-                                    rows={3}
-                                    className="block w-full mb-5 px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    defaultValue={''}
-                                    placeholder="Explain here the issues, feedbacks, or your suggestions"
-                                    {...register("message", {
-                                    })}
-                                    checked={formData.message}
-                                    onChange={handleInputChange}
+                                name="message"
+                                rows={3}
+                                className="block w-full mb-5 px-4 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                defaultValue={''}
+                                placeholder="Explain here the issues, feedbacks, or your suggestions"
+                                {...register("message", {
+                                })}
+                                checked={formData.message}
+                                onChange={handleInputChange}
                             />
 
                             <label
@@ -266,7 +266,7 @@ const ContactUs = () => {
                                 className="btn w-full btn-primary mt-7 text-white"
                                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
                                 disabled={loading}
-                                // onClick={handleSubmit(onSubmitHandler)}
+                            // onClick={handleSubmit(onSubmitHandler)}
                             >
                                 {loading ? (
                                     <svg
