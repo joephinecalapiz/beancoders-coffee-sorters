@@ -68,68 +68,64 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 justify-items-center items-center mb-14 mx-4 md:mx-8">
+        <div className="grid grid-cols-1 md:grid-rows-2 md:grid-cols-1 gap-4 justify-items-center items-center mx-4 md:mx-8">
           {companyData.length > 0 ? (
             companyData.map((detail, index) => (
-              <div
-                key={index}
-                className="bg-brown md:min-h-[450px] md:w-76  rounded-lg p-2  flex flex-col relative shadow-4xl z-100"
-              >
+              // {`w-[615px] h-[372px] ${index % 2 === 0 ? 'left-0 top-0' : 'left-[655px] top-[70px]`}
+              <div key={index} className={`min-w-full h-96 relative flex-row`}>
+                <div className="min-w-full h-[372px] left-0 top-0 absolute bg-stone-950 rounded-[20px]" />
+                <div className={`absolute ${index % 2 === 0 ? 'left-[655px] top-[70px]' : ' justify-self-end top-0 ml-10 mt-10'}`}>
+                  {detail && detail.companyName ? (
+                    <div className="lg:w-[598px] lg:h-[41px] left-0 top-0 absolute text-white text-[40px] font-bold font-['Poppins']">
+                      <FontAwesomeIcon icon={faBuilding} className="mr-10" />
+                      <span>{detail.companyName}</span>
+                    </div>
+                  ) : (
+                    <div>No data available</div>
+                  )}
+
+                  {detail && (
+                    <div className="lg:w-[431px] lg:h-[41.29px] left-0 top-[191px] absolute text-white text-4xl font-medium font-['Poppins']">
+                      <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-10" />
+                      <a
+                        href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
+                          detail.companyLocation
+                        )}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="cursor-pointer"
+                      >
+                        {detail.companyLocation}
+                      </a>
+                    </div>
+                  )}
+
+                  {detail && (
+                    <div className="lg:w-[414.99px] lg:h-[41.29px] left-0 top-[98px] absolute text-white text-4xl font-medium font-['Poppins']">
+                      <FontAwesomeIcon icon={faPhone} className="mr-10" />
+                      <span>{detail.companyNumber}</span>
+                    </div>
+                  )}
+                </div>
                 {detail && detail.images ? (
                   <img
                     src={`${image_endpoint}/storage/${detail.images}`}
-                    alt="beansLogo"
-                    className="w-70 h-64 max-h-full max-w-full mb-4 items-center rounded-lg"
+                    alt="Coffee Beans"
+                    className={`lg:w-[615px] lg:h-[372px] absolute rounded-[20px] ${index % 2 === 0 ? 'left-0 top-0' : 'left-[700px] top-[0px]'}`}
                   />
                 ) : (
-                  <div>No image available</div>
-                )}
-
-                {detail && detail.companyName ? (
-                  <div className="text-white dark:text-textTitle font-bold text-3xl font-poppins mt-3 flex items-center">
-                    <FontAwesomeIcon icon={faBuilding} className="mr-10" />
-                    <span className="flex-grow">{detail.companyName}</span>
-                  </div>
-                ) : (
-                  <div>No data available</div>
-                )}
-
-                {/* <div className="text-white dark:text-textTitle font-bold text-3xl font-poppins mt-3 flex items-center">
-                  <FontAwesomeIcon icon={faBuilding} className="mr-10" />
-                  <span className="flex-grow">{detail.companyName}</span>
-                </div> */}
-
-                {detail && (
-                  <div className="text-white dark:text-textDesc text-3xl font-poppins mt-5 flex items-center">
-                    <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-10" />
-                    <a
-                      href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
-                        detail.companyLocation
-                      )}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-grow cursor-pointer"
-                    >
-                      {detail.companyLocation}
-                    </a>
-                  </div>
-                )}
-
-                {detail && (
-                  <div className="text-white dark:text-textDesc text-3xl font-poppins mt-5 flex items-center">
-                    <FontAwesomeIcon icon={faPhone} className="mr-10" />
-                    <span className="flex-grow">{detail.companyNumber}</span>
+                  <div className="h-full bg-gray-400 rounded-lg flex items-center justify-center">
+                    No image available
                   </div>
                 )}
               </div>
             ))
           ) : (
-            <div>No company data available.</div>
+            <div className="col-span-4 text-center">No company data available.</div>
           )}
-        </div>
-
-        <div className="flex items-center"></div>
+          <div className="flex items-center"></div>
         <br />
+        </div>
       </div>
       <Footer></Footer>
     </>

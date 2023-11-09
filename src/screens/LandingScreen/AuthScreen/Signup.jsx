@@ -50,6 +50,7 @@ const Signup = () => {
           if (error.email) {
             const emailError = error.email[0];
             setPopupMessage("The email has already been taken");
+            setLoading(false);
 
             // alert(emailError);
           }
@@ -57,9 +58,11 @@ const Signup = () => {
           if (error.name) {
             const nameError = error.name[0];
             alert(nameError);
+            setLoading(false);
           }
         } else {
           console.error("Error occured", err);
+          setLoading(false);
         }
       });
     //console.log(data);
