@@ -37,7 +37,6 @@ const Landing = () => {
       } else {
         setCompanyData([]); // Handle the case where data.companies is undefined or null
       }
-      console.log(companyData);
     });
   }, []);
 
@@ -45,21 +44,22 @@ const Landing = () => {
     <>
       <Navbar />
       <div className="block inset-0">
-      <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
-        <div className="text-white font-bold text-2xl text-center py-4 md:py-16 flex flex-col items-center">
-          <div className="md:ml-4 mt-1">
-            <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-5" />
-          </div>
-          <div className="text-center md:ml-32 px-4">
-            <p className="text-4xl mb-4 md:text-5xl md:mb-12 font-poppins md:block hidden poppins-font">
-              BeanCoders:
-            </p>
-            <p className=" mb-4 text-4xl md:text-6xl md:ml-96 poppins-font">
-              Quality Bean Sorter
-            </p>
+        <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
+          <div className="relative text-white font-bold text-2xl py-[5%] flex flex-col items-end">
+            <div className="mt-1">
+              {/* <img src={BeansLogo} alt="BeansLogo" className="flex h-80 w-80 mt-5" /> */}
+              <div className="px-4 poppins-font">
+              <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80" />
+                <p className="text-4xl mb-4 md:text-5xl md:mb-12 md:block hidden">
+                  BeanCoders:
+                </p>
+                <p className="mb-4 text-4xl md:text-6xl">
+                  Quality Bean Sorter
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
       <div className="bg-black">
         <div className="flex items-center"></div>
