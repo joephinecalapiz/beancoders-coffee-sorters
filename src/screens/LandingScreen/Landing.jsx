@@ -68,10 +68,10 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-1 gap-32 sm:gap-10 md:gap-10 lg:gap-10 items-center">
+        <div className="grid grid-cols-1 gap-10 sm:gap-10 md:gap-10 lg:gap-10 items-center">
           {companyData.length > 0 ? (
             companyData.map((detail, index) => (
-              <div key={index} className={`mx-10 md:mx-48 h-64 relative col-span-3`}>
+              <div key={index} className={`mx-10 md:mx-20 lg:mx-48  h-64 relative col-span-3`}>
                 <div className="relative">
                   {/* company info */}
                   <div className={`flex  text-white ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
