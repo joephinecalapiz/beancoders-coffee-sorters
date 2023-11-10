@@ -165,16 +165,19 @@ const Status = () => {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
 
-      const response = await fetch(api_endpoint + "/update-status/" + statusId, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          status: 'Ongoing',
-        }),
-      });
+      const response = await fetch(
+        api_endpoint + "/update-status/" + statusId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            status: "Ongoing",
+          }),
+        }
+      );
       if (response.status === 422) {
         alert("Status is already updated in the database");
       }
@@ -198,16 +201,19 @@ const Status = () => {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
 
-      const response = await fetch(api_endpoint + "/update-status/" + statusId, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          status: 'Finished',
-        }),
-      });
+      const response = await fetch(
+        api_endpoint + "/update-status/" + statusId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            status: "Finished",
+          }),
+        }
+      );
       if (response.status === 422) {
         alert("Status is already updated in the database");
       }
@@ -231,16 +237,19 @@ const Status = () => {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
 
-      const response = await fetch(api_endpoint + "/update-status/" + statusId, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          status: 'Cancelled',
-        }),
-      });
+      const response = await fetch(
+        api_endpoint + "/update-status/" + statusId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            status: "Cancelled",
+          }),
+        }
+      );
       if (response.status === 422) {
         alert("Status is already updated in the database");
       }
@@ -271,7 +280,7 @@ const Status = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black bg-white poppins-font font-bold dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorting Status
               </h1>
             </div>
@@ -283,7 +292,7 @@ const Status = () => {
         </div>
         <div className="search-and-button">
           <div
-            className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+            className={`p-5 px-10 flex justify-between poppins-font items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
             ${navVisible ? "px-10" : "sm:ml-44"}`}
           >
             {/* Search bar */}
@@ -299,7 +308,7 @@ const Status = () => {
             {/* Add New button */}
             <button
               onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
+              className="px-4 py-2 text-white rounded poppins-font font-bold focus:outline-none"
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = "#C4A484";
                 e.target.style.transition = "background-color 0.3s ease";
@@ -310,7 +319,6 @@ const Status = () => {
               }}
               style={{
                 backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
                 boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
                 border: "none",
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -376,57 +384,62 @@ const Status = () => {
                         <td className="poppins-font">{sorted.customerName}</td>
                         <td className="poppins-font">{sorted.sorterName}</td>
                         <td className="poppins-font">
-                        <button
-                              onClick={() => toggleDropdown(sorted.id)}
-                              className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                              type="button"
+                          <button
+                            onClick={() => toggleDropdown(sorted.id)}
+                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            type="button"
+                          >
+                            {sorted.status}
+                          </button>
+                          {openDropdownId === sorted.id && (
+                            <div
+                              id="dropdownDotsHorizontal"
+                              className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                              style={{ top: "50", left: "50" }}
                             >
-                              {sorted.status}
-                            </button>
-                            {openDropdownId === sorted.id && (
-                              <div
-                                id="dropdownDotsHorizontal"
-                                className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                                style={{ top: "50", left: "50" }}
+                              <ul
+                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <ul
-                                  className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                  aria-labelledby="dropdownMenuIconHorizontalButton"
-                                >
-                                  <li>
+                                <li>
                                   <button
                                     onClick={() => setToOngoing(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${sorted.status === "Ongoing" ? "bg-brown hover:bg-gray-100" : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    className={`block px-4 py-2 mx-auto w-full ${
+                                      sorted.status === "Ongoing"
+                                        ? "bg-brown hover:bg-gray-100"
+                                        : ""
+                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
                                   >
                                     Ongoing
                                   </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      onClick={() =>
-                                        setToFinished(sorted.id)
-                                      }
-                                      className={`block px-4 py-2 mx-auto w-full ${sorted.status === "Finished" ? "bg-brown hover:bg-gray-100" : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                </li>
+                                <li>
+                                  <button
+                                    onClick={() => setToFinished(sorted.id)}
+                                    className={`block px-4 py-2 mx-auto w-full ${
+                                      sorted.status === "Finished"
+                                        ? "bg-brown hover:bg-gray-100"
+                                        : ""
+                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
                                   >
-                                      Finished
-                                    </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      onClick={() =>
-                                        setToCancelled(sorted.id)
-                                      }
-                                      className={`block px-4 py-2 mx-auto w-full ${sorted.status === "Cancelled" ? "bg-brown hover:bg-gray-100" : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    Finished
+                                  </button>
+                                </li>
+                                <li>
+                                  <button
+                                    onClick={() => setToCancelled(sorted.id)}
+                                    className={`block px-4 py-2 mx-auto w-full ${
+                                      sorted.status === "Cancelled"
+                                        ? "bg-brown hover:bg-gray-100"
+                                        : ""
+                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
                                   >
-                                      Cancelled
-                                    </button>
-                                  </li>
-                                </ul>
-                              </div>
-                            )}
+                                    Cancelled
+                                  </button>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
                         </td>
                         <td className="poppins-font">
                           <button

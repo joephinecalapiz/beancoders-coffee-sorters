@@ -143,7 +143,7 @@ const Sorters = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Sorters
               </h1>
             </div>
@@ -165,13 +165,13 @@ const Sorters = () => {
               placeholder="Search Sorters"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
+              className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
               style={{ width: "80%", maxWidth: "800px" }}
             />
             {/* Add New button */}
             <button
               onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none poppins-font"
+              className="px-4 py-2 text-white poppins-font font-bold rounded focus:outline-none poppins-font"
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = "#C4A484";
                 e.target.style.transition = "background-color 0.3s ease";
@@ -182,7 +182,6 @@ const Sorters = () => {
               }}
               style={{
                 backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
                 boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
                 border: "none",
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -203,42 +202,42 @@ const Sorters = () => {
             <br />
             <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
               <div className="max-h-[450px] overflow-y-auto">
-                <table className=" min-w-full divide-y divide-gray-200 sorters-table th table-auto ">
+                <table className=" min-w-full divide-y divide-gray-200  sorters-table th table-auto ">
                   <thead>
                     <tr>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
                       >
-                        Id num
+                        Id number
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
                       >
                         Sorter's Name
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
                       >
                         Phone Number
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
                       >
                         Address
                       </th>
                       <th
                         scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
                       >
                         Date Hired
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
+                  <tbody className="bg-white divide-y divide-gray-200 text-center sort-table dark:text-textTitle dark:bg-container">
                     {(reloadSorterData || sortedFilteredSorters).map(
                       (sorter, index) => (
                         <tr key={sorter.id}>

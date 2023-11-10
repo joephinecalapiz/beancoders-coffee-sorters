@@ -8,8 +8,6 @@
   background-color: #d4d4d4;
 } */
 
-
-
 .table-header {
   background-color: #472214;
   color: white;
@@ -32,10 +30,10 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
   .search-bar {
     display: none;
-}
+  }
 }
 
 /* Table - Cell Data (below the header) */
@@ -159,5 +157,3 @@
 .see-more-button:hover {
   background-color: #292c30;
 }
-
-

@@ -330,7 +330,7 @@ const Customers = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Customers
               </h1>
             </div>
@@ -354,13 +354,13 @@ const Customers = () => {
               placeholder="Search Customers"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+              className="px-4 py-2 poppins-font  border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
               style={{ width: "80%", maxWidth: "800px" }}
             />
             {/* Add New button */}
             <button
               onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
+              className="px-4 py-2 poppins-font font-medium text-white rounded focus:outline-none"
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = "#C4A484";
                 e.target.style.transition = "background-color 0.3s ease";
@@ -371,7 +371,6 @@ const Customers = () => {
               }}
               style={{
                 backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
                 boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
                 border: "none",
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -384,17 +383,11 @@ const Customers = () => {
         <div className="calendar">
           <div className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}>
             <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
-              <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
-                <label
-                  htmlFor="monthSelect"
-                  className="font-bold"
-                  style={{
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
+              <div className="relative  dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
+                <label htmlFor="monthSelect" className="poppins-font font-bold">
                   Month:
                 </label>
-                <div className="ml-2">
+                <div className="ml-2 poppins-font font-bold">
                   <Select
                     id="monthSelect"
                     options={monthOptions}
@@ -420,14 +413,14 @@ const Customers = () => {
               <div className="mb-5 dark:text-textTitle  md:mb-0 mobile:justify-self-center  flex items-center">
                 <label
                   htmlFor="yearSelect"
-                  className="font-bold"
+                  className=" font-bold "
                   style={{
                     fontFamily: "'Poppins', sans-serif",
                   }}
                 >
                   Year:
                 </label>
-                <div className="ml-2">
+                <div className="ml-2 poppins-font font-bold">
                   <input
                     type="number"
                     id="yearSelect"
@@ -514,17 +507,6 @@ const Customers = () => {
                           <td className="poppins-font">{customer.address}</td>
                           {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
                           <td className="poppins-font">
-                            {/* <button
-                          onClick={() => {
-                            sessionStorage.setItem("customerId", customer.id);
-                            navigate(
-                              `/customers/customerstatus/${customer.customerName}`
-                            );
-                          }}
-                          className="see-more-button focus:outline-none"
-                        >
-                          See More...
-                        </button> */}
                             <button
                               onClick={() => toggleDropdown(customer.id)}
                               className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
