@@ -81,7 +81,7 @@ const ContactUs = () => {
                         className="rounded-[40px] p-8 max-w-xs w-full "
                         onSubmit={handleSubmit(onSubmitHandler)}
                     >
-                        <div className="w-[140%] mx-auto">
+                        <div className="w-[120%] mx-auto">
                             <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12">
                                 Contact Us
                             </h1>
