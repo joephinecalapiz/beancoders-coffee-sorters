@@ -281,36 +281,32 @@ const Customers = () => {
   const archivedCustomer = async (id) => {
     try {
       let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-      const currentDate = new Date().toISOString();
-
-      const response = await fetch(api_endpoint + "/archive-customer/" + id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "Bearer " + token,
-        },
-        body: JSON.stringify({
-          user_id: user_id,
-          customerName: newCustomerName,
-          phoneNum: newCustomerPhoneNumber,
-          address: newCustomerAddress,
-          registrationDate: currentDate,
-        }),
-      });
-      if (!response.ok) {
-        throw new Error("Fail to archive customer");
+      const response = await fetch(api_endpoint + `/archive-customer/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token,
+      },
+    });
+  
+      if (response.status === 422) {
+        alert("Customer is already archive in the database");
       }
-      // Update customer data after successful archive
-      fetchCustomers();
-
-      if (!fetchResponse.ok) {
-        throw new Error("Failed to fetch archived customer data");
+  
+      if (!response.ok) {
+        throw new Error("Failed to archive customer");
+      }
+  
+      if (response.status === 200) {
+        // Assuming there's a function to fetch the updated customer list
+        fetchCustomers();
+        setOpenDropdownId(null);
       }
     } catch (error) {
       console.error(error);
     }
   };
+  
 
   const handleCancel = () => {
     closeModal();
@@ -545,7 +541,7 @@ const Customers = () => {
                                       History
                                     </button>
                                   </li>
-                                  <li>
+                                  <li>  
                                     <button
                                       onClick={() =>
                                         handleShowUpdateModal(customer)
@@ -555,11 +551,21 @@ const Customers = () => {
                                       Update
                                     </button>
                                   </li>
+                                  <li>
+                                    <button
+                                      onClick={() =>
+                                        archivedCustomer(customer.id)
+                                      }
+                                      className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                      Archive
+                                    </button>
+                                  </li>
                                   {/* <li>
                                 <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Archived</a>
                               </li> */}
                                 </ul>
-                                <div className="py-2">
+                                {/* <div className="py-2">
                                   <button
                                     onClick={() =>
                                       archivedCustomer(customer.id)
@@ -568,7 +574,7 @@ const Customers = () => {
                                   >
                                     Archive
                                   </button>
-                                </div>
+                                </div> */}
                               </div>
                             )}
                             {/* <button
