@@ -55,14 +55,6 @@ const GenerateKeys = () => {
     document.title = "Manage Users";
 
     fetchKeys();
-
-    const role = localStorage.getItem("role");
-
-    // Check if the user_id is not 1 and navigate back if necessary
-    if (role !== "1") {
-      navigate("/permission-denied"); // Go back to the previous page
-      // window.location.reload();
-    }
   }, []); // Empty dependency array, so this effect runs only once
 
   const openModal = () => {
@@ -210,9 +202,9 @@ const GenerateKeys = () => {
               marginTop: "-20px",
             }}
           >
-            <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 table-auto">
-                <thead>
+            <div className="shadow mx-auto overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
+                <thead className="table-header">
                   <tr>
                     <th
                       scope="col"

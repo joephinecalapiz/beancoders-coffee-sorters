@@ -17,12 +17,12 @@ const PermissionDenied = () => {
 
     return (
         <>
-        <Topbar
+        {/* <Topbar
                 onToggleSidebar={toggleSidebar}
                 collapsed={navVisible}
                 handleToggleSidebar={toggleSidebar}
-        />
-            <div className="relative z-10 bg-primary py-[120px]">
+        /> */}
+            <div className="relative z-10 bg-primary max-h-full">
                 <div className="container mx-auto">
                     <div className="-mx-4 flex">
                         <div className="w-full px-4">

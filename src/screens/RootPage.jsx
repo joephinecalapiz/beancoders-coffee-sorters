@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Dashboard from "./DashboardScreen/Dashboard";
 import Customers from "./DashboardScreen/Customers";
 import CustomerArchived from "./Archives/CustomerArchived";
@@ -16,6 +16,16 @@ import PermissionDenied from "./DeniedAccess";
 
 function RootPage() {
     const [navVisible, showNavbar] = useState(false);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const role = localStorage.getItem("role");
+        // Check if the user_id is not 1 and navigate back if necessary
+        if (role !== "2") {
+          navigate("/error404"); // Go back to the previous page
+          // window.location.reload();
+        }
+      }, []);
 
     return (
         <Routes>

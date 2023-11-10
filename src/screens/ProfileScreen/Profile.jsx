@@ -85,13 +85,6 @@ const Profile = () => {
   useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts
     fetchCompanyInfo();
-
-    const role = localStorage.getItem("role");
-    // Check if the user_id is not 1 and navigate back if necessary
-    if (role !== "2") {
-      navigate("/permission-denied"); // Go back to the previous page
-      // window.location.reload();
-    }
   }, []);
 
   // Update profileData when userInfo changes

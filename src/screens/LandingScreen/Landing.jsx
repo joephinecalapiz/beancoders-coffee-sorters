@@ -37,30 +37,33 @@ const Landing = () => {
       } else {
         setCompanyData([]); // Handle the case where data.companies is undefined or null
       }
-      console.log(companyData);
     });
   }, []);
 
   return (
     <>
       <Navbar />
-      <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
-        <div className="text-white font-bold text-2xl text-center py-4 md:py-16 flex flex-col items-center">
-          <div className="md:ml-4 mt-1">
-            <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-5" />
-          </div>
-          <div className="text-center md:ml-32 px-4">
-            <p className="text-4xl mb-4 md:text-5xl md:mb-12 font-poppins md:block hidden poppins-font">
-              BeanCoders:
-            </p>
-            <p className=" mb-4 text-4xl md:text-6xl md:ml-96 poppins-font">
-              Quality Bean Sorter
-            </p>
+      <div className="block inset-0">
+        <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
+          <div className="text-white font-bold text-2xl py-[5%] flex flex-col items-center md:items-end">
+            <div className="mt-1">
+              {/* <img src={BeansLogo} alt="BeansLogo" className="flex h-80 w-80 mt-5" /> */}
+              <div className="px-4 poppins-font md:mr-10">
+              <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80" />
+                <p className="text-4xl mb-4 md:text-5xl md:mb-12 md:block hidden">
+                  BeanCoders:
+                </p>
+                <p className="mb-4 text-4xl md:text-6xl">
+                  Quality Bean Sorter
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="relative bg-black">
+      <div className="bg-black">
+        <div className="flex items-center"></div>
+          <br />
         <div className="text-center justify-center items-center">
           <h1 className="text-white mb-8 md:mb-20 poppins-font text-3xl md:text-5xl mt-0 font-bold">
             Coffee Sorting Establishments
@@ -68,23 +71,23 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-1 tablet:gap:10 sm:gap-10 md:gap-10 lg:gap-10 items-center md:mx-8">
+        <div className="grid grid-cols-1 gap-10 sm:gap-10 md:gap-10 lg:gap-10 items-center">
           {companyData.length > 0 ? (
             companyData.map((detail, index) => (
-              <div key={index} className={`mx-48 max-w-4xl h-64 relative col-span-3`}>
-                <div className="relative max-w-4xl lg:h-64 bg-stone-950 rounded-[20px]">
+              <div key={index} className={`mx-10 md:mx-20 lg:mx-48  h-64 relative col-span-3`}>
+                <div className="relative">
+                  {/* company info */}
                   <div className={`flex  text-white ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
-                    <div className="absolute text-[40px] mr-20 mt-10">
+                    <div className="w-[45%] p-5 absolute text-base sm:text-3xl md:text-2xl lg:text-4xl text-white ml-5 mt-5">
                       {detail && (
                         <div className="font-bold font-['Poppins']">
-                          <FontAwesomeIcon icon={faBuilding} className="mr-10" />
+                          <FontAwesomeIcon icon={faBuilding} className="mr-2 md:mr-5s" />
                           <span>{detail.companyName}</span>
                         </div>
                       )}
-
                       {detail && (
                         <div className="font-medium font-['Poppins']">
-                          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-10" />
+                          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 md:mr-5 mt-5" />
                           <a
                             href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
                               detail.companyLocation
@@ -99,21 +102,27 @@ const Landing = () => {
                       )}
                       {detail && (
                         <div className="font-medium font-['Poppins']">
-                          <FontAwesomeIcon icon={faPhone} className="mr-10" />
+                          <FontAwesomeIcon icon={faPhone} className="mr-2 sm:mr-5 mt-5" />
                           <span>{detail.companyNumber}</span>
                         </div>
                       )}
                     </div>
                   </div>
+                  {/* company image */}
                   <div className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                    <div className="w-[50%] absolute">
                     {detail && (
                       <img
                         src={`${image_endpoint}/storage/${detail.images}`}
                         alt="Coffee Beans"
-                        className="w-70 h-64 relative rounded-[20px]"
+                        className="min-w-full h-64 rounded-[20px]"
                       />
                     )}
+                    </div>
                   </div>
+                </div>
+                {/* background container */}
+                <div className="inset-0 h-64 bg-stone-950 rounded-[20px]">
                 </div>
               </div>
             ))
@@ -123,6 +132,7 @@ const Landing = () => {
           <div className="flex items-center"></div>
           <br />
         </div>
+      </div>
       </div>
       <Footer></Footer>
     </>
