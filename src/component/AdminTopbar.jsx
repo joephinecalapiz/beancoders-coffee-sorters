@@ -8,6 +8,7 @@ import "../css/topbar.css";
 import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
+import image_endpoint from "../image-config";
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -16,6 +17,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [userInfo, setUserInfo] = useState(null);
   const dropdownRef = useRef();
   const [isRotated, setRotated] = useState(false);
+  const [compInfo, setCompInfo] = useState("");
+  const [profileIcon, setProfileIcon] = useState({
+    profileAvatar: compInfo.profileAvatar
+  });
 
   const toggleDropdown = () => {
     setDropdownOpen((prevState) => !prevState);
@@ -29,11 +34,40 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
 
   useEffect(() => {
     fetchUserInfo();
+    fetchCompanyInfo();
     document.addEventListener("mousedown", closeDropdown);
     return () => {
       document.removeEventListener("mousedown", closeDropdown);
     };
   }, []);
+
+  // Update profileData when userInfo changes
+  useEffect(() => {
+    setProfileIcon((prevProfileData) => ({
+      ...prevProfileData,
+      profileAvatar: compInfo.profileAvatar
+    }));
+  }, [userInfo]);
+
+  const fetchCompanyInfo = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch company details data");
+      }
+      const compData = await response.json();
+      setCompInfo(compData.details);
+    } catch (error) {
+      console.error("Error fetching company details data:", error);
+    }
+  };
 
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
@@ -134,7 +168,11 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           >
             <span className="invisible">Dropdown user</span>
             <img
-              src={BeansLogo}
+              src={
+                profileIcon.profileAvatar && profileIcon.profileAvatar.length > 0
+                  ? `${image_endpoint}/storage/${profileIcon.profileAvatar.slice(2, -2)}`
+                  : BeansLogo
+              }
               alt="BeansLogo"
               className="icon-logo w-12 h-12 rounded-full bg-white"
             />
