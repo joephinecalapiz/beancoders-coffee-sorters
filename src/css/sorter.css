@@ -1,11 +1,10 @@
 /** @format */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-/* Table - Header*/
+
 .table-header {
-  background-color: #512615;
+  background-color: #472214;
   color: white;
-  text-align: left;
   font-size: 16px;
 }
 
@@ -17,8 +16,12 @@
   font-family: "Poppins", sans-serif;
 }
 
-.sorters-table {
+.sorters-table th {
+  position: sticky;
+  top: 0;
   width: 1000px;
+  text-align: center;
+  z-index: 1; /* Ensure the headers appear above the content */
 }
 
 .search-bar {
@@ -31,12 +34,11 @@
   background-color: #f2f2f2;
   font-size: 16px;
   color: #333;
-  text-align: left;
 }
 
 .sort-table td {
   padding: 12px;
-  padding-left: 22px;
+  /* padding-left: 22px; */
 }
 
 .sort-table .see-more-button {
@@ -127,3 +129,34 @@
 }
 
 /* ... your existing CSS */
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999; /* Ensure it's above other elements */
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 4px solid #3498db;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

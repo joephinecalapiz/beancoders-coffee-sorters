@@ -2,24 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Login from "./screens/AuthScreen/Login";
-import Landing from "./screens/Landing";
-import About from "./screens/about";
+import Login from "./screens/LandingScreen/AuthScreen/Login";
+import Landing from "./screens/LandingScreen/Landing";
 import "./index.css";
 // import ".../../css/index.css";
 import ".../.././css/Sidebar.css";
-import Signup from "./screens/AuthScreen/Signup";
-import Dashboard from "./screens/DashboardScreen/Dashboard";
-import Sorters from "./screens/DashboardScreen/Sorters";
-import Customers from "./screens/DashboardScreen/Customers";
-import Status from "./screens/DashboardScreen/Status";
-import Profile from "./screens/ProfileScreen/Profile";
-import SortingStatus from "./screens/DashboardScreen/SortingStatus";
-import Receipt from "./screens/ReceiptScreen/Receipt";
+import Signup from "./screens/LandingScreen/AuthScreen/Signup";
+import CompanyDetails from "./screens/LandingScreen/AuthScreen/CompanyDetails";
+import About from "./screens/LandingScreen/About";
+import ContactUs from "./screens/LandingScreen/ContactUs";
+import RootPage from "./screens/RootPage";
+import AdminRootPage from "./superadmin/RootPage";
+import beansLogo from './assets/beansLogo.png';
 
 function App() {
-  const [navVisible, showNavbar] = useState(false);
   const [authenticated, setAuthenticated] = useState(null);
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -29,16 +27,24 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    if (authenticated && window.location.pathname === "/login") {
-      window.location.replace("/dashboard");
-    }
-  }, [authenticated]);
+
+
+  // useEffect(() => {
+  //   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+  //   if (prefersDarkMode) {
+  //     document.body.classList.add('dark:bg-dark');
+  //   } else {
+  //     document.body.classList.remove('dark:bg-dark');
+  //   }
+  // }, []);
+
+
 
   if (authenticated === null) {
     return (
-      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
-        Loading...
+      <div className="flex items-center justify-center h-screen">
+            <img src={beansLogo} alt="Beans Logo" className="w-32 h-32 animate-spin" />
       </div>
     );
   }
@@ -46,64 +52,37 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/dashboard"
-          element={
-            authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
-                <Dashboard />
-              </div>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/customers"
-          element={
-            authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
-                <Customers />
-              </div>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/sorters"
-          element={
-            authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
-                <Sorters />
-              </div>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
-        <Route
-          path="/status"
-          element={
-            authenticated ? (
-              <div className={!navVisible ? "page" : "page page-with-navbar"}>
-                <Status />
-              </div>
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
-        />
         <Route path="/" element={<Landing />} />
         <Route path="/aboutus" element={<About />} />
+        <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/company" element={<CompanyDetails />} />
         <Route
-          path="/customerstatus/:customerName"
-          element={<SortingStatus />}
+          exact
+          path="/*"
+          element={
+            authenticated ? (
+              <RootPage />
+            ) : (
+              <Navigate to="/login" />
+            )
+
+          }
         />
-        <Route path="/receipt/:customerId" element={<Receipt />} />
+
+        <Route
+          exact
+          path="/superadmin/*"
+          element={
+            authenticated ? (
+              <AdminRootPage />
+            ) : (
+              <Navigate to="/login" />
+            )
+
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

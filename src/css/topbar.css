@@ -1,11 +1,9 @@
 /** @format */
 
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-
 .poppins-font {
   font-family: "Poppins", sans-serif;
 }
-@media only screen and (max-width: 400px) {
+@media only screen and (max-width: 600px) {
   .mobile-nav {
     display: flex;
     align-items: center;
@@ -15,13 +13,38 @@
     display: none;
     margin-top: 4.2rem;
   }
-  
+
   .mobile-nav-btn {
     color: #fff;
     background: transparent;
     outline: none;
     border: none;
     top: 100px;
-    margin: 10px 15px;
+    margin: 120px 15px;
   }
+  .logo-title {
+    margin-left: 20%;
+  }
+  .icon-logo {
+    margin-right: 35px;
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .admin-user {
+    display: none;
+  }
+  .icon-logo {
+    margin-right: 35px;
+  }
+}
+
+.rotate-clockwise {
+  transition: transform 0.3s ease-in-out;
+  transform: rotate(180deg); /* Rotate 180 degrees (half turn) */
+}
+
+.rotate-counterclockwise {
+  transition: transform 0.3s ease-in-out;
+  transform: rotate(0deg); /* Rotate back to 0 degrees */
 }

@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import api_endpoint from "../../config";
@@ -10,22 +12,57 @@ import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 
 const Receipt = () => {
   const { customerId } = useParams();
-  const [receiptDetails, setReceiptDetails] = useState([]);
-  const [navVisible, showNavbar] = useState(false);
-  const contentRef = useRef(null);
 
+  const [receiptDetails, setReceiptDetails] = useState([]);
+  const [navVisible, showNavbar] = useState(true);
+  const contentRef = useRef(null);
+  const [compInfo, setCompInfo] = useState("");
+  const [customerInfoReceipt, setcustomerInfoReceipt] = useState("");
+  const [pricesAndDiscounts, setPricesAndDiscounts] = useState("");
   useEffect(() => {
     fetchReceiptDetails();
+    fetchCompanyInfo();
   }, []);
 
-  const fetchReceiptDetails = async () => {
+  const fetchCompanyInfo = async () => {
     try {
-      const response = await fetch(api_endpoint + `/receipts/${customerId}`);
+      let token = localStorage.getItem("token");
+      let user_id = localStorage.getItem("user_id");
+      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch company details data");
+      }
+      const compData = await response.json();
+      setCompInfo(compData.details);
+    } catch (error) {
+      console.error("Error fetching company details data:", error);
+    }
+  };
+
+  const fetchReceiptDetails = async () => {
+    const token = localStorage.getItem('token');
+    const user_id = localStorage.getItem('user_id');
+    try {
+      const response = await fetch(`${api_endpoint}/customer-receipt/${customerId}/${user_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch receipt details");
       }
       const data = await response.json();
-      setReceiptDetails(data);
+      //console.log(data)
+      //console.log(data.customerInfo)
+      setReceiptDetails(data.customerStatus);
+      setcustomerInfoReceipt(data.customerInfo);
+      setPricesAndDiscounts(data.total);
     } catch (error) {
       console.error("Error fetching receipt details:", error);
     }
@@ -64,12 +101,21 @@ const Receipt = () => {
 
           // Add the image to the PDF with correct dimensions and positioning
           pdf.addImage(imgData, "JPEG", 0, imgY, imgWidth, imgHeight);
-
+          const date = new Date(receiptDetails.created_at);
+          const options = {year: 'numeric', month: 'long', day: 'numeric'};
+          const formattedDate = date.toLocaleString('en-US',options);
+          pdf.text(`Date:${formattedDate}`, 10, 10);
           // Save the PDF
           pdf.save("receipt.pdf");
-        }
+        } 
       );
     }
+  };
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleString("en-US", options);
   };
 
   return (
@@ -81,110 +127,112 @@ const Receipt = () => {
           collapsed={navVisible}
           handleToggleSidebar={toggleSidebar}
         />
-
-        <div
-          className={`Page ${navVisible ? "content-shift-right" : ""}`}
-          style={{ backgroundColor: "#d4d4d4" }}
-        >
-          {/* Container for both page content and white box */}
-          <div className="page-container">
-            {/* Page content */}
-            <div className={`p-10 ${navVisible ? "ml-0" : "sm:ml-64"}`}>
-              <div className="flex justify-center items-center h-screen">
-                <div
-                  className="border rounded p-10 mb-10 bg-white whole-receipt"
-                  ref={contentRef}
+        <div className={`p-4 mt-10 ${navVisible ? "ml-20" : "sm:ml-44"}`}>
+          <div className="md:ml-32 md:grid md:tablet:grid-cols-3 tablet:grid-cols-2 gap-20 mt-10 ">
+            <div className="flex self-center">
+              <div className="white-box">
+                <div className="white-box-greeting">
+                  Hi, <span className="bold-customer-id">{receiptDetails.customerName}</span>!
+                </div>
+                <div className="white-box-text">
+                  Would you like to save this as a PDF file?
+                </div>
+                <button
+                  className="btn white-box-button custom-button"
+                  onClick={handleConvertToPDF}
                 >
-                  <div className="header-container">
-                    <div className="logo">
-                      <img
-                        src={BeansLogo}
-                        alt="Beans Logo"
-                        style={{
-                          width: "100px",
-                          height: "100px",
-                          marginTop: "-20px",
-                          marginRight: "20px",
-                        }}
-                      />
-                    </div>
-                    <div className="company-info">
-                      <p className="company-name">Company Name</p>
-                      <p className="company-details">Company Address</p>
-                      <p className="company-details">Contact Number:</p>
-                    </div>
+                  Click here
+                </button>
+              </div>
+            </div>
+
+            <div
+              className="md:flex flex-col sm:flex-row border rounded p-2 mt-4 bg-white whole-receipt"
+              ref={contentRef}
+            >
+              <div className="">
+                <div className="header-container">
+                  <div className="logo">
+                    <img
+                      src={BeansLogo}
+                      alt="Beans Logo"
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        marginTop: "-20px",
+                        marginRight: "20px",
+                      }}
+                    />
                   </div>
-                  <div className="receipt-header">OFFICIAL RECEIPT</div>
-                  <div className="receipt-info-container">
-                    <div className="receipt-name">
-                      Customer Name: {customerId}
-                    </div>
-                    <div className="receipt-date">Date: December 2, 2020</div>
+                  <div className="company-info">
+                    <p className="company-name">{compInfo.companyName}</p>
+                    <p className="company-details">
+                      Address: {compInfo.companyLocation}
+                    </p>
+                    <p className="company-details">
+                      Contact Number: {compInfo.companyNumber}
+                    </p>
                   </div>
-                  <div className="receipt-address">Address:</div>
-                  <div className="receipt-table-container">
-                    <table className="receipt-table">
-                      <thead>
-                        <tr>
-                          <th className="qty">Qty</th>
-                          <th className="unit">Unit</th>
-                          <th className="item">Item</th>
-                          <th className="price">U/Price</th>
-                          <th className="amount">Amount</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {/* Add table rows with data here */}
-                        <tr>
-                          <td className="qty">1</td>
-                          <td className="unit">Kg</td>
-                          <td className="item">Beans</td>
-                          <td className="price">5.00</td>
-                          <td className="amount">5.00</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                </div>
+                <div className="receipt-header">OFFICIAL RECEIPT</div>
+                <div className="receipt-info-container">
+                  <div className="receipt-name">
+                    Customer Name: {receiptDetails.customerName}
                   </div>
-                  <div className="receipt-table-container">
-                    <table className="receipt-table-low">
-                      <tbody>
-                        <tr>
-                          <td className="description">Sub Total</td>
-                          <td className="amount">25.00</td>
-                        </tr>
-                        <tr>
-                          <td className="description">VAT 12%</td>
-                          <td className="amount">25.00</td>
-                        </tr>
-                        <tr>
-                          <td className="description">PWD/SC Discount</td>
-                          <td className="amount">25.00</td>
-                        </tr>
-                        <tr>
-                          <td className="description">Total Amount</td>
-                          <td className="amount">25.00</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                  <div className="receipt-assisted">
-                    ASSISTED BY: Name sa admin or sorter
-                  </div>
+                  <div className="receipt-date">Date: {formatDate(receiptDetails.created_at)}</div>
+                </div>
+                <div className="receipt-address">Address: {customerInfoReceipt.address}</div>
+                <div className="receipt-table-container">
+                  <table className="receipt-table">
+                    <thead>
+                      <tr>
+                        <th className="qty">Qty</th>
+                        <th className="unit">Unit</th>
+                        <th className="item">Item</th>
+                        <th className="price">U/Price</th>
+                        <th className="amount">Amount</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {/* Add table rows with data here */}
+                      <tr>
+                        <td className="qty">{receiptDetails.kiloOfBeans}</td>
+                        <td className="unit">Kg</td>
+                        <td className="item">Arabica Coffee Beans</td>
+                        <td className="price">&#8369; {pricesAndDiscounts.unitPrice}.00</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.amount}.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="receipt-table-container mt-2 mb-2">
+                  <table className="receipt-table-low">
+                    <tbody>
+                      <tr>
+                        <td className="description">Sub Total</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.subTotal}</td>
+                      </tr>
+                      <tr>
+                        <td className="description">VAT 12%</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.vat}0</td>
+                      </tr>
+                      <tr>
+                        <td className="description">PWD/SC Discount</td>
+                        <td className="amount">&#8369; 25.00</td>
+                      </tr>
+                      <tr>
+                        <td className="description">Total Amount</td>
+                        <td className="amount">&#8369; {pricesAndDiscounts.amount}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="receipt-assisted items-end mt-20">
+                  ASSISTED BY: {receiptDetails.sorterName}
                 </div>
               </div>
             </div>
             {/* White box for PDF options */}
-            <div className="white-box">
-              <div className="white-box-greeting">
-                Hi, <span className="bold-customer-id">{customerId}</span>!
-              </div>
-              <div className="white-box-text">
-                Would you like to save this as a PDF file?
-              </div>
-              <button className="btn white-box-button custom-button" onClick={handleConvertToPDF}>
-                Click here
-              </button>
-            </div>
           </div>
         </div>
       </div>

@@ -7,8 +7,6 @@ import api_endpoint from "../config";
 import "../css/topbar.css";
 import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
-import { IoIosArrowDown } from "react-icons/io";
-
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
@@ -114,9 +112,8 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         <button
           type="button"
           onClick={handleToggleSidebar}
-          className={`ml-6 text-white transform transition-transform duration-300 ${
-            collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
-          }`}
+          className={`ml-6 text-white transform transition-transform duration-300 ${collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
+            }`}
         >
           <FaBars size={20} />
         </button>
@@ -127,13 +124,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         </h1> */}
       </div>
       <div className="flex bg-black dark:bg-gray items-center">
-        <div className="flex items-center relative" ref={dropdownRef}>
+        <div className="items-center relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={toggleDropdown}
-            className={`flex relative ${
-              isDropdownOpen ? "bg-white-800" : "bg-black dark:bg-gray"
-            } bg-black dark:bg-gray`}
+            className={`flex relative ${isDropdownOpen ? "bg-white-800" : "bg-black dark:bg-gray"
+              } bg-black dark:bg-gray`}
             aria-expanded={isDropdownOpen}
           >
             <span className="invisible">Dropdown user</span>
@@ -168,7 +164,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
               <ul className="py-1" role="none">
                 <li
                   onClick={() => {
-                    navigate("/profile");
+                    navigate("/superadmin/profile");
                   }}
                 >
                   <a
@@ -179,49 +175,9 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     Profile
                   </a>
                 </li>
-                <button
-                  type="button"
-                  onClick={toggleProfileMenu}
-                  className={`block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white  ${
-                    isProfileMenuOpen ? "" : ""
-                  } `}
-                  aria-expanded={isProfileMenuOpen}
-                  role="menuitem"
-                >
-                  Archive
-                  <span
-                    className={`transform transition-transform duration-300 inline-block ${
-                      isProfileMenuOpen ? "rotate-180" : "rotate-0"
-                    } `}
-                  >
-                    <IoIosArrowDown size={20} className="inline" />
-                  </span>
-                </button>
-
-                {isProfileMenuOpen && (
-                  <ul className="py-1" role="none">
-                    <li onClick={() => navigate("/customer-archived")}>
-                      <a
-                        className="block px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
-                        role="menuitem"
-                      >
-                        Customer
-                      </a>
-                    </li>
-                    <li onClick={() => navigate("/status-archived")}>
-                      <a
-                        className="block px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
-                        role="menuitem"
-                      >
-                        Status
-                      </a>
-                    </li>
-                    {/* Add more sub-menu items as needed */}
-                  </ul>
-                )}
                 <li onClick={handleSignOut}>
                   <a
-                    className="block px-4 py-2 text-sm poppins-font dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 text-sm poppins-font dark:text-textTitle hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                   >
                     Sign out
@@ -232,7 +188,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           )}
         </div>
         <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
-          Admin
+            Super Admin
         </h1>
       </div>
 
@@ -245,13 +201,13 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </p>
             <div className="flex justify-end">
               <button
-                className="bg-red-500 text-white dark:bg-container poppins-font px-4 py-2 rounded mr-2 cursor-pointer"
+                className="bg-red-500 text-white dark:bg-container poppins-font px-4 py-2 rounded mr-2"
                 onClick={handleLogoutConfirmed}
               >
                 Logout
               </button>
               <button
-                className="bg-gray text-white poppins-font px-4 py-2 rounded cursor-pointer"
+                className="bg-gray text-white poppins-font px-4 py-2 rounded"
                 onClick={handleLogoutCancelled}
               >
                 Cancel

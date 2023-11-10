@@ -24,15 +24,15 @@
 
 /* kilos or pieces */
 .data-size {
-  font-size: 32px;
+  font-size: 24px;
   font-weight: bold;
-  color: #7f1f19;
+  /* color: #7f1f19; */
   font-family: "Poppins", sans-serif;
 }
 /* Boxes */
 .grid-item {
   border-radius: 25px;
-  background-color: #cdcdcd;
+  /* background-color: white; */
   text-align: center;
   transition: background-color 0.3s;
 }
@@ -45,6 +45,27 @@
 @media (max-width: 640px) {
   .grid-item {
     /* Adjust styles for smaller screens */
+  }
+  .data-title {
+    font-size: 24px; /* Adjust the font size for smaller screens */
+  }
+
+  .data-size {
+    font-size: 32px; /* Adjust the font size for smaller screens */
+  }
+  .sm\:ml-64 {
+    margin-left: 14rem;
+  }
+}
+
+/* Media query for small screens */
+@media (max-width: 400px) {
+  .data-title {
+    font-size: 18px; /* Adjust the font size for smaller screens */
+  }
+
+  .data-size {
+    font-size: 20px; /* Adjust the font size for smaller screens */
   }
 }
 

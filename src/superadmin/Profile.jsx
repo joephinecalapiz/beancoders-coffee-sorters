@@ -1,16 +1,16 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
-import "../.././css/Sidebar.css";
-import "../.././css/dashboard.css";
-import "../.././css/profile.css";
-import beansLogo from "../../assets/beansLogo.png"; // Import the image
-import api_endpoint from "../../config";
-import image_endpoint from "../../image-config";
-import axios from "axios";
+import ".././css/Sidebar.css";
+import ".././css/dashboard.css";
+import ".././css/profile.css";
 import { useNavigate } from "react-router-dom";
+import beansLogo from "../assets/beansLogo.png"; // Import the image
+import api_endpoint from "../config";
+import image_endpoint from "../image-config";
+import axios from "axios";
+import AdminSidebar from "../component/AdminSidebar";
+import Topbar from "../component/AdminTopbar";
 
 const Profile = () => {
   const [navVisible, showNavbar] = useState(true);
@@ -18,14 +18,13 @@ const Profile = () => {
   const [userInfo, setUserInfo] = useState("");
   const [compInfo, setCompInfo] = useState("");
   const [profileData, setProfileData] = useState({
-    profilePicture: "assets/beansLogo.png",
+    profilePicture: "../assets/beansLogo.png",
     name: userInfo.name,
     email: userInfo.email,
     companyNumber: compInfo.companyNumber,
     companyLocation: compInfo.companyLocation,
     companyName: compInfo.companyName,
-    companyPic: compInfo.images,
-    profileAvatar: compInfo.profileAvatar
+    companyPic: compInfo.images
   });
 
   const [editableContent, setEditableContent] = useState({
@@ -45,8 +44,8 @@ const Profile = () => {
 
     const role = localStorage.getItem("role");
     // Check if the user_id is not 1 and navigate back if necessary
-    if (role !== "2") {
-      navigate("/permission-denied"); // Go back to the previous page
+    if (role !== "1") {
+      navigate("/error"); // Go back to the previous page
       // window.location.reload();
     }
   }, []);
@@ -60,8 +59,7 @@ const Profile = () => {
       companyNumber: compInfo.companyNumber,
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
-      images: compInfo.images,
-      profileAvatar: compInfo.profileAvatar
+      images: compInfo.images
     }));
   }, [userInfo]);
 
@@ -141,7 +139,7 @@ const Profile = () => {
       console.error("Error updating company details:", error);
     }
   };
-
+  
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -197,8 +195,7 @@ const Profile = () => {
 
   return (
     <>
-      <div className="max-w-8xl mx-auto pl-16">
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <Topbar
           onToggleSidebar={toggleSidebar}
           collapsed={navVisible}
@@ -224,19 +221,17 @@ const Profile = () => {
               >
                 <div className="flex flex-col items-center justify-center">
                   <div className="top relative circular-profile object-none object-top overflow-visible">
-                    <label htmlFor="profilePicture" className="profile-picture-label">
+                    <label
+                      htmlFor="profilePicture"
+                      className="profile-picture-label"
+                    >
                       <img
-                        src={
-                          profileData.profileAvatar && profileData.profileAvatar.length > 0
-                            ? `${image_endpoint}/storage/${profileData.profileAvatar.slice(2, -2)}`
-                            : beansLogo
-                        }
-                        alt="profile picture"
+                        src={beansLogo}
+                        alt="Beans Logo"
                         className="admin-picture bg-white"
                         onClick={handleProfilePictureClick}
                       />
                     </label>
-
                     <input
                       type="file"
                       id="profilePictureInput"
@@ -250,7 +245,7 @@ const Profile = () => {
                   </label>
 
                   <label className="admin-label text-black dark:text-textDesc poppins-font mb-5 justify-center drop-shadow-4xl">
-                    Admin
+                    Super Admin
                   </label>
                 </div>
               </div>
@@ -468,7 +463,6 @@ const Profile = () => {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };
