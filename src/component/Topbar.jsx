@@ -20,7 +20,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [isRotated, setRotated] = useState(false);
   const [compInfo, setCompInfo] = useState("");
   const [profileIcon, setProfileIcon] = useState({
-    profileAvatar: compInfo.profileAvatar
+    profileAvatar: compInfo.profileAvatar,
   });
 
   const toggleDropdown = () => {
@@ -65,7 +65,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   useEffect(() => {
     setProfileIcon((prevProfileData) => ({
       ...prevProfileData,
-      profileAvatar: compInfo.profileAvatar
+      profileAvatar: compInfo.profileAvatar,
     }));
   }, [userInfo]);
 
@@ -169,8 +169,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             <span className="invisible">Dropdown user</span>
             <img
               src={
-                profileIcon.profileAvatar && profileIcon.profileAvatar.length > 0
-                  ? `${image_endpoint}/storage/${profileIcon.profileAvatar.slice(2, -2)}`
+                profileIcon.profileAvatar &&
+                profileIcon.profileAvatar.length > 0
+                  ? `${image_endpoint}/storage/${profileIcon.profileAvatar.slice(
+                      2,
+                      -2
+                    )}`
                   : BeansLogo
               }
               alt="BeansLogo"
@@ -265,7 +269,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className="admin-user text-white text-10px mr-8 poppins-font font-semibold  mt-4 ml-8">
+        <h1 className="admin-user text-white text-lg mr-8 poppins-font font-semibold  mt-4 ml-8">
           Admin
         </h1>
       </div>

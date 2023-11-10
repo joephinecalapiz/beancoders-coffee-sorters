@@ -282,21 +282,21 @@ const Customers = () => {
     try {
       let token = localStorage.getItem("token");
       const response = await fetch(api_endpoint + `/archive-customer/${id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token,
-      },
-    });
-  
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      });
+
       if (response.status === 422) {
         alert("Customer is already archive in the database");
       }
-  
+
       if (!response.ok) {
         throw new Error("Failed to archive customer");
       }
-  
+
       if (response.status === 200) {
         // Assuming there's a function to fetch the updated customer list
         fetchCustomers();
@@ -306,7 +306,6 @@ const Customers = () => {
       console.error(error);
     }
   };
-  
 
   const handleCancel = () => {
     closeModal();
@@ -474,12 +473,7 @@ const Customers = () => {
                       >
                         Address
                       </th>
-                      {/* <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Kilo beans
-                    </th> */}
+
                       <th
                         scope="col"
                         className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
@@ -501,7 +495,6 @@ const Customers = () => {
                           </td>
                           <td className="poppins-font">{customer.phoneNum}</td>
                           <td className="poppins-font">{customer.address}</td>
-                          {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
                           <td className="poppins-font">
                             <button
                               onClick={() => toggleDropdown(customer.id)}
@@ -536,17 +529,17 @@ const Customers = () => {
                                           `/customers/customerstatus/${customer.customerName}/${customer.id}`
                                         );
                                       }}
-                                      className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                      className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                     >
                                       History
                                     </button>
                                   </li>
-                                  <li>  
+                                  <li>
                                     <button
                                       onClick={() =>
                                         handleShowUpdateModal(customer)
                                       }
-                                      className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                      className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                     >
                                       Update
                                     </button>
@@ -556,7 +549,7 @@ const Customers = () => {
                                       onClick={() =>
                                         archivedCustomer(customer.id)
                                       }
-                                      className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                      className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                     >
                                       Archive
                                     </button>
