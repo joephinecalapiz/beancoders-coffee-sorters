@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/AdminTopbar";
+import Topbar from "../component/Topbar";
 
-const Error = () => {
+const PermissionDenied = () => {
     const [navVisible, showNavbar] = useState(true);
     const toggleSidebar = () => {
         showNavbar(!navVisible);
@@ -13,30 +12,29 @@ const Error = () => {
     };
 
     useEffect(() => {
-        document.title = "404 Error";
+        document.title = "Denied Access";
       }, []);
 
     return (
         <>
-        {/* <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar
+        {/* <Topbar
                 onToggleSidebar={toggleSidebar}
                 collapsed={navVisible}
                 handleToggleSidebar={toggleSidebar}
         /> */}
-            <div className="relative z-10 bg-primary h-full">
+            <div className="relative z-10 bg-primary py-[120px]">
                 <div className="container mx-auto">
                     <div className="-mx-4 flex">
                         <div className="w-full px-4">
                             <div className="mx-auto max-w-[400px] text-center">
-                                <h2 className="mb-2 text-[50px] font-bold leading-none text-white sm:text-[80px] md:text-[100px]">
+                                {/* <h2 className="mb-2 text-[50px] font-bold leading-none text-white sm:text-[80px] md:text-[100px]">
                                     404
-                                </h2>
+                                </h2> */}
                                 <h4 className="mb-3 text-[22px] font-semibold leading-tight text-white">
-                                    Oops! That page can’t be found
+                                    Oops!
                                 </h4>
                                 <p className="mb-8 text-lg text-white">
-                                    The page you are looking for it maybe deleted or not exist at all.
+                                    You don't have any permission to view the page
                                 </p>
                                 <a
                                     onClick={goBack}
@@ -62,4 +60,4 @@ const Error = () => {
     );
 };
 
-export default Error;
+export default PermissionDenied;

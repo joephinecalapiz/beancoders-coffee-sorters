@@ -59,12 +59,6 @@ const ManageUsers = () => {
         const data = response.data;
         setAllSorters(data.user);
       });
-    
-    // Check if the user_id is not 1 and navigate back if necessary
-    if (role !== "1") {
-      navigate("/permission-denied"); // Go back to the previous page
-      // window.location.reload();
-    }
   }, []); // Empty dependency array, so this effect runs only once
 
   const openModal = () => {
