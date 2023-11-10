@@ -165,7 +165,7 @@ const CompanyDetails = () => {
                         onSubmit={handleSubmit(onSubmitHandler)}
                         className="rounded-[40px] p-8 max-w-xs w-full"
                     >
-                        <div className="w-[140%] mx-auto">
+                        <div className="w-[120%] mx-auto">
                             <h1 className="text-center text-white font-bold text-[30px] md:mt-25 md:mb-5 mt-20">
                                 Complete Registration
                             </h1>

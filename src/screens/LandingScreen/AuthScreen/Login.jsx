@@ -102,7 +102,7 @@ const Login = () => {
             // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="w-[140%] mx-auto poppins-font">
+            <div className="w-[120%] mx-auto poppins-font">
               <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 poppins-font">
                 Login
               </h1>
