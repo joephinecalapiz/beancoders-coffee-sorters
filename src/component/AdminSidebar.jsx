@@ -13,19 +13,19 @@ function AdminSidebar({ collapsed }) {
     {
       name: "Manage User",
       href: "/superadmin/manageusers",
-      current: location.pathname === "/manageusers",
+      current: location.pathname === "/superadmin/manageusers",
       icon: <FaUsers size={ICON_SIZE} />,
     },
     {
       name: "Feedbacks",
       href: "/superadmin/feedbacks",
-      current: location.pathname === "/feedbacks",
+      current: location.pathname === "/superadmin/feedbacks",
       icon: <FaComment size={ICON_SIZE} />,
     },
     {
       name: "Generate Keys",
       href: "/superadmin/generate-keys",
-      current: location.pathname === "/generate-keys",
+      current: location.pathname === "/superadmin/generate-keys",
       icon: <FaKey size={ICON_SIZE} />,
     },
   ]);
