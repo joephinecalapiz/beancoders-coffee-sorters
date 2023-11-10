@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaChartBar, FaThLarge, FaUsers, FaUserFriends } from "react-icons/fa";
+import "./../css/sidebar.css";
 
 const ICON_SIZE = 20;
 
@@ -78,7 +79,7 @@ function Sidebar({ collapsed }) {
   useEffect(() => {
     // Check if dark mode is stored in localStorage
     const storedDarkMode = localStorage.getItem("darkMode");
-    
+
     document.documentElement.classList.toggle("dark", darkMode);
     const appBody = document.getElementById("app-body");
     appBody.classList.toggle("dark:bg-dark", darkMode);

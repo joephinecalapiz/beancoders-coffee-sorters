@@ -29,11 +29,11 @@ const Feedbacks = () => {
   const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
-  
+
   const [searchText, setSearchText] = useState("");
 
   const filteredSorters = allUsers.filter((feedbacks) =>
-  feedbacks.full_name.toLowerCase().includes(searchText.toLowerCase())
+    feedbacks.full_name.toLowerCase().includes(searchText.toLowerCase())
   );
   const sortedFilteredSorters = filteredSorters.sort((a, b) => a.id - b.id);
 
@@ -49,7 +49,7 @@ const Feedbacks = () => {
     const user_id = localStorage.getItem("user_id");
     const role = localStorage.getItem("role");
     axiosInstance
-      .get(api_endpoint + "/fetch-feedback/" + user_id,)
+      .get(api_endpoint + "/fetch-feedback/" + user_id)
       .then((response) => {
         const data = response.data.data;
         setAllSorters(data);
@@ -72,12 +72,14 @@ const Feedbacks = () => {
     closeModal();
   };
 
-
   const totalUsers = allUsers.length;
 
   return (
     <>
-      <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <AdminSidebar
+        collapsed={navVisible}
+        handleToggleSidebar={toggleSidebar}
+      />
       <Topbar
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
@@ -87,7 +89,7 @@ const Feedbacks = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black bg-white poppins-font dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Feedbacks
               </h1>
               {/* <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
@@ -109,48 +111,50 @@ const Feedbacks = () => {
             }}
           >
             <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Id num
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Message
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Date
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                  {sortedFilteredSorters.map((feedback, index) => (
-                    <tr key={feedback.id}>
-                      <td className="poppins-font">{index + 1}</td>
-                      <td className="poppins-font">{feedback.full_name}</td>
-                      <td className="poppins-font">{feedback.message}</td>
-                      <td className="poppins-font">
-                        {new Date(feedback.created_at).toLocaleDateString()}
-                      </td>
+              <div className="max-h-[480px] overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Id num
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Message
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Date
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
+                    {sortedFilteredSorters.map((feedback, index) => (
+                      <tr key={feedback.id}>
+                        <td className="poppins-font">{index + 1}</td>
+                        <td className="poppins-font">{feedback.full_name}</td>
+                        <td className="poppins-font">{feedback.message}</td>
+                        <td className="poppins-font">
+                          {new Date(feedback.created_at).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>

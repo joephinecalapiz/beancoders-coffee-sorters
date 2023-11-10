@@ -112,33 +112,34 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         <button
           type="button"
           onClick={handleToggleSidebar}
-          className={`ml-6 text-white transform transition-transform duration-300 ${collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
-            }`}
+          className={`ml-6 text-white transform transition-transform duration-300 ${
+            collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
+          }`}
         >
           <FaBars size={20} />
         </button>
 
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
-        {/* <h1 className="logo-title poppins-font text-white text-16px ml-10">
-          BeanCoders
-        </h1> */}
       </div>
-      <div className="flex bg-black dark:bg-gray items-center">
-        <div className="items-center relative" ref={dropdownRef}>
+
+      <div className=" flex bg-black p-1  dark:bg-gray items-center">
+        <div className=" items-center relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={toggleDropdown}
-            className={`flex relative ${isDropdownOpen ? "bg-white-800" : "bg-black dark:bg-gray"
-              } bg-black dark:bg-gray`}
+            className={`flex relative ${
+              isDropdownOpen ? "bg-white-800" : "bg-black dark:bg-gray"
+            } bg-black dark:bg-gray`}
             aria-expanded={isDropdownOpen}
           >
             <span className="invisible">Dropdown user</span>
             <img
               src={BeansLogo}
               alt="BeansLogo"
-              className="icon-logo w-12 h-12 rounded-full bg-white"
+              className="icon-logo w-12 h-12 rounded-full mr-14 bg-white"
             />
           </button>
+
           {isDropdownOpen && (
             <div
               className="z-50 absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-gray divide-y divide-gray-100 rounded shadow"
@@ -168,7 +169,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="block px-4 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
@@ -177,7 +178,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 </li>
                 <li onClick={handleSignOut}>
                   <a
-                    className="block px-4 py-2 text-sm poppins-font dark:text-textTitle hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 text-sm poppins-font hover:bg-gray-500 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                   >
                     Sign out
@@ -187,8 +188,9 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className="admin-user text-white text-14px mr-8 poppins-font ml-8">
-            Super Admin
+
+        <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-8 whitespace-nowrap">
+          Super Admin
         </h1>
       </div>
 
