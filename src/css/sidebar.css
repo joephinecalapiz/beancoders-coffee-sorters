@@ -24,10 +24,10 @@ nav {
   text-overflow: ellipsis;
 }
 
-.active-link {
+/* .active-link {
   background-color: #4d4f55;
   color: #000;
-}
+} */
 
 .active-link-foot {
   background-color: #4d4f55;
@@ -35,10 +35,10 @@ nav {
   padding: 10px;
 }
 
-.nav-link:hover {
+/* .nav-link:hover {
   background-color: #353639;
   color: #fff;
-}
+} */
 
 .nav-link span {
   margin-left: 1px;

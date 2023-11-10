@@ -101,8 +101,8 @@ function AdminSidebar({ collapsed }) {
             {adminNav.map((item) => (
               <NavLink
                 to={item.href}
-                className={`nav-link ${
-                  item.current ? "active-link" : "text-white"
+                className={`nav-link hover:bg-bgHover ${
+                  item.current ? "bg-bgActive text-white" : "text-white"
                 } poppins-font`}
                 key={item.href}
               >

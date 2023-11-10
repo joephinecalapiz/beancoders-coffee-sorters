@@ -47,6 +47,8 @@ export default {
         gray: "#292a2d",
         brown: "#3b2313",
         container: "#4d4f55",
+        bgHover: "#353639",
+        bgActive: "#4d4f55"
       },
       fontFamily: {
         display: "Poppins, sans-serif", // Adds a new `font-display` class
