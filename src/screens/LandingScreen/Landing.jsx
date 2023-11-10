@@ -68,23 +68,23 @@ const Landing = () => {
         </div>
 
         {/* Row 1*/}
-        <div className="grid grid-cols-1 tablet:gap:10 sm:gap-10 md:gap-10 lg:gap-10 items-center md:mx-8">
+        <div className="grid grid-cols-1 gap-32 sm:gap-10 md:gap-10 lg:gap-10 items-center">
           {companyData.length > 0 ? (
             companyData.map((detail, index) => (
-              <div key={index} className={`mx-48 max-w-4xl h-64 relative col-span-3`}>
-                <div className="relative max-w-4xl lg:h-64 bg-stone-950 rounded-[20px]">
+              <div key={index} className={`mx-10 md:mx-48 h-64 relative col-span-3`}>
+                <div className="relative">
+                  {/* company info */}
                   <div className={`flex  text-white ${index % 2 === 0 ? 'flex-row-reverse' : 'flex-row'}`}>
-                    <div className="absolute text-[40px] mr-20 mt-10">
+                    <div className="w-[45%] p-5 absolute text-base sm:text-3xl md:text-2xl lg:text-4xl text-white ml-5 mt-5">
                       {detail && (
                         <div className="font-bold font-['Poppins']">
-                          <FontAwesomeIcon icon={faBuilding} className="mr-10" />
+                          <FontAwesomeIcon icon={faBuilding} className="mr-5" />
                           <span>{detail.companyName}</span>
                         </div>
                       )}
-
                       {detail && (
                         <div className="font-medium font-['Poppins']">
-                          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-10" />
+                          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-5 mt-5" />
                           <a
                             href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
                               detail.companyLocation
@@ -99,21 +99,27 @@ const Landing = () => {
                       )}
                       {detail && (
                         <div className="font-medium font-['Poppins']">
-                          <FontAwesomeIcon icon={faPhone} className="mr-10" />
+                          <FontAwesomeIcon icon={faPhone} className="mr-5 mt-5" />
                           <span>{detail.companyNumber}</span>
                         </div>
                       )}
                     </div>
                   </div>
+                  {/* company image */}
                   <div className={`flex ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                    <div className="w-[50%] absolute">
                     {detail && (
                       <img
                         src={`${image_endpoint}/storage/${detail.images}`}
                         alt="Coffee Beans"
-                        className="w-70 h-64 relative rounded-[20px]"
+                        className="min-w-full h-64 rounded-[20px]"
                       />
                     )}
+                    </div>
                   </div>
+                </div>
+                {/* background container */}
+                <div className="inset-0 h-64 bg-stone-950 rounded-[20px]">
                 </div>
               </div>
             ))
