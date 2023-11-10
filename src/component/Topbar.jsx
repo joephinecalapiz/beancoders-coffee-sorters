@@ -8,7 +8,6 @@ import "../css/topbar.css";
 import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
 
@@ -156,9 +155,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         </button>
 
         <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
-        {/* <h1 className="logo-title poppins-font text-white text-16px ml-10">
-          BeanCoders
-        </h1> */}
       </div>
       <div className="flex bg-black dark:bg-gray items-center">
         <div className="flex items-center relative" ref={dropdownRef}>

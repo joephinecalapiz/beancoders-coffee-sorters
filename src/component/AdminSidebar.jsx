@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { FaChartBar, FaThLarge, FaUsers, FaUserFriends } from "react-icons/fa";
+import { FaComment, FaKey, FaUsers } from "react-icons/fa";
+import "./../css/sidebar.css";
 
 const ICON_SIZE = 20;
 
@@ -13,21 +14,21 @@ function AdminSidebar({ collapsed }) {
       name: "Manage User",
       href: "/superadmin/manageusers",
       current: location.pathname === "/manageusers",
-      icon: <FaUsers size={ICON_SIZE} />
+      icon: <FaUsers size={ICON_SIZE} />,
     },
     {
       name: "Feedbacks",
       href: "/superadmin/feedbacks",
       current: location.pathname === "/feedbacks",
-      icon: <FaUsers size={ICON_SIZE} />
+      icon: <FaComment size={ICON_SIZE} />,
     },
     {
       name: "Generate Keys",
       href: "/superadmin/generate-keys",
       current: location.pathname === "/generate-keys",
-      icon: <FaUsers size={ICON_SIZE} />
-    }
-  ])
+      icon: <FaKey size={ICON_SIZE} />,
+    },
+  ]);
 
   // Initialize dark mode state based on localStorage or user preference
   const [darkMode, setDarkMode] = useState(() => {
@@ -91,32 +92,30 @@ function AdminSidebar({ collapsed }) {
   return (
     <>
       <nav
-        className={`pl-4 pt-16 pr-4 pb-4 bg-black dark:bg-gray  fixed z-20 inset-0 mt-2 left-[max(0px,calc(10%-100rem))] w-[15rem] ${collapsed ? "collapsed" : ""
-          }`}
+        className={`pl-4 pt-16 pr-4 pb-4 bg-black dark:bg-gray  fixed z-20 inset-0 mt-2 left-[max(0px,calc(10%-100rem))] w-[15rem] ${
+          collapsed ? "collapsed" : ""
+        }`}
       >
         <div className="mt-4">
-          {/* sidebar navigation */}
           <div className="mt-4">
-                 {
-                   adminNav.map((item) => (
-                    <NavLink
-                      to={item.href}
-                      // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
-                      className={`nav-link ${item.current ? "active-link" : "text-white"
-                        } poppins-font`}
-                      key={item.href}
-                    >
-                      <span className="icon">{item.icon}</span>
-                      <span
-                        className={!collapsed ? "text-visible" : ""}
-                        style={{ fontFamily: "Poppins, sans-serif" }}
-                      >
-                        {item.name}
-                      </span>
-                    </NavLink>
-                  ))
-                }
-              </div>
+            {adminNav.map((item) => (
+              <NavLink
+                to={item.href}
+                className={`nav-link ${
+                  item.current ? "active-link" : "text-white"
+                } poppins-font`}
+                key={item.href}
+              >
+                <span className="icon">{item.icon}</span>
+                <span
+                  className={!collapsed ? "text-visible" : ""}
+                  style={{ fontFamily: "Poppins, sans-serif" }}
+                >
+                  {item.name}
+                </span>
+              </NavLink>
+            ))}
+          </div>
           {/* Dark mode toggle button */}
           <div className="fixed bottom-4 left-4">
             <button

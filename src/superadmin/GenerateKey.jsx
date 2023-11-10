@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ".././css/sorter.css";
 import ".././css/datepicker.css";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
@@ -15,27 +15,29 @@ import Topbar from "../component/AdminTopbar";
 
 const GenerateKeys = () => {
   const [navVisible, showNavbar] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [keyToDelete, setKeyToDelete] = useState(null);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
+
   const axiosInstance = AxiosRateLimit(axios.create(), {
     maxRequests: 5,
     perMilliseconds: 1000,
   }); // Example: 5 requests per second
 
   const [allKeys, setAllKeys] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [newSorterName, setNewSorterName] = useState("");
   const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
-
   const [searchText, setSearchText] = useState("");
 
   const filteredKeys = allKeys.filter((keys) =>
     keys.created_at.toLowerCase().includes(searchText.toLowerCase())
   );
+
   const sortedFilteredKeys = filteredKeys.sort((a, b) => {
     // Parse the dates and compare them
     const dateA = new Date(a.created_at);
@@ -52,8 +54,7 @@ const GenerateKeys = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    document.title = "Manage Users";
-
+    document.title = "Generate Keys";
     fetchKeys();
   }, []); // Empty dependency array, so this effect runs only once
 
@@ -63,6 +64,7 @@ const GenerateKeys = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setKeyToDelete(null);
     setNewSorterName("");
     setNewSorterPhoneNumber("");
     setNewSorterAddress("");
@@ -71,6 +73,33 @@ const GenerateKeys = () => {
 
   const handleCancel = () => {
     closeModal();
+  };
+
+  const handleDelete = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      const response = await fetch(
+        api_endpoint + "/delete-key/" + keyToDelete,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete key data");
+      }
+
+      // Update customer data after successful archive
+      await fetchKeys();
+    } catch (error) {
+      console.error("Error deleting or fetching key data:", error);
+    } finally {
+      // Close the modal after deletion
+      closeModal();
+    }
   };
 
   const handleGenerateKeys = async () => {
@@ -92,24 +121,9 @@ const GenerateKeys = () => {
     }
   };
 
-  const deleteKeys = async (id) => {
-    try {
-      let token = localStorage.getItem("token");
-      const response = await fetch(api_endpoint + "/delete-key/" + id, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to delete key data");
-      }
-      // Update customer data after successful archive
-      await fetchKeys();
-    } catch (error) {
-      console.error("Error deleting or fetching key data:", error);
-    }
+  const deleteKeys = (id) => {
+    setKeyToDelete(id);
+    openModal();
   };
 
   const fetchKeys = async () => {
@@ -129,18 +143,19 @@ const GenerateKeys = () => {
 
       const data = await response.json();
       setAllKeys(data.random_key);
-      //localStorage.setItem("customerData", JSON.stringify(data.customer));
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
   };
 
-
   const totalUsers = allKeys.length;
 
   return (
     <>
-      <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <AdminSidebar
+        collapsed={navVisible}
+        handleToggleSidebar={toggleSidebar}
+      />
       <Topbar
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
@@ -150,14 +165,10 @@ const GenerateKeys = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black bg-white poppins-font dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Generate Keys
               </h1>
-              {/* <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
-                Total Sorter: {totalSorters}
-              </div> */}
             </div>
-
             <div className="flex items-center"></div>
             <br />
             <br />
@@ -169,7 +180,7 @@ const GenerateKeys = () => {
             ${navVisible ? "px-10" : "sm:ml-44"}`}
           >
             {/* Total number of sorters */}
-            Total: {totalUsers}
+            <div className="poppins-font font-bold">Total: {totalUsers}</div>
             {/* Add New button */}
             <button
               onClick={handleGenerateKeys}
@@ -203,59 +214,93 @@ const GenerateKeys = () => {
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
-                <thead className="table-header">
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Id num
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Special Key
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Date
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                  {sortedFilteredKeys.map((key, index) => (
-                    <tr key={key.id}>
-                      <td className="poppins-font">{index + 1}</td>
-                      <td className="poppins-font">{key.special_key}</td>
-                      <td className="poppins-font">
-                        {new Date(key.created_at).toLocaleDateString()}
-                      </td>
-                      <td>
-                        <button
-                          onClick={() => deleteKeys(key.id)}
-                          className="delete-button"
-                        >
-                          <FontAwesomeIcon icon={faTrash} />
-                        </button>
-                      </td>
+              <div className="max-h-[480px] overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
+                  <thead className="table-header">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Id num
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Special Key
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Date
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      ></th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
+                    {sortedFilteredKeys.map((key, index) => (
+                      <tr key={key.id}>
+                        <td className="poppins-font">{index + 1}</td>
+                        <td className="poppins-font">{key.special_key}</td>
+                        <td className="poppins-font">
+                          {new Date(key.created_at).toLocaleDateString()}
+                        </td>
+                        <td>
+                          <button
+                            onClick={() => deleteKeys(key.id)}
+                            className="delete-button "
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
       </div>
+
+      {keyToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+
+          <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            {/* Add padding to the modal content */}
+            <div className="modal-content py-4 text-left px-6">
+              {/* Title */}
+              <div className="mb-4">
+                <p className="text-lg text-gray-700 justify-start">
+                  Are you sure you want to delete the generated key?
+                </p>
+              </div>
+
+              {/* Buttons */}
+              <div className="modal-buttons flex justify-center">
+                <button
+                  onClick={handleDelete}
+                  className="bg-red-500 justify-center hover:bg-red-600 text-white font-bold py-2 px-6 rounded mr-2"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="bg-black justify-center hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
