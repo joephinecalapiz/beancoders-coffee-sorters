@@ -290,22 +290,25 @@ const Status = () => {
             <br />
           </div>
         </div>
-        <div className="search-and-button">
-          <div
-            className={`p-5 px-10 flex justify-between poppins-font items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-            ${navVisible ? "px-10" : "sm:ml-44"}`}
-          >
-            {/* Search bar */}
+
+        <div
+          className={`p-5 px-10 flex poppins-font items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+    ${navVisible ? "px-10" : "sm:ml-44"}`}
+        >
+          {/* Search bar */}
+          <div className="mb-4 sm:mb-0 mx-4 sm:mx-0 w-full ">
             <input
               type="text"
               placeholder="Search Sorters"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 border dark:text-textTitle dark:bg-container rounded focus:outline-none search-bar"
-              style={{ width: "80%", maxWidth: "800px" }}
+              className="px-4 py-2 border dark:text-textTitle dark:bg-container focus:outline-none rounded-lg w-full"
+              style={{ maxWidth: "700px" }}
             />
+          </div>
 
-            {/* Add New button */}
+          {/* Add New button with spacing for web screen */}
+          <div className="md:ml-auto mb-4 sm:mb-0 mx-4 w-full md:w-1/2 ">
             <button
               onClick={openModal}
               className="px-4 py-2 text-white rounded poppins-font font-bold focus:outline-none"
@@ -375,85 +378,92 @@ const Status = () => {
                     </tr>
                   </thead>
                   <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
-                    {status.map((sorted) => (
-                      <tr key={sorted.id}>
-                        <td className="poppins-font">
-                          {new Date(sorted.created_at).toLocaleDateString()}
-                        </td>
+                    {status
+                      .filter((sorted) =>
+                        sorted.customerName
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase())
+                      )
+                      .map((sorted) => (
+                        <tr key={sorted.id}>
+                          <td className="poppins-font">
+                            {new Date(sorted.created_at).toLocaleDateString()}
+                          </td>
 
-                        <td className="poppins-font">{sorted.customerName}</td>
-                        <td className="poppins-font">{sorted.sorterName}</td>
-                        <td className="poppins-font">
-                          <button
-                            onClick={() => toggleDropdown(sorted.id)}
-                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            type="button"
-                          >
-                            {sorted.status}
-                          </button>
-                          {openDropdownId === sorted.id && (
-                            <div
-                              id="dropdownDotsHorizontal"
-                              className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                              style={{ top: "50", left: "50" }}
+                          <td className="poppins-font">
+                            {sorted.customerName}
+                          </td>
+                          <td className="poppins-font">{sorted.sorterName}</td>
+                          <td className="poppins-font">
+                            <button
+                              onClick={() => toggleDropdown(sorted.id)}
+                              className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                              type="button"
                             >
-                              <ul
-                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
+                              {sorted.status}
+                            </button>
+                            {openDropdownId === sorted.id && (
+                              <div
+                                id="dropdownDotsHorizontal"
+                                className="absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-lg shadow bg-white dark:divide-gray-600 mr-5"
+                                style={{ top: "50", left: "50" }}
                               >
-                                <li>
-                                  <button
-                                    onClick={() => setToOngoing(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
-                                      sorted.status === "Ongoing"
-                                        ? "bg-brown hover:bg-gray-100"
-                                        : ""
-                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                  >
-                                    Ongoing
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    onClick={() => setToFinished(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
-                                      sorted.status === "Finished"
-                                        ? "bg-brown hover:bg-gray-100"
-                                        : ""
-                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                  >
-                                    Finished
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    onClick={() => setToCancelled(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
-                                      sorted.status === "Cancelled"
-                                        ? "bg-brown hover:bg-gray-100"
-                                        : ""
-                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                  >
-                                    Cancelled
-                                  </button>
-                                </li>
-                              </ul>
-                            </div>
-                          )}
-                        </td>
-                        <td className="poppins-font">
-                          <button
-                            onClick={() => {
-                              navigate(`/status/receipt/${sorted.id}`);
-                              // navigate(`/customerstatus/${sorted.customerName}`);
-                            }}
-                            className="see-more-button focus:outline-none"
-                          >
-                            Receipt
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
+                                <ul
+                                  className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
+                                  aria-labelledby="dropdownMenuIconHorizontalButton"
+                                >
+                                  <li>
+                                    <button
+                                      onClick={() => setToOngoing(sorted.id)}
+                                      className={`block px-4 py-2 mx-auto w-full ${
+                                        sorted.status === "Ongoing"
+                                          ? "bg-brown hover:bg-gray-100 "
+                                          : ""
+                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    >
+                                      Ongoing
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button
+                                      onClick={() => setToFinished(sorted.id)}
+                                      className={`block px-4 py-2 mx-auto w-full ${
+                                        sorted.status === "Finished"
+                                          ? "bg-brown hover:bg-gray-100"
+                                          : ""
+                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    >
+                                      Finished
+                                    </button>
+                                  </li>
+                                  <li>
+                                    <button
+                                      onClick={() => setToCancelled(sorted.id)}
+                                      className={`block px-4 py-2 mx-auto w-full ${
+                                        sorted.status === "Cancelled"
+                                          ? "bg-brown hover:bg-gray-100"
+                                          : ""
+                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    >
+                                      Cancelled
+                                    </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
+                          </td>
+                          <td className="poppins-font">
+                            <button
+                              onClick={() => {
+                                navigate(`/status/receipt/${sorted.id}`);
+                              }}
+                              className="see-more-button focus:outline-none"
+                            >
+                              Receipt
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

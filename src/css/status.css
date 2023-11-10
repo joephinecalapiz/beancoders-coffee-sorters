@@ -21,11 +21,6 @@
   width: 1000px;
 }
 
-.search-bar {
-  width: 500px;
-  border-radius: 20px;
-}
-
 /* Table - Cell Data (below the header) */
 .sort-table {
   /* background-color: #f2f2f2; */
