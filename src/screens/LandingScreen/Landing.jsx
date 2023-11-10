@@ -44,6 +44,7 @@ const Landing = () => {
   return (
     <>
       <Navbar />
+      <div className="block inset-0">
       <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
         <div className="text-white font-bold text-2xl text-center py-4 md:py-16 flex flex-col items-center">
           <div className="md:ml-4 mt-1">
@@ -60,7 +61,9 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="relative bg-black">
+      <div className="bg-black">
+        <div className="flex items-center"></div>
+          <br />
         <div className="text-center justify-center items-center">
           <h1 className="text-white mb-8 md:mb-20 poppins-font text-3xl md:text-5xl mt-0 font-bold">
             Coffee Sorting Establishments
@@ -129,6 +132,7 @@ const Landing = () => {
           <div className="flex items-center"></div>
           <br />
         </div>
+      </div>
       </div>
       <Footer></Footer>
     </>
