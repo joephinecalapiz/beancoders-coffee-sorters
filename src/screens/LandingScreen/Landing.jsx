@@ -45,10 +45,10 @@ const Landing = () => {
       <Navbar />
       <div className="block inset-0">
         <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
-          <div className="relative text-white font-bold text-2xl py-[5%] flex flex-col items-end">
+          <div className="relative text-white font-bold text-2xl py-[5%] flex flex-col items-center md:items-end">
             <div className="mt-1">
               {/* <img src={BeansLogo} alt="BeansLogo" className="flex h-80 w-80 mt-5" /> */}
-              <div className="px-4 poppins-font">
+              <div className="px-4 poppins-font md:mr-10">
               <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80" />
                 <p className="text-4xl mb-4 md:text-5xl md:mb-12 md:block hidden">
                   BeanCoders:
@@ -81,13 +81,13 @@ const Landing = () => {
                     <div className="w-[45%] p-5 absolute text-base sm:text-3xl md:text-2xl lg:text-4xl text-white ml-5 mt-5">
                       {detail && (
                         <div className="font-bold font-['Poppins']">
-                          <FontAwesomeIcon icon={faBuilding} className="mr-5" />
+                          <FontAwesomeIcon icon={faBuilding} className="mr-2 md:mr-5s" />
                           <span>{detail.companyName}</span>
                         </div>
                       )}
                       {detail && (
                         <div className="font-medium font-['Poppins']">
-                          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-5 mt-5" />
+                          <FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 md:mr-5 mt-5" />
                           <a
                             href={`https://www.google.com/maps/search/?q=${encodeURIComponent(
                               detail.companyLocation
@@ -102,7 +102,7 @@ const Landing = () => {
                       )}
                       {detail && (
                         <div className="font-medium font-['Poppins']">
-                          <FontAwesomeIcon icon={faPhone} className="mr-5 mt-5" />
+                          <FontAwesomeIcon icon={faPhone} className="mr-2 sm:mr-5 mt-5" />
                           <span>{detail.companyNumber}</span>
                         </div>
                       )}
