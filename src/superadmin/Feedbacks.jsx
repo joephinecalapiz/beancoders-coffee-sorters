@@ -114,7 +114,7 @@ const Feedbacks = () => {
             }}
           >
             <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 table-auto">
+              <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
                 <thead>
                   <tr>
                     <th

@@ -210,9 +210,9 @@ const GenerateKeys = () => {
               marginTop: "-20px",
             }}
           >
-            <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 table-auto">
-                <thead>
+            <div className="shadow mx-auto overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
+                <thead className="table-header">
                   <tr>
                     <th
                       scope="col"
