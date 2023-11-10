@@ -67,6 +67,18 @@ function Sidebar({ collapsed }) {
 
   // Toggle the dark mode class when the component mounts and when darkMode changes
   useEffect(() => {
+    // Check if dark mode is stored in localStorage
+    const storedDarkMode = localStorage.getItem("darkMode");
+
+    // Automatically set dark mode based on localStorage or default to light mode
+    setDarkMode(storedDarkMode ? JSON.parse(storedDarkMode) : false);
+  }, []);
+
+  // Toggle the dark mode class when the component mounts and when darkMode changes
+  useEffect(() => {
+    // Check if dark mode is stored in localStorage
+    const storedDarkMode = localStorage.getItem("darkMode");
+    
     document.documentElement.classList.toggle("dark", darkMode);
     const appBody = document.getElementById("app-body");
     appBody.classList.toggle("dark:bg-dark", darkMode);
