@@ -45,7 +45,7 @@ const Landing = () => {
       <Navbar />
       <div className="block inset-0">
         <div className="bg-BgLanding md:bg-cover bg-cover bg-opacity-20 h-screen w-full">
-          <div className="relative text-white font-bold text-2xl py-[5%] flex flex-col items-center md:items-end">
+          <div className="text-white font-bold text-2xl py-[5%] flex flex-col items-center md:items-end">
             <div className="mt-1">
               {/* <img src={BeansLogo} alt="BeansLogo" className="flex h-80 w-80 mt-5" /> */}
               <div className="px-4 poppins-font md:mr-10">
