@@ -240,11 +240,11 @@ const Profile = () => {
                       style={{ display: "none" }}
                     />
                   </div>
-                  <label className="admin-name text-white dark:text-textTitle poppins-font justify-center bg-gray-1000 drop-shadow-2xl">
+                  <label className="admin-name text-black dark:text-textTitle poppins-font justify-center bg-gray-1000 drop-shadow-2xl">
                     {profileData.name}
                   </label>
 
-                  <label className="admin-label text-white dark:text-textDesc poppins-font mb-5 justify-center drop-shadow-4xl">
+                  <label className="admin-label text-black dark:text-textDesc poppins-font mb-5 justify-center drop-shadow-4xl">
                     Super Admin
                   </label>
                 </div>
