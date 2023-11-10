@@ -291,27 +291,25 @@ const Status = () => {
           </div>
         </div>
 
-        <div
-          className={`p-5 px-10 flex poppins-font items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-    ${navVisible ? "px-10" : "sm:ml-44"}`}
-        >
-          {/* Search bar */}
-          <div className="mb-4 sm:mb-0 mx-4 sm:mx-0 w-full ">
+        <div className="search-and-button">
+          <div
+            className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
+            ${navVisible ? "px-10" : "sm:ml-44"}`}
+          >
+            {/* Search bar */}
             <input
               type="text"
               placeholder="Search Sorters"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 border dark:text-textTitle dark:bg-container focus:outline-none rounded-lg w-full"
-              style={{ maxWidth: "700px" }}
+              className="px-4 py-2 border dark:text-textTitle dark:bg-container rounded focus:outline-none search-bar"
+              style={{ width: "80%", maxWidth: "800px" }}
             />
-          </div>
 
-          {/* Add New button with spacing for web screen */}
-          <div className="md:ml-auto mb-4 sm:mb-0 mx-4 w-full md:w-1/2 ">
+            {/* Add New button */}
             <button
               onClick={openModal}
-              className="px-4 py-2 text-white rounded poppins-font font-bold focus:outline-none"
+              className="px-4 py-2 text-white rounded focus:outline-none"
               onMouseEnter={(e) => {
                 e.target.style.backgroundColor = "#C4A484";
                 e.target.style.transition = "background-color 0.3s ease";
@@ -322,6 +320,7 @@ const Status = () => {
               }}
               style={{
                 backgroundColor: "#512615",
+                fontFamily: "'Poppins', sans-serif",
                 boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
                 border: "none",
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
