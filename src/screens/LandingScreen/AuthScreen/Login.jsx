@@ -9,7 +9,6 @@ import Navbar from "../../../component/Navbar";
 import ForgotPasswordModal from "../../../component/ForgotPasswordModal";
 import Footer from "../Footer";
 
-
 const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -58,14 +57,14 @@ const Login = () => {
           localStorage.getItem("savedEmail");
           localStorage.getItem("savedPassword");
           console.log(role, user_id);
-          if (role == 2){
+          if (role == 2) {
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/dashboard");
               window.location.reload();
             }, 2000);
           }
-          if (role == 1){
+          if (role == 1) {
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/superadmin/manageusers");
@@ -96,26 +95,23 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
+      <div className="mt-16 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
         <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="w-[120%] mx-auto poppins-font">
-              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 poppins-font">
+            <div className="w-[145%] justify-center mx-auto poppins-font">
+              <h1 className="text-center poppins-font text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 ">
                 Login
               </h1>
-              <label
-                className="block text-white mb-2"
-                htmlFor="email"
-              >
+              {/* <label className="block text-white mb-2" htmlFor="email">
                 Email Address
-              </label>
+              </label> */}
               <input
                 name="email"
                 type="email"
-                placeholder="you@domain.com"
+                placeholder="Email Address"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -128,22 +124,20 @@ const Login = () => {
                   setSavedEmail(e.target.value);
                   localStorage.setItem("savedEmail", e.target.value);
                 }}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.email ? "mb-2" : "mb-5"
-                  }`}
+                className={`bg-white w-full poppins-font rounded-[10px] h-10 text-black px-4 ${
+                  errors.email ? "mb-2" : "mb-5"
+                }`}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
               )}
-              <label
-                className="block text-white mb-2"
-                htmlFor="password"
-              >
+              {/* <label className="block text-white mb-2" htmlFor="password">
                 Password
-              </label>
+              </label> */}
               <input
                 name="password"
                 type="password"
-                placeholder=""
+                placeholder="Password"
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -156,22 +150,19 @@ const Login = () => {
                   setSavedPassword(e.target.value);
                   localStorage.setItem("savedPassword", e.target.value);
                 }}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.password ? "mb-2" : "mb-5"
-                  }`}
+                className={`bg-white w-full rounded-[10px] poppins-font mt-3 h-10 text-black px-4 ${
+                  errors.password ? "mb-2" : "mb-5"
+                }`}
               />
               {loginError && (
-                <p
-                  className="text-red-500 ml-2"
-                >
-                  Invalid email or password.
-                </p>
+                <p className="text-red-500 ml-2">Invalid email or password.</p>
               )}
 
               {/* {errors.password && (
                 <p className="text-red-500 ml-2">{errors.password.message}</p>
               )} */}
 
-              <div className="flex justify-between mx-auto mb-5 w-[95%]">
+              <div className="flex justify-between mt-7 mx-auto mb-5 w-[95%]">
                 <div className="flex flex-row items-center">
                   <input
                     type="checkbox"
@@ -189,10 +180,12 @@ const Login = () => {
                       }
                     }}
                   />
-                  <span className="ml-2 mr-4 pt-1 text-white font-Poppins">Remember me</span>
+                  <span className="poppins-font ml-2 mr-4 pt-1 text-white font-Poppins">
+                    Remember me
+                  </span>
                 </div>
                 <p
-                  className="hover:underline cursor-pointer pt-1 text-white font-Poppins"
+                  className="poppins-font hover:underline cursor-pointer pt-1 text-white "
                   onClick={openForgotPasswordModal}
                 >
                   Forgot password?
@@ -205,14 +198,13 @@ const Login = () => {
 
               <button
                 type="submit"
-                className="btn w-full btn-primary mt-7 text-white"
-                style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
+                className="btn w-full btn-primary mt-7 text-white text-xl font-semibold poppins-font"
                 disabled={loading}
                 onClick={handleSubmit(onSubmitHandler)}
               >
                 {loading ? (
                   <svg
-                    className="animate-spin h-5 w-5 mr-3 text-white"
+                    className="animate-spin h-5 w-5 mr-  text-white "
                     viewBox="0 0 24 24"
                   >
                     <circle
@@ -232,19 +224,12 @@ const Login = () => {
                 ) : null}
                 {loading ? "Loading..." : "Login"}
               </button>
-              <p
-                className="text-white text-center my-7"
-              >
+              <p className="text-white poppins-font mt-10 text-center my-7">
                 Don't have and account?
                 <span
-                  className="hover:underline cursor-pointer"
+                  className="underline cursor-pointer poppins-font font-semibold text-yellow-800"
                   onClick={() => {
                     navigate("/signup");
-                  }}
-                  style={{
-                    color: "#512615",
-                    fontWeight: "bold",
-                    fontFamily: "Poppins, sans-serif",
                   }}
                 >
                   {" "}

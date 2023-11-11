@@ -30,7 +30,7 @@ const Profile = () => {
     companyLocation: compInfo.companyLocation,
     companyName: compInfo.companyName,
     images: compInfo.images,
-    profileAvatar: compInfo.profileAvatar
+    profileAvatar: compInfo.profileAvatar,
   });
   const [editableContent, setEditableContent] = useState({
     companyName: profileData.companyName,
@@ -48,39 +48,37 @@ const Profile = () => {
     const file = e.target.files[0];
 
     if (file) {
-        const reader = new FileReader();
+      const reader = new FileReader();
 
-        reader.onload = (e) => {
-            const dataURL = e.target.result;
-            setSelectedImage(dataURL); // Set selectedImage to display the preview
-        };
+      reader.onload = (e) => {
+        const dataURL = e.target.result;
+        setSelectedImage(dataURL); // Set selectedImage to display the preview
+      };
 
-        reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
 
-        // Set the file state
-        setFile(file);
+      // Set the file state
+      setFile(file);
 
-        // Set the selected image in editableContent
-        setEditableContent((prevEditableContent) => ({
-            ...prevEditableContent,
-            images: file.name, // Use the selected file here
-        }));
+      // Set the selected image in editableContent
+      setEditableContent((prevEditableContent) => ({
+        ...prevEditableContent,
+        images: file.name, // Use the selected file here
+      }));
 
-        // Print the file name
-        console.log("Selected file name:", file);
+      // Print the file name
+      console.log("Selected file name:", file);
     } else {
-        setSelectedImage(null); // Clear the image preview if no file is selected
-        setFile(null); // Clear the file state
+      setSelectedImage(null); // Clear the image preview if no file is selected
+      setFile(null); // Clear the file state
 
-        // Clear the selected image in editableContent
-        setEditableContent((prevEditableContent) => ({
-            ...prevEditableContent,
-            images: null,
-        }));
+      // Clear the selected image in editableContent
+      setEditableContent((prevEditableContent) => ({
+        ...prevEditableContent,
+        images: null,
+      }));
     }
-};
-
-
+  };
 
   useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts
@@ -97,7 +95,7 @@ const Profile = () => {
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
       images: compInfo.images,
-      profileAvatar: compInfo.profileAvatar
+      profileAvatar: compInfo.profileAvatar,
     }));
   }, [userInfo]);
 
@@ -109,7 +107,7 @@ const Profile = () => {
       companyLocation: compInfo.companyLocation,
       companyName: compInfo.companyName,
       images: compInfo.images,
-      profileAvatar: compInfo.profileAvatar
+      profileAvatar: compInfo.profileAvatar,
     }));
     setEditableProfile((prevProfileData) => ({
       ...prevProfileData,
@@ -168,9 +166,8 @@ const Profile = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(newDetails), // Make sure newDetails contains the updated data
-        
       });
-      console.log(newDetails)
+      console.log(newDetails);
       if (!response.ok) {
         throw new Error("Failed to update company details");
       }
@@ -204,7 +201,6 @@ const Profile = () => {
     }
   };
 
-
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -231,7 +227,7 @@ const Profile = () => {
     });
     // update the details on the server
     updateCompanyDetails(editableContent);
-    console.log(editableContent)
+    console.log(editableContent);
     updateProfileInfo(editableProfile);
   };
 
@@ -278,7 +274,7 @@ const Profile = () => {
         />
         <div
           className={`Profile  ${navVisible ? "profile-shift-right" : ""}`}
-        //  style={{ backgroundColor: '#d4d4d4' }}
+          //  style={{ backgroundColor: '#d4d4d4' }}
         >
           <div className={`p-4 ${navVisible ? "ml-0" : "sm:ml-48"}`}>
             <div className="p-0.5 mb-5 w-full mt-7 relative">
@@ -287,20 +283,32 @@ const Profile = () => {
               </h1>
             </div>
             <div className={`p-4 ${navVisible ? "ml-0" : ""}`}>
-              <div className="max-w-2xl bg-white dark:bg-container object-fill rounded-xl shadow-lg overflow-hidden lg:max-w-full bg-center bg-no-repeat"
+              <div
+                className="max-w-2xl bg-white dark:bg-container object-fill rounded-xl shadow-lg overflow-hidden lg:max-w-full bg-center bg-no-repeat"
                 style={{
-                  backgroundImage: profileData.images && profileData.images.length > 0
-                    ? `url("${image_endpoint}/storage/${profileData.images.slice(2, -2)}")`
-                    : ""
+                  backgroundImage:
+                    profileData.images && profileData.images.length > 0
+                      ? `url("${image_endpoint}/storage/${profileData.images.slice(
+                          2,
+                          -2
+                        )}")`
+                      : "",
                 }}
               >
                 <div className="flex flex-col items-center justify-center">
                   <div className="top relative circular-profile object-none object-top overflow-visible">
-                    <label htmlFor="profilePicture" className="profile-picture-label">
+                    <label
+                      htmlFor="profilePicture"
+                      className="profile-picture-label"
+                    >
                       <img
                         src={
-                          profileData.profileAvatar && profileData.profileAvatar.length > 0
-                            ? `${image_endpoint}/storage/${profileData.profileAvatar.slice(2, -2)}`
+                          profileData.profileAvatar &&
+                          profileData.profileAvatar.length > 0
+                            ? `${image_endpoint}/storage/${profileData.profileAvatar.slice(
+                                2,
+                                -2
+                              )}`
                             : beansLogo
                         }
                         alt="profile picture"
@@ -341,7 +349,7 @@ const Profile = () => {
                           Save
                         </button>
                         <button
-                          className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded-full"
+                          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full"
                           onClick={handleCancelClick}
                         >
                           Cancel
@@ -564,4 +572,3 @@ const Profile = () => {
 };
 
 export default Profile;
-
