@@ -67,6 +67,13 @@ const StatusArchived = () => {
     handleShowUpdateModal(null);
   };
 
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearchInputChange = (e) => {
+    console.log("Search input changed:", e.target.value);
+    setSearchText(e.target.value);
+  };
+
   const fetchCustomers = async () => {
     try {
       let token = localStorage.getItem("token");
@@ -82,7 +89,10 @@ const StatusArchived = () => {
         throw new Error("Failed to fetch customer archived data");
       }
       const data = await response.json();
-      setAllCustomers(data.archiveds);
+      setAllCustomers(data.archived_status);
+      if (sessionStorage.getItem("archive status data") === null) {
+        sessionStorage.setItem("archive status data", JSON.stringify(data.archived_status));
+      }
     } catch (error) {
       console.error("Error fetching customer archived data:", error);
     }
@@ -98,13 +108,13 @@ const StatusArchived = () => {
           Authorization: "Bearer " + token,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to delete customer archived data");
       }
       // Update customer data after successful archive
       await fetchCustomers();
-  
+
       if (!fetchResponse.ok) {
         throw new Error("Failed to fetch archived customer data");
       }
@@ -112,52 +122,27 @@ const StatusArchived = () => {
       console.error("Error deleting or fetching customer data:", error);
     }
   };
-  
-  
+
+  const filteredCustomers = allCustomers.filter((customer) => {
+    const matchesSearchText = customer.customerName.toLowerCase().includes(searchText.toLowerCase());
+    return matchesSearchText;
+  });
+
+  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.customerName.toLowerCase().localeCompare(b.customerName.toLowerCase()) || (a.id - b.id));
+
+
 
   useEffect(() => {
     document.title = "Status Archived";
-    if (selectedMonth !== null && selectedYear !== null) {
-      fetchCustomers();
-      deleteCustomer();
-    }
-  }, [selectedMonth, selectedYear]);
-
-  const [searchText, setSearchText] = useState("");
-
-  const handleSearchInputChange = (e) => {
-    console.log("Search input changed:", e.target.value);
-    setSearchText(e.target.value);
-  };
-
-  const filteredCustomers = allCustomers.filter((customer) => {
-    const registrationDate = new Date(customer.created_at);
-    const matchesSearchText =
-      customer && customer.customerName
-        ? customer.customerName.toLowerCase().includes(searchText.toLowerCase())
-        : false;
-
-    // Check if selectedMonth is not null, and if it is, don't apply the month filter
-    const monthFilter =
-      selectedMonth !== null
-        ? registrationDate.getMonth() + 1 === selectedMonth.value
-        : true;
-
-    return (
-      monthFilter &&
-      (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
-      matchesSearchText
-    );
-  });
-
-  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.id - b.id);
+    fetchCustomers();
+  },);
 
   const totalCustomers = allCustomers.length;
 
   return (
     <>
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
@@ -193,7 +178,7 @@ const StatusArchived = () => {
             />
           </div>
         </div>
-        <div className="calendar">
+        {/* <div className="calendar">
           <div className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}>
             <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
               <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
@@ -252,7 +237,7 @@ const StatusArchived = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
         <div className="px-4">
           <div
@@ -272,12 +257,12 @@ const StatusArchived = () => {
                     >
                       Customer Number
                     </th>
-                    <th
+                    {/* <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
                       Date Archived
-                    </th>
+                    </th> */}
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
@@ -317,12 +302,9 @@ const StatusArchived = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                  {(reloadCustomerData || sortedFilteredCustomers).map((customer) => (
+                  {sortedFilteredCustomers.map((customer) => (
                     <tr key={customer.id}>
                       <td className="poppins-font">{customer.customer_id}</td>
-                      <td className="poppins-font">
-                        {new Date(customer.created_at).toLocaleDateString()}
-                      </td>
                       <td className="poppins-font">{customer.customerName}</td>
                       <td className="poppins-font">{customer.sorterName}</td>
                       <td className="poppins-font">{customer.kiloOfBeans}</td>
