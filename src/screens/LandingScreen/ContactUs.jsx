@@ -79,27 +79,21 @@ const ContactUs = () => {
   return (
     <>
       <Navbar />
-      <div className="mt-16 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
+      <div className="mt-12 md:mt-16 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
         <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             className="rounded-[40px] p-8 max-w-xs w-full "
             onSubmit={handleSubmit(onSubmitHandler)}
           >
             <div className="w-[145%] mx-auto">
-              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12">
+              <h1 className=" poppins-font text-center text-white font-semibold text-[40px] md:mt-20 md:mb-6 mt-12 mb-8">
                 Contact Us
               </h1>
-              <label
-                className="block text-white mb-2"
-                htmlFor="name"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Full Name
-              </label>
+
               <input
                 name="full_name"
                 type="text"
-                placeholder=""
+                placeholder="Full Name"
                 {...register("full_name", {
                   required: "Full Name is required",
                   pattern: {
@@ -118,17 +112,10 @@ const ContactUs = () => {
                 <p className="text-red-500 ml-2">{errors.full_name.message}</p>
               )}
 
-              <label
-                className="block text-white mb-2"
-                htmlFor="company"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Company Name
-              </label>
               <input
                 name="companyName"
                 type="text"
-                placeholder=""
+                placeholder="Company Name"
                 {...register("companyName", {
                   required: "Company name is required",
                   pattern: {
@@ -138,7 +125,7 @@ const ContactUs = () => {
                 })}
                 checked={formData.companyName}
                 onChange={handleInputChange}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
+                className={`bg-white w-full rounded-[10px] mt-2 md:mt-1 h-10 text-black px-4 ${
                   errors.companyName ? "mb-2" : "mb-5"
                 }`}
                 style={{ fontFamily: "Poppins, sans-serif" }}
@@ -149,17 +136,10 @@ const ContactUs = () => {
                 </p>
               )}
 
-              <label
-                className="block text-white mb-2"
-                htmlFor="name"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Phone Number
-              </label>
               <input
                 name="phoneNum"
                 type="number"
-                placeholder=""
+                placeholder="Phone Number"
                 {...register("phoneNum", {
                   required: "Phone Number is required",
                   pattern: {
@@ -169,7 +149,7 @@ const ContactUs = () => {
                 })}
                 checked={formData.phoneNum}
                 onChange={handleInputChange}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
+                className={`bg-white w-full rounded-[10px] mt-2 md:mt-1 h-10 text-black px-4 ${
                   errors.phoneNum ? "mb-2" : "mb-5"
                 }`}
                 style={{ fontFamily: "Poppins, sans-serif" }}
@@ -248,17 +228,10 @@ const ContactUs = () => {
                 onChange={handleInputChange}
               />
 
-              <label
-                className="block text-white mb-2"
-                htmlFor="email"
-                style={{ fontFamily: "Poppins, sans-serif" }}
-              >
-                Email Address
-              </label>
               <input
                 name="email"
                 type="email"
-                placeholder="you@domain.com"
+                placeholder="Email Address"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -268,7 +241,7 @@ const ContactUs = () => {
                 })}
                 checked={formData.email}
                 onChange={handleInputChange}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
+                className={`bg-white w-full rounded-[10px] mt-2 md:mt-1 h-10 text-black px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
                 style={{ fontFamily: "Poppins, sans-serif" }}
@@ -284,7 +257,6 @@ const ContactUs = () => {
                   fontSize: "20px",
                 }}
                 disabled={loading}
-                // onClick={handleSubmit(onSubmitHandler)}
               >
                 {loading ? (
                   <svg
