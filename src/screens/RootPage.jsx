@@ -16,7 +16,6 @@ import PermissionDenied from "./DeniedAccess";
 import Main from "./mainpage";
 
 function RootPage() {
-    const [navVisible, showNavbar] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
