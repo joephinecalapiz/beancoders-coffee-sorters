@@ -9,7 +9,7 @@ import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 
 const StatusArchived = () => {
-  const [navVisible, showNavbar] = useState(true);
+  const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
   const monthOptions = [
@@ -141,30 +141,23 @@ const StatusArchived = () => {
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
-      />
+      /> */}
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-            <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Status Archived
-              </h1>
-            </div>
-
-            <div className="flex items-center"></div>
-            <br />
-            <br />
-          </div>
+        <div className="pl-5 pb-5 pt-0.5 pr-5">
+          <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
+            Status Archives
+          </h1>
         </div>
-        <div className="search-and-button">
+        </div>
+        <div className="search-and-button mt-20">
           <div
-            className={`dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-            ${navVisible ? "px-10" : "sm:ml-44"}`}
+            className='dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins'
           >
             {/* Total number of customer */}
             Total: {totalCustomers}
@@ -241,7 +234,7 @@ const StatusArchived = () => {
 
         <div className="px-4">
           <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+            className='p-5'
             style={{
               transition: "margin-left 0.3s ease",
               marginTop: "-20px",
