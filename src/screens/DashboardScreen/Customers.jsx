@@ -506,7 +506,7 @@ const Customers = () => {
                             {openDropdownId === customer.id && (
                               <div
                                 id="dropdownDotsHorizontal"
-                                className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                                className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
                                 style={{ top: "100", right: "0" }}
                               >
                                 <ul
