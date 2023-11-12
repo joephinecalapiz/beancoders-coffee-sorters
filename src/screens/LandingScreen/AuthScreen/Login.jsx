@@ -38,13 +38,13 @@ const Login = () => {
     }
   }, []);
 
-  useEffect(() =>{
-      const token = localStorage.getItem('token');
-      if (token) {
-        // If there's a token, navigate back to the previous page
-        navigate("/dashboard")
-      }  
-  })
+  // useEffect(() =>{
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       // If there's a token, navigate back to the previous page
+  //       navigate("/dashboard")
+  //     }  
+  // })
 
   const onSubmitHandler = (data) => {
     setLoading(true); // Set loading state to true when form is submitted
