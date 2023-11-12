@@ -106,9 +106,7 @@ function RootPage() {
             <Route
                 path="/error404"
                 element={
-                    <Main>
-                        <Error />
-                    </Main>
+                    <Error />
                 }
             />
             <Route
