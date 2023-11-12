@@ -45,10 +45,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   }, []);
 
   useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("profile photo");
+    const cachedProfileData = sessionStorage.getItem("profile photo");
 
-    if (cachedCustomerData) {
-      setCompInfo(JSON.parse(cachedCustomerData));
+    if (cachedProfileData) {
+      setCompInfo(JSON.parse(cachedProfileData));
     }
   }, []);
 
@@ -64,6 +64,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
+
       const data = await response.json();
       setUserInfo(data.user);
     } catch (error) {
@@ -288,18 +289,18 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     Contact Us
                   </a>
                   <li
-                  onClick={() => {
-                    navigate("/aboutus");
-                  }}
-                >
-                  <a
-                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
-                    role="menuitem"
-                    aria-expanded={isProfileMenuOpen}
+                    onClick={() => {
+                      navigate("/aboutus");
+                    }}
                   >
-                    About Us
-                  </a>
-                </li>
+                    <a
+                      className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                      role="menuitem"
+                      aria-expanded={isProfileMenuOpen}
+                    >
+                      About Us
+                    </a>
+                  </li>
                 </li>
                 <li onClick={handleSignOut}>
                   <a

@@ -140,115 +140,113 @@ const Sorters = () => {
         handleToggleSidebar={toggleSidebar}
       /> */}
       <div className="header">
-      <div className="pl-5 pb-5 pt-0.5 mb-2 pr-5">
+        <div className="pl-5 pb-5 pt-0.5 mb-2 pr-5">
           <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
             Sorters
           </h1>
         </div>
-        </div>
-        <div className="search-and-button mt-20">
-          <div
-            className='dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins'
-          >
-            <div className="poppins-font font-bold">Total: {totalSorters}</div>
+      </div>
+      <div className="search-and-button mt-16">
+        <div className="dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
+          <div className="poppins-font font-bold">Total: {totalSorters}</div>
 
-            <input
-              type="text"
-              placeholder="Search Sorters"
-              value={searchText}
-              onChange={handleSearchInputChange}
-              className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
-              style={{ width: "80%", maxWidth: "800px" }}
-            />
-            {/* Add New button */}
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white poppins-font font-bold rounded focus:outline-none poppins-font"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-                border: "none",
-                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
-              }}
-            >
-              Add New
-            </button>
-          </div>
-        </div>
-        <div className="px-4">
-          <div
-            className='p-5'
+          <input
+            type="text"
+            placeholder="Search Sorters"
+            value={searchText}
+            onChange={handleSearchInputChange}
+            className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
+            style={{ width: "80%", maxWidth: "800px" }}
+          />
+          {/* Add New button */}
+          <button
+            onClick={openModal}
+            className="px-4 py-2 text-white poppins-font font-bold rounded focus:outline-none poppins-font"
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#C4A484";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#512615";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
             style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
+              backgroundColor: "#512615",
+              boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+              border: "none",
+              textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
             }}
           >
-            <br />
-            <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <div className="max-h-[450px] overflow-y-auto">
-                <table className=" min-w-full divide-y divide-gray-200  sorters-table th table-auto ">
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Id number
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Sorter's Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Phone Number
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Address
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Date Hired
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 text-center sort-table dark:text-textTitle dark:bg-container">
-                    {(reloadSorterData || sortedFilteredSorters).map(
-                      (sorter, index) => (
-                        <tr key={sorter.id}>
-                          <td className="poppins-font">{index + 1}</td>
-                          <td className="poppins-font">{sorter.sorterName}</td>
-                          <td className="poppins-font">{sorter.phoneNum}</td>
-                          <td className="poppins-font">{sorter.address}</td>
-                          <td className="poppins-font">
-                            {new Date(sorter.dateHired).toLocaleDateString()}
-                          </td>
-                        </tr>
-                      )
-                    )}
-                  </tbody>
-                </table>
-              </div>
+            Add New
+          </button>
+        </div>
+      </div>
+      <div className="px-4">
+        <div
+          className="p-5"
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          <br />
+          <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+            <div className="max-h-[440px] overflow-y-auto">
+              <table className=" min-w-full divide-y divide-gray-200  sorters-table th table-auto ">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Id number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Sorter's Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Phone Number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Address
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date Hired
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 text-center sort-table dark:text-textTitle dark:bg-container">
+                  {(reloadSorterData || sortedFilteredSorters).map(
+                    (sorter, index) => (
+                      <tr key={sorter.id}>
+                        <td className="poppins-font">{index + 1}</td>
+                        <td className="poppins-font">{sorter.sorterName}</td>
+                        <td className="poppins-font">{sorter.phoneNum}</td>
+                        <td className="poppins-font">{sorter.address}</td>
+                        <td className="poppins-font">
+                          {new Date(sorter.dateHired).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+      </div>
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
