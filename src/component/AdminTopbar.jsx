@@ -180,7 +180,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   : BeansLogo
               }
               alt="BeansLogo"
-              className="w-12 h-12 rounded-full bg-white mr-5"
+              className="w-12 h-12 rounded-full bg-white mr-9"
             />
           </button>
           {isDropdownOpen && (
@@ -231,7 +231,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className="admin-user text-white text-lg mr-8 poppins-font font-semibold mx-5">
+        <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-10 whitespace-nowrap">
           Super Admin
         </h1>
       </div>
