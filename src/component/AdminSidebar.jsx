@@ -57,6 +57,16 @@ function AdminSidebar({ collapsed }) {
     navigate(href);
   };
 
+  useEffect(() => {
+    // Update the navigation state when the location changes
+    setAdminNav((prev) =>
+      prev.map((item) => ({
+        ...item,
+        current: location.pathname === item.href,
+      }))
+    );
+  }, [location]);
+
   // Toggle the dark mode class when the component mounts and when darkMode changes
   useEffect(() => {
     // Check if dark mode is stored in localStorage
@@ -92,30 +102,32 @@ function AdminSidebar({ collapsed }) {
   return (
     <>
       <nav
-        className={`pl-4 pt-16 pr-4 pb-4 bg-black dark:bg-gray  fixed z-20 inset-0 mt-2 left-[max(0px,calc(10%-100rem))] w-[15rem] ${
+        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-16 left-[max(0px,calc(10%-100rem))] w-[15rem] ${
           collapsed ? "collapsed" : ""
         }`}
       >
         <div className="mt-4">
-          <div className="mt-4">
-            {adminNav.map((item) => (
-              <NavLink
-                to={item.href}
-                className={`nav-link hover:bg-bgHover ${
-                  item.current ? "bg-bgActive text-white" : "text-white"
-                } poppins-font`}
-                key={item.href}
+          {/* sidebar navigation */}
+          {adminNav.map((item) => (
+            <NavLink
+              to={item.href}
+              // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
+              className={`nav-link hover:bg-bgHover ${
+                item.current ? "bg-lightBrown text-white" : "text-white"
+              } poppins-font`}
+              onMouseEnter={() => setAdminNav((prev) => [...prev])}
+              onMouseLeave={() => setAdminNav((prev) => [...prev])}
+              key={item.href}
+            >
+              <span className="icon">{item.icon}</span>
+              <span
+                className={!collapsed ? "text-visible" : ""}
+                style={{ fontFamily: "Poppins, sans-serif" }}
               >
-                <span className="icon">{item.icon}</span>
-                <span
-                  className={!collapsed ? "text-visible" : ""}
-                  style={{ fontFamily: "Poppins, sans-serif" }}
-                >
-                  {item.name}
-                </span>
-              </NavLink>
-            ))}
-          </div>
+                {item.name}
+              </span>
+            </NavLink>
+          ))}
           {/* Dark mode toggle button */}
           <div className="fixed bottom-4 left-4">
             <button

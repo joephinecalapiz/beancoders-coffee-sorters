@@ -76,7 +76,7 @@ const Feedbacks = () => {
 
   return (
     <>
-      <AdminSidebar
+      {/* <AdminSidebar
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
       />
@@ -84,27 +84,17 @@ const Feedbacks = () => {
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
-      />
-      <div className={`mx-auto ${navVisible ? "" : ""}`}>
-        <div className="header">
-          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-            <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white poppins-font dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Feedbacks
-              </h1>
-              {/* <div className="ml-auto" style={{ marginTop: "50px",fontFamily: "'Poppins', sans-serif", fontSize: "19px"}}>
-                Total Sorter: {totalSorters}
-              </div> */}
-            </div>
-
-            <div className="flex items-center"></div>
-            <br />
-            <br />
-          </div>
+      /> */}
+      <div className="header">
+      <div className="pl-5 pt-0.5 mb-16 pr-5">
+          <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-5 text-base p-3 rounded-lg shadow-xl">
+            Feedbacks
+          </h1>
+        </div>
         </div>
         <div className="px-4">
           <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+            className='p-5'
             style={{
               transition: "margin-left 0.3s ease",
               marginTop: "-20px",
@@ -158,7 +148,6 @@ const Feedbacks = () => {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 };

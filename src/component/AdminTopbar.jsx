@@ -9,6 +9,7 @@ import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
+import { IoIosArrowDown } from "react-icons/io";
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -153,11 +154,13 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           <FaBars size={20} />
         </button>
 
-        <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
+        {/* <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" /> */}
+        <span className="px-5 pt-5 text-lightBrown dark:text-lightBrown poppins-font text-xl h-16 font-semibold">
+        {profileIcon.companyName}
+          </span>{" "}
       </div>
-
-      <div className=" flex bg-black p-1  dark:bg-gray items-center">
-        <div className=" items-center relative" ref={dropdownRef}>
+      <div className="flex bg-black dark:bg-gray items-center">
+        <div className="flex items-center relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={toggleDropdown}
@@ -169,15 +172,18 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             <span className="invisible">Dropdown user</span>
             <img
               src={
-                profileIcon.profileAvatar && profileIcon.profileAvatar.length > 0
-                  ? `${image_endpoint}/storage/${profileIcon.profileAvatar.slice(2, -2)}`
+                profileIcon.profileAvatar &&
+                profileIcon.profileAvatar.length > 0
+                  ? `${image_endpoint}/storage/${profileIcon.profileAvatar.slice(
+                      2,
+                      -2
+                    )}`
                   : BeansLogo
               }
               alt="BeansLogo"
-              className="icon-logo w-12 h-12 rounded-full mr-14 bg-white"
+              className="w-12 h-12 rounded-full bg-white"
             />
           </button>
-
           {isDropdownOpen && (
             <div
               className="z-50 absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-gray divide-y divide-gray-100 rounded shadow"
@@ -216,7 +222,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 </li>
                 <li onClick={handleSignOut}>
                   <a
-                    className="block px-4 py-2 text-sm poppins-font hover:bg-gray-500 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                   >
                     Sign out
@@ -226,8 +232,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-
-        <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-8 whitespace-nowrap">
+        <h1 className="admin-user text-white text-lg mr-8 poppins-font font-semibold mx-5">
           Super Admin
         </h1>
       </div>
@@ -241,13 +246,13 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </p>
             <div className="flex justify-end">
               <button
-                className="bg-red-500 text-white dark:bg-container poppins-font px-4 py-2 rounded mr-2"
+                className="bg-red-500 text-white dark:bg-container poppins-font px-4 py-2 rounded mr-2 cursor-pointer"
                 onClick={handleLogoutConfirmed}
               >
                 Logout
               </button>
               <button
-                className="bg-gray text-white poppins-font px-4 py-2 rounded"
+                className="bg-gray text-white poppins-font px-4 py-2 rounded cursor-pointer"
                 onClick={handleLogoutCancelled}
               >
                 Cancel
