@@ -81,6 +81,14 @@ const Profile = () => {
   };
 
   useEffect(() => {
+    const cachedCustomerData = sessionStorage.getItem("profile photo");
+
+    if (cachedCustomerData) {
+      setCompInfo(JSON.parse(cachedCustomerData));
+    }
+  }, [])
+
+  useEffect(() => {
     fetchUserInfo(); // Fetch user info when the component mounts
     fetchCompanyInfo();
   }, []);
@@ -150,6 +158,9 @@ const Profile = () => {
       }
       const compData = await response.json();
       setCompInfo(compData.details);
+      if (sessionStorage.getItem("profile photo") === null) {
+        sessionStorage.setItem("profile photo", JSON.stringify(compData.details));
+      }
     } catch (error) {
       console.error("Error fetching company details data:", error);
     }
