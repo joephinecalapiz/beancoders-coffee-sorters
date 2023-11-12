@@ -22,10 +22,10 @@ function RootPage() {
         const role = localStorage.getItem("role");
         // Check if the user_id is not 1 and navigate back if necessary
         if (role !== "2") {
-          navigate("/error404"); // Go back to the previous page
-          // window.location.reload();
+            navigate("/error404"); // Go back to the previous page
+            // window.location.reload();
         }
-      }, []);
+    }, []);
 
     return (
         <Routes>
@@ -41,32 +41,32 @@ function RootPage() {
                 path="/customers"
                 element={
                     <Main>
-                    <Customers />
-                </Main>
+                        <Customers />
+                    </Main>
                 }
             />
             <Route
                 path="/customer-archived"
                 element={
                     <Main>
-                    <CustomerArchived />
-                </Main>
+                        <CustomerArchived />
+                    </Main>
                 }
             />
             <Route
                 path="/status-archived"
                 element={
                     <Main>
-                    <StatusArchived />
-                </Main>
+                        <StatusArchived />
+                    </Main>
                 }
             />
             <Route
                 path="/sorters"
                 element={
-                     <Main>
-                     <Sorters />
-                 </Main>
+                    <Main>
+                        <Sorters />
+                    </Main>
 
                 }
             />
@@ -74,25 +74,25 @@ function RootPage() {
                 path="/status"
                 element={
                     <Main>
-                    <Status />
-                </Main>
-                    
+                        <Status />
+                    </Main>
+
                 }
             />
             <Route
                 path="/profile"
                 element={
                     <Main>
-                    <Profile />
-                </Main>
+                        <Profile />
+                    </Main>
                 }
             />
             <Route
                 path="/customers/customerstatus/:customerName/:customerId"
                 element={
                     <Main>
-                    <SortingStatus />
-                </Main>
+                        <SortingStatus />
+                    </Main>
                 }
             />
             <Route
@@ -107,16 +107,16 @@ function RootPage() {
                 path="/error404"
                 element={
                     <Main>
-                    <Error />
-                </Main>
+                        <Error />
+                    </Main>
                 }
             />
             <Route
                 path="/permission-denied"
                 element={
                     <Main>
-                    <PermissionDenied />
-                </Main>
+                        <PermissionDenied />
+                    </Main>
                 }
             />
             <Route path="*" element={<Error />} />
