@@ -15,31 +15,16 @@ const SortingStatus = () => {
   const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedMonth, setSelectedMonth] = useState(null);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
-    // const customerId = sessionStorage.getItem("customerId");
+    console.log("navVisible:", navVisible);
 
-    axios
-      .get(api_endpoint + "/fetch-history/" + user_id + "/" + customerId, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((response) => {
-        const history = response.data;
-        setAllHistory(history.history);
-        setIsLoading(false); // Data fetching is complete
-      });
-  }, []);
-
-  useEffect(() => {
-    document.title = "Customer Status";
+    document.title = "History Customer Status";
 
     // Add this code to control the body's overflow
     if (navVisible) {
@@ -49,7 +34,61 @@ const SortingStatus = () => {
     }
   }, [navVisible]);
 
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const user_id = localStorage.getItem("user_id");
+
+        const response = await axios.get(
+          `${api_endpoint}/fetch-history/${user_id}/${customerId}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        const history = response.data;
+        setAllHistory(history.history);
+        setIsLoading(false); // Data fetching is complete
+      } catch (error) {
+        console.error("Error fetching initial data:", error);
+        // Handle error (e.g., set an error state)
+      }
+    };
+
+    fetchData();
+  }, [customerId]);
+
+  useEffect(() => {
+    if (!selectedMonth) return;
+
+    const fetchMonthData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const user_id = localStorage.getItem("user_id");
+
+        const response = await axios.get(
+          `${api_endpoint}/fetch-history/${user_id}/${customerId}?month=${selectedMonth.value}`,
+          {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        const history = response.data;
+        setAllHistory(history.history);
+        setIsLoading(false); // Data fetching is complete
+      } catch (error) {
+        console.error("Error fetching month data:", error);
+        // Handle error (e.g., set an error state)
+      }
+    };
+
+    fetchMonthData();
+  }, [selectedMonth, customerId]);
 
   const monthOptions = [
     { value: 1, label: "January" },
@@ -79,7 +118,7 @@ const SortingStatus = () => {
           <div className="header">
             <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
               <div className="p-0.5 mb-2 w-full mt-6 relative">
-                <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+                <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                   History Customer Status
                 </h1>
               </div>
@@ -94,10 +133,11 @@ const SortingStatus = () => {
             ${navVisible ? "px-10" : "sm:ml-44"}`}
             >
               <div className="font-poppins">
-                <span className="block text-24px mb-1 dark:text-textTitle">
+                <span className="poppins-font  font-semibold block text-24px mb-1 dark:text-textTitle">
                   Customer's Name:
                 </span>
-                <span className="block text-20px underline font-bold mb-20 dark:text-textDesc">
+                <br />
+                <span className="poppins-font font-semibold ml-1 block text-20px underline mb-20 dark:text-textDesc">
                   {customerName}
                 </span>
               </div>
@@ -105,11 +145,7 @@ const SortingStatus = () => {
               <div className="flex dark:text-textTitle items-center justify-end mr-6 z-10">
                 <label
                   htmlFor="monthSelect"
-                  className="mr-2 bold"
-                  style={{
-                    fontFamily: "'Poppins', sans-serif",
-                    fontWeight: "bold",
-                  }}
+                  className="mr-2 font-bold poppins-font"
                 >
                   Month:
                 </label>
@@ -118,14 +154,21 @@ const SortingStatus = () => {
                   id="monthSelect"
                   options={monthOptions}
                   value={selectedMonth}
-                  onChange={setSelectedMonth}
-                  isSearchable={false} // Add this line to disable keyboard input
+                  onChange={(selectedOption) =>
+                    setSelectedMonth(selectedOption)
+                  }
+                  isSearchable={false}
                   clearable={false}
                   styles={{
                     option: (provided) => ({
                       ...provided,
                       fontFamily: "'Poppins', sans-serif",
                       color: "#000",
+                    }),
+                    singleValue: (provided) => ({
+                      ...provided,
+                      fontFamily: "'Poppins', sans-serif",
+                      color: "#333",
                     }),
                   }}
                 />

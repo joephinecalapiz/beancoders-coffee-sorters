@@ -75,26 +75,23 @@ const Signup = () => {
   return (
     <>
       <Navbar />
-      <div className="md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
-        <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
+      <div className="mt-20 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
+        <section className="justify-center md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full"
           >
-            <div className="w-[120%] mx-auto poppins-font">
-              <h1 className="text-center text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 poppins-font">
+            <div className="w-[145%] justify-center poppins-font">
+              <h1 className="text-center text-white font-bold text-[30px] md:mt-24 md:mb-12 mt-20 mb-12 poppins-font">
                 Create Account
               </h1>
-              <label
-                className="block text-white mb-2"
-                htmlFor="email"
-              >
+              {/* <label className="block text-white mb-2" htmlFor="email">
                 Full Name
-              </label>
+              </label> */}
               <input
                 name="name"
                 type="text"
-                placeholder=""
+                placeholder="Fullname"
                 {...register("name", {
                   required: "Name is required",
                   pattern: {
@@ -110,16 +107,13 @@ const Signup = () => {
               {errors.name && (
                 <p className="text-red-500 ml-2">{errors.name.message}</p>
               )}
-              <label
-                className="block text-white mb-2"
-                htmlFor="email"
-              >
+              {/* <label className="block text-white mb-2" htmlFor="email">
                 Email Address
-              </label>
+              </label> */}
               <input
                 name="email"
                 type="email"
-                placeholder="you@domain.com"
+                placeholder="Email Address"
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
@@ -127,23 +121,20 @@ const Signup = () => {
                     message: "Invalid email address",
                   },
                 })}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
+                className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
               )}
-              <label
-                className="block text-white mb-2"
-                htmlFor="password"
-              >
+              {/* <label className="block text-white mb-2" htmlFor="password">
                 Password
-              </label>
+              </label> */}
               <input
                 name="password"
                 type="password"
-                placeholder=""
+                placeholder="Password"
                 {...register("password", {
                   required: "Password is required",
                   minLength: {
@@ -151,7 +142,7 @@ const Signup = () => {
                     message: "Password must be at least 8 characters long",
                   },
                 })}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
+                className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
               />
@@ -187,19 +178,12 @@ const Signup = () => {
                 ) : null}
                 {loading ? "Loading..." : "Sign Up"}
               </button>
-              <p
-                className="text-white text-center my-7"
-              >
+              <p className="text-white text-center my-7 ">
                 Already have an account?
                 <span
-                  className="hover:underline cursor-pointer"
+                  className="underline cursor-pointer text-yellow-700 poppins-font font-semibold"
                   onClick={() => {
                     navigate("/signin");
-                  }}
-                  style={{
-                    color: "#512615",
-                    fontWeight: "bold",
-                    fontFamily: "Poppins, sans-serif",
                   }}
                 >
                   {" "}
@@ -218,7 +202,6 @@ const Signup = () => {
       >
         {popupMessage}
       </Modal>
-
     </>
   );
 };

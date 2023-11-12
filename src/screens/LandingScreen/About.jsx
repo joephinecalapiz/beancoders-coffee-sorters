@@ -16,7 +16,7 @@ const About = () => {
   return (
     <>
       <Navbar />
-      <div className="flex flex-col justify-center items-center bg-CoffeeBeans bg-cover h-full w-full">
+      <div className="md:mt-10 flex flex-col justify-center items-center bg-CoffeeBeans bg-cover h-full w-full">
         {/* Use min-h-screen to make sure the div takes at least the height of the screen */}
 
         <img src={BeansLogo} alt="BeansLogo" className="h-80 w-80 mt-20" />
@@ -41,6 +41,9 @@ const About = () => {
             This ensures that only the highest-quality beans are used for
             roasting and brewing, while lower-grade beans can be used for other
             purposes or blends.
+          </h3>
+          <h3 className="text-center mb-12 md:text-[18px] text-[16px] m-5 md:ml-20 md:mr-20 ml-22 mr-22 md:leading-[1.7]">
+            Upgrade sorter for the better, coffee will make it tastier!
           </h3>
         </div>
       </div>

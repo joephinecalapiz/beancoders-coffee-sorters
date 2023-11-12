@@ -110,7 +110,7 @@ const CustomerArchived = () => {
           Authorization: "Bearer " + token,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error("Failed to delete customer archived data");
       }
@@ -120,11 +120,9 @@ const CustomerArchived = () => {
       console.error("Error deleting or fetching customer data:", error);
     }
   };
-  
-  
 
   useEffect(() => {
-    document.title = "Archived";
+    document.title = "Customer Archived";
     // const cachedCustomerData = sessionStorage.getItem("archive customer data");
 
     // if (cachedCustomerData) {
@@ -169,8 +167,8 @@ const CustomerArchived = () => {
 
   return (
     <>
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <Topbar
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
@@ -179,7 +177,7 @@ const CustomerArchived = () => {
         <div className="header">
           <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
             <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
+              <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
                 Customer Archive
               </h1>
             </div>
@@ -195,14 +193,17 @@ const CustomerArchived = () => {
             ${navVisible ? "px-10" : "sm:ml-44"}`}
           >
             {/* Total number of customer */}
-            Total: {totalCustomers}
+            <div className="poppins-font font-bold">
+              Total: {totalCustomers}
+            </div>
             {/* Search bar */}
             <input
               type="text"
               placeholder="Search Customers"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+              className="px-4 py-2 poppins-font  border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+              style={{ width: "90%", maxWidth: "900px" }}
             />
           </div>
         </div>
@@ -231,7 +232,7 @@ const CustomerArchived = () => {
                       option: (provided) => ({
                         ...provided,
                         fontFamily: "'Poppins', sans-serif",
-                        color: "#000"
+                        color: "#000",
                       }),
                       singleValue: (provided) => ({
                         ...provided,
@@ -324,18 +325,21 @@ const CustomerArchived = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                  {(reloadCustomerData || sortedFilteredCustomers).map((customer) => (
-                    <tr key={customer.id}>
-                      <td className="poppins-font">{customer.id}</td>
-                      <td className="poppins-font">
-                        {new Date(customer.created_at).toLocaleDateString()}
-                      </td>
-                      <td className="poppins-font">{customer.customerName}</td>
-                      <td className="poppins-font">{customer.phoneNum}</td>
-                      <td className="poppins-font">{customer.address}</td>
-                      {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
-                      <td className="poppins-font">
-                        {/* <button
+                  {(reloadCustomerData || sortedFilteredCustomers).map(
+                    (customer) => (
+                      <tr key={customer.id}>
+                        <td className="poppins-font">{customer.id}</td>
+                        <td className="poppins-font">
+                          {new Date(customer.created_at).toLocaleDateString()}
+                        </td>
+                        <td className="poppins-font">
+                          {customer.customerName}
+                        </td>
+                        <td className="poppins-font">{customer.phoneNum}</td>
+                        <td className="poppins-font">{customer.address}</td>
+                        {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
+                        <td className="poppins-font">
+                          {/* <button
                           onClick={() => {
                             sessionStorage.setItem("customerId", customer.id);
                             navigate(
@@ -346,44 +350,46 @@ const CustomerArchived = () => {
                         >
                           See More...
                         </button> */}
-                        <button
-                          onClick={() => toggleDropdown(customer.id)}
-                          className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                          type="button"
-                        >
-                          <svg
-                            className="w-5 h-5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 16 3"
+                          <button
+                            onClick={() => toggleDropdown(customer.id)}
+                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            type="button"
                           >
-                            <path
-                              d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-                            />
-                          </svg>
-                        </button>
-                        {openDropdownId === customer.id && (
-                          <div
-                            id="dropdownDotsHorizontal"
-                            className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                            style={{ top: '100', right: '0' }}
-                          >
-                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
-                              <li>
-                                <button
-                                  onClick={() => deleteCustomer(customer.id)}
-                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >
-                                  Permanent Delete
-                                </button>
-                              </li>
-                            </ul>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
+                            <svg
+                              className="w-5 h-5"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 16 3"
+                            >
+                              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                            </svg>
+                          </button>
+                          {openDropdownId === customer.id && (
+                            <div
+                              id="dropdownDotsHorizontal"
+                              className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                              style={{ top: "100", right: "0" }}
+                            >
+                              <ul
+                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownMenuIconHorizontalButton"
+                              >
+                                <li>
+                                  <button
+                                    onClick={() => deleteCustomer(customer.id)}
+                                    className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    Permanent Delete
+                                  </button>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    )
+                  )}
                 </tbody>
               </table>
             </div>
