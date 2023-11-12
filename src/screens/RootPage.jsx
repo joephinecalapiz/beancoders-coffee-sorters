@@ -13,6 +13,7 @@ import SortingStatus from "./DashboardScreen/SortingStatus";
 import Receipt from "./ReceiptScreen/Receipt";
 import Error from "./error";
 import PermissionDenied from "./DeniedAccess";
+import Main from "./mainpage";
 
 function RootPage() {
     const [navVisible, showNavbar] = useState(false);
@@ -32,65 +33,67 @@ function RootPage() {
             <Route
                 path="/dashboard"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"} >
+                    <Main>
                         <Dashboard />
-                    </div>
+                    </Main>
                 }
             />
             <Route
                 path="/customers"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
-                        <Customers />
-                    </div>
+                    <Main>
+                    <Customers />
+                </Main>
                 }
             />
             <Route
                 path="/customer-archived"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
-                        <CustomerArchived />
-                    </div>
+                    <Main>
+                    <CustomerArchived />
+                </Main>
                 }
             />
             <Route
                 path="/status-archived"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
-                        <StatusArchived />
-                    </div>
+                    <Main>
+                    <StatusArchived />
+                </Main>
                 }
             />
             <Route
                 path="/sorters"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
-                        <Sorters />
-                    </div>
+                     <Main>
+                     <Sorters />
+                 </Main>
+
                 }
             />
             <Route
                 path="/status"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
-                        <Status />
-                    </div>
+                    <Main>
+                    <Status />
+                </Main>
+                    
                 }
             />
             <Route
                 path="/profile"
                 element={
-                    <div>
-                        <Profile />
-                    </div>
+                    <Main>
+                    <Profile />
+                </Main>
                 }
             />
             <Route
                 path="/customers/customerstatus/:customerName/:customerId"
                 element={
-                    <div>
-                        <SortingStatus />
-                    </div>
+                    <Main>
+                    <SortingStatus />
+                </Main>
                 }
             />
             <Route
@@ -104,17 +107,17 @@ function RootPage() {
             <Route
                 path="/error404"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto" : "page page-with-navbar"}>
-                        <Error />
-                    </div>
+                    <Main>
+                    <Error />
+                </Main>
                 }
             />
             <Route
                 path="/permission-denied"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto" : "page page-with-navbar"}>
-                        <PermissionDenied />
-                    </div>
+                    <Main>
+                    <PermissionDenied />
+                </Main>
                 }
             />
             <Route path="*" element={<Error />} />
