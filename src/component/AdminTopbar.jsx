@@ -20,7 +20,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [isRotated, setRotated] = useState(false);
   const [compInfo, setCompInfo] = useState("");
   const [profileIcon, setProfileIcon] = useState({
-    profileAvatar: compInfo.profileAvatar
+    profileAvatar: compInfo.profileAvatar,
   });
 
   const toggleDropdown = () => {
@@ -46,7 +46,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   useEffect(() => {
     setProfileIcon((prevProfileData) => ({
       ...prevProfileData,
-      profileAvatar: compInfo.profileAvatar
+      profileAvatar: compInfo.profileAvatar,
     }));
   }, [userInfo]);
 
@@ -153,11 +153,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         >
           <FaBars size={20} />
         </button>
-
         {/* <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" /> */}
         <span className="px-5 pt-5 text-lightBrown dark:text-lightBrown poppins-font text-xl h-16 font-semibold">
-        {profileIcon.companyName}
-          </span>{" "}
+          BeanCoders
+        </span>{" "}
       </div>
       <div className="flex bg-black dark:bg-gray items-center">
         <div className="flex items-center relative" ref={dropdownRef}>
@@ -181,7 +180,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   : BeansLogo
               }
               alt="BeansLogo"
-              className="w-12 h-12 rounded-full bg-white mr-5"
+              className="w-12 h-12 rounded-full bg-white mr-9"
             />
           </button>
           {isDropdownOpen && (
@@ -232,7 +231,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className="admin-user text-white text-lg mr-8 poppins-font font-semibold mx-5">
+        <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-10 whitespace-nowrap">
           Super Admin
         </h1>
       </div>
