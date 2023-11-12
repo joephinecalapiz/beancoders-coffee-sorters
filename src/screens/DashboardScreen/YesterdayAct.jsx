@@ -6,7 +6,7 @@ import axios from "axios";
 import api_endpoint from "../../config";
 import { useNavigate, useParams } from "react-router-dom";
 
-const Activities = () => {
+const YesterdayAct = () => {
   const navigate = useNavigate();
   const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);
@@ -28,28 +28,30 @@ const Activities = () => {
       })
       .then((response) => {
         const data = response.data;
-        // Get the current date in the format YYYY-MM-DD
-        const today = new Date().toISOString().split('T')[0];
+          // Get yesterday's date by subtracting one day from the current date
+          const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+              .toISOString()
+              .split('T')[0];
         // Filter data to include only records created today
         const filteredData = data.history.filter(
-          (record) => record.created_at.split('T')[0] === today
+          (record) => record.created_at.split('T')[0] === yesterday
         ).slice(0, 5); // Limit to the first 5 records
         
-        sessionStorage.setItem("todayactivityData", JSON.stringify(filteredData));
+        sessionStorage.setItem("yestactivityData", JSON.stringify(filteredData));
         setAllHistory(filteredData);
         setIsLoading(false); // Data fetching is complete
       });
   }, []);
 
   useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("todayactivityData");
+    const cachedCustomerData = sessionStorage.getItem("yestactivityData");
     if (cachedCustomerData) {
       setAllHistory(JSON.parse(cachedCustomerData));
     }
   }, []);
 
   return (
-    <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+    <div className="mt-10 shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
       <div className="max-h-[450px] overflow-y-auto">
         <table className="min-w-full divide-y divide-gray-200 customers-table poppins-font ">
           <thead>
@@ -58,7 +60,7 @@ const Activities = () => {
                 scope="col"
                 className="px-6 py-3 text-start  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
               >
-                Today
+                Yesterday
               </th>
               <th
                 scope="col"
@@ -113,4 +115,4 @@ const Activities = () => {
   );
 };
 
-export default Activities;
+export default YesterdayAct;

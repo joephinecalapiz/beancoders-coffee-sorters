@@ -275,6 +275,32 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     </li>
                   </ul>
                 )}
+                <li
+                  onClick={() => {
+                    navigate("/contact-us");
+                  }}
+                >
+                  <a
+                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    role="menuitem"
+                    aria-expanded={isProfileMenuOpen}
+                  >
+                    Contact Us
+                  </a>
+                  <li
+                  onClick={() => {
+                    navigate("/aboutus");
+                  }}
+                >
+                  <a
+                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    role="menuitem"
+                    aria-expanded={isProfileMenuOpen}
+                  >
+                    About Us
+                  </a>
+                </li>
+                </li>
                 <li onClick={handleSignOut}>
                   <a
                     className="block px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
