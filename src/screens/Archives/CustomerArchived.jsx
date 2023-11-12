@@ -276,6 +276,8 @@ const CustomerArchived = () => {
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
+            <div className="max-h-[420px] overflow-y-auto">
+
               <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                 <thead>
                   <tr>
@@ -392,6 +394,8 @@ const CustomerArchived = () => {
                 </tbody>
               </table>
             </div>
+            </div>
+
           </div>
         </div>
       </div>
