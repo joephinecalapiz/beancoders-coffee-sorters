@@ -128,7 +128,6 @@ const CustomerArchived = () => {
     // if (cachedCustomerData) {
     //   setAllCustomers(JSON.parse(cachedCustomerData));
     // }
-
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
