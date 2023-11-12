@@ -15,7 +15,7 @@ function Main({ children }) {
                 collapsed={navVisible}
                 handleToggleSidebar={toggleSidebar} />
             <AdminSidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-            <div className={`main relative z-5 inset-0 mt-16  ${!navVisible ? "sm:ml-60" : "ml-16"}`}
+            <div className={`main relative z-5 inset-0 mt-16  ${!navVisible ? "sm:ml-60" : "sm:ml-16"}`}
                 style={{
                     transition: "margin-left 0.3s ease",
                 }}
