@@ -37,7 +37,6 @@ html,
 .App {
   display: flex;
   flex-basis: 100%;
-  /* height: max-content; */
   flex-direction: column;
   transition: margin-left 1s;
 }
@@ -58,7 +57,6 @@ html,
   margin-left: 15%;
 }
 
-/* For screens smaller than a certain breakpoint (e.g., 640px), use a different layout */
 @media (max-width: 700px) {
   .grid-cols-4 {
     grid-template-columns: repeat(1, minmax(0, 1fr));

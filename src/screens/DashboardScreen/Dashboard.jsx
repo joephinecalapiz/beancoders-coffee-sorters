@@ -102,21 +102,15 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} /> */}
-      {/* <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      /> */}
       <div className="header">
-        <div className="pl-5 pt-0.5 mb-2 pr-5">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pt-0.5 mb-2">
           <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-5 text-base p-3 rounded-lg shadow-xl">
             Dashboard
           </h1>
         </div>
       </div>
       <div
-        className='p-5'
+        className="p-5"
         style={{
           transition: "margin-left 0.3s ease",
         }}
@@ -162,8 +156,9 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+
       <div
-        className="p-5 activities"
+        className="md:pl-5 md:pr-5 pr-2 pl-2 p-5 activities"
         style={{
           transition: "margin-left 0.3s ease",
           marginTop: "-20px",

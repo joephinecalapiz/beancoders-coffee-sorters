@@ -15,11 +15,7 @@ const YesterdayAct = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
-    // const customerId = sessionStorage.getItem("customerId");
 
-    // // Get the current date in the format YYYY-MM-DD
-    // const today = new Date().toISOString().split('T')[0];
-    // console.log(today)
     axios
       .get(api_endpoint + "/fetch-histories/" + user_id, {
         headers: {
@@ -28,16 +24,19 @@ const YesterdayAct = () => {
       })
       .then((response) => {
         const data = response.data;
-          // Get yesterday's date by subtracting one day from the current date
-          const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
-              .toISOString()
-              .split('T')[0];
+        // Get yesterday's date by subtracting one day from the current date
+        const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+          .toISOString()
+          .split("T")[0];
         // Filter data to include only records created today
-        const filteredData = data.history.filter(
-          (record) => record.created_at.split('T')[0] === yesterday
-        ).slice(0, 5); // Limit to the first 5 records
-        
-        sessionStorage.setItem("yestactivityData", JSON.stringify(filteredData));
+        const filteredData = data.history
+          .filter((record) => record.created_at.split("T")[0] === yesterday)
+          .slice(0, 5); // Limit to the first 5 records
+
+        sessionStorage.setItem(
+          "yestactivityData",
+          JSON.stringify(filteredData)
+        );
         setAllHistory(filteredData);
         setIsLoading(false); // Data fetching is complete
       });
@@ -99,7 +98,6 @@ const YesterdayAct = () => {
                   <button
                     onClick={() => {
                       navigate(`/status/receipt/${historyItem.id}`);
-                      // navigate(`/customerstatus/${sorted.customerName}`);
                     }}
                     className="see-more-button focus:outline-none"
                   >

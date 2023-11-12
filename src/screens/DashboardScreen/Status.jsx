@@ -278,21 +278,15 @@ const Status = () => {
 
   return (
     <>
-      {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} /> */}
-      {/* <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      /> */}
       <div className="header">
-        <div className="pl-5 pb-5 pt-0.5 pr-5">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pb-5 pt-0.5">
           <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
             Status
           </h1>
         </div>
       </div>
 
-      <div className="search-and-button mt-14">
+      <div className="search-and-button mt-16">
         <div className="p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
           {/* Search bar */}
           <input
@@ -301,13 +295,13 @@ const Status = () => {
             value={searchText}
             onChange={handleSearchInputChange}
             className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
-            style={{ width: "80%", maxWidth: "800px" }}
+            style={{ width: "80%", maxWidth: "850px" }}
           />
 
           {/* Add New button */}
           <button
             onClick={openModal}
-            className="px-4 py-2 text-white rounded focus:outline-none"
+            className="px-4 py-2 poppins-font font-semibold text-white rounded bg-[#512615] text-shadow shadow-md border-none text-shadow focus:outline-none "
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = "#C4A484";
               e.target.style.transition = "background-color 0.3s ease";
@@ -316,22 +310,15 @@ const Status = () => {
               e.target.style.backgroundColor = "#512615";
               e.target.style.transition = "background-color 0.3s ease";
             }}
-            style={{
-              backgroundColor: "#512615",
-              fontFamily: "'Poppins', sans-serif",
-              boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-              border: "none",
-              textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
-            }}
           >
             Add New
           </button>
         </div>
       </div>
 
-      <div className="px-4">
+      <div className="md:pl-5 md:pr-5 pr-2 pl-2">
         <div
-          className="p-5"
+          className="md:p-5 pt-10"
           style={{
             transition: "margin-left 0.3s ease",
             marginTop: "-20px",

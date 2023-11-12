@@ -81,96 +81,85 @@ const ManageUsers = () => {
 
   return (
     <>
-      {/* <AdminSidebar
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      /> */}
       <div className="header">
-        <div className="pl-5 pt-0.5 mb-2 pr-5">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pt-0.5 mb-2">
           <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-5 text-base p-3 rounded-lg shadow-xl">
             Manage Users
           </h1>
         </div>
-        </div>
-        <div className="search-and-button mt-20">
-          <div
-            className='p-5 dark:text-textTitle px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins'
-          >
-            {/* Total number of sorters */}
-            <div className="poppins-font font-bold">Total: {totalUsers}</div>
+      </div>
+      <div className="search-and-button mt-20">
+        <div className="p-5 dark:text-textTitle px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
+          {/* Total number of sorters */}
+          <div className="poppins-font font-bold">Total: {totalUsers}</div>
 
-            {/* Search bar */}
-            <input
-              type="text"
-              placeholder="Search Sorters"
-              value={searchText}
-              onChange={handleSearchInputChange}
-              className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
-              style={{ width: "80%", maxWidth: "1000px" }}
-            />
-          </div>
+          {/* Search bar */}
+          <input
+            type="text"
+            placeholder="Search Sorters"
+            value={searchText}
+            onChange={handleSearchInputChange}
+            className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
+            style={{ width: "50%", maxWidth: "1000px" }}
+          />
         </div>
-        <div className="px-4">
-          <div
-            className='p-5'
-            style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
-            }}
-          >
-            <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <div className="max-h-[450px] overflow-y-auto">
-                <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Id num
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Email
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Date Registered
-                      </th>
+      </div>
+      <div className="md:pl-5 md:pr-5 pr-2 pl-2 p-5">
+        <div
+          className="md:p-5"
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+            <div className="max-h-[450px] overflow-y-auto">
+              <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Id num
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Email
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date Registered
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
+                  {sortedFilteredSorters.map((user, index) => (
+                    <tr key={user.id}>
+                      <td className="poppins-font">{index + 1}</td>
+                      <td className="poppins-font">{user.name}</td>
+                      <td className="poppins-font">{user.email}</td>
+                      <td className="poppins-font">
+                        {new Date(user.created_at).toLocaleDateString()}
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                    {sortedFilteredSorters.map((user, index) => (
-                      <tr key={user.id}>
-                        <td className="poppins-font">{index + 1}</td>
-                        <td className="poppins-font">{user.name}</td>
-                        <td className="poppins-font">{user.email}</td>
-                        <td className="poppins-font">
-                          {new Date(user.created_at).toLocaleDateString()}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
+      </div>
 
       {/* Modal */}
       {isModalOpen && (

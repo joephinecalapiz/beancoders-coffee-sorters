@@ -15,11 +15,7 @@ const Activities = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user_id = localStorage.getItem("user_id");
-    // const customerId = sessionStorage.getItem("customerId");
 
-    // // Get the current date in the format YYYY-MM-DD
-    // const today = new Date().toISOString().split('T')[0];
-    // console.log(today)
     axios
       .get(api_endpoint + "/fetch-histories/" + user_id, {
         headers: {
@@ -100,7 +96,6 @@ const Activities = () => {
                   <button
                     onClick={() => {
                       navigate(`/status/receipt/${historyItem.id}`);
-                      // navigate(`/customerstatus/${sorted.customerName}`);
                     }}
                     className="see-more-button focus:outline-none"
                   >
