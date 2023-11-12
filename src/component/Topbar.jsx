@@ -21,7 +21,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [compInfo, setCompInfo] = useState("");
   const [profileIcon, setProfileIcon] = useState({
     profileAvatar: compInfo.profileAvatar,
-    companyName: compInfo.companyName
+    companyName: compInfo.companyName,
   });
 
   const toggleDropdown = () => {
@@ -37,7 +37,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   useEffect(() => {
     fetchUserInfo();
     fetchCompanyInfo();
-    
+
     document.addEventListener("mousedown", closeDropdown);
     return () => {
       document.removeEventListener("mousedown", closeDropdown);
@@ -50,7 +50,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     if (cachedCustomerData) {
       setCompInfo(JSON.parse(cachedCustomerData));
     }
-  }, [])
+  }, []);
 
   const fetchUserInfo = async () => {
     let token = localStorage.getItem("token");
@@ -76,7 +76,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     setProfileIcon((prevProfileData) => ({
       ...prevProfileData,
       profileAvatar: compInfo.profileAvatar,
-      companyName: compInfo.companyName
+      companyName: compInfo.companyName,
     }));
   }, [userInfo]);
 
@@ -96,7 +96,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
       const compData = await response.json();
       setCompInfo(compData.details);
       if (sessionStorage.getItem("profile photo") === null) {
-        sessionStorage.setItem("profile photo", JSON.stringify(compData.details));
+        sessionStorage.setItem(
+          "profile photo",
+          JSON.stringify(compData.details)
+        );
       }
     } catch (error) {
       console.error("Error fetching company details data:", error);
@@ -167,13 +170,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         >
           <FaBars size={20} />
         </button>
-
         {/* <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" /> */}
         <span className="px-5 pt-5 text-lightBrown dark:text-lightBrown poppins-font text-xl h-16 font-semibold">
-        {profileIcon.companyName}
-          </span>{" "}
+          {profileIcon.companyName}
+        </span>{" "}
       </div>
-      <div className="flex bg-black dark:bg-gray items-center">
+      <div className="flex bg-black dark:bg-gray items-center md:pb-1">
         <div className="flex items-center relative" ref={dropdownRef}>
           <button
             type="button"
@@ -195,7 +197,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   : BeansLogo
               }
               alt="BeansLogo"
-              className="w-12 h-12 rounded-full bg-white mr-5"
+              className="fixed w-12 h-12 rounded-full bg-white "
             />
           </button>
           {isDropdownOpen && (
@@ -271,7 +273,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                         Status
                       </a>
                     </li>
-                    {/* Add more sub-menu items as needed */}
                   </ul>
                 )}
                 <li onClick={handleSignOut}>
@@ -286,9 +287,11 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className="admin-user text-white text-lg mr-8 poppins-font font-semibold mx-5">
-          Admin
-        </h1>
+        <div className="mt-3">
+          <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-12 whitespace-nowrap">
+            Admin
+          </h1>
+        </div>
       </div>
 
       {/* Confirmation Modal */}
