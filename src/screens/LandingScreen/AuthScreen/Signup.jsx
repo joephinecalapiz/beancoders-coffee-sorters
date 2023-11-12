@@ -72,6 +72,14 @@ const Signup = () => {
     document.title = "Sign Up";
   }, []);
 
+  useEffect(() =>{
+    const token = localStorage.getItem('token');
+    if (token) {
+      // If there's a token, navigate back to the previous page
+      navigate("/dashboard")
+    }  
+})
+
   return (
     <>
       <Navbar />
