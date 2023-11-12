@@ -33,7 +33,7 @@ const Activities = () => {
         // Filter data to include only records created today
         const filteredData = data.history.filter(
           (record) => record.created_at.split('T')[0] === today
-        );
+        ).slice(0, 5); // Limit to the first 5 records
         
         sessionStorage.setItem("todayactivityData", JSON.stringify(filteredData));
         setAllHistory(filteredData);
