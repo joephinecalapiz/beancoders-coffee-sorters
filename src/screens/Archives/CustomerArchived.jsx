@@ -82,20 +82,23 @@ const CustomerArchived = () => {
         throw new Error("Failed to fetch customer archived data");
       }
       const data = await response.json();
-      setAllCustomers((prevCustomers) => {
-        // Update state with the new customer data
-        const updatedArchivedCustomer = [...prevCustomers, data.archiveds];
-        // Update session storage with the updated data
-        sessionStorage.setItem(
-          "archive customer data",
-          JSON.stringify(updatedArchivedCustomer)
-        );
-        return updatedArchivedCustomer;
-      });
+      // setAllCustomers((prevCustomers) => {
+      //   // Update state with the new customer data
+      //   const updatedArchivedCustomer = [...prevCustomers, data.archiveds];
+      //   // Update session storage with the updated data
+      //   sessionStorage.setItem(
+      //     "archive customer data",
+      //     JSON.stringify(updatedArchivedCustomer)
+      //   );
+      //   return updatedArchivedCustomer;
+      // });
+      setAllCustomers(data.archiveds)
     } catch (error) {
       console.error("Error fetching customer archived data:", error);
     }
   };
+
+  console.log(allCustomers)
 
   const deleteCustomer = async (id) => {
     try {
@@ -122,11 +125,11 @@ const CustomerArchived = () => {
 
   useEffect(() => {
     document.title = "Archived";
-    const cachedCustomerData = sessionStorage.getItem("archive customer data");
+    // const cachedCustomerData = sessionStorage.getItem("archive customer data");
 
-    if (cachedCustomerData) {
-      setAllCustomers(JSON.parse(cachedCustomerData));
-    }
+    // if (cachedCustomerData) {
+    //   setAllCustomers(JSON.parse(cachedCustomerData));
+    // }
 
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
