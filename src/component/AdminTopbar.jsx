@@ -20,7 +20,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [isRotated, setRotated] = useState(false);
   const [compInfo, setCompInfo] = useState("");
   const [profileIcon, setProfileIcon] = useState({
-    profileAvatar: compInfo.profileAvatar
+    profileAvatar: compInfo.profileAvatar,
   });
 
   const toggleDropdown = () => {
@@ -46,7 +46,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   useEffect(() => {
     setProfileIcon((prevProfileData) => ({
       ...prevProfileData,
-      profileAvatar: compInfo.profileAvatar
+      profileAvatar: compInfo.profileAvatar,
     }));
   }, [userInfo]);
 
@@ -153,11 +153,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         >
           <FaBars size={20} />
         </button>
-
         {/* <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" /> */}
         <span className="px-5 pt-5 text-lightBrown dark:text-lightBrown poppins-font text-xl h-16 font-semibold">
-        {profileIcon.companyName}
-          </span>{" "}
+          BeanCoders
+        </span>{" "}
       </div>
       <div className="flex bg-black dark:bg-gray items-center">
         <div className="flex items-center relative" ref={dropdownRef}>

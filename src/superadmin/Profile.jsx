@@ -275,16 +275,16 @@ const Profile = () => {
             Profile
           </h1>
         </div>
-        <div className='p-4'>
+        <div className="p-4">
           <div
             className=" bg-white dark:bg-container object-fill rounded-xl shadow-lg overflow-hidden lg:max-w-full bg-center bg-no-repeat"
             style={{
               backgroundImage:
                 profileData.images && profileData.images.length > 0
                   ? `url("${image_endpoint}/storage/${profileData.images.slice(
-                    2,
-                    -2
-                  )}")`
+                      2,
+                      -2
+                    )}")`
                   : "",
             }}
           >
@@ -297,11 +297,11 @@ const Profile = () => {
                   <img
                     src={
                       profileData.profileAvatar &&
-                        profileData.profileAvatar.length > 0
+                      profileData.profileAvatar.length > 0
                         ? `${image_endpoint}/storage/${profileData.profileAvatar.slice(
-                          2,
-                          -2
-                        )}`
+                            2,
+                            -2
+                          )}`
                         : beansLogo
                     }
                     alt="profile picture"
@@ -309,11 +309,11 @@ const Profile = () => {
                   />
                 </label>
               </div>
-              <label className="admin-name text-white dark:text-textTitle poppins-font justify-center bg-gray-1000 drop-shadow-2xl">
+              <label className="admin-name text-black dark:text-textTitle poppins-font justify-center bg-gray-1000 drop-shadow-2xl">
                 {profileData.name}
               </label>
 
-              <label className="admin-label text-white dark:text-textDesc poppins-font mb-5 justify-center drop-shadow-4xl">
+              <label className="admin-label text-black dark:text-textDesc poppins-font mb-5 justify-center drop-shadow-4xl">
                 Super Admin
               </label>
             </div>
@@ -404,7 +404,7 @@ const Profile = () => {
                             Role
                           </dt>
                           <dd className="mt-1 text-sm leading-6 text-gray-900 dark:text-textDesc sm:col-span-2 sm:mt-0 justify-self-end">
-                          Super Admin
+                            Super Admin
                           </dd>
                         </div>
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
