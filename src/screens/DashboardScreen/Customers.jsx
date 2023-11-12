@@ -431,7 +431,7 @@ const Customers = () => {
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-              <div className="max-h-[390px] overflow-y-auto">
+              <div className="max-h-[350px] overflow-y-auto">
                 <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                   <thead>
                     <tr>

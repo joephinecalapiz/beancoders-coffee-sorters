@@ -116,14 +116,13 @@ const SortingStatus = () => {
       <div className="header">
              <div className="pl-5 pb-5 pt-0.5 pr-5">
           <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
-            Customers
+            Customer History
           </h1>
         </div>
           </div>
-          <div className="search-and-button">
+          <div className="search-and-button mt-20">
             <div
-              className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-            ${navVisible ? "px-10" : "sm:ml-44"}`}
+              className='p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins '
             >
               <div className="font-poppins">
                 <span className="poppins-font  font-semibold block text-24px mb-1 dark:text-textTitle">
@@ -170,7 +169,7 @@ const SortingStatus = () => {
           </div>
           <div className="px-4">
             <div
-              className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+              className='p-5'
               style={{
                 transition: "margin-left 0.3s ease",
                 marginTop: "-20px",

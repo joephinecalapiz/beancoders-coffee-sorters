@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
 import Activities from "./Activities";
+import YesterdayAct from "./YesterdayAct";
 
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -173,6 +174,7 @@ const Dashboard = () => {
             Recent Activities
           </h1>
           <Activities />
+          <YesterdayAct />
         </div>
       </div>
       <UpdateCompanyInfo
