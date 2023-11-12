@@ -1,12 +1,6 @@
 /** @format */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-nav {
-  z-index: 2;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
 .navbar {
   transform: translateX(-100%);
 }
@@ -24,21 +18,11 @@ nav {
   text-overflow: ellipsis;
 }
 
-/* .active-link {
-  background-color: #4d4f55;
-  color: #000;
-} */
-
 .active-link-foot {
   background-color: #4d4f55;
   color: #ffffff;
   padding: 10px;
 }
-
-/* .nav-link:hover {
-  background-color: #353639;
-  color: #fff;
-} */
 
 .nav-link span {
   margin-left: 1px;
@@ -66,34 +50,13 @@ nav {
 }
 
 @media only screen and (max-width: 400px) {
-  /* nav {
-    width: 50%;
-    padding: 10px;
-    height: 100%;
-  } */
 }
-
-/* @media only screen and (max-width: 500px) {
-  .mobile-nav {
-    display: flex;
-    align-items: center;
-  }
-  nav {
-    width: 70%;
-    top: 100px;
-    min-height: calc(100vh - 38px);
-  }
-
-  .nav-btn {
-    display: none;
-  }
-} */
 
 @media only screen and (max-width: 640px) {
   .collapsed {
     display: none;
   }
-  .main-menu{
+  .main-menu {
     display: none;
   }
 }
