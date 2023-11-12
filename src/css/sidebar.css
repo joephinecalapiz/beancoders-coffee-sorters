@@ -89,12 +89,6 @@ nav {
   }
 } */
 
-nav {
-  width: 70%;
-  top: 100px;
-  min-height: calc(100vh - 38px);
-}
-
 @media only screen and (max-width: 640px) {
   .collapsed {
     display: none;
