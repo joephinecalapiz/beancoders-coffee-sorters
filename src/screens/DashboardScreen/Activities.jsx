@@ -29,13 +29,16 @@ const Activities = () => {
       .then((response) => {
         const data = response.data;
         // Get the current date in the format YYYY-MM-DD
-        const today = new Date().toISOString().split('T')[0];
+        const today = new Date().toISOString().split("T")[0];
         // Filter data to include only records created today
-        const filteredData = data.history.filter(
-          (record) => record.created_at.split('T')[0] === today
-        ).slice(0, 5); // Limit to the first 5 records
-        
-        sessionStorage.setItem("todayactivityData", JSON.stringify(filteredData));
+        const filteredData = data.history
+          .filter((record) => record.created_at.split("T")[0] === today)
+          .slice(0, 5); // Limit to the first 5 records
+
+        sessionStorage.setItem(
+          "todayactivityData",
+          JSON.stringify(filteredData)
+        );
         setAllHistory(filteredData);
         setIsLoading(false); // Data fetching is complete
       });
@@ -50,7 +53,7 @@ const Activities = () => {
 
   return (
     <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-      <div className="max-h-[450px] overflow-y-auto">
+      <div className="max-h-[420px] overflow-y-auto">
         <table className="min-w-full divide-y divide-gray-200 customers-table poppins-font ">
           <thead>
             <tr>
