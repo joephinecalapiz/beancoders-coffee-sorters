@@ -68,6 +68,11 @@ const Navbar = () => {
       href: "/status",
       current: location.pathname === "/status",
     },
+    {
+      name: "Profile",
+      href: "/profile",
+      current: location.pathname === "/profile",
+    },
   ]);
 
   const toggleMenu = () => {
