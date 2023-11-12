@@ -41,6 +41,8 @@ const ContactUs = () => {
     document.title = "Contact Us";
   }, []);
 
+  const email = localStorage.getItem("savedEmail")
+
   const onSubmitHandler = async (formData) => {
     // e.preventDefault();
     setLoading(true); // Set loading state to true when form is submitted
@@ -230,6 +232,7 @@ const ContactUs = () => {
 
               <input
                 name="email"
+                value={email}
                 type="email"
                 placeholder="Email Address"
                 {...register("email", {

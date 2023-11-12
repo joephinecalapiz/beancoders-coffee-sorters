@@ -94,6 +94,9 @@ nav {
   .collapsed {
     display: none;
   }
+  .main-menu{
+    display: none;
+  }
 }
 
 .collapsed {
