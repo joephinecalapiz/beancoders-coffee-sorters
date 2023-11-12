@@ -73,7 +73,7 @@ nav {
   } */
 }
 
-@media only screen and (max-width: 500px) {
+/* @media only screen and (max-width: 500px) {
   .mobile-nav {
     display: flex;
     align-items: center;
@@ -87,7 +87,12 @@ nav {
   .nav-btn {
     display: none;
   }
-  
+} */
+
+nav {
+  width: 70%;
+  top: 100px;
+  min-height: calc(100vh - 38px);
 }
 
 @media only screen and (max-width: 640px) {
