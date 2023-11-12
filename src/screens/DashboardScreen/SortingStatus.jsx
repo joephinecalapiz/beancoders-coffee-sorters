@@ -107,25 +107,18 @@ const SortingStatus = () => {
 
   return (
     <>
-      <div className="max-w-8xl mx-auto pl-16">
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-        <Topbar
-          onToggleSidebar={toggleSidebar}
-          collapsed={navVisible}
-          handleToggleSidebar={toggleSidebar}
-        />
-        <div className={`mx-auto ${navVisible ? "" : ""}`}>
-          <div className="header">
-            <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-              <div className="p-0.5 mb-2 w-full mt-6 relative">
-                <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                  History Customer Status
-                </h1>
-              </div>
-              <div className="flex items-center"></div>
-              <br />
-              <br />
-            </div>
+    {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} /> */}
+      {/* <Topbar
+        onToggleSidebar={toggleSidebar}
+        collapsed={navVisible}
+        handleToggleSidebar={toggleSidebar}
+      /> */}
+      <div className="header">
+             <div className="pl-5 pb-5 pt-0.5 pr-5">
+          <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
+            Customers
+          </h1>
+        </div>
           </div>
           <div className="search-and-button">
             <div
@@ -237,8 +230,6 @@ const SortingStatus = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
     </>
   );
 };

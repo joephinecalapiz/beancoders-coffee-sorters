@@ -9,7 +9,7 @@ import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 
 const CustomerArchived = () => {
-  const [navVisible, showNavbar] = useState(true);
+  const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
   const monthOptions = [
@@ -82,20 +82,23 @@ const CustomerArchived = () => {
         throw new Error("Failed to fetch customer archived data");
       }
       const data = await response.json();
-      setAllCustomers((prevCustomers) => {
-        // Update state with the new customer data
-        const updatedArchivedCustomer = [...prevCustomers, data.archiveds];
-        // Update session storage with the updated data
-        sessionStorage.setItem(
-          "archive customer data",
-          JSON.stringify(updatedArchivedCustomer)
-        );
-        return updatedArchivedCustomer;
-      });
+      // setAllCustomers((prevCustomers) => {
+      //   // Update state with the new customer data
+      //   const updatedArchivedCustomer = [...prevCustomers, data.archiveds];
+      //   // Update session storage with the updated data
+      //   sessionStorage.setItem(
+      //     "archive customer data",
+      //     JSON.stringify(updatedArchivedCustomer)
+      //   );
+      //   return updatedArchivedCustomer;
+      // });
+      setAllCustomers(data.archiveds)
     } catch (error) {
       console.error("Error fetching customer archived data:", error);
     }
   };
+
+  console.log(allCustomers)
 
   const deleteCustomer = async (id) => {
     try {
@@ -120,12 +123,11 @@ const CustomerArchived = () => {
 
   useEffect(() => {
     document.title = "Customer Archived";
-    const cachedCustomerData = sessionStorage.getItem("archive customer data");
+    // const cachedCustomerData = sessionStorage.getItem("archive customer data");
 
-    if (cachedCustomerData) {
-      setAllCustomers(JSON.parse(cachedCustomerData));
-    }
-
+    // if (cachedCustomerData) {
+    //   setAllCustomers(JSON.parse(cachedCustomerData));
+    // }
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
@@ -164,30 +166,23 @@ const CustomerArchived = () => {
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
       <Topbar
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
-      />
+      /> */}
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-            <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Customer Archive
-              </h1>
-            </div>
-
-            <div className="flex items-center"></div>
-            <br />
-            <br />
-          </div>
+        <div className="pl-5 pb-5 pt-0.5 pr-5">
+          <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
+            Customer Archives
+          </h1>
         </div>
-        <div className="search-and-button">
+        </div>
+        <div className="search-and-button mt-20">
           <div
-            className={`dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-            ${navVisible ? "px-10" : "sm:ml-44"}`}
+            className='dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins'
           >
             {/* Total number of customer */}
             <div className="poppins-font font-bold">
@@ -205,7 +200,7 @@ const CustomerArchived = () => {
           </div>
         </div>
         <div className="calendar">
-          <div className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}>
+          <div className='p-5'>
             <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
               <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
                 <label
@@ -267,13 +262,15 @@ const CustomerArchived = () => {
 
         <div className="px-4">
           <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+            className='p-5'
             style={{
               transition: "margin-left 0.3s ease",
               marginTop: "-20px",
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
+            <div className="max-h-[420px] overflow-y-auto">
+
               <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                 <thead>
                   <tr>
@@ -365,7 +362,7 @@ const CustomerArchived = () => {
                           {openDropdownId === customer.id && (
                             <div
                               id="dropdownDotsHorizontal"
-                              className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                              className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
                               style={{ top: "100", right: "0" }}
                             >
                               <ul
@@ -390,6 +387,8 @@ const CustomerArchived = () => {
                 </tbody>
               </table>
             </div>
+            </div>
+
           </div>
         </div>
       </div>
