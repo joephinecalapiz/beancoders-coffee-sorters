@@ -20,10 +20,7 @@ function Main({ children }) {
                     transition: "margin-left 0.3s ease",
                 }}
             >
-                <div className={`mx-auto ${navVisible ? "" : ""}`}
-                >
-                    {children}
-                </div>
+                {children}
             </div>
         </>
     )
