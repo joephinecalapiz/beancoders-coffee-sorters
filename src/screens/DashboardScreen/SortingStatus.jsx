@@ -15,7 +15,33 @@ const SortingStatus = () => {
   const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [selectedMonth, setSelectedMonth] = useState(null);
+  const monthOptions = [
+    { value: 1, label: "January" },
+    { value: 2, label: "February" },
+    { value: 3, label: "March" },
+    { value: 4, label: "April" },
+    { value: 5, label: "May" },
+    { value: 6, label: "June" },
+    { value: 7, label: "July" },
+    { value: 8, label: "August" },
+    { value: 9, label: "September" },
+    { value: 10, label: "October" },
+    { value: 11, label: "November" },
+    { value: 12, label: "December" },
+  ];
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Adding 1 to match your month options (1 - 12)
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState({
+    value: currentMonth,
+    label: monthOptions[currentMonth - 1].label, // Get the label for the current month
+  });
+  const [searchText, setSearchText] = useState("");
+
+  const handleSearchInputChange = (e) => {
+    console.log("Search input changed:", e.target.value);
+    setSearchText(e.target.value);
+  };
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -33,77 +59,64 @@ const SortingStatus = () => {
       document.body.style.overflow = "auto";
     }
   }, [navVisible]);
+  
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const user_id = localStorage.getItem("user_id");
+    document.title = "Customer Archived";
+    // const cachedCustomerData = sessionStorage.getItem("archive customer data");
 
-        const response = await axios.get(
-          `${api_endpoint}/fetch-history/${user_id}/${customerId}`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+    // if (cachedCustomerData) {
+    //   setAllCustomers(JSON.parse(cachedCustomerData));
+    // }
+    if (selectedMonth !== null && selectedYear !== null) {
+      fetchData();
+    }
+  }, [selectedMonth, selectedYear]);
 
-        const history = response.data;
-        setAllHistory(history.history);
-        setIsLoading(false); // Data fetching is complete
-      } catch (error) {
-        console.error("Error fetching initial data:", error);
-        // Handle error (e.g., set an error state)
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const user_id = localStorage.getItem("user_id");
 
-    fetchData();
-  }, [customerId]);
+      const response = await axios.get(
+        `${api_endpoint}/fetch-history/${user_id}/${customerId}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
 
-  useEffect(() => {
-    if (!selectedMonth) return;
+      const history = response.data;
+      setAllHistory(history.history);
+      setIsLoading(false); // Data fetching is complete
+    } catch (error) {
+      console.error("Error fetching initial data:", error);
+      // Handle error (e.g., set an error state)
+    }
+  };
 
-    const fetchMonthData = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const user_id = localStorage.getItem("user_id");
+  const filteredCustomers = allHistory.filter((customer) => {
+    const registrationDate = new Date(customer.created_at);
+    const matchesSearchText =
+      customer && customer.customerName
+        ? customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+        : false;
 
-        const response = await axios.get(
-          `${api_endpoint}/fetch-history/${user_id}/${customerId}?month=${selectedMonth.value}`,
-          {
-            headers: {
-              Authorization: "Bearer " + token,
-            },
-          }
-        );
+    // Check if selectedMonth is not null, and if it is, don't apply the month filter
+    const monthFilter =
+      selectedMonth !== null
+        ? registrationDate.getMonth() + 1 === selectedMonth.value
+        : true;
 
-        const history = response.data;
-        setAllHistory(history.history);
-        setIsLoading(false); // Data fetching is complete
-      } catch (error) {
-        console.error("Error fetching month data:", error);
-        // Handle error (e.g., set an error state)
-      }
-    };
+    return (
+      monthFilter &&
+      (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
+      matchesSearchText
+    );
+  });
 
-    fetchMonthData();
-  }, [selectedMonth, customerId]);
-
-  const monthOptions = [
-    { value: 1, label: "January" },
-    { value: 2, label: "February" },
-    { value: 3, label: "March" },
-    { value: 4, label: "April" },
-    { value: 5, label: "May" },
-    { value: 6, label: "June" },
-    { value: 7, label: "July" },
-    { value: 8, label: "August" },
-    { value: 9, label: "September" },
-    { value: 10, label: "October" },
-    { value: 11, label: "November" },
-    { value: 12, label: "December" },
-  ];
+  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.id - b.id);
 
   return (
     <>
@@ -114,59 +127,91 @@ const SortingStatus = () => {
         handleToggleSidebar={toggleSidebar}
       /> */}
       <div className="header">
-             <div className="pl-5 pb-5 pt-0.5 pr-5">
+        <div className="pl-5 pb-5 pt-0.5 pr-5">
           <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
             Customer History
           </h1>
         </div>
+        </div>
+        <div className="search-and-button mt-20">
+          <div
+            className='dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins'
+          >
+            {/* Total number of customer */}
+            <div className="poppins-font font-bold">
+              
+            </div>
+            {/* Search bar */}
+            <input
+              type="text"
+              placeholder="Search Customers"
+              value={searchText}
+              onChange={handleSearchInputChange}
+              className="px-4 py-2 poppins-font  border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+              style={{ width: "90%", maxWidth: "900px" }}
+            />
           </div>
-          <div className="search-and-button mt-20">
-            <div
-              className='p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins '
-            >
-              <div className="font-poppins">
-                <span className="poppins-font  font-semibold block text-24px mb-1 dark:text-textTitle">
-                  Customer's Name:
-                </span>
-                <br />
-                <span className="poppins-font font-semibold ml-1 block text-20px underline mb-20 dark:text-textDesc">
-                  {customerName}
-                </span>
-              </div>
-
-              <div className="flex dark:text-textTitle items-center justify-end mr-6 z-10">
+        </div>
+        <div className="calendar">
+          <div className='p-5'>
+            <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
+              <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
                 <label
                   htmlFor="monthSelect"
-                  className="mr-2 font-bold poppins-font"
+                  className="font-bold"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                  }}
                 >
                   Month:
                 </label>
-
-                <Select
-                  id="monthSelect"
-                  options={monthOptions}
-                  value={selectedMonth}
-                  onChange={(selectedOption) =>
-                    setSelectedMonth(selectedOption)
-                  }
-                  isSearchable={false}
-                  clearable={false}
-                  styles={{
-                    option: (provided) => ({
-                      ...provided,
-                      fontFamily: "'Poppins', sans-serif",
-                      color: "#000",
-                    }),
-                    singleValue: (provided) => ({
-                      ...provided,
-                      fontFamily: "'Poppins', sans-serif",
-                      color: "#333",
-                    }),
+                <div className="ml-2">
+                  <Select
+                    id="monthSelect"
+                    options={monthOptions}
+                    value={selectedMonth}
+                    onChange={setSelectedMonth}
+                    isSearchable={false}
+                    clearable={false}
+                    styles={{
+                      option: (provided) => ({
+                        ...provided,
+                        fontFamily: "'Poppins', sans-serif",
+                        color: "#000",
+                      }),
+                      singleValue: (provided) => ({
+                        ...provided,
+                        fontFamily: "'Poppins', sans-serif",
+                        color: "#333",
+                      }),
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="mb-5 dark:text-textTitle  md:mb-0 mobile:justify-self-center  flex items-center">
+                <label
+                  htmlFor="yearSelect"
+                  className="font-bold"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
                   }}
-                />
+                >
+                  Year:
+                </label>
+                <div className="ml-2">
+                  <input
+                    type="number"
+                    id="yearSelect"
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(e.target.value)}
+                    className="border rounded px-2 py-2 w-20 dark:bg-container focus:outline-none focus:border-blue-400 poppins-font"
+                    required
+                  />
+                </div>
               </div>
             </div>
           </div>
+        </div>
           <div className="px-4">
             <div
               className='p-5'
@@ -207,7 +252,7 @@ const SortingStatus = () => {
                       </tr>
                     </thead>
                     <tbody className="bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200 custom-table">
-                      {allHistory.map((historyItem) => (
+                      {sortedFilteredCustomers.map((historyItem) => (
                         <tr key={historyItem.id}>
                           <td className="poppins-font text-center">
                             {new Date(historyItem.date).toLocaleDateString()}
