@@ -13,14 +13,15 @@ const Login = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [checkboxStatus, setCheckboxStatus] = useState(false);
-  const [loginError, setLoginError] = useState(false); // Add a state variable for login error
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const [rememberMe, setRememberMe] = useState(true);
+  const [rememberMe, setRememberMe] = useState(false);
   const [savedEmail, setSavedEmail] = useState("");
   const [savedPassword, setSavedPassword] = useState("");
 
@@ -36,6 +37,12 @@ const Login = () => {
       setSavedEmail(savedEmail);
       setSavedPassword(savedPassword);
     }
+    // if(rememberMe == true){
+    //   localStorage.setItem("savedEmail", savedEmail);
+    //   localStorage.setItem("savedPassword", savedPassword);
+    //   setSavedEmail(savedEmail);
+    //   setSavedPassword(savedPassword);
+    // }
   }, []);
 
   // useEffect(() =>{
@@ -48,10 +55,6 @@ const Login = () => {
 
   const onSubmitHandler = (data) => {
     setLoading(true); // Set loading state to true when form is submitted
-
-    console.log(data);
-    console.log("checkboxStatus:", checkboxStatus);
-
     axios
       .post(api_endpoint + "/login", data)
       .then((response) => {
@@ -62,14 +65,12 @@ const Login = () => {
           localStorage.setItem("role", role);
           localStorage.setItem("token", token);
           localStorage.setItem("user_id", user_id);
-          localStorage.getItem("savedEmail");
-          localStorage.getItem("savedPassword");
           console.log(role, user_id);
           if (role == 2) {
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/dashboard");
-              // window.location.reload();
+              window.location.reload();
             }, 2000);
           }
           if (role == 1) {
@@ -83,8 +84,13 @@ const Login = () => {
       })
       .catch((error) => {
         console.error("Error", error.response ? error.response.data : error);
-        if (error.response && error.response.status === 401) {
-          setLoginError(true);
+        if (error.response && error.response.data.email === 'Email Not Found') {
+          setEmailError(true);
+          setPasswordError(false);
+        }
+        if (error.response && error.response.data.password === 'Invalid Password') {
+          setPasswordError(true);
+          setEmailError(false);
         }
       })
       .finally(() => {
@@ -110,7 +116,7 @@ const Login = () => {
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
             <div className="w-[145%] justify-center mx-auto poppins-font">
-              <h1 className="text-center poppins-font text-white font-bold text-[40px] md:mt-28 md:mb-12 mt-20 mb-12 ">
+              <h1 className="text-center poppins-font text-white font-bold text-[40px] xl:mt-28 md:mt-20 md:mb-12 mt-20 mb-12 ">
                 Login
               </h1>
               {/* <label className="block text-white mb-2" htmlFor="email">
@@ -130,14 +136,18 @@ const Login = () => {
                 value={savedEmail}
                 onChange={(e) => {
                   setSavedEmail(e.target.value);
-                  localStorage.setItem("savedEmail", e.target.value);
+                  setEmailError(false)
+                  // localStorage.setItem("savedEmail", e.target.value);
                 }}
-                className={`bg-white w-full poppins-font rounded-[10px] h-10 text-black px-4 ${
+                className={`bg-white w-full rounded-[10px] poppins-font mt-3 h-10 text-black px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
+              )}
+              {emailError && (
+                <p className="text-red-500 ml-2">Email not found. Please double-check and try again.</p>
               )}
               {/* <label className="block text-white mb-2" htmlFor="password">
                 Password
@@ -156,19 +166,19 @@ const Login = () => {
                 value={savedPassword}
                 onChange={(e) => {
                   setSavedPassword(e.target.value);
-                  localStorage.setItem("savedPassword", e.target.value);
+                  setPasswordError(false)
+                    // localStorage.setItem("savedPassword", e.target.value);
                 }}
                 className={`bg-white w-full rounded-[10px] poppins-font mt-3 h-10 text-black px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
               />
-              {loginError && (
-                <p className="text-red-500 ml-2">Invalid email or password.</p>
-              )}
-
-              {/* {errors.password && (
+              {errors.password && (
                 <p className="text-red-500 ml-2">{errors.password.message}</p>
-              )} */}
+              )}
+              {passwordError && (
+                <p className="text-red-500 ml-2">Incorrect Password. Please double-check and try again.</p>
+              )}
 
               <div className="flex justify-between mt-7 mx-auto mb-5 w-[95%]">
                 <div className="flex flex-row items-center">
@@ -179,6 +189,8 @@ const Login = () => {
                     checked={rememberMe}
                     onChange={(e) => {
                       setRememberMe(e.target.checked);
+                      localStorage.setItem("savedEmail", savedEmail);
+                      localStorage.setItem("savedPassword", savedPassword);
                       if (!e.target.checked) {
                         // Clear saved email and password when unchecked
                         // setSavedEmail("");
