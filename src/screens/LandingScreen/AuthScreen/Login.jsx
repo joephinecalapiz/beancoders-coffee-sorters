@@ -110,13 +110,13 @@ const Login = () => {
     <>
       <Navbar />
       <div className="mt-16 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
-        <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
+        <section className="justify-center md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             // onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full "
           >
-            <div className="w-[145%] justify-center mx-auto poppins-font">
-              <h1 className="text-center poppins-font text-white font-bold text-[40px] xl:mt-28 md:mt-20 md:mb-12 mt-20 mb-12 ">
+            <div className="w-[145%] justify-center poppins-font">
+              <h1 className="text-center text-white font-bold text-[30px] md:mt-24 md:mb-12 mt-20 mb-12 poppins-font">
                 Login
               </h1>
               {/* <label className="block text-white mb-2" htmlFor="email">
@@ -180,7 +180,7 @@ const Login = () => {
                 <p className="text-red-500 ml-2">Incorrect Password. Please double-check and try again.</p>
               )}
 
-              <div className="flex justify-between mt-7 mx-auto mb-5 w-[95%]">
+              <div className="flex justify-between mx-auto mb-5 w-[95%]">
                 <div className="flex flex-row items-center">
                   <input
                     type="checkbox"
