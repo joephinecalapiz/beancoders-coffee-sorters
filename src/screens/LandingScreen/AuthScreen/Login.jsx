@@ -113,7 +113,7 @@ const Login = () => {
         <section className="justify-center md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
             // onSubmit={handleSubmit(onSubmitHandler)}
-            className="rounded-[40px] p-8 max-w-xs w-full "
+            className="rounded-[40px] p-8 max-w-xs w-full"
           >
             <div className="w-[145%] justify-center poppins-font">
               <h1 className="text-center text-white font-bold text-[30px] md:mt-24 md:mb-12 mt-20 mb-12 poppins-font">

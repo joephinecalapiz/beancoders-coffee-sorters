@@ -34,9 +34,7 @@ const Signup = () => {
           // setPopupMessage("Done registered your account, you can now login");
           const token = response.data.token;
           const user_id = response.data.user.id;
-          const role = response.data.user.role;
           localStorage.setItem("token", token);
-          localStorage.setItem("role", role);
           localStorage.setItem("user_id", user_id);
           setTimeout(() => {
             setLoading(false); // Set loading to false when the operation is complete
@@ -129,6 +127,9 @@ const Signup = () => {
                     message: "Invalid email address",
                   },
                 })}
+                onChange={(e) => {
+                  localStorage.setItem("savedEmail", e.target.value);
+                }}
                 className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
@@ -150,6 +151,9 @@ const Signup = () => {
                     message: "Password must be at least 8 characters long",
                   },
                 })}
+                onChange={(e) => {
+                  localStorage.setItem("savedPassword", e.target.value);
+                }}
                 className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
