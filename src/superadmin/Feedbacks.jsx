@@ -290,7 +290,7 @@ const Feedbacks = () => {
                                   onClick={() => setToPending(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Pending"
-                                      ? "bg-brown hover:bg-gray-100 "
+                                      ? "bg-brown hover:bg-gray-100 text-white"
                                       : ""
                                   } dark:hover:bg-gray-600 dark:hover:text-white`}
                                 >
@@ -302,7 +302,7 @@ const Feedbacks = () => {
                                   onClick={() => setToFinished(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Finished"
-                                      ? "bg-brown hover:bg-gray-100"
+                                      ? "bg-brown hover:bg-gray-100 text-white"
                                       : ""
                                   } dark:hover:bg-gray-600 dark:hover:text-white`}
                                 >
@@ -314,7 +314,7 @@ const Feedbacks = () => {
                                   onClick={() => setToCancelled(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Cancelled"
-                                      ? "bg-brown hover:bg-gray-100"
+                                      ? "bg-brown hover:bg-gray-100 text-white"
                                       : ""
                                   } dark:hover:bg-gray-600 dark:hover:text-white`}
                                 >
