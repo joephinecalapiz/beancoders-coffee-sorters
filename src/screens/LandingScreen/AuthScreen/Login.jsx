@@ -15,6 +15,7 @@ const Login = () => {
   const [checkboxStatus, setCheckboxStatus] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
+  const [disabledError, setDisabledError] = useState(false);
   const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   const {
     register,
@@ -92,6 +93,9 @@ const Login = () => {
           setPasswordError(true);
           setEmailError(false);
         }
+        if (error.response && error.response.data.disabled === 'User is disabled') {
+          disableduser();
+        }
       })
       .finally(() => {
         setLoading(false); // Reset loading state
@@ -104,6 +108,14 @@ const Login = () => {
 
   const closeForgotPasswordModal = () => {
     setShowForgotPasswordModal(false);
+  };
+
+  const disableduser = () =>{
+    setDisabledError(true);
+    setPasswordError(false);
+    setEmailError(false);
+    localStorage.removeItem("savedEmail");
+    localStorage.removeItem("savedPassword");
   };
 
   return (
@@ -244,6 +256,9 @@ const Login = () => {
                 ) : null}
                 {loading ? "Loading..." : "Login"}
               </button>
+              {disabledError && (
+                <p className="text-red-500 ml-2">User is disabled. Please contact the admin and try again.</p>
+              )}
               <p className="text-white poppins-font mt-10 text-center my-7">
                 Don't have and account?
                 <span
