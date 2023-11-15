@@ -141,7 +141,7 @@ const Feedbacks = () => {
             Authorization: "Bearer " + token,
           },
           body: JSON.stringify({
-            status: "Finished",
+            status: "Solved",
           }),
         }
       );
@@ -161,39 +161,39 @@ const Feedbacks = () => {
     setOpenDropdownId(null);
   };
 
-  const setToCancelled = async (statusId) => {
-    try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
+  // const setToCancelled = async (statusId) => {
+  //   try {
+  //     let token = localStorage.getItem("token");
+  //     let user_id = localStorage.getItem("user_id");
 
-      const response = await fetch(
-        api_endpoint + "/update-feedback/" + statusId,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-          body: JSON.stringify({
-            status: "Cancelled",
-          }),
-        }
-      );
-      if (response.status === 422) {
-        alert("Status is already updated in the database");
-      }
-      if (!response.ok) {
-        throw new Error("Fail to update the status");
-      }
-      if (response.status === 200) {
-        fetchFeedbacks();
-        setOpenDropdownId(null);
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    setOpenDropdownId(null);
-  };
+  //     const response = await fetch(
+  //       api_endpoint + "/update-feedback/" + statusId,
+  //       {
+  //         method: "PATCH",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: "Bearer " + token,
+  //         },
+  //         body: JSON.stringify({
+  //           status: "Cancelled",
+  //         }),
+  //       }
+  //     );
+  //     if (response.status === 422) {
+  //       alert("Status is already updated in the database");
+  //     }
+  //     if (!response.ok) {
+  //       throw new Error("Fail to update the status");
+  //     }
+  //     if (response.status === 200) {
+  //       fetchFeedbacks();
+  //       setOpenDropdownId(null);
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  //   setOpenDropdownId(null);
+  // };
 
   useEffect(() => {
     const cachedCustomerData = sessionStorage.getItem("feedbackData");
@@ -242,6 +242,12 @@ const Feedbacks = () => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
+                      Product
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
                       Message
                     </th>
                     <th
@@ -263,6 +269,15 @@ const Feedbacks = () => {
                     <tr key={feedback.id}>
                       <td className="poppins-font">{index + 1}</td>
                       <td className="poppins-font">{feedback.full_name}</td>
+                      <td className="poppins-font">
+                        {feedback.coffee_bean_ai_sorter && feedback.website
+                          ? 'Coffee Bean Sorter and Website'
+                          : feedback.coffee_bean_ai_sorter
+                            ? 'Coffee Bean'
+                            : feedback.website
+                              ? 'Website'
+                              : 'None'}
+                      </td>
                       <td className="poppins-font">{feedback.message}</td>
                       <td className="poppins-font">
                         {new Date(feedback.created_at).toLocaleDateString()}
@@ -273,7 +288,7 @@ const Feedbacks = () => {
                           className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                           type="button"
                         >
-                          {feedback.status}
+                          {feedback.status === 'Solved' ? feedback.status : ''}
                         </button>
                         {openDropdownId === feedback.id && (
                           <div
@@ -306,10 +321,10 @@ const Feedbacks = () => {
                                       : ""
                                   } dark:hover:bg-gray-600 dark:hover:text-white`}
                                 >
-                                  Finished
+                                  Solved
                                 </button>
                               </li>
-                              <li>
+                              {/* <li>
                                 <button
                                   onClick={() => setToCancelled(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
@@ -320,7 +335,7 @@ const Feedbacks = () => {
                                 >
                                   Cancelled
                                 </button>
-                              </li>
+                              </li> */}
                             </ul>
                           </div>
                         )}
