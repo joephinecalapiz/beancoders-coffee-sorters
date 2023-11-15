@@ -82,23 +82,14 @@ const CustomerArchived = () => {
         throw new Error("Failed to fetch customer archived data");
       }
       const data = await response.json();
-      // setAllCustomers((prevCustomers) => {
-      //   // Update state with the new customer data
-      //   const updatedArchivedCustomer = [...prevCustomers, data.archiveds];
-      //   // Update session storage with the updated data
-      //   sessionStorage.setItem(
-      //     "archive customer data",
-      //     JSON.stringify(updatedArchivedCustomer)
-      //   );
-      //   return updatedArchivedCustomer;
-      // });
-      setAllCustomers(data.archiveds)
+
+      setAllCustomers(data.archiveds);
     } catch (error) {
       console.error("Error fetching customer archived data:", error);
     }
   };
 
-  console.log(allCustomers)
+  console.log(allCustomers);
 
   const deleteCustomer = async (id) => {
     try {
@@ -123,11 +114,7 @@ const CustomerArchived = () => {
 
   useEffect(() => {
     document.title = "Customer Archived";
-    // const cachedCustomerData = sessionStorage.getItem("archive customer data");
 
-    // if (cachedCustomerData) {
-    //   setAllCustomers(JSON.parse(cachedCustomerData));
-    // }
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
@@ -166,24 +153,16 @@ const CustomerArchived = () => {
 
   return (
     <>
-      {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      /> */}
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-        <div className="pl-5 pb-5 pt-0.5 pr-5">
-          <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
-            Customer Archives
-          </h1>
+          <div className="md:pl-5 md:pr-5 pr-2 pl-2 pb-5 pt-0.5 ">
+            <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
+              Customer Archives
+            </h1>
+          </div>
         </div>
-        </div>
-        <div className="search-and-button mt-20">
-          <div
-            className='dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins'
-          >
+        <div className="search-and-button mt-16">
+          <div className="dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
             {/* Total number of customer */}
             <div className="poppins-font font-bold">
               Total: {totalCustomers}
@@ -194,14 +173,14 @@ const CustomerArchived = () => {
               placeholder="Search Customers"
               value={searchText}
               onChange={handleSearchInputChange}
-              className="px-4 py-2 poppins-font  border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
-              style={{ width: "90%", maxWidth: "900px" }}
+              className="px-4 py-2 poppins-font   border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+              style={{ width: "50%", maxWidth: "1000px" }}
             />
           </div>
         </div>
         <div className="calendar">
-          <div className='p-5'>
-            <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
+          <div className="p-5">
+            <div className="flex md:grid grid-rows-1 gap-2 md:grid-cols-2 md:grid-rows-1">
               <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
                 <label
                   htmlFor="monthSelect"
@@ -235,10 +214,10 @@ const CustomerArchived = () => {
                   />
                 </div>
               </div>
-              <div className="mb-5 dark:text-textTitle  md:mb-0 mobile:justify-self-center  flex items-center">
+              <div className="md:mb-0 mb-1 dark:text-textTitle mobile:justify-self-center  flex items-center">
                 <label
                   htmlFor="yearSelect"
-                  className="font-bold"
+                  className="font-bold md:ml-2 ml-6"
                   style={{
                     fontFamily: "'Poppins', sans-serif",
                   }}
@@ -260,135 +239,118 @@ const CustomerArchived = () => {
           </div>
         </div>
 
-        <div className="px-4">
+        <div className="md:pl-2 md:pr-2 pr-2 pl-2">
           <div
-            className='p-5'
+            className="md:p-5 md:pt-10 pt-10 "
             style={{
               transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
+              marginTop: "-10px",
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-            <div className="max-h-[420px] overflow-y-auto">
+              <div className="max-h-[420px] overflow-y-auto">
+                <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Id number
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Date Archived
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Customer Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Phone Number
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Address
+                      </th>
 
-              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Id number
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Date Archived
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Customer Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Phone Number
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Address
-                    </th>
-                    {/* <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Kilo beans
-                    </th> */}
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                  {(reloadCustomerData || sortedFilteredCustomers).map(
-                    (customer) => (
-                      <tr key={customer.id}>
-                        <td className="poppins-font">{customer.id}</td>
-                        <td className="poppins-font">
-                          {new Date(customer.created_at).toLocaleDateString()}
-                        </td>
-                        <td className="poppins-font">
-                          {customer.customerName}
-                        </td>
-                        <td className="poppins-font">{customer.phoneNum}</td>
-                        <td className="poppins-font">{customer.address}</td>
-                        {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
-                        <td className="poppins-font">
-                          {/* <button
-                          onClick={() => {
-                            sessionStorage.setItem("customerId", customer.id);
-                            navigate(
-                              `/customers/customerstatus/${customer.customerName}`
-                            );
-                          }}
-                          className="see-more-button focus:outline-none"
-                        >
-                          See More...
-                        </button> */}
-                          <button
-                            onClick={() => toggleDropdown(customer.id)}
-                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            type="button"
-                          >
-                            <svg
-                              className="w-5 h-5"
-                              aria-hidden="true"
-                              xmlns="http://www.w3.org/2000/svg"
-                              fill="currentColor"
-                              viewBox="0 0 16 3"
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
+                    {(reloadCustomerData || sortedFilteredCustomers).map(
+                      (customer) => (
+                        <tr key={customer.id}>
+                          <td className="poppins-font">{customer.id}</td>
+                          <td className="poppins-font">
+                            {new Date(customer.created_at).toLocaleDateString()}
+                          </td>
+                          <td className="poppins-font">
+                            {customer.customerName}
+                          </td>
+                          <td className="poppins-font">{customer.phoneNum}</td>
+                          <td className="poppins-font">{customer.address}</td>
+                          <td className="poppins-font">
+                            <button
+                              onClick={() => toggleDropdown(customer.id)}
+                              className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                              type="button"
                             >
-                              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                            </svg>
-                          </button>
-                          {openDropdownId === customer.id && (
-                            <div
-                              id="dropdownDotsHorizontal"
-                              className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                              style={{ top: "100", right: "0" }}
-                            >
-                              <ul
-                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
+                              <svg
+                                className="w-5 h-5"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="currentColor"
+                                viewBox="0 0 16 3"
                               >
-                                <li>
-                                  <button
-                                    onClick={() => deleteCustomer(customer.id)}
-                                    className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                  >
-                                    Permanent Delete
-                                  </button>
-                                </li>
-                              </ul>
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    )
-                  )}
-                </tbody>
-              </table>
+                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                              </svg>
+                            </button>
+                            {openDropdownId === customer.id && (
+                              <div
+                                id="dropdownDotsHorizontal"
+                                className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                                style={{ top: "100", right: "0" }}
+                              >
+                                <ul
+                                  className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                  aria-labelledby="dropdownMenuIconHorizontalButton"
+                                >
+                                  <li>
+                                    <button
+                                      onClick={() =>
+                                        deleteCustomer(customer.id)
+                                      }
+                                      className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                      Permanent Delete
+                                    </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            )}
+                          </td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
-            </div>
-
           </div>
         </div>
       </div>

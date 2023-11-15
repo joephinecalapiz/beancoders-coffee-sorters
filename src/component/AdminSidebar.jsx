@@ -80,7 +80,7 @@ function AdminSidebar({ collapsed }) {
   useEffect(() => {
     // Check if dark mode is stored in localStorage
     const storedDarkMode = localStorage.getItem("darkMode");
-    
+
     document.documentElement.classList.toggle("dark", darkMode);
     const appBody = document.getElementById("app-body");
     appBody.classList.toggle("dark:bg-dark", darkMode);
@@ -102,8 +102,8 @@ function AdminSidebar({ collapsed }) {
   return (
     <>
       <nav
-        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-16 left-[max(0px,calc(10%-100rem))] w-[15rem] ${
-          collapsed ? "collapsed" : ""
+        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-16 left-[max(0px,calc(10%-100rem))]  ${
+          collapsed ? "collapsed" : "w-[15rem]"
         }`}
       >
         <div className="mt-4">

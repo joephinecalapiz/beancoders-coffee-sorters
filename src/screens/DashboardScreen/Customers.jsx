@@ -86,11 +86,6 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
-      // const cachedCustomerData = localStorage.getItem("customerData");
-      // if (cachedCustomerData) {
-      //   setAllCustomers(JSON.parse(cachedCustomerData));
-      // }
-
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/customers/" + user_id, {
@@ -194,8 +189,6 @@ const Customers = () => {
           address: newCustomerAddress,
           //kiloOfBeans: newCustomerKiloOfBeans,
           registrationDate: currentDate,
-          // year: selectedYearValue, // Use the selected year
-          // month: selectedMonthValue, // Use the selected month value
         }),
       });
       if (response.status === 422) {
@@ -248,7 +241,6 @@ const Customers = () => {
         alert("Customer is already in the database");
       }
 
-      //fetchCustomers();
       if (response.status === 200) {
         // Update the customer data in both state and session storage
         setAllCustomers((prevCustomers) => {
@@ -311,30 +303,18 @@ const Customers = () => {
     closeModal();
   };
 
-  //console.log(sortedFilteredCustomers); //too many requests
-
   return (
     <>
-      {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} /> */}
-      {/* <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      /> */}
       <div className="header">
-        <div className="pl-5 pb-5 pt-0.5 pr-5">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pb-5 pt-0.5">
           <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
             Customers
           </h1>
         </div>
       </div>
-      <div className="search-and-button mt-20">
-        <div
-          className='dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins'
-        >
-          <div className="poppins-font font-bold">
-            Total: {totalCustomers}
-          </div>
+      <div className="search-and-button mt-16">
+        <div className="dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
+          <div className="poppins-font font-bold">Total: {totalCustomers}</div>
           {/* Search bar */}
           <input
             type="text"
@@ -368,8 +348,8 @@ const Customers = () => {
         </div>
       </div>
       <div className="calendar">
-        <div className='p-5'>
-          <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
+        <div className="p-5">
+          <div className="flex md:grid grid-rows-1 gap-2 md:grid-cols-2 md:grid-rows-1">
             <div className="relative  dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
               <label htmlFor="monthSelect" className="poppins-font font-bold">
                 Month:
@@ -397,10 +377,10 @@ const Customers = () => {
                 />
               </div>
             </div>
-            <div className="mb-5 dark:text-textTitle  md:mb-0 mobile:justify-self-center  flex items-center">
+            <div className="md:mb-0 mb-1 dark:text-textTitle mobile:justify-self-center  flex items-center">
               <label
                 htmlFor="yearSelect"
-                className=" font-bold "
+                className="font-bold md:ml-2 ml-6 "
                 style={{
                   fontFamily: "'Poppins', sans-serif",
                 }}
@@ -422,170 +402,157 @@ const Customers = () => {
         </div>
       </div>
 
-        <div className="px-4">
-          <div
-            className='p-5'
-            style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
-            }}
-          >
-            <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-              <div className="max-h-[350px] overflow-y-auto">
-                <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Id number
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Date Added
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Customer Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Phone Number
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Address
-                      </th>
+      <div className="md:pl-2 md:pr-2 pr-2 pl-2">
+        <div
+          className="md:p-5 md:pt-10 pt-10 "
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-10px",
+          }}
+        >
+          <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
+            <div className="max-h-[350px] overflow-y-auto">
+              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Id number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date Added
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Customer Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Phone Number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Address
+                    </th>
 
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                    {(reloadCustomerData || sortedFilteredCustomers).map(
-                      (customer, index) => (
-                        <tr key={customer.id}>
-                          <td className="poppins-font">{index + 1}</td>
-                          <td className="poppins-font">
-                            {new Date(customer.created_at).toLocaleDateString()}
-                          </td>
-                          <td className="poppins-font">
-                            {customer.customerName}
-                          </td>
-                          <td className="poppins-font">{customer.phoneNum}</td>
-                          <td className="poppins-font">{customer.address}</td>
-                          <td className="poppins-font">
-                            <button
-                              onClick={() => toggleDropdown(customer.id)}
-                              className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                              type="button"
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
+                  {(reloadCustomerData || sortedFilteredCustomers).map(
+                    (customer, index) => (
+                      <tr key={customer.id}>
+                        <td className="poppins-font">{index + 1}</td>
+                        <td className="poppins-font">
+                          {new Date(customer.created_at).toLocaleDateString()}
+                        </td>
+                        <td className="poppins-font">
+                          {customer.customerName}
+                        </td>
+                        <td className="poppins-font">{customer.phoneNum}</td>
+                        <td className="poppins-font">{customer.address}</td>
+                        <td className="poppins-font">
+                          <button
+                            onClick={() => toggleDropdown(customer.id)}
+                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            type="button"
+                          >
+                            <svg
+                              className="w-5 h-5"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 16 3"
                             >
-                              <svg
-                                className="w-5 h-5"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="currentColor"
-                                viewBox="0 0 16 3"
+                              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                            </svg>
+                          </button>
+                          {openDropdownId === customer.id && (
+                            <div
+                              id="dropdownDotsHorizontal"
+                              className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                              style={{ top: "100", right: "0" }}
+                            >
+                              <ul
+                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                              </svg>
-                            </button>
-                            {openDropdownId === customer.id && (
-                              <div
-                                id="dropdownDotsHorizontal"
-                                className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                                style={{ top: "100", right: "0" }}
-                              >
-                                <ul
-                                  className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                                  aria-labelledby="dropdownMenuIconHorizontalButton"
-                                >
-                                  <li>
-                                    <button
-                                      onClick={() => {
-                                        // Navigate to the desired page
-                                        navigate(
-                                          `/customers/customerstatus/${customer.customerName}/${customer.id}`
-                                        );
-                                      }}
-                                      className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    >
-                                      History
-                                    </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      onClick={() =>
-                                        handleShowUpdateModal(customer)
-                                      }
-                                      className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    >
-                                      Update
-                                    </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      onClick={() =>
-                                        archivedCustomer(customer.id)
-                                      }
-                                      className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                    >
-                                      Archive
-                                    </button>
-                                  </li>
-                                  {/* <li>
-                                <a href="#" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Archived</a>
-                              </li> */}
-                                </ul>
-                                {/* <div className="py-2">
+                                <li>
+                                  <button
+                                    onClick={() => {
+                                      // Navigate to the desired page
+                                      navigate(
+                                        `/customers/customerstatus/${customer.customerName}/${customer.id}`
+                                      );
+                                    }}
+                                    className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    History
+                                  </button>
+                                </li>
+                                <li>
+                                  <button
+                                    onClick={() =>
+                                      handleShowUpdateModal(customer)
+                                    }
+                                    className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    Update
+                                  </button>
+                                </li>
+                                <li>
                                   <button
                                     onClick={() =>
                                       archivedCustomer(customer.id)
                                     }
-                                    className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
                                     Archive
                                   </button>
-                                </div> */}
-                              </div>
-                            )}
-                            {/* <button
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                          {/* <button
                           onClick={() => handleSeeMore(customer.customerName)}
                           className="see-more-button focus:outline-none"
                         >
                           Receipt
                         </button> */}
-                          </td>
-                        </tr>
-                      )
-                    )}
-                  </tbody>
-                </table>
-              </div>
-              {selectedCustomer && (
-                <UpdateCustomer
-                  show={showUpdateModal}
-                  onClose={handleCloseUpdateModal}
-                  customer={selectedCustomer}
-                  update={fetchCustomers}
-                />
-              )}
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+              </table>
             </div>
+            {selectedCustomer && (
+              <UpdateCustomer
+                show={showUpdateModal}
+                onClose={handleCloseUpdateModal}
+                customer={selectedCustomer}
+                update={fetchCustomers}
+              />
+            )}
           </div>
         </div>
+      </div>
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
@@ -645,22 +612,6 @@ const Customers = () => {
               required
             />
           </div>
-          {/* <div className="mb-4">
-                <label
-                  htmlFor="kiloOfBeans"
-                  className="block font-medium poppins-font"
-                >
-                  Kilo of Beans:
-                </label>
-                <input
-                  type="text"
-                  id="newCustomerKiloOfBeans"
-                  value={newCustomerKiloOfBeans}
-                  onChange={(e) => setKiloOfBeans(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div> */}
 
           <div className="flex justify-between">
             <button

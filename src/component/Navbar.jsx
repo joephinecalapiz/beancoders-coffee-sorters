@@ -50,8 +50,9 @@ const Navbar = () => {
 
   const [mainNav, setMainNav] = useState([
     {
-      name: "Dashboard", href: "/dashboard",
-      current: location.pathname === "/dashboard"
+      name: "Dashboard",
+      href: "/dashboard",
+      current: location.pathname === "/dashboard",
     },
     {
       name: "Customers",
@@ -122,7 +123,7 @@ const Navbar = () => {
   }
 
   const isAuthenticated = () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     // Add additional checks if needed
     return token !== null;
   };
@@ -155,8 +156,9 @@ const Navbar = () => {
     <div className=" text-red-700  fixed top-0 left-0 right-0 z-50 ">
       {/* Mobile menu button */}
       <div
-        className={`md:hidden absolute top-8 right-4 cursor-pointer z-50 transition-transform transform ${menuOpen ? "rotate-clockwise" : ""
-          }`}
+        className={`md:hidden absolute top-8 right-4 cursor-pointer z-50 transition-transform transform ${
+          menuOpen ? "rotate-clockwise" : ""
+        }`}
         onClick={toggleMenu}
       >
         <svg
@@ -181,12 +183,12 @@ const Navbar = () => {
           {mobileNav.map((item) => (
             <li
               key={item.href}
-              className={`my-4 hover:text-[#FF3535] cursor-pointer text-white hover:underline md:text-[20px] ${item.current ? "text-[#883d3d]" : ""
-                } poppins-font font-semibold`}
+              className={`my-4 hover:text-[#FF3535] cursor-pointer text-white hover:underline md:text-[20px] ${
+                item.current ? "text-[#883d3d]" : ""
+              } poppins-font font-semibold`}
               onClick={() => {
                 handleMobileNavigationClick(item.href);
                 setMenuOpen(false);
-                // Add your navigation logic here, e.g., navigate(item.href);
               }}
             >
               {item.name}
@@ -200,12 +202,12 @@ const Navbar = () => {
           {mainNav.map((item) => (
             <li
               key={item.href}
-              className={`my-4 hover:text-[#FF3535] cursor-pointer text-white hover:underline md:text-[20px] ${item.current ? "text-[#883d3d]" : ""
-                } poppins-font font-semibold`}
+              className={`my-4 hover:text-[#FF3535] cursor-pointer text-white hover:underline md:text-[20px] ${
+                item.current ? "text-[#883d3d]" : ""
+              } poppins-font font-semibold`}
               onClick={() => {
                 handleMainNavigationClick(item.href);
                 setMainMenuOpen(false);
-                // Add your navigation logic here, e.g., navigate(item.href);
               }}
             >
               {item.name}
@@ -225,8 +227,9 @@ const Navbar = () => {
           </span>
           {isAuthenticated() ? (
             <div
-              className={`absolute top-8 right-4 cursor-pointer z-50 transition-transform transform ${mainMenuOpen ? "rotate-clockwise" : ""
-                }`}
+              className={`absolute top-8 right-4 cursor-pointer z-50 transition-transform transform ${
+                mainMenuOpen ? "rotate-clockwise" : ""
+              }`}
               onClick={toggleMainMenu}
             >
               <svg
@@ -245,34 +248,29 @@ const Navbar = () => {
               </svg>
             </div>
           ) : (
-           ""
+            ""
           )}
           {/* Add span */}
         </div>
 
         <div className="justify-end ">
           <ul className="hidden md:flex md:flex-row  md:justify-between md:mt-3 md:space-x-8 ">
-            {navigation.map((item) => (
-              // <li
-              //   key={item.href}
-              //   className={`my-4 hover:text-[#783e3e] cursor-pointer  hover:underline md:text-[20px] ${
-              //     item.current ? "text-[#512b2b]" : ""
-              //   } poppins-font font-semibold `}
-              //   onClick={() => {
-              //     handleNavigationClick(item.href);
-              //   }}
-              // >
-              //   {item.name}
-              // </li>
-              !(item.name === 'Login' && isAuthenticated()) && (
-                <li key={item.href}
-                  className={`my-4 hover:text-[#783e3e] cursor-pointer  hover:underline md:text-[20px] ${item.current ? "text-[#512b2b]" : ""
+            {navigation.map(
+              (item) =>
+                !(item.name === "Login" && isAuthenticated()) && (
+                  <li
+                    key={item.href}
+                    className={`my-4 hover:text-[#783e3e] cursor-pointer  hover:underline md:text-[20px] ${
+                      item.current ? "text-[#512b2b]" : ""
                     } poppins-font font-semibold `}
-                  onClick={() => {
-                    handleNavigationClick(item.href);
-                  }}>{item.name}</li>
-              )
-            ))}
+                    onClick={() => {
+                      handleNavigationClick(item.href);
+                    }}
+                  >
+                    {item.name}
+                  </li>
+                )
+            )}
 
             <button
               onClick={handleButtonClick}
@@ -292,7 +290,7 @@ const Navbar = () => {
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
               }}
             >
-              {isAuthenticated() ? 'Logout' : 'Sign Up'}
+              {isAuthenticated() ? "Logout" : "Sign Up"}
             </button>
           </ul>
         </div>

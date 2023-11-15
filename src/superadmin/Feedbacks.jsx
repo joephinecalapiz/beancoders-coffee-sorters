@@ -18,7 +18,7 @@ const Feedbacks = () => {
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
-  
+
   const axiosInstance = AxiosRateLimit(axios.create(), {
     maxRequests: 5,
     perMilliseconds: 1000,
@@ -64,9 +64,11 @@ const Feedbacks = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-  
-      const response = await axiosInstance.get(api_endpoint + "/fetch-feedback/" + user_id);
-      
+
+      const response = await axiosInstance.get(
+        api_endpoint + "/fetch-feedback/" + user_id
+      );
+
       const data = response.data.data;
       setAllFeedbacks(data);
       sessionStorage.setItem("feedbackData", JSON.stringify(data));
@@ -74,7 +76,6 @@ const Feedbacks = () => {
       console.error("Error fetching feedback data:", error);
     }
   };
-  
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -200,38 +201,28 @@ const Feedbacks = () => {
       setAllFeedbacks(JSON.parse(cachedCustomerData));
     }
   }, []);
-  
 
   const totalUsers = allUsers.length;
 
   return (
     <>
-      {/* <AdminSidebar
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      /> */}
       <div className="header">
-        <div className="pl-5 pt-0.5 mb-16 pr-5">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pt-0.5 mb-16 ">
           <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-5 text-base p-3 rounded-lg shadow-xl">
             Feedbacks
           </h1>
         </div>
       </div>
-      <div className="px-4">
+      <div className="md:pl-5 md:pr-5 pr-2 pl-2 p-5">
         <div
-          className='p-5'
+          className="md:p-5"
           style={{
             transition: "margin-left 0.3s ease",
             marginTop: "-20px",
           }}
         >
           <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-            <div className="max-h-[480px] overflow-y-auto">
+            <div className="max-h-[460px] overflow-y-auto">
               <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
                 <thead>
                   <tr>
@@ -277,60 +268,63 @@ const Feedbacks = () => {
                         {new Date(feedback.created_at).toLocaleDateString()}
                       </td>
                       <td className="poppins-font">
-                          <button
-                            onClick={() => toggleDropdown(feedback.id)}
-                            className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                            type="button"
+                        <button
+                          onClick={() => toggleDropdown(feedback.id)}
+                          className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                          type="button"
+                        >
+                          {feedback.status}
+                        </button>
+                        {openDropdownId === feedback.id && (
+                          <div
+                            id="dropdownDotsHorizontal"
+                            className="absolute z-10 mt-4 md:w-32 w-10 divide-y divide-gray-100  shadow-lg bg-white dark:divide-gray-600 "
+                            style={{ top: "50", left: "50" }}
                           >
-                            {feedback.status}
-                          </button>
-                          {openDropdownId === feedback.id && (
-                            <div
-                              id="dropdownDotsHorizontal"
-                              className="absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-lg shadow bg-white dark:divide-gray-600 mr-5"
-                              style={{ top: "50", left: "50" }}
+                            <ul
+                              className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
+                              aria-labelledby="dropdownMenuIconHorizontalButton"
                             >
-                              <ul
-                                className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
-                                aria-labelledby="dropdownMenuIconHorizontalButton"
-                              >
-                                <li>
-                                  <button
-                                    onClick={() => setToPending(feedback.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${feedback.status === "Pending"
-                                        ? "bg-brown hover:bg-gray-100 "
-                                        : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                  >
-                                    Pending
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    onClick={() => setToFinished(feedback.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${feedback.status === "Finished"
-                                        ? "bg-brown hover:bg-gray-100"
-                                        : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                  >
-                                    Finished
-                                  </button>
-                                </li>
-                                <li>
-                                  <button
-                                    onClick={() => setToCancelled(feedback.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${feedback.status === "Cancelled"
-                                        ? "bg-brown hover:bg-gray-100"
-                                        : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                  >
-                                    Cancelled
-                                  </button>
-                                </li>
-                              </ul>
-                            </div>
-                          )}
-                        </td>
+                              <li>
+                                <button
+                                  onClick={() => setToPending(feedback.id)}
+                                  className={`block px-4 py-2 mx-auto w-full ${
+                                    feedback.status === "Pending"
+                                      ? "bg-brown hover:bg-gray-100 "
+                                      : ""
+                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                >
+                                  Pending
+                                </button>
+                              </li>
+                              <li>
+                                <button
+                                  onClick={() => setToFinished(feedback.id)}
+                                  className={`block px-4 py-2 mx-auto w-full ${
+                                    feedback.status === "Finished"
+                                      ? "bg-brown hover:bg-gray-100"
+                                      : ""
+                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                >
+                                  Finished
+                                </button>
+                              </li>
+                              <li>
+                                <button
+                                  onClick={() => setToCancelled(feedback.id)}
+                                  className={`block px-4 py-2 mx-auto w-full ${
+                                    feedback.status === "Cancelled"
+                                      ? "bg-brown hover:bg-gray-100"
+                                      : ""
+                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                >
+                                  Cancelled
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
