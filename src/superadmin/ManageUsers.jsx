@@ -23,13 +23,10 @@ const ManageUsers = () => {
     perMilliseconds: 1000,
   }); // Example: 5 requests per second
 
-  const [allUsers, setAllSorters] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newSorterName, setNewSorterName] = useState("");
-  const [newSorterPhoneNumber, setNewSorterPhoneNumber] = useState("");
-  const [newSorterAddress, setNewSorterAddress] = useState("");
-  const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [openDropdownId, setOpenDropdownId] = useState(null);
   const filteredSorters = allUsers.filter((users) =>
     users.name.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -44,21 +41,22 @@ const ManageUsers = () => {
   const user_id = localStorage.getItem("id");
 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     document.title = "Manage Users";
 
-    const token = localStorage.getItem("token");
-    const role = localStorage.getItem("role");
-    const headers = {
-      Authorization: "Bearer " + token,
-    };
-    axiosInstance
-      .get(api_endpoint + "/allusers/", { headers })
-      .then((response) => {
-        const data = response.data;
-        setAllSorters(data.user);
-      });
+    fetchUsers();
+    // const token = localStorage.getItem("token");
+    // const role = localStorage.getItem("role");
+    // const headers = {
+    //   Authorization: "Bearer " + token,
+    // };
+    // axiosInstance
+    //   .get(api_endpoint + "/allusers/", { headers })
+    //   .then((response) => {
+    //     const data = response.data;
+    //     setAllSorters(data.user);
+    //   });
   }, []); // Empty dependency array, so this effect runs only once
 
   const openModal = () => {
@@ -67,15 +65,107 @@ const ManageUsers = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setNewSorterName("");
-    setNewSorterPhoneNumber("");
-    setNewSorterAddress("");
-    setNewSorterDateHired("");
   };
 
   const handleCancel = () => {
     closeModal();
   };
+
+  const toggleDropdown = (user) => {
+    if (openDropdownId === user) {
+      // If the clicked dropdown is already open, close it
+      setOpenDropdownId(null);
+    } else {
+      // Close the previously open dropdown (if any)
+      setOpenDropdownId(user);
+    }
+  };
+
+  const setEnabled = async (statusId) => {
+    try {
+      let token = localStorage.getItem("token");
+
+      const response = await fetch(
+        api_endpoint + "/disabled-user/" + statusId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            disabled: false,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Fail to enabled the user");
+      }
+      if (response.status === 200) {
+        setOpenDropdownId(null);
+        fetchUsers();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setOpenDropdownId(null);
+  };
+
+  const setToDisabled = async (statusId) => {
+    try {
+      let token = localStorage.getItem("token");
+
+      const response = await fetch(
+        api_endpoint + "/disabled-user/" + statusId,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            disabled: true,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Fail to enabled the user");
+      }
+      if (response.status === 200) {
+        setOpenDropdownId(null);
+        fetchUsers();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    setOpenDropdownId(null);
+  };
+
+  const fetchUsers = async () => {
+    try {
+      let token = localStorage.getItem("token");
+  
+      const response = await fetch(api_endpoint + "/allusers", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+  
+      const data = await response.json();
+      setAllUsers(data.user);
+      sessionStorage.setItem("userData", JSON.stringify(data.user));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  useEffect(() => {
+    const cachedCustomerData = sessionStorage.getItem("userData");
+    if (cachedCustomerData) {
+      setAllUsers(JSON.parse(cachedCustomerData));
+    }
+  }, []);
 
   const totalUsers = allUsers.length;
 
@@ -139,6 +229,12 @@ const ManageUsers = () => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
                       Date Registered
                     </th>
                   </tr>
@@ -149,6 +245,56 @@ const ManageUsers = () => {
                       <td className="poppins-font">{index + 1}</td>
                       <td className="poppins-font">{user.name}</td>
                       <td className="poppins-font">{user.email}</td>
+                      <td className="poppins-font">
+                        <button
+                          onClick={() => toggleDropdown(user.id)}
+                          className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                          type="button"
+                        >
+                          {user.disabled ? (
+                            <span style={{ color: 'red' }}>Disabled</span>
+                          ) : (
+                            <span style={{ color: 'green' }}>Active</span>
+                          )}
+                        </button>
+                        {openDropdownId === user.id && (
+                          <div
+                            id="dropdownDotsHorizontal"
+                            className="absolute z-10 mt-4 md:w-32 w-10 divide-y divide-gray-100  shadow-lg bg-white dark:divide-gray-600 "
+                            style={{ top: "50", left: "50" }}
+                          >
+                            <ul
+                              className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
+                              aria-labelledby="dropdownMenuIconHorizontalButton"
+                            >
+                              <li>
+                                <button
+                                  onClick={() => setEnabled(user.id)}
+                                  className={`block px-4 py-2 mx-auto w-full ${
+                                    user.disabled === false
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
+                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                >
+                                  Enabled
+                                </button>
+                              </li>
+                              <li>
+                                <button
+                                  onClick={() => setToDisabled(user.id)}
+                                  className={`block px-4 py-2 mx-auto w-full ${
+                                    user.disabled === true
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
+                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                >
+                                  Disabled
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
+                        )}
+                      </td>
                       <td className="poppins-font">
                         {new Date(user.created_at).toLocaleDateString()}
                       </td>
@@ -161,112 +307,6 @@ const ManageUsers = () => {
         </div>
       </div>
 
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div
-            className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
-            onClick={closeModal}
-          ></div>
-          <div className="modal-container bg-white p-10 max-w-sm mx-auto rounded z-50">
-            <span
-              className="modal-close absolute top-4 right-4 text-xl cursor-pointer"
-              onClick={closeModal}
-            >
-              &times;
-            </span>
-            <h2 className="text-2xl font-semibold mb-4 poppins-font">
-              Add New Sorter
-            </h2>
-
-            <form onSubmit={handleAddNewSorter}>
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterName"
-                  className="block font-medium poppins-font"
-                >
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  id="newSorterName"
-                  value={newSorterName}
-                  onChange={(e) => setNewSorterName(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterPhoneNumber"
-                  className="block font-medium poppins-font"
-                >
-                  Phone Number:
-                </label>
-                <input
-                  type="text"
-                  id="newSorterPhoneNumber"
-                  value={newSorterPhoneNumber}
-                  onChange={(e) => setNewSorterPhoneNumber(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterAddress"
-                  className="block font-medium poppins-font"
-                >
-                  Address:
-                </label>
-                <input
-                  type="text"
-                  id="newSorterAddress"
-                  value={newSorterAddress}
-                  onChange={(e) => setNewSorterAddress(e.target.value)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
-
-              <div className="mb-4">
-                <label
-                  htmlFor="newSorterDateHired"
-                  className="block font-medium poppins-font"
-                >
-                  Date Hired:
-                </label>
-                {/*DatePicker*/}
-                <DatePicker
-                  id="newSorterDateHired"
-                  selected={newSorterDateHired}
-                  onChange={(date) => setNewSorterDateHired(date)}
-                  className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
-                  required
-                />
-              </div>
-
-              <div className="flex justify-between">
-                <button
-                  type="submit"
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Add Sorter
-                </button>
-                <button
-                  type="button"
-                  onClick={handleCancel}
-                  className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
-                >
-                  Cancel
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
     </>
   );
 };
