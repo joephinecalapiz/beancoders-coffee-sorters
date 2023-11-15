@@ -314,16 +314,14 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <div className="mt-3">
-          <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-12 whitespace-nowrap">
+        <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-12 whitespace-nowrap">
             Admin
-          </h1>
-        </div>
+        </h1>
       </div>
 
       {/* Confirmation Modal */}
       {isConfirmationModalOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-70">
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-70 z-100">
           <div className="bg-white p-6 rounded shadow">
             <p className="text-gray-800 text-lg poppins-font mb-4">
               Are you sure you want to log out?
