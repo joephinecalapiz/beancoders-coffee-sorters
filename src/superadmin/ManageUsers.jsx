@@ -9,8 +9,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
-import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/AdminTopbar";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const ManageUsers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -27,6 +27,7 @@ const ManageUsers = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [keyToDelete, setKeyToDelete] = useState(null);
   const filteredSorters = allUsers.filter((users) =>
     users.name.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -37,10 +38,10 @@ const ManageUsers = () => {
     setSearchText(e.target.value);
   };
 
-  // Add code to get the user_id from local storage
-  const user_id = localStorage.getItem("id");
-
-  const navigate = useNavigate();
+  const deleteKeys = (id) => {
+    setKeyToDelete(id);
+    openModal();
+  };
   
   useEffect(() => {
     document.title = "Manage Users";
@@ -65,6 +66,7 @@ const ManageUsers = () => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setKeyToDelete(null);
   };
 
   const handleCancel = () => {
@@ -78,6 +80,33 @@ const ManageUsers = () => {
     } else {
       // Close the previously open dropdown (if any)
       setOpenDropdownId(user);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      let token = localStorage.getItem("token");
+      const response = await fetch(
+        api_endpoint + "/delete-user/" + keyToDelete,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete user data");
+      }
+
+      // Update customer data after successful archive
+      fetchUsers();
+    } catch (error) {
+      console.error("Error deleting or fetching user data:", error);
+    } finally {
+      // Close the modal after deletion
+      closeModal();
     }
   };
 
@@ -237,6 +266,12 @@ const ManageUsers = () => {
                     >
                       Date Registered
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
@@ -298,6 +333,14 @@ const ManageUsers = () => {
                       <td className="poppins-font">
                         {new Date(user.created_at).toLocaleDateString()}
                       </td>
+                      <td>
+                        <button
+                          onClick={() => deleteKeys(user.id)}
+                          className="delete-button "
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -306,7 +349,39 @@ const ManageUsers = () => {
           </div>
         </div>
       </div>
+      {keyToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          <div className="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
 
+          <div className="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+            {/* Add padding to the modal content */}
+            <div className="modal-content py-4 text-left px-6">
+              {/* Title */}
+              <div className="mb-4">
+                <p className="text-lg text-gray-700 justify-start">
+                  Are you sure you want to delete this user?
+                </p>
+              </div>
+
+              {/* Buttons */}
+              <div className="modal-buttons flex justify-center">
+                <button
+                  onClick={handleDelete}
+                  className="bg-red-500 justify-center hover:bg-red-600 text-white font-bold py-2 px-6 rounded mr-2"
+                >
+                  Yes
+                </button>
+                <button
+                  onClick={handleCancel}
+                  className="bg-black justify-center hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
