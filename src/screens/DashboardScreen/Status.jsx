@@ -53,35 +53,35 @@ const Status = () => {
       });
   }, [status]);
 
-  useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
-    axios
-      .get(`${api_endpoint}/customers/${user_id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((response) => {
-        const fetchCustomerData = response.data.customer;
-        setCustomer(fetchCustomerData);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const user_id = localStorage.getItem("user_id");
+  //   const token = localStorage.getItem("token");
+  //   axios
+  //     .get(`${api_endpoint}/customers/${user_id}`, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       const fetchCustomerData = response.data.customer;
+  //       setCustomer(fetchCustomerData);
+  //     });
+  // }, []);
 
-  useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
-    axios
-      .get(`${api_endpoint}/sorters/${user_id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((response) => {
-        const fetchSorterData = response.data.sorters;
-        setSorter(fetchSorterData);
-      });
-  }, []);
+  // useEffect(() => {
+  //   const user_id = localStorage.getItem("user_id");
+  //   const token = localStorage.getItem("token");
+  //   axios
+  //     .get(`${api_endpoint}/sorters/${user_id}`, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       const fetchSorterData = response.data.sorters;
+  //       setSorter(fetchSorterData);
+  //     });
+  // }, []);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -399,9 +399,9 @@ const Status = () => {
                                     onClick={() => setToOngoing(sorted.id)}
                                     className={`block px-4 py-2 mx-auto w-full ${
                                       sorted.status === "Ongoing"
-                                        ? "bg-brown hover:bg-gray-100 "
+                                        ? "bg-brown hover:bg-gray-100 text-white"
                                         : ""
-                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
                                   >
                                     Ongoing
                                   </button>
@@ -411,9 +411,9 @@ const Status = () => {
                                     onClick={() => setToFinished(sorted.id)}
                                     className={`block px-4 py-2 mx-auto w-full ${
                                       sorted.status === "Finished"
-                                        ? "bg-brown hover:bg-gray-100"
+                                        ? "bg-brown hover:bg-gray-100  text-white"
                                         : ""
-                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
                                   >
                                     Finished
                                   </button>
@@ -423,9 +423,9 @@ const Status = () => {
                                     onClick={() => setToCancelled(sorted.id)}
                                     className={`block px-4 py-2 mx-auto w-full ${
                                       sorted.status === "Cancelled"
-                                        ? "bg-brown hover:bg-gray-100"
+                                        ? "bg-brown hover:bg-gray-100 text-white"
                                         : ""
-                                    } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
                                   >
                                     Cancelled
                                   </button>
