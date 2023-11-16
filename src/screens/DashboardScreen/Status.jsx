@@ -53,35 +53,37 @@ const Status = () => {
       });
   }, [status]);
 
-  // useEffect(() => {
-  //   const user_id = localStorage.getItem("user_id");
-  //   const token = localStorage.getItem("token");
-  //   axios
-  //     .get(`${api_endpoint}/customers/${user_id}`, {
-  //       headers: {
-  //         Authorization: "Bearer " + token,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       const fetchCustomerData = response.data.customer;
-  //       setCustomer(fetchCustomerData);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
+    axios
+      .get(`${api_endpoint}/customers/${user_id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const fetchCustomerData = response.data.customer;
+        sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
+        setCustomer(fetchCustomerData);
+      });
+  }, []);
 
-  // useEffect(() => {
-  //   const user_id = localStorage.getItem("user_id");
-  //   const token = localStorage.getItem("token");
-  //   axios
-  //     .get(`${api_endpoint}/sorters/${user_id}`, {
-  //       headers: {
-  //         Authorization: "Bearer " + token,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       const fetchSorterData = response.data.sorters;
-  //       setSorter(fetchSorterData);
-  //     });
-  // }, []);
+  useEffect(() => {
+    const user_id = localStorage.getItem("user_id");
+    const token = localStorage.getItem("token");
+    axios
+      .get(`${api_endpoint}/sorters/${user_id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const fetchSorterData = response.data.sorters;
+        sessionStorage.setItem("sorterData", JSON.stringify(fetchSorterData));
+        setSorter(fetchSorterData);
+      });
+  }, []);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
