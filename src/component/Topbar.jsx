@@ -198,7 +198,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   : BeansLogo
               }
               alt="BeansLogo"
-              className="fixed w-12 h-12 rounded-full bg-white "
+              className="fixed w-12 h-12 rounded-full bg-white border border-green-500 shadow-xl shadow-green-900/20 ring-4 ring-green-500/30"
             />
           </button>
           {isDropdownOpen && (
