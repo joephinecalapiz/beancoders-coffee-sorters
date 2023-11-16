@@ -455,7 +455,7 @@ const Status = () => {
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+        <h2 className="text-2xl font-semibold mb-4 text-center poppins-font text-black dark:text-textTitle">
           Status
         </h2>
         {/* Add your form or content for adding a new customer */}
@@ -466,7 +466,7 @@ const Status = () => {
               htmlFor="newCustomer"
               className="block font-medium poppins-font"
             >
-              Customer's Name:
+              Customer's Name
             </label>
             <select
               id="newCustomer"
@@ -489,7 +489,7 @@ const Status = () => {
               htmlFor="newSorter"
               className="block font-medium poppins-font"
             >
-              Sorter's Name:
+              Sorter's Name
             </label>
             <select
               id="newSorter"
@@ -511,7 +511,7 @@ const Status = () => {
               htmlFor="kiloOfBeans"
               className="block font-medium poppins-font"
             >
-              Kilo of Beans:
+              Kilo of Beans
             </label>
             <input
               type="text"
@@ -528,7 +528,7 @@ const Status = () => {
               htmlFor="newStatus"
               className="block font-medium poppins-font"
             >
-              Status:
+              Status
             </label>
             <select
               id="newStatus"
@@ -544,7 +544,7 @@ const Status = () => {
             </select>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
@@ -554,7 +554,7 @@ const Status = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className=" hover:bg-red-700 text-black hover:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>

@@ -501,8 +501,11 @@ const Customers = () => {
                                         `/customers/customerstatus/${customer.customerName}/${customer.id}`
                                       );
                                     }}
-                                    className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
+                                    <span class="material-symbols-outlined pr-2">
+                                    history
+                                    </span>
                                     History
                                   </button>
                                 </li>
@@ -511,18 +514,23 @@ const Customers = () => {
                                     onClick={() =>
                                       handleShowUpdateModal(customer)
                                     }
-                                    className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
+                                    <span class="material-symbols-outlined pr-2">
+                                    edit
+                                  </span>
                                     Update
                                   </button>
+                                  
                                 </li>
                                 <li>
                                   <button
-                                    onClick={() =>
-                                      archivedCustomer(customer.id)
-                                    }
-                                    className="poppins-font block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                    onClick={() => archivedCustomer(customer.id)}
+                                    className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
+                                    <span className="material-symbols-outlined pr-2">
+                                      archive
+                                    </span>
                                     Archive
                                   </button>
                                 </li>
@@ -556,7 +564,7 @@ const Customers = () => {
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+        <h2 className="text-2xl font-semibold mb-4 text-center poppins-font text-black dark:text-textTitle">
           Customer
         </h2>
         {/* form for adding a new customer */}
@@ -566,7 +574,7 @@ const Customers = () => {
               htmlFor="newCustomerName"
               className="block font-medium poppins-font"
             >
-              Name:
+              Name
             </label>
             <input
               type="text"
@@ -583,7 +591,7 @@ const Customers = () => {
               htmlFor="newCustomerPhoneNumber"
               className="block font-medium poppins-font"
             >
-              Phone Number:
+              Phone Number
             </label>
             <input
               type="text"
@@ -600,7 +608,7 @@ const Customers = () => {
               htmlFor="newCustomerAddress"
               className="block font-medium poppins-font"
             >
-              Address:
+              Address
             </label>
             <textarea
               id="newCustomerAddress"
@@ -613,7 +621,7 @@ const Customers = () => {
             />
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
@@ -623,7 +631,7 @@ const Customers = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className=" hover:bg-red-700 hover:text-white text-black font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>

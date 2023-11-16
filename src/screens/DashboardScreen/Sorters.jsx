@@ -244,7 +244,7 @@ const Sorters = () => {
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+        <h2 className="text-2xl font-semibold text-center mb-4 poppins-font text-black dark:text-textTitle">
           Sorter
         </h2>
         {/* form for adding a new sorter */}
@@ -254,7 +254,7 @@ const Sorters = () => {
               htmlFor="newSorterName"
               className="block font-medium poppins-font"
             >
-              Name:
+              Name
             </label>
             <input
               type="text"
@@ -271,7 +271,7 @@ const Sorters = () => {
               htmlFor="newSorterPhoneNumber"
               className="block font-medium poppins-font"
             >
-              Phone Number:
+              Phone Number
             </label>
             <input
               type="text"
@@ -288,7 +288,7 @@ const Sorters = () => {
               htmlFor="newSorterAddress"
               className="block font-medium poppins-font"
             >
-              Address:
+              Address
             </label>
             <input
               type="text"
@@ -305,7 +305,7 @@ const Sorters = () => {
               htmlFor="newSorterDateHired"
               className="block font-medium poppins-font"
             >
-              Date Hired:
+              Date Hired
             </label>
             {/*DatePicker*/}
             <DatePicker
@@ -317,7 +317,7 @@ const Sorters = () => {
             />
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
@@ -327,7 +327,7 @@ const Sorters = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className="text-black hover:bg-red-700 hover:text-white  font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>
