@@ -20,7 +20,7 @@ const Error = () => {
 
   return (
     <>
-      <AdminSidebar
+      {/* <AdminSidebar
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
       />
@@ -28,7 +28,7 @@ const Error = () => {
         onToggleSidebar={toggleSidebar}
         collapsed={navVisible}
         handleToggleSidebar={toggleSidebar}
-      />
+      /> */}
       <div className="relative z-10 py-[120px]">
         <div className="container mx-auto">
           <div className="-mx-4 flex">

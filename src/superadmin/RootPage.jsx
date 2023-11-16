@@ -8,7 +8,7 @@ import Error from "./Error";
 import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
 import PermissionDenied from "./DeniedAccess";
-import Main from "../screens/mainpage";
+import Main from "./mainpage";
 
 function AdminRootPage() {
     const navigate = useNavigate();
@@ -54,7 +54,6 @@ function AdminRootPage() {
                     <Main>
                         <Profile />
                     </Main>
-
                 }
             />
             <Route
@@ -64,14 +63,6 @@ function AdminRootPage() {
                         <Error />
                     </Main>
 
-                }
-            />
-            <Route
-                path="/permission-denied"
-                element={
-                    <Main>
-                        <PermissionDenied />
-                    </Main>
                 }
             />
             <Route path="*" element={<Error />} />
