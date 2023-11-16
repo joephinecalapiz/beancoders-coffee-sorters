@@ -8,7 +8,7 @@ import Error from "./Error";
 import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
 import PermissionDenied from "./DeniedAccess";
-import Main from "./Mainpage";
+import Main from "../screens/mainpage";
 
 function AdminRootPage() {
     const navigate = useNavigate();

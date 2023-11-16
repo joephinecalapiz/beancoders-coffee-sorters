@@ -18,12 +18,12 @@ const PermissionDenied = () => {
 
     return (
         <>
-        <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+        {/* <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
         <Topbar
                 onToggleSidebar={toggleSidebar}
                 collapsed={navVisible}
                 handleToggleSidebar={toggleSidebar}
-        />
+        /> */}
             <div className="relative z-10 max-h-full">
                 <div className="container mx-auto">
                     <div className="-mx-4 flex">
