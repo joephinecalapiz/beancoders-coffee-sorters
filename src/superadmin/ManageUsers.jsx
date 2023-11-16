@@ -307,9 +307,9 @@ const ManageUsers = () => {
                                   onClick={() => setEnabled(user.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     user.disabled === false
-                                      ? "bg-brown hover:bg-gray-100 text-white"
-                                      : ""
-                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    ? "bg-brown hover:bg-gray-100 text-white"
+                                    : ""
+                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Enabled
                                 </button>
@@ -321,7 +321,7 @@ const ManageUsers = () => {
                                     user.disabled === true
                                       ? "bg-brown hover:bg-gray-100 text-white"
                                       : ""
-                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                  } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Disabled
                                 </button>

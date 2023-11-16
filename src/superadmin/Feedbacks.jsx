@@ -305,9 +305,9 @@ const Feedbacks = () => {
                                   onClick={() => setToPending(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Pending"
-                                      ? "bg-brown hover:bg-gray-100 text-white"
-                                      : ""
-                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    ? "bg-brown hover:bg-gray-100 text-white"
+                                    : ""
+                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Pending
                                 </button>
@@ -317,9 +317,9 @@ const Feedbacks = () => {
                                   onClick={() => setToFinished(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Finished"
-                                      ? "bg-brown hover:bg-gray-100 text-white"
-                                      : ""
-                                  } dark:hover:bg-gray-600 dark:hover:text-white`}
+                                    ? "bg-brown hover:bg-gray-100 text-white"
+                                    : ""
+                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Solved
                                 </button>
