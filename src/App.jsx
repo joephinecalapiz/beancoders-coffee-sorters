@@ -13,7 +13,10 @@ import About from "./screens/LandingScreen/About";
 import ContactUs from "./screens/LandingScreen/ContactUs";
 import RootPage from "./screens/RootPage";
 import AdminRootPage from "./superadmin/RootPage";
-import logo from './assets/logo.png';
+import beanlogo from './assets/beanlogo.png';
+import Error from "./superadmin/Error";
+import PermissionDenied from "./superadmin/DeniedAccess";
+import Main from "./screens/mainpage";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
@@ -44,7 +47,7 @@ function App() {
   if (authenticated === null) {
     return (
       <div className="flex items-center justify-center h-screen">
-            <img src={logo} alt="Beans Logo" className="w-32 h-32" />
+            <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
       </div>
     );
   }
@@ -83,6 +86,24 @@ function App() {
 
           }
         />
+        <Route
+          path="/error"
+          element={
+            <Main>
+              <Error />
+            </Main>
+
+          }
+        />
+        <Route
+          path="/superadmin/permission-denied/"
+          element={
+            <Main>
+              <PermissionDenied />
+            </Main>
+          }
+        />
+        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );
