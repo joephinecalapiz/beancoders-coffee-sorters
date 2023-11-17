@@ -288,7 +288,7 @@ const Feedbacks = () => {
                           className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                           type="button"
                         >
-                          {feedback.status === 'Solved' ? feedback.status : ''}
+                          {feedback.status}
                         </button>
                         {openDropdownId === feedback.id && (
                           <div
