@@ -11,6 +11,7 @@ import api_endpoint from "../../config";
 
 const Status = () => {
   const [navVisible, showNavbar] = useState(false);
+  const [statusError, setStatusError] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customers, setCustomer] = useState([]);
   const [sorters, setSorter] = useState([]);
@@ -49,6 +50,9 @@ const Status = () => {
         setAllStatus(fetchAllStatus);
       })
       .catch((error) => {
+        if (error.response && error.response.data.error === 'No Status Found') {
+          setStatusError(true);
+        }
         console.error();
       });
   }, [status]);
@@ -448,6 +452,9 @@ const Status = () => {
                         </td>
                       </tr>
                     ))}
+                  {statusError && (
+                    <p className="text-red-500 ml-2">No status found. Please add new status!</p>
+                  )}
                 </tbody>
               </table>
             </div>
