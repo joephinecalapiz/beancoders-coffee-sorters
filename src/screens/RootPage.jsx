@@ -19,7 +19,7 @@ import SortingStatus from "./DashboardScreen/SortingStatus";
 import Receipt from "./ReceiptScreen/Receipt";
 import Error from "./Error";
 import PermissionDenied from "./DeniedAccess";
-import Main from "./mainpage";
+import Main from "./Mainpage";
 
 function RootPage() {
   const navigate = useNavigate();
