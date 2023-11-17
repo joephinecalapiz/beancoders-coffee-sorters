@@ -21,6 +21,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const [compInfo, setCompInfo] = useState("");
   const [profileIcon, setProfileIcon] = useState({
     profileAvatar: compInfo.profileAvatar,
+    companyName: compInfo.companyName,
   });
 
   const toggleDropdown = () => {
@@ -36,10 +37,19 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   useEffect(() => {
     fetchUserInfo();
     fetchCompanyInfo();
+
     document.addEventListener("mousedown", closeDropdown);
     return () => {
       document.removeEventListener("mousedown", closeDropdown);
     };
+  }, []);
+
+  useEffect(() => {
+    const cachedProfileData = sessionStorage.getItem("profile photo");
+
+    if (cachedProfileData) {
+      setCompInfo(JSON.parse(cachedProfileData));
+    }
   }, []);
 
   const fetchUserInfo = async () => {
@@ -54,6 +64,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
+
       const data = await response.json();
       setUserInfo(data.user);
     } catch (error) {
@@ -66,6 +77,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     setProfileIcon((prevProfileData) => ({
       ...prevProfileData,
       profileAvatar: compInfo.profileAvatar,
+      companyName: compInfo.companyName,
     }));
   }, [userInfo]);
 
@@ -84,6 +96,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
       }
       const compData = await response.json();
       setCompInfo(compData.details);
+      if (sessionStorage.getItem("profile photo") === null) {
+        sessionStorage.setItem(
+          "profile photo",
+          JSON.stringify(compData.details)
+        );
+      }
     } catch (error) {
       console.error("Error fetching company details data:", error);
     }
@@ -153,10 +171,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         >
           <FaBars size={20} />
         </button>
-
-        <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" />
+        {/* <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" /> */}
+        <span className="px-5 pt-5 text-lightBrown dark:text-lightBrown poppins-font text-xl h-16 font-semibold">
+          {profileIcon.companyName}
+        </span>{" "}
       </div>
-      <div className="flex bg-black dark:bg-gray items-center">
+      <div className="flex bg-black dark:bg-gray items-center md:pb-1">
         <div className="flex items-center relative" ref={dropdownRef}>
           <button
             type="button"
@@ -178,7 +198,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   : BeansLogo
               }
               alt="BeansLogo"
-              className="icon-logo w-12 h-12 rounded-full bg-white"
+              className="fixed w-12 h-12 rounded-full bg-white border border-green-500 shadow-xl shadow-green-900/20 ring-4 ring-green-500/30"
             />
           </button>
           {isDropdownOpen && (
@@ -254,9 +274,34 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                         Status
                       </a>
                     </li>
-                    {/* Add more sub-menu items as needed */}
                   </ul>
                 )}
+                <li
+                  onClick={() => {
+                    navigate("/contact-us");
+                  }}
+                >
+                  <a
+                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    role="menuitem"
+                    aria-expanded={isProfileMenuOpen}
+                  >
+                    Contact Us
+                  </a>
+                  <li
+                    onClick={() => {
+                      navigate("/aboutus");
+                    }}
+                  >
+                    <a
+                      className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                      role="menuitem"
+                      aria-expanded={isProfileMenuOpen}
+                    >
+                      About Us
+                    </a>
+                  </li>
+                </li>
                 <li onClick={handleSignOut}>
                   <a
                     className="block px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
@@ -269,14 +314,14 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className="admin-user text-white text-lg mr-8 poppins-font font-semibold  mt-4 ml-8">
-          Admin
+        <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-12 whitespace-nowrap">
+            Admin
         </h1>
       </div>
 
       {/* Confirmation Modal */}
       {isConfirmationModalOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-70">
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-70 z-100">
           <div className="bg-white p-6 rounded shadow">
             <p className="text-gray-800 text-lg poppins-font mb-4">
               Are you sure you want to log out?

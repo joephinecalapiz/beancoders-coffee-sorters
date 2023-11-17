@@ -110,8 +110,6 @@ const CompanyDetails = () => {
 
   const token = localStorage.getItem("token");
   const user_id = localStorage.getItem("user_id");
-  const role = localStorage.getItem("role");
-  localStorage.setItem("role", role);
   //---kanang console.log eh change rana para eh connect sa database
   const onSubmitHandler = (data) => {
     setLoading(true);
@@ -134,8 +132,8 @@ const CompanyDetails = () => {
       .then((response) => {
         if (response.status === 200) {
           setTimeout(() => {
+            setPopupMessage("Company Information is set!");
             setLoading(false);
-            navigate("/dashboard");
           }, 2000);
         }
       })
@@ -152,6 +150,12 @@ const CompanyDetails = () => {
     //console.log(data);
   };
 
+  const closeMessage = () => {
+    setPopupMessage(null)
+    navigate('/login')
+    localStorage.removeItem("token")
+  }
+
   useEffect(() => {
     document.title = "Company Details";
   }, []);
@@ -165,11 +169,11 @@ const CompanyDetails = () => {
             onSubmit={handleSubmit(onSubmitHandler)}
             className="rounded-[40px] p-8 max-w-xs w-full"
           >
-            <div className="w-[145%] mx-auto">
-              <h1 className="text-center poppins-font text-white font-bold text-[30px] md:mt-25 md:mb-5 md:mt-16 mt-20">
+            <div className="w-[145%] justify-center poppins-font">
+              <h1 className="text-center text-white font-bold text-[30px] md:mt-24 md:mb-5 mt-20 mb-5 poppins-font">
                 Complete Registration
               </h1>
-              <h5 className="text-center text-white text-[15px] poppins-font mb-10 md:mb-4 md:mt-2">
+              <h5 className="text-center text-white text-[15px] poppins-font mb-10 md:mb-4">
                 Enter your company information below.
               </h5>
               {/* <label
@@ -354,7 +358,7 @@ const CompanyDetails = () => {
                     ></path>
                   </svg>
                 ) : null}
-                {loading ? "Processing..." : "Sign up"}
+                {loading ? "Processing..." : "Submit"}
               </button>
             </div>
           </form>
@@ -362,7 +366,7 @@ const CompanyDetails = () => {
       </div>
       <Modal
         isOpen={popupMessage !== null}
-        onClose={() => setPopupMessage(null)}
+        onClose={closeMessage}
         showCloseButton={true}
       >
         {popupMessage}

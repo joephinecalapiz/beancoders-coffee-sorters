@@ -8,68 +8,61 @@ import Error from "./Error";
 import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
 import PermissionDenied from "./DeniedAccess";
+import Main from "./mainpage";
 
 function AdminRootPage() {
-    const [navVisible, showNavbar] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const role = localStorage.getItem("role");
         // Check if the user_id is not 1 and navigate back if necessary
         if (role !== "1") {
-          navigate("/superadmin/permission-denied"); // Go back to the previous page
-          // window.location.reload();
+            navigate("/superadmin/permission-denied"); // Go back to the previous page
+            // window.location.reload();
         }
-      }, []);
+    }, []);
 
     return (
         <Routes>
             <Route
                 path="/manageusers"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                    <Main>
                         <ManageUsers />
-                    </div>
+                    </Main>
                 }
             />
             <Route
                 path="/feedbacks"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                    <Main>
                         <Feedbacks />
-                    </div>
+                    </Main>
                 }
             />
             <Route
                 path="/generate-keys"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                    <Main>
                         <GenerateKeys />
-                    </div>
+                    </Main>
                 }
             />
             <Route
                 path="/profile"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto pl-16" : "page page-with-navbar"}>
+                    <Main>
                         <Profile />
-                    </div>
+                    </Main>
                 }
             />
             <Route
                 path="/error"
                 element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto" : "page page-with-navbar"}>
+                    <Main>
                         <Error />
-                    </div>
-                }
-            />
-            <Route
-                path="/permission-denied"
-                element={
-                    <div className={!navVisible ? "max-w-8xl mx-auto" : "page page-with-navbar"}>
-                        <PermissionDenied />
-                    </div>
+                    </Main>
+
                 }
             />
             <Route path="*" element={<Error />} />

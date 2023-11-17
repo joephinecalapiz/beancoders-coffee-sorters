@@ -9,7 +9,7 @@ import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 
 const StatusArchived = () => {
-  const [navVisible, showNavbar] = useState(true);
+  const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
   const monthOptions = [
@@ -78,12 +78,15 @@ const StatusArchived = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/fetch-archive-status/" + user_id, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const response = await fetch(
+        api_endpoint + "/fetch-archive-status/" + user_id,
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to fetch customer archived data");
@@ -91,7 +94,10 @@ const StatusArchived = () => {
       const data = await response.json();
       setAllCustomers(data.archived_status);
       if (sessionStorage.getItem("archive status data") === null) {
-        sessionStorage.setItem("archive status data", JSON.stringify(data.archived_status));
+        sessionStorage.setItem(
+          "archive status data",
+          JSON.stringify(data.archived_status)
+        );
       }
     } catch (error) {
       console.error("Error fetching customer archived data:", error);
@@ -102,12 +108,15 @@ const StatusArchived = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/delete-archive-status/" + id, {
-        method: "DELETE",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
+      const response = await fetch(
+        api_endpoint + "/delete-archive-status/" + id,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to delete customer archived data");
@@ -124,57 +133,49 @@ const StatusArchived = () => {
   };
 
   const filteredCustomers = allCustomers.filter((customer) => {
-    const matchesSearchText = customer.customerName.toLowerCase().includes(searchText.toLowerCase());
+    const matchesSearchText = customer.customerName
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
     return matchesSearchText;
   });
 
-  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.customerName.toLowerCase().localeCompare(b.customerName.toLowerCase()) || (a.id - b.id));
-
-
+  const sortedFilteredCustomers = filteredCustomers.sort(
+    (a, b) =>
+      a.customerName
+        .toLowerCase()
+        .localeCompare(b.customerName.toLowerCase()) || a.id - b.id
+  );
 
   useEffect(() => {
     document.title = "Status Archived";
     fetchCustomers();
-  },);
+  });
 
   const totalCustomers = allCustomers.length;
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
       <div className={`mx-auto ${navVisible ? "" : ""}`}>
         <div className="header">
-          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-            <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Status Archived
-              </h1>
-            </div>
-
-            <div className="flex items-center"></div>
-            <br />
-            <br />
+          <div className="md:pl-5 md:pr-5 pr-2 pl-2 pb-5 pt-0.5">
+            <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
+              Status Archives
+            </h1>
           </div>
         </div>
-        <div className="search-and-button">
-          <div
-            className={`dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-            ${navVisible ? "px-10" : "sm:ml-44"}`}
-          >
-            {/* Total number of customer */}
-            Total: {totalCustomers}
-            {/* Search bar */}
+        <div className="search-and-button mt-20">
+          <div className="dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
+            <div className="poppins-font font-bold">
+              Total: {totalCustomers}
+            </div>
+
             <input
               type="text"
               placeholder="Search Customers"
               value={searchText}
               onChange={handleSearchInputChange}
               className="px-4 py-2 border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+              style={{ width: "50%", maxWidth: "1000px" }}
             />
           </div>
         </div>
@@ -239,12 +240,12 @@ const StatusArchived = () => {
           </div>
         </div> */}
 
-        <div className="px-4">
+        <div className="md:pl-2 md:pr-2 pr-2 pl-2">
           <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+            className="md:p-5 md:pt-10 pt-5 "
             style={{
               transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
+              marginTop: "-10px",
             }}
           >
             <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
@@ -257,12 +258,7 @@ const StatusArchived = () => {
                     >
                       Customer Number
                     </th>
-                    {/* <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Date Archived
-                    </th> */}
+
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
@@ -287,12 +283,7 @@ const StatusArchived = () => {
                     >
                       Status
                     </th>
-                    {/* <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Kilo beans
-                    </th> */}
+
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
@@ -309,19 +300,7 @@ const StatusArchived = () => {
                       <td className="poppins-font">{customer.sorterName}</td>
                       <td className="poppins-font">{customer.kiloOfBeans}</td>
                       <td className="poppins-font">{customer.status}</td>
-                      {/* <td className="poppins-font">{customer.kiloOfBeans}</td> */}
                       <td className="poppins-font">
-                        {/* <button
-                          onClick={() => {
-                            sessionStorage.setItem("customerId", customer.id);
-                            navigate(
-                              `/customers/customerstatus/${customer.customerName}`
-                            );
-                          }}
-                          className="see-more-button focus:outline-none"
-                        >
-                          See More...
-                        </button> */}
                         <button
                           onClick={() => toggleDropdown(customer.id)}
                           className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -334,25 +313,28 @@ const StatusArchived = () => {
                             fill="currentColor"
                             viewBox="0 0 16 3"
                           >
-                            <path
-                              d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
-                            />
+                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
                           </svg>
                         </button>
                         {openDropdownId === customer.id && (
                           <div
                             id="dropdownDotsHorizontal"
-                            className="absolute z-10 mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow w-44 bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                            style={{ top: '100', right: '0' }}
+                            className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                            style={{ top: "100", right: "0" }}
                           >
-                            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
+                            <ul
+                              className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                              aria-labelledby="dropdownMenuIconHorizontalButton"
+                            >
                               <li>
                                 <button
                                   onClick={() => deleteCustomer(customer.id)}
-                                  className="block px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >
-                                  Permanent Delete
-                                </button>
+                                  className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    <span className="delete pr-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"/></svg>                                    </span>
+                                    Permanent Delete
+                                  </button>
                               </li>
                             </ul>
                           </div>

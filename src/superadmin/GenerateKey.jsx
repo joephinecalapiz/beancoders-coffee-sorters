@@ -152,117 +152,98 @@ const GenerateKeys = () => {
 
   return (
     <>
-      <AdminSidebar
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
-      <div className={`mx-auto ${navVisible ? "" : ""}`}>
-        <div className="header">
-          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-            <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white poppins-font dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Generate Keys
-              </h1>
-            </div>
-            <div className="flex items-center"></div>
-            <br />
-            <br />
-          </div>
+      <div className="header">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pt-0.5 mb-2">
+          <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-5 text-base p-3 rounded-lg shadow-xl">
+            Generate Keys
+          </h1>
         </div>
-        <div className="search-and-button">
-          <div
-            className={`p-5 dark:text-textTitle px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-            ${navVisible ? "px-10" : "sm:ml-44"}`}
-          >
-            {/* Total number of sorters */}
-            <div className="poppins-font font-bold">Total: {totalUsers}</div>
-            {/* Add New button */}
-            <button
-              onClick={handleGenerateKeys}
-              className="px-4 py-2 text-white rounded focus:outline-none"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-                border: "none",
-                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
-              }}
-            >
-              Generate New Key
-            </button>
-          </div>
-        </div>
-        <div className="px-4">
-          <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
+      </div>
+      <div className="search-and-button mt-20">
+        <div className="p-5 dark:text-textTitle px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
+          {/* Total number of sorters */}
+          <div className="poppins-font font-bold">Total: {totalUsers}</div>
+          {/* Add New button */}
+          <button
+            onClick={handleGenerateKeys}
+            className="px-4 py-2 text-white rounded focus:outline-none"
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#C4A484";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#512615";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
             style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
+              backgroundColor: "#512615",
+              fontFamily: "'Poppins', sans-serif",
+              boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+              border: "none",
+              textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
             }}
           >
-            <div className="shadow mx-auto overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-              <div className="max-h-[480px] overflow-y-auto">
-                <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
-                  <thead className="table-header">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Id num
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Special Key
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      ></th>
+            Generate New Key
+          </button>
+        </div>
+      </div>
+      <div className="md:pl-5 md:pr-5 pr-2 pl-2 p-5">
+        <div
+          className="md:p-5"
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          <div className="shadow mx-auto overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
+            <div className="max-h-[580px] md:max-h-[460px] overflow-y-auto">
+              <table className="min-w-full divide-y divide-gray-200 table-auto customers-table">
+                <thead className="table-header">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Id num
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Special Key
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    ></th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
+                  {sortedFilteredKeys.map((key, index) => (
+                    <tr key={key.id}>
+                      <td className="poppins-font">{index + 1}</td>
+                      <td className="poppins-font">{key.special_key}</td>
+                      <td className="poppins-font">
+                        {new Date(key.created_at).toLocaleDateString()}
+                      </td>
+                      <td>
+                        <button
+                          onClick={() => deleteKeys(key.id)}
+                          className="delete-button "
+                        >
+                          <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                      </td>
                     </tr>
-                  </thead>
-                  <tbody className="bg-white divide-y divide-gray-200 sort-table dark:text-textTitle dark:bg-container">
-                    {sortedFilteredKeys.map((key, index) => (
-                      <tr key={key.id}>
-                        <td className="poppins-font">{index + 1}</td>
-                        <td className="poppins-font">{key.special_key}</td>
-                        <td className="poppins-font">
-                          {new Date(key.created_at).toLocaleDateString()}
-                        </td>
-                        <td>
-                          <button
-                            onClick={() => deleteKeys(key.id)}
-                            className="delete-button "
-                          >
-                            <FontAwesomeIcon icon={faTrash} />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>

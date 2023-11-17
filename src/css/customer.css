@@ -1,27 +1,6 @@
 /** @format */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
-/* Table - Header */
-
-/* .App{ 
-  height: 100%;
-  background-color: #d4d4d4;
-} */
-
-.table-header {
-  background-color: #472214;
-  color: white;
-  text-align: left;
-  font-size: 30px;
-}
-
-.add-new-btn {
-  font-family: "Poppins", sans-serif;
-}
-
-.poppins-font {
-  font-family: "Poppins", sans-serif;
-}
 
 .search-bar {
   margin-left: 35px;
@@ -30,15 +9,13 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 500px) {
+@media (max-width: 700px) {
   .search-bar {
     display: none;
   }
 }
 
-/* Table - Cell Data (below the header) */
 .custom-table {
-  /* background-color: #f2f2f2; */
   font-size: 16px;
   color: #333;
   text-align: center;
@@ -58,7 +35,6 @@
   color: #0052a3;
 }
 
-/* For Modal Styling */
 .modal-overlay {
   background-color: rgba(0, 0, 0, 0.5);
 }
@@ -95,33 +71,21 @@
   margin-right: 1rem;
 }
 
-/* Modal Buttons */
 .button-container {
   display: flex;
   gap: 80px;
   font-size: 14px;
 }
 
-/* Height of Text Field for Address */
 .custom-address-input {
   height: 70px;
 }
 
 .content-shift-right {
   margin-left: 100px;
-  transition: margin-left 0.3s ease; /* Apply a smooth transition effect */
+  transition: margin-left 0.3s ease;
 }
 
-/* Add this CSS to your existing customer.css file or create a new CSS file and import it */
-
-/* Set a height for the container */
-.table-container {
-  /* background-color: #d4d4d4; */
-  max-height: calc(100vh - 200px); /* Adjust the height as needed */
-  overflow-y: auto;
-}
-
-/* Optional: If you want to style the table headers */
 .customers-table th {
   position: sticky;
   top: 0;
@@ -129,21 +93,13 @@
   color: white;
   font-weight: bold;
   text-align: center;
-  z-index: 1; /* Ensure the headers appear above the content */
+  z-index: 1;
 }
 
-/* Optional: Style for the search bar */
-.search-bar {
-  width: 100%;
-  max-width: 300px;
-}
-
-/* Optional: Style for the Add New button */
 .add-button:hover {
   background-color: #c4a484;
 }
 
-/* Optional: Style for the See More button */
 .see-more-button {
   color: white;
   padding: 4px 8px;

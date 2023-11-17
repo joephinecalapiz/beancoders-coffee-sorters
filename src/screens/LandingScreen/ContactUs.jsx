@@ -41,6 +41,8 @@ const ContactUs = () => {
     document.title = "Contact Us";
   }, []);
 
+  const email = localStorage.getItem("savedEmail")
+
   const onSubmitHandler = async (formData) => {
     // e.preventDefault();
     setLoading(true); // Set loading state to true when form is submitted
@@ -79,14 +81,14 @@ const ContactUs = () => {
   return (
     <>
       <Navbar />
-      <div className="mt-12 md:mt-16 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
-        <section className="sm:mx-auto md:mx-24 lg:mx-32 xl:mx-48 items-center">
+      <div className="mt-16 md:bg-bgLogin md:bg-cover min-h-screen bg-CoffeeBeans bg-cover">
+        <section className="justify-center md:mx-24 lg:mx-32 xl:mx-48 items-center">
           <form
-            className="rounded-[40px] p-8 max-w-xs w-full "
+            className="rounded-[40px] p-8 max-w-xs w-full"
             onSubmit={handleSubmit(onSubmitHandler)}
           >
-            <div className="w-[145%] mx-auto">
-              <h1 className=" poppins-font text-center text-white font-semibold text-[40px] md:mt-20 md:mb-6 mt-12 mb-8">
+            <div className="w-[145%] justify-center poppins-font">
+              <h1 className="text-center text-white font-bold text-[30px] md:mt-24 md:mb-12 mt-20 mb-12 poppins-font">
                 Contact Us
               </h1>
 
@@ -230,6 +232,7 @@ const ContactUs = () => {
 
               <input
                 name="email"
+                value={email}
                 type="email"
                 placeholder="Email Address"
                 {...register("email", {

@@ -64,6 +64,7 @@ const Status = () => {
       })
       .then((response) => {
         const fetchCustomerData = response.data.customer;
+        sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
         setCustomer(fetchCustomerData);
       });
   }, []);
@@ -79,6 +80,7 @@ const Status = () => {
       })
       .then((response) => {
         const fetchSorterData = response.data.sorters;
+        sessionStorage.setItem("sorterData", JSON.stringify(fetchSorterData));
         setSorter(fetchSorterData);
       });
   }, []);
@@ -92,9 +94,17 @@ const Status = () => {
   }, []);
 
   useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("statusData");
+    const cachedCustomerData = sessionStorage.getItem("customerData");
     if (cachedCustomerData) {
-      setAllStatus(JSON.parse(cachedCustomerData));
+      setCustomer(JSON.parse(cachedCustomerData));
+    }
+    const cachedSorterData = sessionStorage.getItem("sorterData");
+    if (cachedSorterData) {
+      setSorter(JSON.parse(cachedSorterData));
+    }
+    const cachedStatusData = sessionStorage.getItem("statusData");
+    if (cachedStatusData) {
+      setAllStatus(JSON.parse(cachedStatusData));
     }
   }, []);
 
@@ -270,202 +280,176 @@ const Status = () => {
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
-      <div className={`mx-auto ${navVisible ? "" : ""}`}>
-        <div className="header">
-          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-            <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black bg-white poppins-font dark:text-textTitle dark:bg-container mt-10 font-bold text-base p-3 rounded-lg shadow-xl">
-                Sorting Status
-              </h1>
-            </div>
-
-            <div className="flex items-center"></div>
-            <br />
-            <br />
-          </div>
+      <div className="header">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pb-5 pt-0.5">
+          <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
+            Status
+          </h1>
         </div>
+      </div>
 
-        <div className="search-and-button">
-          <div
-            className={`p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins 
-            ${navVisible ? "px-10" : "sm:ml-44"}`}
-          >
-            {/* Search bar */}
-            <input
-              type="text"
-              placeholder="Search Sorters"
-              value={searchText}
-              onChange={handleSearchInputChange}
-              className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
-              style={{ width: "80%", maxWidth: "800px" }}
-            />
+      <div className="search-and-button mt-16">
+        <div className="p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
+          {/* Search bar */}
+          <input
+            type="text"
+            placeholder="Search Sorters"
+            value={searchText}
+            onChange={handleSearchInputChange}
+            className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
+            style={{ width: "80%", maxWidth: "850px" }}
+          />
 
-            {/* Add New button */}
-            <button
-              onClick={openModal}
-              className="px-4 py-2 text-white rounded focus:outline-none"
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = "#C4A484";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
-                e.target.style.transition = "background-color 0.3s ease";
-              }}
-              style={{
-                backgroundColor: "#512615",
-                fontFamily: "'Poppins', sans-serif",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
-                border: "none",
-                textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
-              }}
-            >
-              Add New
-            </button>
-          </div>
-        </div>
-
-        <div className="px-4">
-          <div
-            className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-            style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-20px",
+          {/* Add New button */}
+          <button
+            onClick={openModal}
+            className="px-4 py-2 poppins-font font-semibold text-white rounded bg-[#512615] text-shadow shadow-md border-none text-shadow focus:outline-none "
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = "#C4A484";
+              e.target.style.transition = "background-color 0.3s ease";
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = "#512615";
+              e.target.style.transition = "background-color 0.3s ease";
             }}
           >
-            <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-              <div className="max-h-[450px] overflow-y-auto">
-                <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
-                  <thead>
-                    <tr>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Date
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Customer's Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Sorter's Name
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        Status
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                      >
-                        receipt
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
-                    {status
-                      .filter((sorted) =>
-                        sorted.customerName
-                          .toLowerCase()
-                          .includes(searchText.toLowerCase())
-                      )
-                      .map((sorted) => (
-                        <tr key={sorted.id}>
-                          <td className="poppins-font">
-                            {new Date(sorted.created_at).toLocaleDateString()}
-                          </td>
+            Add New
+          </button>
+        </div>
+      </div>
 
-                          <td className="poppins-font">
-                            {sorted.customerName}
-                          </td>
-                          <td className="poppins-font">{sorted.sorterName}</td>
-                          <td className="poppins-font">
-                            <button
-                              onClick={() => toggleDropdown(sorted.id)}
-                              className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                              type="button"
+      <div className="md:pl-5 md:pr-5 pr-2 pl-2">
+        <div
+          className="md:p-5 pt-10"
+          style={{
+            transition: "margin-left 0.3s ease",
+            marginTop: "-20px",
+          }}
+        >
+          <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
+            <div className="max-h-[470px] overflow-y-auto">
+              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
+                <thead>
+                  <tr>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Customer's Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Sorter's Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Status
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      receipt
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
+                  {status
+                    .filter((sorted) =>
+                      sorted.customerName
+                        .toLowerCase()
+                        .includes(searchText.toLowerCase())
+                    )
+                    .map((sorted) => (
+                      <tr key={sorted.id}>
+                        <td className="poppins-font">
+                          {new Date(sorted.created_at).toLocaleDateString()}
+                        </td>
+
+                        <td className="poppins-font">{sorted.customerName}</td>
+                        <td className="poppins-font">{sorted.sorterName}</td>
+                        <td className="poppins-font">
+                          <button
+                            onClick={() => toggleDropdown(sorted.id)}
+                            className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            type="button"
+                          >
+                            {sorted.status}
+                          </button>
+                          {openDropdownId === sorted.id && (
+                            <div
+                              id="dropdownDotsHorizontal"
+                              className="absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-lg shadow bg-white dark:divide-gray-600 mr-5"
+                              style={{ top: "50", left: "50" }}
                             >
-                              {sorted.status}
-                            </button>
-                            {openDropdownId === sorted.id && (
-                              <div
-                                id="dropdownDotsHorizontal"
-                                className="absolute z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-lg shadow bg-white dark:divide-gray-600 mr-5"
-                                style={{ top: "50", left: "50" }}
+                              <ul
+                                className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <ul
-                                  className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
-                                  aria-labelledby="dropdownMenuIconHorizontalButton"
-                                >
-                                  <li>
-                                    <button
-                                      onClick={() => setToOngoing(sorted.id)}
-                                      className={`block px-4 py-2 mx-auto w-full ${
-                                        sorted.status === "Ongoing"
-                                          ? "bg-brown hover:bg-gray-100 "
-                                          : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                    >
-                                      Ongoing
-                                    </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      onClick={() => setToFinished(sorted.id)}
-                                      className={`block px-4 py-2 mx-auto w-full ${
-                                        sorted.status === "Finished"
-                                          ? "bg-brown hover:bg-gray-100"
-                                          : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                    >
-                                      Finished
-                                    </button>
-                                  </li>
-                                  <li>
-                                    <button
-                                      onClick={() => setToCancelled(sorted.id)}
-                                      className={`block px-4 py-2 mx-auto w-full ${
-                                        sorted.status === "Cancelled"
-                                          ? "bg-brown hover:bg-gray-100"
-                                          : ""
-                                      } dark:hover:bg-gray-600 dark:hover:text-white`}
-                                    >
-                                      Cancelled
-                                    </button>
-                                  </li>
-                                </ul>
-                              </div>
-                            )}
-                          </td>
-                          <td className="poppins-font">
-                            <button
-                              onClick={() => {
-                                navigate(`/status/receipt/${sorted.id}`);
-                              }}
-                              className="see-more-button focus:outline-none"
-                            >
-                              Receipt
-                            </button>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
+                                <li>
+                                  <button
+                                    onClick={() => setToOngoing(sorted.id)}
+                                    className={`block px-4 py-2 mx-auto w-full ${
+                                      sorted.status === "Ongoing"
+                                        ? "bg-brown hover:bg-gray-100 text-white"
+                                        : ""
+                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                  >
+                                    Ongoing
+                                  </button>
+                                </li>
+                                <li>
+                                  <button
+                                    onClick={() => setToFinished(sorted.id)}
+                                    className={`block px-4 py-2 mx-auto w-full ${
+                                      sorted.status === "Finished"
+                                        ? "bg-brown hover:bg-gray-100  text-white"
+                                        : ""
+                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                  >
+                                    Finished
+                                  </button>
+                                </li>
+                                <li>
+                                  <button
+                                    onClick={() => setToCancelled(sorted.id)}
+                                    className={`block px-4 py-2 mx-auto w-full ${
+                                      sorted.status === "Cancelled"
+                                        ? "bg-brown hover:bg-gray-100 text-white"
+                                        : ""
+                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                  >
+                                    Cancelled
+                                  </button>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        </td>
+                        <td className="poppins-font">
+                          <button
+                            onClick={() => {
+                              navigate(`/status/receipt/${sorted.id}`);
+                            }}
+                            className="see-more-button focus:outline-none"
+                          >
+                            Receipt
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -473,7 +457,7 @@ const Status = () => {
 
       {/* Modal */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2 className="text-2xl font-semibold mb-4 poppins-font text-black dark:text-textTitle">
+        <h2 className="text-2xl font-semibold mb-4 text-center poppins-font text-black dark:text-textTitle">
           Status
         </h2>
         {/* Add your form or content for adding a new customer */}
@@ -484,7 +468,7 @@ const Status = () => {
               htmlFor="newCustomer"
               className="block font-medium poppins-font"
             >
-              Customer's Name:
+              Customer's Name
             </label>
             <select
               id="newCustomer"
@@ -507,7 +491,7 @@ const Status = () => {
               htmlFor="newSorter"
               className="block font-medium poppins-font"
             >
-              Sorter's Name:
+              Sorter's Name
             </label>
             <select
               id="newSorter"
@@ -529,7 +513,7 @@ const Status = () => {
               htmlFor="kiloOfBeans"
               className="block font-medium poppins-font"
             >
-              Kilo of Beans:
+              Kilo of Beans
             </label>
             <input
               type="text"
@@ -546,7 +530,7 @@ const Status = () => {
               htmlFor="newStatus"
               className="block font-medium poppins-font"
             >
-              Status:
+              Status
             </label>
             <select
               id="newStatus"
@@ -562,7 +546,7 @@ const Status = () => {
             </select>
           </div>
 
-          <div className="flex justify-between">
+          <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
@@ -572,7 +556,7 @@ const Status = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className=" hover:bg-red-700 text-black hover:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>

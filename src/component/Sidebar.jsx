@@ -66,6 +66,16 @@ function Sidebar({ collapsed }) {
     navigate(href);
   };
 
+  useEffect(() => {
+    // Update the navigation state when the location changes
+    setNavigation((prev) =>
+      prev.map((item) => ({
+        ...item,
+        current: location.pathname === item.href,
+      }))
+    );
+  }, [location]);
+
   // Toggle the dark mode class when the component mounts and when darkMode changes
   useEffect(() => {
     // Check if dark mode is stored in localStorage
@@ -101,8 +111,8 @@ function Sidebar({ collapsed }) {
   return (
     <>
       <nav
-        className={`pl-4 pt-16 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-2 left-[max(0px,calc(10%-100rem))] w-[15rem] ${
-          collapsed ? "collapsed" : ""
+        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-16 left-[max(0px,calc(10%-100rem))]  ${
+          collapsed ? "collapsed" : "w-[15rem]"
         }`}
       >
         <div className="mt-4">
@@ -112,8 +122,10 @@ function Sidebar({ collapsed }) {
               to={item.href}
               // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
               className={`nav-link hover:bg-bgHover ${
-                item.current ? "bg-bgActive text-white" : "text-white"
+                item.current ? "bg-lightBrown text-white" : "text-white"
               } poppins-font`}
+              onMouseEnter={() => setNavigation((prev) => [...prev])}
+              onMouseLeave={() => setNavigation((prev) => [...prev])}
               key={item.href}
             >
               <span className="icon">{item.icon}</span>

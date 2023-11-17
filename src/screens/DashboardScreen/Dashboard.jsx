@@ -16,6 +16,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
 import Activities from "./Activities";
+import YesterdayAct from "./YesterdayAct";
 
 const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -101,89 +102,80 @@ const Dashboard = () => {
 
   return (
     <>
-      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
-      <div className={`mx-auto ${navVisible ? "" : ""}`}>
-        <div className="header">
-          <div className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}>
-            <div className="p-0.5 mb-2 w-full mt-6 relative">
-              <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-10 text-base p-3 rounded-lg shadow-xl">
-                Dashboard
-              </h1>
-            </div>
-          </div>
+      <div className="header">
+        <div className="md:pl-5 md:pr-5 pr-2 pl-2 pt-0.5 mb-2">
+          <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-5 text-base p-3 rounded-lg shadow-xl">
+            Dashboard
+          </h1>
         </div>
-        <div
-          className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginTop: "-20px",
-          }}
-        >
-          <div className="grid grid-cols-1 gap-12 mb-4 ">
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
-              <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
-                <div>
-                  <h1 className="text-black poppins-font font-medium data-title m-auto ml-5 mr-5">
-                    Pieces of Bad Beans
-                  </h1>
-                  <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                    {beanCount && beanCount.bad !== null
-                      ? `${beanCount.bad} pieces`
-                      : "0"}
-                  </h1>
-                </div>
-              </div>
-              <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
-                <div>
-                  <h1 className="text-black poppins-font font-medium data-title m-auto">
-                    Pieces of Good Beans
-                  </h1>
-                  <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                    {beanCount && beanCount.good !== null
-                      ? `${beanCount.good} pieces`
-                      : "0"}
-                  </h1>
-                </div>
-              </div>
-              <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
-                <div>
-                  <h1 className="text-black poppins-font font-medium data-title m-auto">
-                    KG of Bad Beans
-                  </h1>
-                  <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                    {beanCount && beanCount.kilograms !== null
-                      ? `${beanCount.kilograms} kilograms`
-                      : "0"}
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className={`p-5 ${navVisible ? "" : "sm:ml-44"}`}
-          style={{
-            transition: "margin-left 0.3s ease",
-            marginTop: "-20px",
-          }}
-        >
-          <div>
-            <h1 className="text-black poppins-font dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
-              Recent Activities
-            </h1>
-            <Activities />
-          </div>
-        </div>
-        <UpdateCompanyInfo
-          show={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-        />
       </div>
+      <div
+        className="p-5"
+        style={{
+          transition: "margin-left 0.3s ease",
+        }}
+      >
+        <div className="grid grid-cols-1 gap-12 mb-4 ">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
+            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+              <div>
+                <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto ml-5 mr-5">
+                  Pieces of Bad Beans
+                </h1>
+                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
+                  {beanCount && beanCount.bad !== null
+                    ? `${beanCount.bad} pieces`
+                    : "0"}
+                </h1>
+              </div>
+            </div>
+            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+              <div>
+                <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
+                  Pieces of Good Beans
+                </h1>
+                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
+                  {beanCount && beanCount.good !== null
+                    ? `${beanCount.good} pieces`
+                    : "0"}
+                </h1>
+              </div>
+            </div>
+            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+              <div>
+                <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
+                  KG of Bad Beans
+                </h1>
+                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
+                  {beanCount && beanCount.kilograms !== null
+                    ? `${beanCount.kilograms} kilograms`
+                    : "0"}
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        className="md:pl-5 md:pr-5 pr-2 pl-2 p-5 activities"
+        style={{
+          transition: "margin-left 0.3s ease",
+          marginTop: "-20px",
+        }}
+      >
+        <div>
+          <h1 className="text-black poppins-font dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
+            Recent Activities
+          </h1>
+          <Activities />
+          <YesterdayAct />
+        </div>
+      </div>
+      <UpdateCompanyInfo
+        show={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </>
   );
 };
