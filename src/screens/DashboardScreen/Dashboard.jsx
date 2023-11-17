@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useEffect, useRef, useState } from "react";
-import ".././css/sidebar.css";
 import ".././css/dashboard.css";
 import axios from "axios";
 import api_endpoint from "../../config";
