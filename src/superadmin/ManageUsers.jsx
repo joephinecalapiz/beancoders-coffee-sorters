@@ -270,6 +270,12 @@ const ManageUsers = () => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
+                      Last Login
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
                       Actions
                     </th>
                   </tr>
@@ -332,6 +338,17 @@ const ManageUsers = () => {
                       </td>
                       <td className="poppins-font">
                         {new Date(user.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="poppins-font">
+                        {user.last_login ? new Date(user.last_login).toLocaleString('en-US', {
+                          year: 'numeric',
+                          month: 'numeric',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          second: 'numeric',
+                          hour12: true
+                        }) : 'N/A'}
                       </td>
                       <td>
                         <button
