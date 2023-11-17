@@ -6,8 +6,6 @@ import api_endpoint from "../../config";
 import Sidebar from "../../component/Sidebar";
 import Topbar from "../../component/Topbar";
 import html2canvas from "html2canvas";
-import "../css/receipt.css";
-import ".././css/sidebar.css";
 import jsPDF from "jspdf";
 import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 

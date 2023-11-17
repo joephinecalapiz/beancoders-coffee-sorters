@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react"; // Import useState
 import { useNavigate, useParams } from "react-router-dom";
 import Modal from "../../component/Modal"; // Import the Modal component
-import ".././css/status.css";
 import axios from "axios";
 import api_endpoint from "../../config";
 

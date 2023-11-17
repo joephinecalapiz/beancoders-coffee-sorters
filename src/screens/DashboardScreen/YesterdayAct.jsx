@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import ".././css/sidebar.css";
 import axios from "axios";
 import api_endpoint from "../../config";
 import { useNavigate, useParams } from "react-router-dom";

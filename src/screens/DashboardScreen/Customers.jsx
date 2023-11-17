@@ -1,8 +1,6 @@
 /** @format */
 import React, { useState, useEffect } from "react";
 import api_endpoint from "../../config";
-import ".././css/customer.css";
-import ".././css/sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import UpdateCustomer from "../ModalScreen/UpdateCustomer";

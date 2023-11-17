@@ -1,9 +1,6 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import ".././css/sidebar.css";
-import ".././css/dashboard.css";
-import ".././css/profile.css";
 import beansLogo from "../../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../../config";
 import image_endpoint from "../../image-config";
