@@ -1,18 +1,10 @@
 /** @format */
 
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
-import "../.././css/Sidebar.css";
-import "../.././css/dashboard.css";
+import ".././css/Sidebar.css";
+import ".././css/dashboard.css";
 import axios from "axios";
 import api_endpoint from "../../config";
-import ChartComponent from "./Chart";
-import Modal from "../../component/Modal";
-import { Chart } from "chart.js/auto";
-import feather from "feather-icons";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
 import Activities from "./Activities";
