@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect } from "react"; // Import useState
 import { useNavigate, useParams } from "react-router-dom";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
 import Modal from "../../component/Modal"; // Import the Modal component
-import "../.././css/status.css";
+import ".././css/status.css";
 import axios from "axios";
 import api_endpoint from "../../config";
 
@@ -64,7 +62,10 @@ const Status = () => {
       })
       .then((response) => {
         const fetchCustomerData = response.data.customer;
-        sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
+        sessionStorage.setItem(
+          "customerData",
+          JSON.stringify(fetchCustomerData)
+        );
         setCustomer(fetchCustomerData);
       });
   }, []);

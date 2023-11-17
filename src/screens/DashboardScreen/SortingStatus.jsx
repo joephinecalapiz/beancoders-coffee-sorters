@@ -1,14 +1,11 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
-import "../.././css/Sidebar.css";
+import ".././css/Sidebar.css";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import api_endpoint from "../../config";
-import Skeleton from "react-loading-skeleton";
 
 const SortingStatus = () => {
   const [navVisible, showNavbar] = useState(false);
