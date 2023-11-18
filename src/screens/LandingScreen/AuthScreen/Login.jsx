@@ -71,14 +71,14 @@ const Login = () => {
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/dashboard");
-              window.location.reload();
+              // window.location.reload();
             }, 2000);
           }
           if (role == 1) {
             setTimeout(() => {
               setLoading(false); // Set loading to false when the operation is complete
               navigate("/superadmin/manageusers");
-              window.location.reload();
+              // window.location.reload();
             }, 2000);
           }
         }
