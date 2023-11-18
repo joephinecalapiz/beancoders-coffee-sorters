@@ -22,6 +22,8 @@ const Dashboard = () => {
   const [navVisible, showNavbar] = useState(false);
   const [userInfo, setUserInfo] = useState("");
   const [beanCount, setBeanCount] = useState("");
+  const [kgCount, setKgCount] = useState("");
+  const [goodCount, setGoodCount] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -92,7 +94,11 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get(api_endpoint + "/count").then((response) => {
       const bean = response.data.beans;
+      const total = response.data.total;
+      const good = response.data.goodbeans;
       setBeanCount(bean);
+      setKgCount(total);
+      setGoodCount(good);
     });
   }, []);
 
@@ -135,8 +141,8 @@ const Dashboard = () => {
                   Pieces of Good Beans
                 </h1>
                 <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                  {beanCount && beanCount.good !== null
-                    ? `${beanCount.good} pieces`
+                  {goodCount && goodCount !== null
+                    ? `${goodCount} pieces`
                     : "0"}
                 </h1>
               </div>
@@ -147,8 +153,8 @@ const Dashboard = () => {
                   KG of Bad Beans
                 </h1>
                 <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                  {beanCount && beanCount.kilograms !== null
-                    ? `${beanCount.kilograms} kilograms`
+                  {kgCount && kgCount !== null
+                    ? `${kgCount} kilograms`
                     : "0"}
                 </h1>
               </div>
