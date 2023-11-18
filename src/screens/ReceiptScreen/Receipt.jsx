@@ -12,9 +12,8 @@ import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
 import { useSelector } from 'react-redux'
 
 const Receipt = () => {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const { customerId } = useParams();
   const [receiptDetails, setReceiptDetails] = useState([]);
   const [navVisible, showNavbar] = useState(true);

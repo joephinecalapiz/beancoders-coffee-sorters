@@ -12,9 +12,7 @@ import image_endpoint from "../image-config";
 import { useSelector } from 'react-redux'
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();

@@ -8,9 +8,8 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
 const Activities = () => {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const [allHistory, setAllHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);

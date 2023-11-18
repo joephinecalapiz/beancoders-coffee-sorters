@@ -23,7 +23,7 @@ function App() {
   const [authenticated, setAuthenticated] = useState(null);
   // Access the token from the Redux state
   const token = useSelector(state => state.auth.token);
-  
+
   useEffect(() => {
     if (token) {
       setAuthenticated(true);

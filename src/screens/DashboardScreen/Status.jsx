@@ -1,15 +1,16 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import { useNavigate, useParams } from "react-router-dom";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../component/Modal"; // Import the Modal component
 import "../.././css/status.css";
 import axios from "axios";
 import api_endpoint from "../../config";
+import { useSelector } from 'react-redux'
 
 const Status = () => {
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const [navVisible, showNavbar] = useState(false);
   const [statusError, setStatusError] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -35,9 +36,6 @@ const Status = () => {
   };
 
   useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
-
     axios
       .get(`${api_endpoint}/fetch-status/${user_id}`, {
         headers: {
@@ -58,8 +56,6 @@ const Status = () => {
   }, [status]);
 
   useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
     axios
       .get(`${api_endpoint}/customers/${user_id}`, {
         headers: {
@@ -74,8 +70,6 @@ const Status = () => {
   }, []);
 
   useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
     axios
       .get(`${api_endpoint}/sorters/${user_id}`, {
         headers: {
@@ -176,9 +170,6 @@ const Status = () => {
 
   const setToOngoing = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {
@@ -212,9 +203,6 @@ const Status = () => {
 
   const setToFinished = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {
@@ -248,9 +236,6 @@ const Status = () => {
 
   const setToCancelled = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {

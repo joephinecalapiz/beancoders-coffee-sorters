@@ -1,7 +1,5 @@
 /** @format */
 import React, { useState, useEffect } from "react";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
 import "../.././css/customer.css";
 import "../.././css/Sidebar.css";
@@ -10,8 +8,11 @@ import Select from "react-select";
 import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 import Modal from "../../component/Modal";
 import axios from 'axios';
+import { useSelector } from 'react-redux'
 
 const Customers = () => {
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
@@ -88,9 +89,6 @@ const Customers = () => {
 
   const fetchCustomers = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-  
       const response = await axios.get(`${api_endpoint}/customers/${user_id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -166,8 +164,6 @@ const Customers = () => {
   const getCustomerPostHistory = async (e) => {
     e.preventDefault();
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const currentDate = new Date().toISOString();
 
       // Get the selected year and month from the state
@@ -218,8 +214,6 @@ const Customers = () => {
 
   const updateCustomerDetails = async (id) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const currentDate = new Date().toISOString();
 
       const response = await fetch(api_endpoint + "/edit-customer/" + id, {
@@ -270,7 +264,6 @@ const Customers = () => {
 
   const archivedCustomer = async (id) => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(api_endpoint + `/archive-customer/${id}`, {
         method: "PATCH",
         headers: {

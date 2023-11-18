@@ -13,9 +13,8 @@ import api_endpoint from "../config";
 import { useSelector } from 'react-redux'
 
 const GenerateKeys = () => {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [keyToDelete, setKeyToDelete] = useState(null);

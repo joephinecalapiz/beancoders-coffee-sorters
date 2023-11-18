@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../../component/Navbar";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import api_endpoint from "../../../config";
 import Modal from "../../../component/Modal";
 import Footer from "../Footer";
 

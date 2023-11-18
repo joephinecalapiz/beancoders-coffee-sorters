@@ -18,13 +18,12 @@ import {useSelector } from 'react-redux'
 
 function RootPage() {
     const navigate = useNavigate();
-    const { role } = useSelector(
-        (state) => state.auth
-      )
+    const role = useSelector(state => state.auth.role);
 
     useEffect(() => {
+        // const role = localStorage.getItem('token')
         // Check if the user_id is not 1 and navigate back if necessary
-        if (role !== 2) {
+        if (role !== '2') {
             navigate("/error404"); // Go back to the previous page
             // window.location.reload();
         }

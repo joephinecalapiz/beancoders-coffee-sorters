@@ -8,9 +8,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from 'react-redux'
 
 const YesterdayAct = () => {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);

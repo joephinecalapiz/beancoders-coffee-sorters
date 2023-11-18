@@ -9,9 +9,8 @@ import { useSelector } from 'react-redux'
 const ICON_SIZE = 20;
 
 function Sidebar({ collapsed }) {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const location = useLocation();
   const [navigation, setNavigation] = useState([
     {

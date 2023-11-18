@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import api_endpoint from "../../../config";
 import Navbar from "../../../component/Navbar";
 import ForgotPasswordModal from "../../../component/ForgotPasswordModal";
 import Footer from "../Footer";
@@ -14,8 +12,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const Login = () => {
   const navigate = useNavigate();
-  // const [loading, setLoading] = useState(false);
-  const [checkboxStatus, setCheckboxStatus] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [disabledError, setDisabledError] = useState(false);
@@ -29,7 +25,7 @@ const Login = () => {
   const [savedEmail, setSavedEmail] = useState("");
   const [savedPassword, setSavedPassword] = useState("");
   const dispatch = useDispatch()
-  const { loading, user, token, success } = useSelector(
+  const { loading, role, success } = useSelector(
     (state) => state.auth
   )
 
@@ -108,19 +104,17 @@ const Login = () => {
       .unwrap()
       .then(() => {
         // Registration successful, you can navigate or perform other actions
-        if (user.role == 2) {
+        if (role == 2) {
           setTimeout(() => {
             navigate("/dashboard");
           }, 2000);
         }
-        if (user.role == 1) {
+        if (role == 1) {
           setTimeout(() => {
             navigate("/superadmin/manageusers");
           }, 2000);
         }
         console.log('Login successful');
-        console.log(user.role);
-        console.log(token);
       })
       .catch((err) => {
         if (err && err.type === 'email') {

@@ -3,9 +3,8 @@ import api_endpoint from "../../config";
 import { useSelector } from 'react-redux'
 
 const UpdateCustomer = ({ show, onClose, customer, update }) => {
-    const { token, user_id } = useSelector(
-        (state) => state.auth
-      )
+    const token = useSelector(state => state.auth.token);
+    const user_id = useSelector(state => state.auth.token);
     const [customerId, setCustomerId] = useState(customer.id);
     const [newCustomerName, setNewCustomerName] = useState(customer.customerName);
     const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState(customer.phoneNum);

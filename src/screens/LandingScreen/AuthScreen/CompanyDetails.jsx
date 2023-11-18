@@ -11,9 +11,8 @@ import { useSelector } from 'react-redux'
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const CompanyDetails = () => {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const [popupMessage, setPopupMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -122,10 +121,12 @@ const CompanyDetails = () => {
     formData.append("companyLocation", data.companyLocation);
     formData.append("images", data.images);
     formData.append("profileAvatar", data.profileAvatar);
-    console.log(companyFileDataURL);
-    console.log(profileFileDataURL);
+    console.log(data.images);
+    console.log(data.profileAvatar);
+    console.log(data);
+    console.log(user_id)
     axios
-      .post(api_endpoint + "/add-info", data, {
+      .post(api_endpoint + "/add-info", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: "Bearer " + token,
@@ -156,6 +157,8 @@ const CompanyDetails = () => {
     setPopupMessage(null)
     navigate('/login')
     localStorage.removeItem("token")
+    localStorage.removeItem("user_id")
+    localStorage.removeItem("role")
   }
 
   useEffect(() => {

@@ -8,18 +8,17 @@ import Error from "./Error";
 import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
 import Main from "./mainpage";
-import { useSelector } from 'react-redux'
+import {useSelector } from 'react-redux'
 
 function AdminRootPage() {
     const navigate = useNavigate();
-    const { role } = useSelector(
-        (state) => state.auth
-      )
-
+    const role = useSelector(state => state.auth.role);
+    
     useEffect(() => {
+        // const role = localStorage.getItem('token')
         // Check if the user_id is not 1 and navigate back if necessary
-        if (role !== 1) {
-            navigate("/superadmin/permission-denied"); // Go back to the previous page
+        if (role !== '1') {
+            navigate("/error404"); // Go back to the previous page
             // window.location.reload();
         }
     }, []);

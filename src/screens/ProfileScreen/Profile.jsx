@@ -1,8 +1,6 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
 import "../.././css/Sidebar.css";
 import "../.././css/dashboard.css";
 import "../.././css/profile.css";
@@ -16,9 +14,8 @@ import { useSelector } from 'react-redux'
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const Profile = () => {
-  const { token, user_id } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const [navVisible, showNavbar] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [userInfo, setUserInfo] = useState("");

@@ -6,11 +6,10 @@ import BeansLogo from ".././assets/beansLogo.png";
 import "./../css/sidebar.css";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import { useSelector } from 'react-redux'
+import { useEffect } from "react";
 
 const Navbar = () => {
-  const { token } = useSelector(
-    (state) => state.auth
-  )
+  const token = useSelector(state => state.auth.token);
   const navigate = useNavigate();
   const location = useLocation(); // Get the current location
   const [menuOpen, setMenuOpen] = useState(false);
@@ -125,7 +124,7 @@ const Navbar = () => {
   function clearSessionStorage() {
     sessionStorage.clear(); // This will remove all data from session storage
   }
-
+  
   const isAuthenticated = () => {
     return token !== null;
   };
