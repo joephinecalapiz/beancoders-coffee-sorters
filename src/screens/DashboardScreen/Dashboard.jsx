@@ -150,7 +150,7 @@ const Dashboard = () => {
             <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
-                  KG of Bad Beans
+                  Total Kilo of Coffee Beans
                 </h1>
                 <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
                   {kgCount && kgCount !== null
