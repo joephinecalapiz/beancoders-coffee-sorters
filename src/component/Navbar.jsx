@@ -5,8 +5,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import BeansLogo from ".././assets/beansLogo.png";
 import "./../css/sidebar.css";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
+  const { token } = useSelector(
+    (state) => state.auth
+  )
   const navigate = useNavigate();
   const location = useLocation(); // Get the current location
   const [menuOpen, setMenuOpen] = useState(false);
@@ -123,8 +127,6 @@ const Navbar = () => {
   }
 
   const isAuthenticated = () => {
-    const token = localStorage.getItem("token");
-    // Add additional checks if needed
     return token !== null;
   };
 

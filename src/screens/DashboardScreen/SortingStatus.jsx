@@ -1,16 +1,17 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
 import "../.././css/Sidebar.css";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import api_endpoint from "../../config";
-import Skeleton from "react-loading-skeleton";
+import { useSelector } from 'react-redux'
 
 const SortingStatus = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
   const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);
@@ -48,10 +49,6 @@ const SortingStatus = () => {
   };
 
   useEffect(() => {
-    console.log("navVisible:", navVisible);
-
-    document.title = "History Customer Status";
-
     if (navVisible) {
       document.body.style.overflow = "hidden";
     } else {
@@ -69,9 +66,6 @@ const SortingStatus = () => {
 
   const fetchData = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const user_id = localStorage.getItem("user_id");
-
       const response = await axios.get(
         `${api_endpoint}/fetch-history/${user_id}/${customerId}`,
         {

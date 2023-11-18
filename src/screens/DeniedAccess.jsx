@@ -1,14 +1,7 @@
 /** @format */
-
-import React, { useState, useEffect } from "react";
-import Topbar from "../component/Topbar";
+import React, { useEffect } from "react";
 
 const PermissionDenied = () => {
-  const [navVisible, showNavbar] = useState(true);
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
-
   const goBack = () => {
     window.history.back(); // Use the browser's history to navigate back
   };

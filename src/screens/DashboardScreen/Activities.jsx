@@ -4,18 +4,18 @@ import React, { useState, useEffect } from "react"; // Import useState
 import "../.././css/Sidebar.css";
 import axios from "axios";
 import api_endpoint from "../../config";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux'
 
 const Activities = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const navigate = useNavigate();
-  const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
-
     axios
       .get(api_endpoint + "/fetch-histories/" + user_id, {
         headers: {

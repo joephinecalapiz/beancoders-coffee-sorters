@@ -11,10 +11,14 @@ import api_endpoint from "../../config";
 import image_endpoint from "../../image-config";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux'
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const Profile = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [userInfo, setUserInfo] = useState("");
@@ -138,7 +142,6 @@ const Profile = () => {
   }, [userInfo]);
 
   const fetchUserInfo = async () => {
-    let token = localStorage.getItem("token");
     try {
       const response = await fetch(api_endpoint + "/user", {
         headers: {
@@ -158,8 +161,6 @@ const Profile = () => {
 
   const fetchCompanyInfo = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
           Authorization: "Bearer " + token,
@@ -184,8 +185,6 @@ const Profile = () => {
 
   const updateCompanyDetails = async (newDetails) => {
     try {
-      const token = localStorage.getItem("token");
-      const user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + `/edit-info/${user_id}`, {
         method: "PATCH",
         headers: {
@@ -209,8 +208,6 @@ const Profile = () => {
 
   const updateProfileInfo = async (newDetails) => {
     try {
-      const token = localStorage.getItem("token");
-      const user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + `/update-user/${user_id}`, {
         method: "PATCH",
         headers: {

@@ -1,24 +1,20 @@
 /** @format */
 
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
+import React, { useEffect, useState } from "react";
 import "../.././css/Sidebar.css";
 import "../.././css/dashboard.css";
 import axios from "axios";
 import api_endpoint from "../../config";
-import ChartComponent from "./Chart";
-import Modal from "../../component/Modal";
-import { Chart } from "chart.js/auto";
-import feather from "feather-icons";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
 import Activities from "./Activities";
 import YesterdayAct from "./YesterdayAct";
+import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
   const [userInfo, setUserInfo] = useState("");
   const [beanCount, setBeanCount] = useState("");
@@ -33,10 +29,7 @@ const Dashboard = () => {
   };
 
   const fetchUserInfo = async () => {
-    let token = localStorage.getItem("token");
-    let user_id = localStorage.getItem("user_id");
     try {
-      user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
           Authorization: "Bearer " + token,

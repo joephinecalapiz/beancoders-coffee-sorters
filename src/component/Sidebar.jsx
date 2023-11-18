@@ -4,10 +4,14 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaChartBar, FaThLarge, FaUsers, FaUserFriends } from "react-icons/fa";
 import "./../css/sidebar.css";
+import { useSelector } from 'react-redux'
 
 const ICON_SIZE = 20;
 
 function Sidebar({ collapsed }) {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const location = useLocation();
   const [navigation, setNavigation] = useState([
     {
@@ -51,9 +55,6 @@ function Sidebar({ collapsed }) {
       prefersDarkMode || (storedDarkMode ? JSON.parse(storedDarkMode) : false)
     );
   });
-
-  // Add code to get the user_id from local storage
-  const role = localStorage.getItem("user_id");
 
   const handleNavigationClick = (href) => {
     const updatedNavigation = navigation.map((item) => ({

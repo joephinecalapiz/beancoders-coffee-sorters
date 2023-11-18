@@ -9,10 +9,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
-import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/AdminTopbar";
+import { useSelector } from 'react-redux'
 
 const Feedbacks = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
 
   const toggleSidebar = () => {
@@ -62,9 +64,6 @@ const Feedbacks = () => {
 
   const fetchFeedbacks = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await axiosInstance.get(
         api_endpoint + "/fetch-feedback/" + user_id
       );
@@ -95,9 +94,6 @@ const Feedbacks = () => {
 
   const setToPending = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-feedback/" + statusId,
         {
@@ -129,9 +125,6 @@ const Feedbacks = () => {
 
   const setToFinished = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-feedback/" + statusId,
         {

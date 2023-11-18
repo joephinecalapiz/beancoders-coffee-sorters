@@ -11,10 +11,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import Modal from "../../component/Modal";
-
+import { useSelector } from 'react-redux'
 import api_endpoint from "../../config";
 
 const Sorters = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -49,8 +52,6 @@ const Sorters = () => {
     if (cachedSorterData) {
       setAllSorters(JSON.parse(cachedSorterData));
     }
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
     const headers = {
       Authorization: "Bearer " + token,
     };
@@ -79,8 +80,6 @@ const Sorters = () => {
 
   const handleAddNewSorter = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
     try {
       const response = await axiosInstance.post(
         api_endpoint + "/add/sorter",

@@ -11,8 +11,12 @@ import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from 'react-redux';
 
 const ManageUsers = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
 
   const toggleSidebar = () => {
@@ -85,7 +89,6 @@ const ManageUsers = () => {
 
   const handleDelete = async () => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(
         api_endpoint + "/delete-user/" + keyToDelete,
         {
@@ -112,8 +115,6 @@ const ManageUsers = () => {
 
   const setEnabled = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-
       const response = await fetch(
         api_endpoint + "/disabled-user/" + statusId,
         {
@@ -142,8 +143,6 @@ const ManageUsers = () => {
 
   const setToDisabled = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-
       const response = await fetch(
         api_endpoint + "/disabled-user/" + statusId,
         {
@@ -172,8 +171,6 @@ const ManageUsers = () => {
 
   const fetchUsers = async () => {
     try {
-      let token = localStorage.getItem("token");
-  
       const response = await fetch(api_endpoint + "/allusers", {
         method: "GET",
         headers: {

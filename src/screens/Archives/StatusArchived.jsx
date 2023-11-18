@@ -2,45 +2,15 @@
 import React, { useState, useEffect } from "react";
 import "../.././css/customer.css";
 import "../.././css/Sidebar.css";
-import { useNavigate } from "react-router-dom";
-import Select from "react-select";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
+import { useSelector } from 'react-redux'
 
 const StatusArchived = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
-  const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
-  const monthOptions = [
-    { value: 1, label: "January" },
-    { value: 2, label: "February" },
-    { value: 3, label: "March" },
-    { value: 4, label: "April" },
-    { value: 5, label: "May" },
-    { value: 6, label: "June" },
-    { value: 7, label: "July" },
-    { value: 8, label: "August" },
-    { value: 9, label: "September" },
-    { value: 10, label: "October" },
-    { value: 11, label: "November" },
-    { value: 12, label: "December" },
-  ];
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1; // Adding 1 to match your month options (1 - 12)
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState({
-    value: currentMonth,
-    label: monthOptions[currentMonth - 1].label, // Get the label for the current month
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newCustomerName, setNewCustomerName] = useState("");
-  const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
-  const [newCustomerAddress, setNewCustomerAddress] = useState("");
-  const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
-  const [reloadCustomerData, setReloadCustomerData] = useState(null);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -56,17 +26,6 @@ const StatusArchived = () => {
     }
   };
 
-  const handleShowUpdateModal = (customer) => {
-    setOpenDropdownId(null);
-    setSelectedCustomer(customer);
-    setShowUpdateModal(true);
-  };
-
-  const handleCloseUpdateModal = (customer) => {
-    setSelectedCustomer(customer);
-    handleShowUpdateModal(null);
-  };
-
   const [searchText, setSearchText] = useState("");
 
   const handleSearchInputChange = (e) => {
@@ -76,8 +35,6 @@ const StatusArchived = () => {
 
   const fetchCustomers = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(
         api_endpoint + "/fetch-archive-status/" + user_id,
         {
@@ -106,8 +63,6 @@ const StatusArchived = () => {
 
   const deleteCustomer = async (id) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(
         api_endpoint + "/delete-archive-status/" + id,
         {
@@ -179,67 +134,6 @@ const StatusArchived = () => {
             />
           </div>
         </div>
-        {/* <div className="calendar">
-          <div className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}>
-            <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
-              <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
-                <label
-                  htmlFor="monthSelect"
-                  className="font-bold"
-                  style={{
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  Month:
-                </label>
-                <div className="ml-2">
-                  <Select
-                    id="monthSelect"
-                    options={monthOptions}
-                    value={selectedMonth}
-                    onChange={setSelectedMonth}
-                    isSearchable={false}
-                    clearable={false}
-                    styles={{
-                      option: (provided) => ({
-                        ...provided,
-                        fontFamily: "'Poppins', sans-serif",
-                        color: "#000"
-                      }),
-                      singleValue: (provided) => ({
-                        ...provided,
-                        fontFamily: "'Poppins', sans-serif",
-                        color: "#333",
-                      }),
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="mb-5 dark:text-textTitle  md:mb-0 mobile:justify-self-center  flex items-center">
-                <label
-                  htmlFor="yearSelect"
-                  className="font-bold"
-                  style={{
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  Year:
-                </label>
-                <div className="ml-2">
-                  <input
-                    type="number"
-                    id="yearSelect"
-                    value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                    className="border rounded px-2 py-2 w-20 dark:bg-container focus:outline-none focus:border-blue-400 poppins-font"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-
         <div className="md:pl-2 md:pr-2 pr-2 pl-2">
           <div
             className="md:p-5 md:pt-10 pt-5 "

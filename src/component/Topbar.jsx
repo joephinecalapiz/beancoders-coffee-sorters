@@ -10,8 +10,12 @@ import { FaBars } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
+import { useSelector } from 'react-redux'
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -53,7 +57,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   }, []);
 
   const fetchUserInfo = async () => {
-    let token = localStorage.getItem("token");
     try {
       const response = await fetch(api_endpoint + "/user", {
         headers: {
@@ -83,8 +86,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
 
   const fetchCompanyInfo = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
           Authorization: "Bearer " + token,
@@ -155,9 +156,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const toggleProfileMenu = () => {
     setProfileMenuOpen((prevState) => !prevState);
   };
-
-  // Add code to get the user_id from local storage
-  const user_id = localStorage.getItem("id");
 
   return (
     <div className="z-20 fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">

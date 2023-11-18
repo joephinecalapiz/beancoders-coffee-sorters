@@ -17,32 +17,20 @@ import beanlogo from './assets/beanlogo.png';
 import Error from "./superadmin/Error";
 import PermissionDenied from "./superadmin/DeniedAccess";
 import Main from "./screens/mainpage";
+import { useSelector } from 'react-redux'
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
-
+  // Access the token from the Redux state
+  const token = useSelector(state => state.auth.token);
+  
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       setAuthenticated(true);
     } else {
       setAuthenticated(false);
     }
   }, []);
-
-
-
-  // useEffect(() => {
-  //   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  //   if (prefersDarkMode) {
-  //     document.body.classList.add('dark:bg-dark');
-  //   } else {
-  //     document.body.classList.remove('dark:bg-dark');
-  //   }
-  // }, []);
-
-
 
   if (authenticated === null) {
     return (
@@ -70,7 +58,6 @@ function App() {
             ) : (
               <Navigate to="/login" />
             )
-
           }
         />
 

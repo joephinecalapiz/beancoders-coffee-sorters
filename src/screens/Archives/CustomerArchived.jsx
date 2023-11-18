@@ -4,11 +4,13 @@ import "../.././css/customer.css";
 import "../.././css/Sidebar.css";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
 import api_endpoint from "../../config";
+import { useSelector } from 'react-redux'
 
 const CustomerArchived = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
@@ -69,8 +71,6 @@ const CustomerArchived = () => {
 
   const fetchCustomers = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-archive/" + user_id, {
         method: "GET",
         headers: {
@@ -93,8 +93,6 @@ const CustomerArchived = () => {
 
   const deleteCustomer = async (id) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/delete-customer/" + id, {
         method: "DELETE",
         headers: {

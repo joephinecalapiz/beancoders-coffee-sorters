@@ -10,10 +10,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
-import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/AdminTopbar";
+import { useSelector } from 'react-redux'
 
 const GenerateKeys = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [keyToDelete, setKeyToDelete] = useState(null);
@@ -77,7 +79,6 @@ const GenerateKeys = () => {
 
   const handleDelete = async () => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(
         api_endpoint + "/delete-key/" + keyToDelete,
         {
@@ -104,7 +105,6 @@ const GenerateKeys = () => {
 
   const handleGenerateKeys = async () => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(api_endpoint + "/generate-keys", {
         method: "POST",
         headers: {
@@ -128,8 +128,6 @@ const GenerateKeys = () => {
 
   const fetchKeys = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-keys/" + user_id, {
         method: "GET",
         headers: {

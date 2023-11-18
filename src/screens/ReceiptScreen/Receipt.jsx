@@ -9,10 +9,13 @@ import html2canvas from "html2canvas";
 import "../../css/receipt.css";
 import jsPDF from "jspdf";
 import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
+import { useSelector } from 'react-redux'
 
 const Receipt = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const { customerId } = useParams();
-
   const [receiptDetails, setReceiptDetails] = useState([]);
   const [navVisible, showNavbar] = useState(true);
   const contentRef = useRef(null);
@@ -26,8 +29,6 @@ const Receipt = () => {
 
   const fetchCompanyInfo = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,8 +46,6 @@ const Receipt = () => {
   };
 
   const fetchReceiptDetails = async () => {
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
     try {
       const response = await fetch(
         `${api_endpoint}/customer-receipt/${customerId}/${user_id}`,

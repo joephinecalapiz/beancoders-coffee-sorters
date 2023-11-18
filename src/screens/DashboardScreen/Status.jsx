@@ -50,7 +50,7 @@ const Status = () => {
         setAllStatus(fetchAllStatus);
       })
       .catch((error) => {
-        if (error.response && error.response.data.error === 'No Status Found') {
+        if (error.response && error.response.data.status === 'Status Not Found') {
           setStatusError(true);
         }
         console.error();
@@ -452,11 +452,13 @@ const Status = () => {
                         </td>
                       </tr>
                     ))}
-                  {statusError && (
-                    <p className="text-red-500 ml-2">No status found. Please add new status!</p>
-                  )}
                 </tbody>
               </table>
+              <div>
+                  {statusError && (
+                    <p className="items-center justify-center">No status found. Please add new status!</p>
+                  )}
+                </div>
             </div>
           </div>
         </div>

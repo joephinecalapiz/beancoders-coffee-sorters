@@ -7,16 +7,18 @@ import Feedbacks from "./Feedbacks";
 import Error from "./Error";
 import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
-import PermissionDenied from "./DeniedAccess";
 import Main from "./mainpage";
+import { useSelector } from 'react-redux'
 
 function AdminRootPage() {
     const navigate = useNavigate();
+    const { role } = useSelector(
+        (state) => state.auth
+      )
 
     useEffect(() => {
-        const role = localStorage.getItem("role");
         // Check if the user_id is not 1 and navigate back if necessary
-        if (role !== "1") {
+        if (role !== 1) {
             navigate("/superadmin/permission-denied"); // Go back to the previous page
             // window.location.reload();
         }

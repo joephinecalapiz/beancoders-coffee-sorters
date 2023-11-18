@@ -14,14 +14,17 @@ import Receipt from "./ReceiptScreen/Receipt";
 import Error from "./error";
 import PermissionDenied from "./DeniedAccess";
 import Main from "./mainpage";
+import {useSelector } from 'react-redux'
 
 function RootPage() {
     const navigate = useNavigate();
+    const { role } = useSelector(
+        (state) => state.auth
+      )
 
     useEffect(() => {
-        const role = localStorage.getItem("role");
         // Check if the user_id is not 1 and navigate back if necessary
-        if (role !== "2") {
+        if (role !== 2) {
             navigate("/error404"); // Go back to the previous page
             // window.location.reload();
         }

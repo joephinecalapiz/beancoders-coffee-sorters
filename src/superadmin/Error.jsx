@@ -1,15 +1,8 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/AdminTopbar";
 
 const Error = () => {
-  const [navVisible, showNavbar] = useState(true);
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
-
   const goBack = () => {
     window.history.back(); // Use the browser's history to navigate back
   };
@@ -20,15 +13,6 @@ const Error = () => {
 
   return (
     <>
-      {/* <AdminSidebar
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      />
-      <Topbar
-        onToggleSidebar={toggleSidebar}
-        collapsed={navVisible}
-        handleToggleSidebar={toggleSidebar}
-      /> */}
       <div className="relative z-10 py-[120px]">
         <div className="container mx-auto">
           <div className="-mx-4 flex">

@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import api_endpoint from "../../config";
+import { useSelector } from 'react-redux'
 
 const UpdateCustomer = ({ show, onClose, customer, update }) => {
-    const [allCustomers, setAllCustomers] = useState([]);
+    const { token, user_id } = useSelector(
+        (state) => state.auth
+      )
     const [customerId, setCustomerId] = useState(customer.id);
     const [newCustomerName, setNewCustomerName] = useState(customer.customerName);
     const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState(customer.phoneNum);
@@ -18,8 +21,6 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
     const updateCustomerDetails = async (e) => {
         e.preventDefault();
         try {
-            let token = localStorage.getItem("token");
-            let user_id = localStorage.getItem("user_id");
             const currentDate = new Date().toISOString();
 
             const response = await fetch(api_endpoint + "/edit-customer/" + customerId, {

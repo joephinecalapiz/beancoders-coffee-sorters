@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 import Modal from "../../component/Modal";
+import axios from 'axios';
 
 const Customers = () => {
   const [navVisible, showNavbar] = useState(false);
@@ -45,6 +46,7 @@ const Customers = () => {
   const [reloadCustomerData, setReloadCustomerData] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
+  const [CustomerError, setCustomerError] = useState(false);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -88,25 +90,21 @@ const Customers = () => {
     try {
       let token = localStorage.getItem("token");
       let user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/customers/" + user_id, {
-        method: "GET",
+  
+      const response = await axios.get(`${api_endpoint}/customers/${user_id}`, {
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: `Bearer ${token}`,
         },
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch customer data");
-      }
-
+  
       const data = await response.json();
       setAllCustomers(data.customer);
-      //localStorage.setItem("customerData", JSON.stringify(data.customer));
-      if (sessionStorage.getItem("customerData") === null) {
-        sessionStorage.setItem("customerData", JSON.stringify(data.customer));
-      }
+      sessionStorage.setItem("customerData", JSON.stringify(data.customer));
     } catch (error) {
-      console.error("Error fetching customer data:", error);
+      if (error.response && error.response.data.customer === 'Customer Not Found') {
+        setCustomerError(true);
+        // console.error("Error fetching customer data:", error);
+      }
     }
   };
 
@@ -290,7 +288,6 @@ const Customers = () => {
       }
 
       if (response.status === 200) {
-        // Assuming there's a function to fetch the updated customer list
         fetchCustomers();
         setOpenDropdownId(null);
       }
@@ -549,6 +546,11 @@ const Customers = () => {
                   )}
                 </tbody>
               </table>
+              <div>
+              {CustomerError && (
+                    <p className="items-center justify-center">No Customer found. Please add new customer!</p>
+                  )}
+              </div>
             </div>
             {selectedCustomer && (
               <UpdateCustomer

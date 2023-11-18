@@ -2,10 +2,14 @@ import React, { useState, useEffect } from "react";
 import api_endpoint from "../../config";
 import Modal from "../../component/Modal";
 import { useForm } from "react-hook-form";
+import { useSelector } from 'react-redux'
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const UpdateCompanyInfo = ({ show, onClose }) => {
+    const { token, user_id } = useSelector(
+        (state) => state.auth
+      )
     const [modalStep, setModalStep] = useState(1); // Track the current step of the modal
     const [loading, setLoading] = useState(false);
     const [companyName, setCompanyName] = useState("");

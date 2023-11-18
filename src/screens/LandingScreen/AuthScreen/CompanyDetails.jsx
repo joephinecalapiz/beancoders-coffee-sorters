@@ -6,10 +6,14 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import api_endpoint from "../../../config";
 import Modal from "../../../component/Modal";
+import { useSelector } from 'react-redux'
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const CompanyDetails = () => {
+  const { token, user_id } = useSelector(
+    (state) => state.auth
+  )
   const navigate = useNavigate();
   const [popupMessage, setPopupMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -107,9 +111,7 @@ const CompanyDetails = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  const token = localStorage.getItem("token");
-  const user_id = localStorage.getItem("user_id");
+  
   //---kanang console.log eh change rana para eh connect sa database
   const onSubmitHandler = (data) => {
     setLoading(true);
