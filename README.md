@@ -1,6 +1,6 @@
-# React + Vite
+# The Arabica Coffee Beans Sorter
 
-The Arabica Coffee Beans Sorter
+
 
 The Arabica coffee beans sorter is a sophisticated machine designed to separate coffee beans based on their size, quality, and color. This sorting process is essential to remove defective or damaged beans, foreign materials, and any other impurities that might have been mixed with the coffee cherries during harvesting or processing.
 
