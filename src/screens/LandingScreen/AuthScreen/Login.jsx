@@ -9,9 +9,12 @@ import Navbar from "../../../component/Navbar";
 import ForgotPasswordModal from "../../../component/ForgotPasswordModal";
 import Footer from "../Footer";
 
+import { loginUser } from "../../../../redux/authActions";
+import { useDispatch, useSelector } from 'react-redux'
+
 const Login = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [checkboxStatus, setCheckboxStatus] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
@@ -25,6 +28,10 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [savedEmail, setSavedEmail] = useState("");
   const [savedPassword, setSavedPassword] = useState("");
+  const dispatch = useDispatch()
+  const { loading, user, token, success } = useSelector(
+    (state) => state.auth
+  )
 
   useEffect(() => {
     document.title = "Login";
@@ -46,53 +53,94 @@ const Login = () => {
     // }
   }, []);
 
+  // const onSubmitHandler = (data) => {
+  //   setLoading(true); // Set loading state to true when form is submitted
+  //   axios
+  //     .post(api_endpoint + "/login", data)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         const token = response.data.token;
+  //         const user_id = response.data.user.id;
+  //         const role = response.data.user.role;
+  //         localStorage.setItem("role", role);
+  //         localStorage.setItem("token", token);
+  //         localStorage.setItem("user_id", user_id);
+  //         console.log(role, user_id);
+  //         if (role == 2) {
+  //           setTimeout(() => {
+  //             setLoading(false); // Set loading to false when the operation is complete
+  //             navigate("/dashboard");
+  //             // window.location.reload();
+  //           }, 2000);
+  //         }
+  //         if (role == 1) {
+  //           setTimeout(() => {
+  //             setLoading(false); // Set loading to false when the operation is complete
+  //             navigate("/superadmin/manageusers");
+  //             // window.location.reload();
+  //           }, 2000);
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error", error.response ? error.response.data : error);
+  //       if (error.response && error.response.data.email === 'Email Not Found') {
+  //         setEmailError(true);
+  //         setPasswordError(false);
+  //       }
+  //       if (error.response && error.response.data.password === 'Invalid Password') {
+  //         setPasswordError(true);
+  //         setEmailError(false);
+  //       }
+  //       if (error.response && error.response.data.disabled === 'User is disabled') {
+  //         disableduser();
+  //       }
+  //     })
+  //     .finally(() => {
+  //       setLoading(false); // Reset loading state
+  //     });
+  // };
+
   const onSubmitHandler = (data) => {
-    setLoading(true); // Set loading state to true when form is submitted
-    axios
-      .post(api_endpoint + "/login", data)
-      .then((response) => {
-        if (response.status === 200) {
-          const token = response.data.token;
-          const user_id = response.data.user.id;
-          const role = response.data.user.role;
-          localStorage.setItem("role", role);
-          localStorage.setItem("token", token);
-          localStorage.setItem("user_id", user_id);
-          console.log(role, user_id);
-          if (role == 2) {
-            setTimeout(() => {
-              setLoading(false); // Set loading to false when the operation is complete
-              navigate("/dashboard");
-              // window.location.reload();
-            }, 2000);
-          }
-          if (role == 1) {
-            setTimeout(() => {
-              setLoading(false); // Set loading to false when the operation is complete
-              navigate("/superadmin/manageusers");
-              // window.location.reload();
-            }, 2000);
-          }
+    // setLoading(true);
+
+    dispatch(loginUser(data))
+      .unwrap()
+      .then(() => {
+        // Registration successful, you can navigate or perform other actions
+        if (user.role == 2) {
+          setTimeout(() => {
+            navigate("/dashboard");
+          }, 2000);
         }
+        if (user.role == 1) {
+          setTimeout(() => {
+            navigate("/superadmin/manageusers");
+          }, 2000);
+        }
+        console.log('Login successful');
+        console.log(user.role);
+        console.log(token);
       })
-      .catch((error) => {
-        console.error("Error", error.response ? error.response.data : error);
-        if (error.response && error.response.data.email === 'Email Not Found') {
-          setEmailError(true);
-          setPasswordError(false);
-        }
-        if (error.response && error.response.data.password === 'Invalid Password') {
-          setPasswordError(true);
-          setEmailError(false);
-        }
-        if (error.response && error.response.data.disabled === 'User is disabled') {
-          disableduser();
+      .catch((err) => {
+        if (err && err.type === 'email') {
+          setEmailError(true)
+          setPasswordError(false)
+        } else if (err && err.type === 'password') {
+          setEmailError(false)
+          setPasswordError(true)
+        } else if (err && err.type === 'disabled') {
+          setEmailError(false)
+          setPasswordError(false)
+          disableduser()
+        } else {
         }
       })
       .finally(() => {
-        setLoading(false); // Reset loading state
-      });
-  };
+        // setLoading(false);
+      });      
+  }
+
 
   const openForgotPasswordModal = () => {
     setShowForgotPasswordModal(true);
