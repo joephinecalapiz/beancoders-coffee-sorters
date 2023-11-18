@@ -8,6 +8,11 @@ export const loginUser = createAsyncThunk(
     async (userData, { rejectWithValue }) => {
         try {
             const response = await axios.post(`${api_endpoint}/login`, userData);
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('role', response.data.user.role);
+                localStorage.setItem('user_id', response.data.user.id);
+            }
             return response.data;
         } catch (error) {
             // Check if email validation error exists
@@ -32,6 +37,11 @@ export const registerUser = createAsyncThunk(
     async (userData, { rejectWithValue }) => {
         try {
             const response = await axios.post(`${api_endpoint}/register/users`, userData);
+            if (response.status === 200) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('role', response.data.user.role);
+                localStorage.setItem('user_id', response.data.user.id);
+            }
             return response.data;
         } catch (error) {
             if (error.response && error.response.data.status === 'Validation error') {

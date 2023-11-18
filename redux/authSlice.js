@@ -31,6 +31,8 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       localStorage.removeItem('token') // deletes token from storage
+      localStorage.removeItem('role') // deletes token from storage
+      localStorage.removeItem('user_id') // deletes token from storage
       state.loading = false
       state.user = null
       state.token = null
@@ -51,11 +53,8 @@ const authSlice = createSlice({
         state.success = true // login successful
         state.user = action.payload.user; // Assuming the payload contains user data
         state.token = action.payload.token; // Assuming the payload contains a token
-        localStorage.setItem('token', action.payload.token);
         state.role = action.payload.user.role; // Assuming the payload contains a role
-        localStorage.setItem('role', action.payload.user.role);
         state.user_id = action.payload.user.id; // Assuming the payload contains a role
-        localStorage.setItem('user_id', action.payload.user.id);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -71,6 +70,7 @@ const authSlice = createSlice({
         state.success = true // registration successful
         state.user = action.payload.user; // Assuming the payload contains user data
         state.token = action.payload.token; // Assuming the payload contains a token
+        state.role = action.payload.user.role; // Assuming the payload contains a role
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
