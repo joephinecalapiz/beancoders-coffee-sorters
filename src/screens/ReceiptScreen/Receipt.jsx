@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux'
 
 const Receipt = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const { customerId } = useParams();
   const [receiptDetails, setReceiptDetails] = useState([]);
   const [navVisible, showNavbar] = useState(true);

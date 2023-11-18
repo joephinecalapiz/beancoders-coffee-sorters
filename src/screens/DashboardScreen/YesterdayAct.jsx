@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 const YesterdayAct = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const navigate = useNavigate();
   const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);

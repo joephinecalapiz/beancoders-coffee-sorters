@@ -16,7 +16,7 @@ import api_endpoint from "../../config";
 
 const Sorters = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
   const toggleSidebar = () => {
     showNavbar(!navVisible);

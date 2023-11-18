@@ -25,9 +25,8 @@ const Login = () => {
   const [savedEmail, setSavedEmail] = useState("");
   const [savedPassword, setSavedPassword] = useState("");
   const dispatch = useDispatch()
-  const { loading, role, success } = useSelector(
-    (state) => state.auth
-  )
+  const { loading, success } = useSelector((state) => state.auth)
+  const role = useSelector(state => state.auth.role);
 
   useEffect(() => {
     document.title = "Login";
@@ -104,12 +103,12 @@ const Login = () => {
       .unwrap()
       .then(() => {
         // Registration successful, you can navigate or perform other actions
-        if (role == 2) {
+        if (role == '2') {
           setTimeout(() => {
             navigate("/dashboard");
           }, 2000);
         }
-        if (role == 1) {
+        if (role == '1') {
           setTimeout(() => {
             navigate("/superadmin/manageusers");
           }, 2000);

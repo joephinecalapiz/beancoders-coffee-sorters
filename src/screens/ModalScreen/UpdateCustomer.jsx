@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 const UpdateCustomer = ({ show, onClose, customer, update }) => {
     const token = useSelector(state => state.auth.token);
-    const user_id = useSelector(state => state.auth.token);
+    const user_id = useSelector(state => state.auth.user_id);
     const [customerId, setCustomerId] = useState(customer.id);
     const [newCustomerName, setNewCustomerName] = useState(customer.customerName);
     const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState(customer.phoneNum);

@@ -14,7 +14,7 @@ import { useSelector } from 'react-redux'
 
 const GenerateKeys = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [keyToDelete, setKeyToDelete] = useState(null);

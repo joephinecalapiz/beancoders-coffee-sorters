@@ -8,7 +8,7 @@ const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const UpdateCompanyInfo = ({ show, onClose }) => {
     const token = useSelector(state => state.auth.token);
-    const user_id = useSelector(state => state.auth.token);
+    const user_id = useSelector(state => state.auth.user_id);
     const [modalStep, setModalStep] = useState(1); // Track the current step of the modal
     const [loading, setLoading] = useState(false);
     const [companyName, setCompanyName] = useState("");

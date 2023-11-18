@@ -1,15 +1,17 @@
 /** @format */
 
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import BeansLogo from ".././assets/beansLogo.png";
 import "./../css/sidebar.css";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
-import { useSelector } from 'react-redux'
-import { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from "../../redux/authSlice";
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);
+  const [authenticated, setAuthenticated] = useState(null);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const location = useLocation(); // Get the current location
   const [menuOpen, setMenuOpen] = useState(false);
@@ -129,19 +131,25 @@ const Navbar = () => {
     return token !== null;
   };
 
+  useEffect(() => {
+    if (token) {
+      setAuthenticated(true);
+    } else {
+      setAuthenticated(false);
+    }
+  }, []);
+
   const handleButtonClick = () => {
     // Handle button click logic based on authentication status
-    if (isAuthenticated()) {
+    if (authenticated) {
       // Clear session storage
       clearSessionStorage();
 
       // Clear the user's local storage
-      localStorage.removeItem("token");
-      localStorage.removeItem("user_id");
-      localStorage.removeItem("role");
+      dispatch(logout())
       localStorage.removeItem("isLoggedIn");
 
-      // Check for saved email and password in localStorage
+      // temporary check for saved email and password in localStorage
       localStorage.getItem("savedEmail");
       localStorage.getItem("savedPassword");
       navigate("/login");

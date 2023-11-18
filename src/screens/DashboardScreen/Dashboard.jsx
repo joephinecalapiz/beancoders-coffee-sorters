@@ -9,77 +9,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
 import Activities from "./Activities";
 import YesterdayAct from "./YesterdayAct";
-import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
-  const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
-  const [navVisible, showNavbar] = useState(false);
-  const [userInfo, setUserInfo] = useState("");
   const [beanCount, setBeanCount] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const fetchUserInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setUserInfo(data.details);
-
-      // Now that userInfo is set, you can check companyName
-      if (data.details.companyName === "") {
-        console.log("No company info yet");
-        openModal();
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
-  useEffect(() => {
-    // Function to check the screen width and update navVisible
-    const handleResize = () => {
-      if (window.innerWidth <= 640) {
-        showNavbar(true);
-      } else {
-        showNavbar(false);
-      }
-    };
-
-    // Add an event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Initial check when the component mounts
-    handleResize();
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
 
   useEffect(() => {
     axios.get(api_endpoint + "/count").then((response) => {

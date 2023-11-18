@@ -14,7 +14,7 @@ const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const Profile = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
   const [isEditing, setEditing] = useState(false);
   const [userInfo, setUserInfo] = useState("");

@@ -12,7 +12,7 @@ const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const CompanyDetails = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const navigate = useNavigate();
   const [popupMessage, setPopupMessage] = useState(null);
   const [loading, setLoading] = useState(false);

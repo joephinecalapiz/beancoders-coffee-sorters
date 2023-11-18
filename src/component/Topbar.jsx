@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux'
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
