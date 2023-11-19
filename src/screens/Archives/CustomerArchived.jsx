@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux'
 
 const CustomerArchived = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
@@ -83,6 +83,7 @@ const CustomerArchived = () => {
       const data = await response.json();
 
       setAllCustomers(data.archiveds);
+      console.log(data.archiveds)
     } catch (error) {
       console.error("Error fetching customer archived data:", error);
     }

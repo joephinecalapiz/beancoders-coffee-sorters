@@ -11,11 +11,12 @@ const YesterdayAct = () => {
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
   const navigate = useNavigate();
-  const { customerName, customerId } = useParams();
   const [allHistory, setAllHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log(token)
+    console.log(user_id)
     axios
       .get(api_endpoint + "/fetch-histories/" + user_id, {
         headers: {
@@ -37,6 +38,7 @@ const YesterdayAct = () => {
           "yestactivityData",
           JSON.stringify(filteredData)
         );
+        console.log(filteredData)
         setAllHistory(filteredData);
         setIsLoading(false); // Data fetching is complete
       });

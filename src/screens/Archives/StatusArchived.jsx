@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 
 const StatusArchived = () => {
   const token = useSelector(state => state.auth.token);
-  const user_id = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
   const [allCustomers, setAllCustomers] = useState([]);
   const toggleSidebar = () => {
