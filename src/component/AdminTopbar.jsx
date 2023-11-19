@@ -9,10 +9,13 @@ import "./../css/sidebar.css";
 import { FaBars } from "react-icons/fa";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from "../../redux/authSlice";
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const dispatch = useDispatch()
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -102,9 +105,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     clearSessionStorage();
 
     // Clear the user's local storage
-    localStorage.removeItem("token");
-    localStorage.removeItem("user_id");
-    localStorage.removeItem("role");
+    dispatch(logout())
     localStorage.removeItem("isLoggedIn");
     // Clear the user data from state, if necessary
     setUserInfo(null);
@@ -117,7 +118,8 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     setConfirmationModalOpen(false);
 
     // Navigate the user back to the login page
-    navigate("/login");
+    // navigate("/login");
+    window.location.reload();
   };
 
   const handleLogoutCancelled = () => {
@@ -137,7 +139,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   };
 
   return (
-    <div className="z-20 fixed top-0 left-0 right-0 flex flex-row w-full text-white text-[14px]">
+    <div className="z-20 fixed top-0 left-0 right-0 flex flex-row w-full text-[14px]">
       <div className="bg-black dark:bg-gray h-full w-full flex items-center">
         <button
           type="button"
@@ -148,7 +150,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         >
           <FaBars size={20} />
         </button>
-        <span className="px-5 pt-5 text-lightBrown dark:text-lightBrown poppins-font text-xl h-16 font-semibold">
+        <span className="px-5 pt-5 text-textTitle dark:text-textTitle poppins-font text-xl h-16 font-semibold">
           BeanCoders
         </span>{" "}
       </div>
@@ -179,13 +181,13 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           </button>
           {isDropdownOpen && (
             <div
-              className="z-50 absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-gray divide-y divide-gray-100 rounded shadow"
+              className="z-50 text-textTitle dark:text-textTitle absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-gray divide-y divide-gray-100 rounded shadow"
               id="dropdown-user"
             >
               {/* Dropdown content */}
               <div className="px-4 py-3" role="none">
                 <p
-                  className="text-sm poppins-font dark:text-textTitle"
+                  className="text-sm poppins-font"
                   role="none"
                 >
                   {userInfo.name}
@@ -206,7 +208,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-lightBrown text-textTitle dark:hover:bg-lightBrown cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
@@ -215,7 +217,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 </li>
                 <li onClick={handleSignOut}>
                   <a
-                    className="block px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="block px-4 py-2 text-sm poppins-font font-semibold text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown cursor-pointer"
                     role="menuitem"
                   >
                     Sign out
@@ -225,7 +227,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
             </div>
           )}
         </div>
-        <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-10 whitespace-nowrap">
+        <h1 className=" text-textTitle poppins-font hidden md:block font-semibold md:text-base px-5 pt-2 mr-10 whitespace-nowrap">
           Super Admin
         </h1>
       </div>
@@ -234,18 +236,18 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
       {isConfirmationModalOpen && (
         <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-70">
           <div className="bg-white p-6 rounded shadow">
-            <p className="text-gray-800 text-lg poppins-font mb-4">
+            <p className="text-gray-800 text-base poppins-font mb-4">
               Are you sure you want to log out?
             </p>
-            <div className="flex justify-end">
+            <div className="flex justify-center">
               <button
-                className="bg-red-500 text-white dark:bg-container poppins-font px-4 py-2 rounded mr-2 cursor-pointer"
+                className="bg-red-500 text-textTitle dark:bg-container poppins-font px-4 py-2 rounded mr-2 cursor-pointer"
                 onClick={handleLogoutConfirmed}
               >
                 Logout
               </button>
               <button
-                className="bg-gray text-white poppins-font px-4 py-2 rounded cursor-pointer"
+                className="bg-gray text-textTitle poppins-font px-4 py-2 rounded cursor-pointer"
                 onClick={handleLogoutCancelled}
               >
                 Cancel

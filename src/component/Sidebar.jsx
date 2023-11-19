@@ -111,7 +111,7 @@ function Sidebar({ collapsed }) {
   return (
     <>
       <nav
-        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-16 left-[max(0px,calc(10%-100rem))]  ${
+        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-mainbg dark:bg-gray fixed z-20 inset-0 mt-16 left-[max(0px,calc(10%-100rem))]  ${
           collapsed ? "collapsed" : "w-[15rem]"
         }`}
       >
@@ -121,8 +121,8 @@ function Sidebar({ collapsed }) {
             <NavLink
               to={item.href}
               // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
-              className={`nav-link hover:bg-bgHover ${
-                item.current ? "bg-lightBrown text-white" : "text-white"
+              className={`nav-link text-secondary dark:text-textTitle hover:bg-bgHover ${
+                item.current ? "bg-lightBrown" : ""
               } poppins-font`}
               onMouseEnter={() => setNavigation((prev) => [...prev])}
               onMouseLeave={() => setNavigation((prev) => [...prev])}
@@ -140,7 +140,7 @@ function Sidebar({ collapsed }) {
           {/* Dark mode toggle button */}
           <div className="fixed bottom-4 left-4">
             <button
-              className="p-2 text-white rounded-full flex items-center"
+              className="p-2 text-secondary rounded-full flex items-center"
               onClick={toggleDarkMode}
             >
               {darkMode ? (
