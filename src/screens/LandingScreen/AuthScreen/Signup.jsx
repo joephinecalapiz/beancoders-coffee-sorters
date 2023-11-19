@@ -78,6 +78,7 @@ const Signup = () => {
         setTimeout(() => {
             // setLoading(false); // Set loading to false when the operation is complete
             navigate("/company");
+            // window.location.reload();
         }, 2000);
         console.log('Registration successful');
       })

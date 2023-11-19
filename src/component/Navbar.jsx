@@ -137,11 +137,11 @@ const Navbar = () => {
     } else {
       setAuthenticated(false);
     }
-  }, []);
+  }, [token]);
 
   const handleButtonClick = () => {
     // Handle button click logic based on authentication status
-    if (authenticated) {
+    if (isAuthenticated()) {
       // Clear session storage
       clearSessionStorage();
 

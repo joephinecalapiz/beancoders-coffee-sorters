@@ -26,11 +26,21 @@ const Login = () => {
   const [savedPassword, setSavedPassword] = useState("");
   const dispatch = useDispatch()
   const { loading, success } = useSelector((state) => state.auth)
+  const token = useSelector(state => state.auth.token);
   const role = useSelector(state => state.auth.role);
 
   useEffect(() => {
-    document.title = "Login";
+    if (token === null) {
+      navigate("/login")
+    }
+    else{
+      if (role == 2) navigate('/dashboard')
+      if (role == 1) navigate('/superadmin/manageusers')
+    }
+  }, []);
 
+  useEffect(() => {
+    document.title = "Login";
     // Check for saved email and password in localStorage
     const savedEmail = localStorage.getItem("savedEmail");
     const savedPassword = localStorage.getItem("savedPassword");
@@ -101,19 +111,13 @@ const Login = () => {
 
     dispatch(loginUser(data))
       .unwrap()
-      .then(() => {
+      .then((data) => {
         // Registration successful, you can navigate or perform other actions
-        if (role == '2') {
-          setTimeout(() => {
-            navigate("/dashboard");
-          }, 2000);
-        }
-        if (role == '1') {
-          setTimeout(() => {
-            navigate("/superadmin/manageusers");
-          }, 2000);
-        }
         console.log('Login successful');
+        // if (data.user.role == 2) navigate('/dashboard')
+        // if (data.user.role == 1) navigate('/superadmin/manageusers')
+        console.log(data.user.role)
+        window.location.reload();
       })
       .catch((err) => {
         if (err && err.type === 'email') {

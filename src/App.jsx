@@ -34,7 +34,7 @@ function App() {
 
   if (authenticated === null) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen backdrop-blur">
             <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
       </div>
     );
