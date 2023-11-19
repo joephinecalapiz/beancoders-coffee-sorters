@@ -228,22 +228,28 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
+                    <span class="material-symbols-outlined pr-2">
+                      account_circle
+                    </span>
                     Profile
                   </a>
                 </li>
                 <button
                   type="button"
                   onClick={toggleProfileMenu}
-                  className={`block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white  ${
+                  className={`flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white  ${
                     isProfileMenuOpen ? "" : ""
                   } `}
                   aria-expanded={isProfileMenuOpen}
                   role="menuitem"
                 >
+                  <span class="material-symbols-outlined pr-2">
+                      archive
+                  </span>
                   Archive
                   <span
                     className={`transform transition-transform duration-300 inline-block ${
@@ -258,7 +264,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   <ul className="py-1" role="none">
                     <li onClick={() => navigate("/customer-archived")}>
                       <a
-                        className="block px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                        className="flex pl-20 px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                         role="menuitem"
                       >
                         Customer
@@ -266,7 +272,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     </li>
                     <li onClick={() => navigate("/status-archived")}>
                       <a
-                        className="block px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                        className="flex pl-20 px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                         role="menuitem"
                       >
                         Status
@@ -280,10 +286,13 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
+                    <span class="material-symbols-outlined pr-2">
+                      contact_support
+                    </span>
                     Contact Us
                   </a>
                   <li
@@ -292,19 +301,25 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     }}
                   >
                     <a
-                      className="block px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                      className="flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                       role="menuitem"
                       aria-expanded={isProfileMenuOpen}
                     >
+                      <span class="material-symbols-outlined pr-2">
+                        info
+                      </span>
                       About Us
                     </a>
                   </li>
                 </li>
                 <li onClick={handleSignOut}>
                   <a
-                    className="block px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="flex items-center px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
                     role="menuitem"
                   >
+                    <span class="material-symbols-outlined pr-2">
+                      power_settings_new
+                    </span>
                     Sign out
                   </a>
                 </li>
