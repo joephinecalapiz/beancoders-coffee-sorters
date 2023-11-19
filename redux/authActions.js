@@ -64,3 +64,28 @@ export const registerUser = createAsyncThunk(
         }
     }
 );
+
+// Async Thunk for User Registration
+export const companyDetails = createAsyncThunk(
+    'auth/company',
+    async (userData, { rejectWithValue }) => {
+        try {
+            let token = localStorage.getItem('token');
+            const config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                    Authorization: "Bearer " + token,
+                },  
+            }
+            console.log(userData);
+            const response = await axios.post(`${api_endpoint}/add-info`, userData, config);
+            return response.data;
+        } catch (error) {
+            if (error.response && error.response.data.status === 401) {
+                return rejectWithValue('Error');
+            } else {
+                return rejectWithValue('Something Went Wrong');
+            }
+        }
+    }
+);

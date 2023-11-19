@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { loginUser, registerUser } from './authActions';
+import { companyDetails, loginUser, registerUser } from './authActions';
 
 // initialize userToken from local storage
 const token = localStorage.getItem('token')
@@ -22,11 +22,13 @@ const authSlice = createSlice({
   initialState: {
     loading: false,
     user: null,
+    details: null,
     token,
     role,
     user_id,
     error: null,
     success: false,
+    companyName: null
   },
   reducers: {
     logout: (state) => {
@@ -54,7 +56,7 @@ const authSlice = createSlice({
         state.user = action.payload.user; // Assuming the payload contains user data
         state.token = action.payload.token; // Assuming the payload contains a token
         state.role = action.payload.user.role; // Assuming the payload contains a role
-        state.user_id = action.payload.user.id; // Assuming the payload contains a role
+        state.user_id = action.payload.user.id; // Assuming the payload contains a id
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
@@ -71,8 +73,23 @@ const authSlice = createSlice({
         state.user = action.payload.user; // Assuming the payload contains user data
         state.token = action.payload.token; // Assuming the payload contains a token
         state.role = action.payload.user.role; // Assuming the payload contains a role
+        state.user_id = action.payload.user.id;
       })
       .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; // Now the payload contains the error message
+      })
+      //company
+      .addCase(companyDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(companyDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true // registration successful
+        state.details = action.payload.details; // Assuming the payload contains user data
+      })
+      .addCase(companyDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Now the payload contains the error message
       });
