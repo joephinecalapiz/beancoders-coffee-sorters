@@ -42,7 +42,7 @@ export const fetchUserDetails = createAsyncThunk(
                 throw new Error('Failed to fetch company details data');
             }
             const userData = await response.json();
-            console.log(userData.user)
+            // console.log(userData.user)
             // Persist the data to sessionStorage
             sessionStorage.setItem('userInfo', JSON.stringify(userData.user));
             return userData.user;

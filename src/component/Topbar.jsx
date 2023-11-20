@@ -11,8 +11,9 @@ import { IoIosArrowDown } from "react-icons/io";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from "../../redux/authSlice";
+import { logout, setCredentials } from "../../redux/authSlice";
 import { fetchCompanyDetails, fetchUserDetails } from "../../redux/userActions";
+import { useGetUserDetailsQuery } from '../../redux/authService'
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const dispatch = useDispatch();
@@ -38,7 +39,17 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     dispatch(fetchUserDetails({ token }));
   }, [dispatch]);
 
-  console.log('details', companyInfo.companyName)
+  // automatically authenticate user if token is found
+  const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
+  // perform a refetch every 15mins
+    pollingInterval: 900000,
+  })
+
+  useEffect(() => {
+    if (data) dispatch(setCredentials(data))
+  }, [data, dispatch])
+
+  console.log('user crendentials', data) // user object
 
   const toggleDropdown = () => {
     setDropdownOpen((prevState) => !prevState);
@@ -244,7 +255,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
-                    <span class="material-symbols-outlined pr-4">
+                    <span className="material-symbols-outlined pr-4">
                       account_circle
                     </span>
                     Profile
@@ -258,7 +269,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     aria-expanded={isProfileMenuOpen}
                     role="menuitem"
                   >
-                    <span class="material-symbols-outlined">
+                    <span className="material-symbols-outlined">
                       archive
                     </span>
                     Archive
@@ -292,7 +303,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   </ul>
                   </div>
                 )}
-                <li
+                <ul
                   onClick={() => {
                     navigate("/contact-us");
                   }}
@@ -302,7 +313,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
-                    <span class="material-symbols-outlined pr-4">
+                    <span className="material-symbols-outlined pr-4">
                       contact_support
                     </span>
                     Contact Us
@@ -317,19 +328,19 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                       role="menuitem"
                       aria-expanded={isProfileMenuOpen}
                     >
-                      <span class="material-symbols-outlined pr-4">
+                      <span className="material-symbols-outlined pr-4">
                         info
                       </span>
                       About Us
                     </a>
                   </li>
-                </li>
+                </ul>
                 <li onClick={handleSignOut}>
                   <a
                     className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitlee cursor-pointer"
                     role="menuitem"
                   >
-                    <span class="material-symbols-outlined pr-4">
+                    <span className="material-symbols-outlined pr-4">
                       power_settings_new
                     </span>
                     Sign out
