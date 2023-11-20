@@ -122,6 +122,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
 
   const handleSignOut = () => {
     // Show the confirmation modal
+    setDropdownOpen(false);
     setConfirmationModalOpen(true);
   };
 
@@ -207,12 +208,12 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   : BeansLogo
               }
               alt="BeansLogo"
-              className="fixed w-12 h-12 rounded-full bg-white border border-green-500 shadow-xl shadow-green-900/20 ring-4 ring-green-500/30"
+              className="fixed w-12 h-12 rounded-full bg-white border border-lightBrown shadow-xl shadow-green-900/20 ring-4 ring-lightBrown"
             />
           </button>
           {isDropdownOpen && (
             <div
-              className="z-50 absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-mainbg divide-y divide-gray-100 rounded shadow"
+              className="mx-5 z-50 absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-mainbg divide-y divide-gray-100 rounded shadow"
               id="dropdown-user"
             >
               {/* Dropdown content */}
@@ -239,7 +240,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
@@ -249,10 +250,10 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     Profile
                   </a>
                 </li>
-                <button
+                <li
                   type="button"
                   onClick={toggleProfileMenu}
-                  className={`flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white  ${
+                  className={`flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle  ${
                     isProfileMenuOpen ? "" : ""
                   } `}
                   aria-expanded={isProfileMenuOpen}
@@ -269,13 +270,13 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   >
                     <IoIosArrowDown size={20} className="inline" />
                   </span>
-                </button>
+                </li>
 
                 {isProfileMenuOpen && (
                   <ul className="py-1" role="none">
                     <li onClick={() => navigate("/customer-archived")}>
                       <a
-                        className="flex pl-20 px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                        className="flex pl-20 px-10 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                         role="menuitem"
                       >
                         Customer
@@ -283,7 +284,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     </li>
                     <li onClick={() => navigate("/status-archived")}>
                       <a
-                        className="flex pl-20 px-10 py-2 poppins-font text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                        className="flex pl-20 px-10 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                         role="menuitem"
                       >
                         Status
@@ -297,7 +298,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
@@ -312,7 +313,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     }}
                   >
                     <a
-                      className="flex items-center px-4 py-2 poppins-font font-semibold text-sm dark:text-textTitle hover:bg-gray-100 text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                      className="flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                       role="menuitem"
                       aria-expanded={isProfileMenuOpen}
                     >
@@ -325,7 +326,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 </li>
                 <li onClick={handleSignOut}>
                   <a
-                    className="flex items-center px-4 py-2 text-sm poppins-font font-semibold dark:text-textTitle hover:bg-gray-100  dark:hover:bg-gray-600 dark:hover:text-white cursor-pointer"
+                    className="flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitlee cursor-pointer"
                     role="menuitem"
                   >
                     <span class="material-symbols-outlined pr-2">
@@ -345,7 +346,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
 
       {/* Confirmation Modal */}
       {isConfirmationModalOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-mainbg bg-opacity-70 z-100">
+        <div className="fixed top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-mainbg bg-opacity-70 z-60">
           <div className="bg-white p-6 rounded shadow">
             <p className="text-gray-800 text-lg poppins-font mb-4">
               Are you sure you want to log out?
