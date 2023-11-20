@@ -8,16 +8,20 @@ import { useNavigate } from "react-router-dom";
 import beansLogo from "../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../config";
 import image_endpoint from "../image-config";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCompanyDetails, fetchUserDetails } from "../../redux/userActions";
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
+  const companyInfo = useSelector(state => state.company.companyInfo);
+  const userInfo = useSelector(state => state.user.userInfo);
   const [navVisible, showNavbar] = useState(false);
   const [isEditing, setEditing] = useState(false);
-  const [userInfo, setUserInfo] = useState("");
+  // const [userInfo, setUserInfo] = useState("");
   const [compInfo, setCompInfo] = useState("");
   const [selectedImage, setSelectedImage] = useState();
   const [file, setFile] = useState();
@@ -26,11 +30,11 @@ const Profile = () => {
     profilePicture: "assets/beansLogo.png",
     name: userInfo.name,
     email: userInfo.email,
-    companyNumber: compInfo.companyNumber,
-    companyLocation: compInfo.companyLocation,
-    companyName: compInfo.companyName,
-    images: compInfo.images,
-    profileAvatar: compInfo.profileAvatar,
+    companyNumber: companyInfo.companyNumber,
+    companyLocation: companyInfo.companyLocation,
+    companyName: companyInfo.companyName,
+    images: companyInfo.images,
+    profileAvatar: companyInfo.profileAvatar,
   });
   const [editableContent, setEditableContent] = useState({
     companyName: profileData.companyName,
@@ -43,7 +47,7 @@ const Profile = () => {
     name: profileData.name,
     email: profileData.email,
   });
-
+  
   const handleImageChange = (e) => {
     const file = e.target.files[0];
 
@@ -81,9 +85,11 @@ const Profile = () => {
   };
 
   useEffect(() => {
-    fetchUserInfo(); // Fetch user info when the component mounts
-    fetchCompanyInfo();
-  }, []);
+    // fetchUserInfo(); // Fetch user info when the component mounts
+    // fetchCompanyInfo();
+    dispatch(fetchCompanyDetails({ user_id, token }));
+    dispatch(fetchUserDetails({ token }));
+  }, [dispatch]);
 
   // Update profileData when userInfo changes
   useEffect(() => {
@@ -91,11 +97,11 @@ const Profile = () => {
       ...prevProfileData,
       name: userInfo.name,
       email: userInfo.email,
-      companyNumber: compInfo.companyNumber,
-      companyLocation: compInfo.companyLocation,
-      companyName: compInfo.companyName,
-      images: compInfo.images,
-      profileAvatar: compInfo.profileAvatar,
+      companyNumber: companyInfo.companyNumber,
+      companyLocation: companyInfo.companyLocation,
+      companyName: companyInfo.companyName,
+      images: companyInfo.images,
+      profileAvatar: companyInfo.profileAvatar,
     }));
   }, [userInfo]);
 
@@ -103,11 +109,11 @@ const Profile = () => {
   useEffect(() => {
     setEditableContent((prevProfileData) => ({
       ...prevProfileData,
-      companyNumber: compInfo.companyNumber,
-      companyLocation: compInfo.companyLocation,
-      companyName: compInfo.companyName,
-      images: compInfo.images,
-      profileAvatar: compInfo.profileAvatar,
+      companyNumber: companyInfo.companyNumber,
+      companyLocation: companyInfo.companyLocation,
+      companyName: companyInfo.companyName,
+      images: companyInfo.images,
+      profileAvatar: companyInfo.profileAvatar,
     }));
     setEditableProfile((prevProfileData) => ({
       ...prevProfileData,
@@ -116,41 +122,41 @@ const Profile = () => {
     }));
   }, [userInfo]);
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/user", {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Erro("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setUserInfo(data.user);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/user", {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Erro("Failed to fetch user data");
+  //     }
+  //     const data = await response.json();
+  //     setUserInfo(data.user);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //   }
+  // };
 
-  const fetchCompanyInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch company details data");
-      }
-      const compData = await response.json();
-      setCompInfo(compData.details);
-    } catch (error) {
-      console.error("Error fetching company details data:", error);
-    }
-  };
+  // const fetchCompanyInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch company details data");
+  //     }
+  //     const compData = await response.json();
+  //     setCompInfo(compData.details);
+  //   } catch (error) {
+  //     console.error("Error fetching company details data:", error);
+  //   }
+  // };
 
   const updateCompanyDetails = async (newDetails) => {
     try {
@@ -162,13 +168,12 @@ const Profile = () => {
         },
         body: JSON.stringify(newDetails), // Make sure newDetails contains the updated data
       });
-      console.log(newDetails);
+      // console.log(newDetails);
       if (!response.ok) {
         throw new Error("Failed to update company details");
       }
-
       // Handle success response
-      console.log("Company details updated successfully");
+      console.log("Company and user details updated successfully");
       console.log(user_id);
     } catch (error) {
       console.error("Error updating company details:", error);
@@ -220,7 +225,7 @@ const Profile = () => {
     });
     // update the details on the server
     updateCompanyDetails(editableContent);
-    console.log(editableContent);
+    // console.log(editableContent);
     updateProfileInfo(editableProfile);
   };
 

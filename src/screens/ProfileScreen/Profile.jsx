@@ -8,32 +8,33 @@ import beansLogo from "../../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../../config";
 import image_endpoint from "../../image-config";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+ import { fetchCompanyDetails, fetchUserDetails } from "../../../redux/userActions";
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const Profile = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
+  const companyInfo = useSelector(state => state.company.companyInfo);
+  const userInfo = useSelector(state => state.user.userInfo);
   const [navVisible, showNavbar] = useState(false);
   const [isEditing, setEditing] = useState(false);
-  const [userInfo, setUserInfo] = useState("");
+  // const [userInfo, setUserInfo] = useState("");
   const [compInfo, setCompInfo] = useState("");
   const [selectedImage, setSelectedImage] = useState();
   const [file, setFile] = useState();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-
-  const navigate = useNavigate();
   const [profileData, setProfileData] = useState({
     profilePicture: "assets/beansLogo.png",
     name: userInfo.name,
     email: userInfo.email,
-    companyNumber: compInfo.companyNumber,
-    companyLocation: compInfo.companyLocation,
-    companyName: compInfo.companyName,
-    images: compInfo.images,
-    profileAvatar: compInfo.profileAvatar,
+    companyNumber: companyInfo.companyNumber,
+    companyLocation: companyInfo.companyLocation,
+    companyName: companyInfo.companyName,
+    images: companyInfo.images,
+    profileAvatar: companyInfo.profileAvatar,
   });
   const [editableContent, setEditableContent] = useState({
     companyName: profileData.companyName,
@@ -46,6 +47,13 @@ const Profile = () => {
     name: profileData.name,
     email: profileData.email,
   });
+
+  useEffect(() => {
+    // fetchUserInfo(); // Fetch user info when the component mounts
+    // fetchCompanyInfo();
+    dispatch(fetchCompanyDetails({ user_id, token }));
+    dispatch(fetchUserDetails({ token }));
+  }, [dispatch]);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -94,18 +102,13 @@ const Profile = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("profile photo");
+  // useEffect(() => {
+  //   const cachedCustomerData = sessionStorage.getItem("profile photo");
 
-    if (cachedCustomerData) {
-      setCompInfo(JSON.parse(cachedCustomerData));
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchUserInfo(); // Fetch user info when the component mounts
-    fetchCompanyInfo();
-  }, []);
+  //   if (cachedCustomerData) {
+  //     setCompInfo(JSON.parse(cachedCustomerData));
+  //   }
+  // }, []);
 
   // Update profileData when userInfo changes
   useEffect(() => {
@@ -113,72 +116,72 @@ const Profile = () => {
       ...prevProfileData,
       name: userInfo.name,
       email: userInfo.email,
-      companyNumber: compInfo.companyNumber,
-      companyLocation: compInfo.companyLocation,
-      companyName: compInfo.companyName,
-      images: compInfo.images,
-      profileAvatar: compInfo.profileAvatar,
+      companyNumber: companyInfo.companyNumber,
+      companyLocation: companyInfo.companyLocation,
+      companyName: companyInfo.companyName,
+      images: companyInfo.images,
+      profileAvatar: companyInfo.profileAvatar,
     }));
-  }, [userInfo]);
+  }, [userInfo, companyInfo]);
 
   // Update editableContent when userInfo want to edit
   useEffect(() => {
     setEditableContent((prevProfileData) => ({
       ...prevProfileData,
-      companyNumber: compInfo.companyNumber,
-      companyLocation: compInfo.companyLocation,
-      companyName: compInfo.companyName,
-      images: compInfo.images,
-      profileAvatar: compInfo.profileAvatar,
+      companyNumber: companyInfo.companyNumber,
+      companyLocation: companyInfo.companyLocation,
+      companyName: companyInfo.companyName,
+      images: companyInfo.images,
+      profileAvatar: companyInfo.profileAvatar,
     }));
     setEditableProfile((prevProfileData) => ({
       ...prevProfileData,
       name: userInfo.name,
       email: userInfo.email,
     }));
-  }, [userInfo]);
+  }, [userInfo, companyInfo]);
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/user", {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Erro("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setUserInfo(data.user);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/user", {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Erro("Failed to fetch user data");
+  //     }
+  //     const data = await response.json();
+  //     setUserInfo(data.user);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //   }
+  // };
 
-  const fetchCompanyInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch company details data");
-      }
-      const compData = await response.json();
-      setCompInfo(compData.details);
-      if (sessionStorage.getItem("profile photo") === null) {
-        sessionStorage.setItem(
-          "profile photo",
-          JSON.stringify(compData.details)
-        );
-      }
-    } catch (error) {
-      console.error("Error fetching company details data:", error);
-    }
-  };
+  // const fetchCompanyInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch company details data");
+  //     }
+  //     const compData = await response.json();
+  //     setCompInfo(compData.details);
+  //     if (sessionStorage.getItem("profile photo") === null) {
+  //       sessionStorage.setItem(
+  //         "profile photo",
+  //         JSON.stringify(compData.details)
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching company details data:", error);
+  //   }
+  // };
 
   const updateCompanyDetails = async (newDetails) => {
     try {

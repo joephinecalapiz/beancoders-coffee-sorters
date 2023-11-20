@@ -12,22 +12,33 @@ import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../redux/authSlice";
+import { fetchCompanyDetails, fetchUserDetails } from "../../redux/userActions";
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const dispatch = useDispatch()
+  const companyInfo = useSelector(state => state.company.companyInfo);
+  const userInfo = useSelector(state => state.user.userInfo);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
   const dropdownRef = useRef();
   const [isRotated, setRotated] = useState(false);
   const [compInfo, setCompInfo] = useState("");
+  // const { companyInfo, status, error } = useSelector((state) => state.company);
   const [profileIcon, setProfileIcon] = useState({
-    profileAvatar: compInfo.profileAvatar,
-    companyName: compInfo.companyName,
+    profileAvatar: companyInfo.profileAvatar,
+    companyName: companyInfo.companyName,
   });
+
+  useEffect(() => {
+    dispatch(fetchCompanyDetails({ user_id, token }));
+    dispatch(fetchUserDetails({ token }));
+  }, [dispatch]);
+
+  console.log('details', companyInfo.companyName)
 
   const toggleDropdown = () => {
     setDropdownOpen((prevState) => !prevState);
@@ -40,8 +51,8 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   };
 
   useEffect(() => {
-    fetchUserInfo();
-    fetchCompanyInfo();
+    // fetchUserInfo();
+    // fetchCompanyInfo();
 
     document.addEventListener("mousedown", closeDropdown);
     return () => {
@@ -49,65 +60,65 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     };
   }, []);
 
-  useEffect(() => {
-    const cachedProfileData = sessionStorage.getItem("profile photo");
+  // useEffect(() => {
+  //   const cachedProfileData = sessionStorage.getItem("profile photo");
 
-    if (cachedProfileData) {
-      setCompInfo(JSON.parse(cachedProfileData));
-    }
-  }, []);
+  //   if (cachedProfileData) {
+  //     setCompInfo(JSON.parse(cachedProfileData));
+  //   }
+  // }, []);
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/user", {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/user", {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch user data");
+  //     }
 
-      const data = await response.json();
-      setUserInfo(data.user);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+  //     const data = await response.json();
+  //     setUserInfo(data.user);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //   }
+  // };
 
   // Update profileData when userInfo changes
   useEffect(() => {
     setProfileIcon((prevProfileData) => ({
       ...prevProfileData,
-      profileAvatar: compInfo.profileAvatar,
-      companyName: compInfo.companyName,
+      profileAvatar: companyInfo.profileAvatar,
+      companyName: companyInfo.companyName,
     }));
   }, [userInfo]);
 
-  const fetchCompanyInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch company details data");
-      }
-      const compData = await response.json();
-      setCompInfo(compData.details);
-      if (sessionStorage.getItem("profile photo") === null) {
-        sessionStorage.setItem(
-          "profile photo",
-          JSON.stringify(compData.details)
-        );
-      }
-    } catch (error) {
-      console.error("Error fetching company details data:", error);
-    }
-  };
+  // const fetchCompanyInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch company details data");
+  //     }
+  //     const compData = await response.json();
+  //     setCompInfo(compData.details);
+  //     if (sessionStorage.getItem("profile photo") === null) {
+  //       sessionStorage.setItem(
+  //         "profile photo",
+  //         JSON.stringify(compData.details)
+  //       );
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching company details data:", error);
+  //   }
+  // };
 
   const handleSignOut = () => {
     // Show the confirmation modal
@@ -127,7 +138,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     dispatch(logout())
     localStorage.removeItem("isLoggedIn");
     // Clear the user data from state, if necessary
-    setUserInfo(null);
+    // setUserInfo(null);
 
     // Check for saved email and password in localStorage
     localStorage.getItem("savedEmail");
@@ -170,7 +181,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           <FaBars size={20} />
         </button>
         {/* <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" /> */}
-        <span className="px-5 pt-5 text-textTitle dark:text-lightBrown poppins-font text-xl h-16 font-semibold">
+        <span className="px-5 pt-5 text-textTitle dark:text-textTitle poppins-font text-xl h-16 font-semibold">
           {profileIcon.companyName}
         </span>{" "}
       </div>

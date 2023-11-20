@@ -11,21 +11,29 @@ import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../redux/authSlice";
+import { fetchCompanyDetails, fetchUserDetails } from "../../redux/userActions";
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const dispatch = useDispatch()
+  const companyInfo = useSelector(state => state.company.companyInfo);
+  const userInfo = useSelector(state => state.user.userInfo);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
   const dropdownRef = useRef();
   const [isRotated, setRotated] = useState(false);
   const [compInfo, setCompInfo] = useState("");
   const [profileIcon, setProfileIcon] = useState({
     profileAvatar: compInfo.profileAvatar,
   });
+
+  useEffect(() => {
+    dispatch(fetchCompanyDetails({ user_id, token }));
+    dispatch(fetchUserDetails({ token }));
+  }, [dispatch]);
 
   const toggleDropdown = () => {
     setDropdownOpen((prevState) => !prevState);
@@ -38,8 +46,8 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   };
 
   useEffect(() => {
-    fetchUserInfo();
-    fetchCompanyInfo();
+    // fetchUserInfo();
+    // fetchCompanyInfo();
     document.addEventListener("mousedown", closeDropdown);
     return () => {
       document.removeEventListener("mousedown", closeDropdown);
@@ -54,41 +62,41 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     }));
   }, [userInfo]);
 
-  const fetchCompanyInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch company details data");
-      }
-      const compData = await response.json();
-      setCompInfo(compData.details);
-    } catch (error) {
-      console.error("Error fetching company details data:", error);
-    }
-  };
+  // const fetchCompanyInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch company details data");
+  //     }
+  //     const compData = await response.json();
+  //     setCompInfo(compData.details);
+  //   } catch (error) {
+  //     console.error("Error fetching company details data:", error);
+  //   }
+  // };
 
-  const fetchUserInfo = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/user", {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setUserInfo(data.user);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+  // const fetchUserInfo = async () => {
+  //   try {
+  //     const response = await fetch(api_endpoint + "/user", {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
+  //     if (!response.ok) {
+  //       throw new Error("Failed to fetch user data");
+  //     }
+  //     const data = await response.json();
+  //     setUserInfo(data.user);
+  //   } catch (error) {
+  //     console.error("Error fetching user data:", error);
+  //   }
+  // };
 
   const handleSignOut = () => {
     // Show the confirmation modal
