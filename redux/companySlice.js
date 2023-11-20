@@ -4,7 +4,7 @@ import { fetchCompanyDetails } from './userActions';
 // initialize role from local storage
 const storedCompanyInfo = JSON.parse(sessionStorage.getItem('companyInfo'))
   ? JSON.parse(sessionStorage.getItem('companyInfo'))
-  : null
+  : ''
 
 const initialState = {
     companyInfo: storedCompanyInfo,

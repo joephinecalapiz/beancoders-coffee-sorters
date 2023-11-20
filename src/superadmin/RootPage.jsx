@@ -52,9 +52,7 @@ function AdminRootPage() {
             <Route
                 path="/profile"
                 element={
-                    <Main>
-                        <Profile />
-                    </Main>
+                    <Profile />
                 }
             />
             <Route
