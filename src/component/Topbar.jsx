@@ -21,6 +21,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const user_id = useSelector(state => state.auth.user_id);
   const companyInfo = useSelector(state => state.company.companyInfo);
   const userInfo = useSelector(state => state.user.userInfo);
+  const { user } = useSelector((state) => state.auth)
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -39,18 +40,9 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     dispatch(fetchUserDetails({ token }));
   }, [dispatch]);
 
-  // automatically authenticate user if token is found
-  const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
-  // perform a refetch every 15mins
-    pollingInterval: 900000,
-  })
-
-  useEffect(() => {
-    if (data) dispatch(setCredentials(data))
-  }, [data, dispatch])
-
-  console.log('user crendentials', data) // user object
-
+  // console.log('user crendentials', data.user) // user object
+  // console.log('details', user.details[0].companyName)
+  
   const toggleDropdown = () => {
     setDropdownOpen((prevState) => !prevState);
   };
@@ -186,36 +178,39 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
         <button
           type="button"
           onClick={handleToggleSidebar}
-          className={`ml-6 transform transition-transform duration-300 ${
-            collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
-          }`}
+          className={`ml-6 transform transition-transform duration-300 ${collapsed ? "rotate-clockwise" : "rotate-counterclockwise"
+            }`}
         >
           <FaBars size={20} />
         </button>
         {/* <img src={BeansLogo} alt="BeansLogo" className="h-16 w-16 mt-1 ml-2" /> */}
         <span className="px-5 pt-5 text-textTitle dark:text-textTitle poppins-font text-xl h-16 font-semibold">
           {profileIcon.companyName}
-        </span>{" "}
+          {/* {isFetching
+            ? `Fetching your credentials...`
+            : user !== null
+              ? `${user.details[0].companyName}`
+              : "You're not logged in"} */}
+        </span>
       </div>
       <div className="flex bg-mainbg dark:bg-gray items-center md:pb-1">
         <div className="flex items-center relative" ref={dropdownRef}>
           <button
             type="button"
             onClick={toggleDropdown}
-            className={`flex relative ${
-              isDropdownOpen ? "bg-white-800" : "bg-mainbg dark:bg-gray"
-            } bg-mainbg dark:bg-gray`}
+            className={`flex relative ${isDropdownOpen ? "bg-white-800" : "bg-mainbg dark:bg-gray"
+              } bg-mainbg dark:bg-gray`}
             aria-expanded={isDropdownOpen}
           >
             <span className="invisible">Dropdown user</span>
             <img
               src={
                 profileIcon.profileAvatar &&
-                profileIcon.profileAvatar.length > 0
+                  profileIcon.profileAvatar.length > 0
                   ? `${image_endpoint}/storage/${profileIcon.profileAvatar.slice(
-                      2,
-                      -2
-                    )}`
+                    2,
+                    -2
+                  )}`
                   : BeansLogo
               }
               alt="BeansLogo"
@@ -256,7 +251,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     aria-expanded={isProfileMenuOpen}
                   >
                     <span className="material-symbols-outlined pr-4">
-                      account_circle
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     </span>
                     Profile
                   </a>
@@ -269,8 +264,8 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     aria-expanded={isProfileMenuOpen}
                     role="menuitem"
                   >
-                    <span className="material-symbols-outlined">
-                      archive
+                    <span className="material-symbols-outlined md-light">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-archive"><polyline points="21 8 21 21 3 21 3 8"></polyline><rect x="1" y="3" width="22" height="5"></rect><line x1="10" y1="12" x2="14" y2="12"></line></svg>
                     </span>
                     Archive
                     <span
@@ -282,42 +277,45 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   </a>
                 </li>
                 {isProfileMenuOpen && (
-                  <div className="mx-5 items-center">
+                  <div className="pl-10 items-center ">
                     <ul className="py-1" role="none">
-                    <li onClick={() => navigate("/customer-archived")}>
-                      <a
-                        className="mx-2 hover:rounded-full flex justify-center py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
-                        role="menuitem"
-                      >
-                        Customer
-                      </a>
-                    </li>
-                    <li onClick={() => navigate("/status-archived")}>
-                      <a
-                        className="mx-2 hover:rounded-full flex justify-center py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
-                        role="menuitem"
-                      >
-                        Status
-                      </a>
-                    </li>
-                  </ul>
+                      <li onClick={() => navigate("/customer-archived")}>
+                        <a
+                          className="mx-2 pl-5 hover:rounded-full flex justify-start py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                          role="menuitem"
+                        >
+                          Customer
+                        </a>
+                      </li>
+                      <li onClick={() => navigate("/status-archived")}>
+                        <a
+                          className="mx-2 pl-5 hover:rounded-full flex justify-start py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                          role="menuitem"
+                        >
+                          Status
+                        </a>
+                      </li>
+                    </ul>
                   </div>
                 )}
                 <ul
-                  onClick={() => {
-                    navigate("/contact-us");
-                  }}
                 >
-                  <a
-                    className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
-                    role="menuitem"
-                    aria-expanded={isProfileMenuOpen}
+                  <li
+                    onClick={() => {
+                      navigate("/contact-us");
+                    }}
                   >
-                    <span className="material-symbols-outlined pr-4">
-                      contact_support
-                    </span>
-                    Contact Us
-                  </a>
+                    <a
+                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                      role="menuitem"
+                      aria-expanded={isProfileMenuOpen}
+                    >
+                      <span className="material-symbols-outlined pr-4">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                      </span>
+                      Contact Us
+                    </a>
+                  </li>
                   <li
                     onClick={() => {
                       navigate("/aboutus");
@@ -329,7 +327,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                       aria-expanded={isProfileMenuOpen}
                     >
                       <span className="material-symbols-outlined pr-4">
-                        info
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
                       </span>
                       About Us
                     </a>
@@ -341,7 +339,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     role="menuitem"
                   >
                     <span className="material-symbols-outlined pr-4">
-                      power_settings_new
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-power"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg>
                     </span>
                     Sign out
                   </a>
@@ -351,7 +349,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
           )}
         </div>
         <h1 className=" text-white poppins-font hidden md:block font-semibold md:text-base mt-3 mr-12 whitespace-nowrap">
-            Admin
+          Admin
         </h1>
       </div>
 
