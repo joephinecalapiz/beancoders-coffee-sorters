@@ -11,7 +11,7 @@ const storedUserInfo = JSON.parse(sessionStorage.getItem('userInfo'))
 
 const initialState = {
     userInfo: storedUserInfo,
-    companyInfo: storedUserInfo.details[0],
+    companyInfo: '',
     customers: null,
     sorters: null,
     statusInfo: null,
@@ -32,6 +32,7 @@ const userInfoSlice = createSlice({
             .addCase(fetchUserDetails.fulfilled, (state, action) => {
                 state.status = 'succeeded';
                 state.userInfo = action.payload;
+                state.companyInfo = action.payload.details[0];
             })
             .addCase(fetchUserDetails.rejected, (state, action) => {
                 state.status = 'failed';
