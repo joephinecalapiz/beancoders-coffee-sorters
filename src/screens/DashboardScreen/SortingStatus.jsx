@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import "../.././css/Sidebar.css";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
 import axios from "axios";

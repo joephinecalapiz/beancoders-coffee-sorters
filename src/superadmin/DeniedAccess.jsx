@@ -1,3 +1,5 @@
+/** @format */
+
 import React, { useState, useEffect } from "react";
 
 const PermissionDenied = () => {
@@ -5,9 +7,9 @@ const PermissionDenied = () => {
         window.history.back(); // Use the browser's history to navigate back
     };
 
-    useEffect(() => {
-        document.title = "Denied Access";
-      }, []);
+  useEffect(() => {
+    document.title = "Denied Access";
+  }, []);
 
     return (
         <>
@@ -36,17 +38,17 @@ const PermissionDenied = () => {
                     </div>
                 </div>
 
-                <div className="absolute left-0 top-0 -z-10 flex h-full w-full items-center justify-between space-x-5 md:space-x-8 lg:space-x-14">
-                    <div className="h-full w-1/3 bg-gradient-to-t from-[#FFFFFF14] to-[#C4C4C400]"></div>
-                    <div className="flex h-full w-1/3">
-                        <div className="h-full w-1/2 bg-gradient-to-b from-[#FFFFFF14] to-[#C4C4C400]"></div>
-                        <div className="h-full w-1/2 bg-gradient-to-t from-[#FFFFFF14] to-[#C4C4C400]"></div>
-                    </div>
-                    <div className="h-full w-1/3 bg-gradient-to-b from-[#FFFFFF14] to-[#C4C4C400]"></div>
-                </div>
-            </div>
-        </>
-    );
+        <div className="absolute left-0 top-0 -z-10 flex h-full w-full items-center justify-between space-x-5 md:space-x-8 lg:space-x-14">
+          <div className="h-full w-1/3 bg-gradient-to-t from-[#FFFFFF14] to-[#C4C4C400]"></div>
+          <div className="flex h-full w-1/3">
+            <div className="h-full w-1/2 bg-gradient-to-b from-[#FFFFFF14] to-[#C4C4C400]"></div>
+            <div className="h-full w-1/2 bg-gradient-to-t from-[#FFFFFF14] to-[#C4C4C400]"></div>
+          </div>
+          <div className="h-full w-1/3 bg-gradient-to-b from-[#FFFFFF14] to-[#C4C4C400]"></div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default PermissionDenied;

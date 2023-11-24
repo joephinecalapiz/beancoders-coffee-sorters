@@ -1,8 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from "react";
-import "../.././css/Sidebar.css";
-import "../.././css/dashboard.css";
+import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import api_endpoint from "../../config";
 import "react-datepicker/dist/react-datepicker.css";

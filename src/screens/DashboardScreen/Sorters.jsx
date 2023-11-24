@@ -2,10 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
-import "../.././css/sorter.css";
-import "../.././css/datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";

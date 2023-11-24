@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ".././css/sorter.css";
-import ".././css/datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -45,7 +43,7 @@ const ManageUsers = () => {
     setKeyToDelete(id);
     openModal();
   };
-  
+
   useEffect(() => {
     document.title = "Manage Users";
 
@@ -176,7 +174,7 @@ const ManageUsers = () => {
           Authorization: "Bearer " + token,
         },
       });
-  
+
       const data = await response.json();
       setAllUsers(data.user);
       sessionStorage.setItem("userData", JSON.stringify(data.user));
@@ -289,9 +287,9 @@ const ManageUsers = () => {
                           type="button"
                         >
                           {user.disabled ? (
-                            <span style={{ color: 'red' }}>Disabled</span>
+                            <span style={{ color: "red" }}>Disabled</span>
                           ) : (
-                            <span style={{ color: 'green' }}>Active</span>
+                            <span style={{ color: "green" }}>Active</span>
                           )}
                         </button>
                         {openDropdownId === user.id && (
@@ -309,9 +307,9 @@ const ManageUsers = () => {
                                   onClick={() => setEnabled(user.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     user.disabled === false
-                                    ? "bg-brown hover:bg-gray-100 text-white"
-                                    : ""
-                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
+                                  } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Enabled
                                 </button>

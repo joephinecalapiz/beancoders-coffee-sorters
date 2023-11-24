@@ -5,8 +5,15 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./screens/LandingScreen/AuthScreen/Login";
 import Landing from "./screens/LandingScreen/Landing";
 import "./index.css";
-// import ".../../css/index.css";
-import ".../.././css/Sidebar.css";
+import "./css/sidebar.css";
+import "./css/dashboard.css";
+import "./css/sorter.css";
+import "./css/status.css";
+import "./css/profile.css";
+import "./css/customer.css";
+import "./css/datepicker.css";
+import "./css/receipt.css";
+import "./css/topbar.css";
 import Signup from "./screens/LandingScreen/AuthScreen/Signup";
 import CompanyDetails from "./screens/LandingScreen/AuthScreen/CompanyDetails";
 import About from "./screens/LandingScreen/About";
@@ -52,45 +59,14 @@ function App() {
         <Route
           exact
           path="/*"
-          element={
-            authenticated ? (
-              <RootPage />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          element={authenticated ? <RootPage /> : <Navigate to="/login" />}
         />
 
         <Route
           exact
           path="/superadmin/*"
-          element={
-            authenticated ? (
-              <AdminRootPage />
-            ) : (
-              <Navigate to="/login" />
-            )
-
-          }
+          element={authenticated ? <AdminRootPage /> : <Navigate to="/login" />}
         />
-        <Route
-          path="/error"
-          element={
-            <Main>
-              <Error />
-            </Main>
-
-          }
-        />
-        <Route
-          path="/superadmin/permission-denied/"
-          element={
-            <Main>
-              <PermissionDenied />
-            </Main>
-          }
-        />
-        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

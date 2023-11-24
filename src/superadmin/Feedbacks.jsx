@@ -2,8 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ".././css/sorter.css";
-import ".././css/datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
@@ -263,12 +261,12 @@ const Feedbacks = () => {
                       <td className="poppins-font">{feedback.full_name}</td>
                       <td className="poppins-font">
                         {feedback.coffee_bean_ai_sorter && feedback.website
-                          ? 'Coffee Bean Sorter and Website'
+                          ? "Coffee Bean Sorter and Website"
                           : feedback.coffee_bean_ai_sorter
-                            ? 'Coffee Bean'
-                            : feedback.website
-                              ? 'Website'
-                              : 'None'}
+                          ? "Coffee Bean"
+                          : feedback.website
+                          ? "Website"
+                          : "None"}
                       </td>
                       <td className="poppins-font">{feedback.message}</td>
                       <td className="poppins-font">
@@ -297,9 +295,9 @@ const Feedbacks = () => {
                                   onClick={() => setToPending(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Pending"
-                                    ? "bg-brown hover:bg-gray-100 text-white"
-                                    : ""
-                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
+                                  } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Pending
                                 </button>
@@ -309,9 +307,9 @@ const Feedbacks = () => {
                                   onClick={() => setToFinished(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Finished"
-                                    ? "bg-brown hover:bg-gray-100 text-white"
-                                    : ""
-                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
+                                  } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Solved
                                 </button>

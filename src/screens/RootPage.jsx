@@ -1,7 +1,13 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import Dashboard from "./DashboardScreen/Dashboard";
 import Customers from "./DashboardScreen/Customers";
 import CustomerArchived from "./Archives/CustomerArchived";
@@ -11,7 +17,7 @@ import Status from "./DashboardScreen/Status";
 import Profile from "./ProfileScreen/Profile";
 import SortingStatus from "./DashboardScreen/SortingStatus";
 import Receipt from "./ReceiptScreen/Receipt";
-import Error from "./error";
+import Error from "./Error";
 import PermissionDenied from "./DeniedAccess";
 import Main from "./mainpage";
 import {useSelector } from 'react-redux'

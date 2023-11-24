@@ -1,7 +1,13 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import ManageUsers from "./ManageUsers";
 import Feedbacks from "./Feedbacks";
 import Error from "./Error";
@@ -18,7 +24,7 @@ function AdminRootPage() {
         // const role = localStorage.getItem('token')
         // Check if the user_id is not 1 and navigate back if necessary
         if (role !== '1') {
-            navigate("/error404"); // Go back to the previous page
+            navigate("/superadmin/permission-denied"); // Go back to the previous page
             // window.location.reload();
         }
     }, []);
