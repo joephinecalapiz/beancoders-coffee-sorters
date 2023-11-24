@@ -6,10 +6,13 @@ import BeansLogo from ".././assets/beansLogo.png";
 import "./../css/sidebar.css";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from "../../redux/authSlice";
+import { logout, setCredentials } from "../../redux/authSlice";
+import { useGetUserDetailsQuery } from '../../redux/authService'
+import { fetchUserDetails } from "../../redux/userActions";
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);
+  const { user } = useSelector((state) => state.auth)
   const [authenticated, setAuthenticated] = useState(null);
   const dispatch = useDispatch()
   const navigate = useNavigate();
@@ -32,7 +35,6 @@ const Navbar = () => {
     // { name: "Register", href: "/signup", current: location.pathname === "/signup" },
     { name: "Login", href: "/login", current: location.pathname === "/login" },
   ]);
-
   const [mobileNav, setMobileNav] = useState([
     { name: "Home", href: "/", current: location.pathname === "/" },
     {
@@ -52,7 +54,6 @@ const Navbar = () => {
     },
     { name: "Login", href: "/login", current: location.pathname === "/login" },
   ]);
-
   const [mainNav, setMainNav] = useState([
     {
       name: "Dashboard",
@@ -80,6 +81,26 @@ const Navbar = () => {
       current: location.pathname === "/profile",
     },
   ]);
+
+  // automatically authenticate user if token is found
+  const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
+    // perform a refetch every 15mins
+    pollingInterval: 900000,
+  })
+
+  useEffect(() => {
+    if (data) dispatch(setCredentials(data))
+  }, [data, dispatch])
+
+  // automatically authenticate user if token is found
+  useEffect(() => {
+    if (token) {
+      dispatch(fetchUserDetails())
+    }
+  }, [token, dispatch])
+
+  // console.log('user crendentials', data.user) // user object
+  // console.log('user', user)
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -141,7 +162,7 @@ const Navbar = () => {
 
   const handleButtonClick = () => {
     // Handle button click logic based on authentication status
-    if (isAuthenticated()) {
+    if (authenticated) {
       // Clear session storage
       clearSessionStorage();
 
@@ -232,9 +253,9 @@ const Navbar = () => {
           {/* Add a flex container */}
           <img src={BeansLogo} alt="BeansLogo" className="h-20 w-20 ml-1" />
           <span className="hidden md:block ml-2 text-red-800 mt-3 poppins-font md:text-xl font-semibold">
-            BeanCoders
+            Beancoders
           </span>
-          {isAuthenticated() ? (
+          {authenticated ? (
             <div
               className={`absolute top-8 right-4 cursor-pointer z-50 transition-transform transform ${
                 mainMenuOpen ? "rotate-clockwise" : ""
@@ -266,7 +287,7 @@ const Navbar = () => {
           <ul className="hidden md:flex md:flex-row  md:justify-between md:mt-3 md:space-x-8 ">
             {navigation.map(
               (item) =>
-                !(item.name === "Login" && isAuthenticated()) && (
+                !(item.name === "Login" && authenticated) && (
                   <li
                     key={item.href}
                     className={`my-4 hover:text-[#783e3e] cursor-pointer  hover:underline md:text-[20px] ${
@@ -280,6 +301,52 @@ const Navbar = () => {
                   </li>
                 )
             )}
+
+            {/* <div className='cta'>
+              {user ? (
+                <button
+                  onClick={handleLogout}
+                  className="btn btn-primary p-5 poppins-font rounded-md text-white poppins-font"
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#C4A484";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#512615";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  style={{
+                    backgroundColor: "#512615",
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                    border: "none",
+                    textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+                  }}
+                >
+                  Logout
+                </button>
+              ) : (
+                <button
+                  onClick={handleSignUp}
+                  className="btn btn-primary p-5 poppins-font rounded-md text-white poppins-font"
+                  onMouseEnter={(e) => {
+                    e.target.style.backgroundColor = "#C4A484";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.backgroundColor = "#512615";
+                    e.target.style.transition = "background-color 0.3s ease";
+                  }}
+                  style={{
+                    backgroundColor: "#512615",
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
+                    border: "none",
+                    textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
+                  }}
+                >
+                  Sign Up
+                </button>
+              )}
+            </div> */}
 
             <button
               onClick={handleButtonClick}
@@ -299,7 +366,7 @@ const Navbar = () => {
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
               }}
             >
-              {isAuthenticated() ? "Logout" : "Sign Up"}
+              {authenticated ? "Logout" : "Sign Up"}
             </button>
           </ul>
         </div>
