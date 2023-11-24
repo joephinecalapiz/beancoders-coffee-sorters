@@ -17,12 +17,15 @@ const Signup = () => {
   const { loading, userInfo, error, success } = useSelector(
     (state) => state.auth
   )
+  const token = useSelector(state => state.auth.token);
+  const role = useSelector(state => state.auth.role);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch()
+  
 
   //---kanang console.log eh change rana para eh connect sa database
   // const onSubmitHandler = (data) => {
@@ -100,6 +103,10 @@ const Signup = () => {
   }
 
   useEffect(() => {
+     if (token) {
+      if (role == 2) navigate('/dashboard')
+      if (role == 1) navigate('/superadmin/manageusers')
+    }
     document.title = "Sign Up";
   }, []);
 
