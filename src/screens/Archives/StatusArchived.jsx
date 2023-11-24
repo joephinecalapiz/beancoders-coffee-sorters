@@ -1,7 +1,6 @@
 /** @format */
 import React, { useState, useEffect } from "react";
 import api_endpoint from "../../config";
-import api_endpoint from "../../config";
 import { useSelector } from 'react-redux'
 import Sidebar from "../../component/Sidebar";
 import Topbar from "../../component/Topbar";
