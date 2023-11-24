@@ -76,11 +76,11 @@ const Customers = () => {
 
   useEffect(() => {
     document.title = "Customers";
-    const cachedCustomerData = sessionStorage.getItem("customerData");
+    // const cachedCustomerData = sessionStorage.getItem("customerData");
 
-    if (cachedCustomerData) {
-      setAllCustomers(JSON.parse(cachedCustomerData));
-    }
+    // if (cachedCustomerData) {
+    //   setAllCustomers(JSON.parse(cachedCustomerData));
+    // }
 
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
@@ -95,9 +95,10 @@ const Customers = () => {
         },
       });
   
-      const data = await response.json();
-      setAllCustomers(data.customer);
-      sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+      const data = response.data.customer;
+      setAllCustomers(data);
+      // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+      setCustomerError(false)
     } catch (error) {
       if (error.response && error.response.data.customer === 'Customer Not Found') {
         setCustomerError(true);
@@ -192,18 +193,19 @@ const Customers = () => {
         throw new Error("Fail to add customer");
       }
       if (response.status === 200) {
-        const newCustomer = await response.json();
+        // const newCustomer = await response.json();
         setIsFetching(true);
-        setAllCustomers((prevCustomers) => {
-          // Update state with the new customer data
-          const updatedCustomers = [...prevCustomers, newCustomer.customer];
-          // Update session storage with the updated data
-          sessionStorage.setItem(
-            "customerData",
-            JSON.stringify(updatedCustomers)
-          );
-          return updatedCustomers;
-        });
+        // setAllCustomers((prevCustomers) => {
+        //   // Update state with the new customer data
+        //   const updatedCustomers = [...prevCustomers, newCustomer.customer];
+        //   // Update session storage with the updated data
+        //   // sessionStorage.setItem(
+        //   //   "customerData",
+        //   //   JSON.stringify(updatedCustomers)
+        //   // );
+        //   return updatedCustomers;
+        // });
+        fetchCustomers();
         closeModal();
       }
     } catch (error) {
@@ -249,10 +251,10 @@ const Customers = () => {
             return customer;
           });
           // Update session storage with the updated data
-          sessionStorage.setItem(
-            "customerData",
-            JSON.stringify(updatedCustomers)
-          );
+          // sessionStorage.setItem(
+          //   "customerData",
+          //   JSON.stringify(updatedCustomers)
+          // );
           return updatedCustomers;
         });
       }
@@ -344,7 +346,7 @@ const Customers = () => {
               <label htmlFor="monthSelect" className="poppins-font font-bold">
                 Month:
               </label>
-              <div className="ml-2 poppins-font font-bold">
+              <div className="ml-2 poppins-font font-seminold">
                 <Select
                   id="monthSelect"
                   options={monthOptions}
@@ -493,7 +495,7 @@ const Customers = () => {
                                     }}
                                     className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
-                                    <span class="history pr-2">
+                                    <span className="history pr-2">
                                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z" /></svg>
                                     </span>
                                     History
@@ -506,7 +508,7 @@ const Customers = () => {
                                     }
                                     className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
-                                    <span class="edit pr-2">
+                                    <span className="edit pr-2">
                                       <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" /></svg>
                                     </span>
                                     Update
@@ -541,7 +543,7 @@ const Customers = () => {
               </table>
               <div>
               {CustomerError && (
-                    <p className="items-center justify-center">No Customer found. Please add new customer!</p>
+                    <p className="items-center justify-center text-center text-primary dark:text-textTitle">No Customer found. Please add new customer!</p>
                   )}
               </div>
             </div>
@@ -564,7 +566,7 @@ const Customers = () => {
         </h2>
         {/* form for adding a new customer */}
         <form onSubmit={getCustomerPostHistory}>
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomerName"
               className="block font-medium poppins-font"
@@ -576,12 +578,12 @@ const Customers = () => {
               id="newCustomerName"
               value={newCustomerName}
               onChange={(e) => setNewCustomerName(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomerPhoneNumber"
               className="block font-medium poppins-font"
@@ -589,16 +591,16 @@ const Customers = () => {
               Phone Number
             </label>
             <input
-              type="text"
+              type="number"
               id="newCustomerPhoneNumber"
               value={newCustomerPhoneNumber}
               onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomerAddress"
               className="block font-medium poppins-font"
@@ -609,7 +611,7 @@ const Customers = () => {
               id="newCustomerAddress"
               value={newCustomerAddress}
               onChange={(e) => setNewCustomerAddress(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               rows={4}
               style={{ height: "70px", wordWrap: "break-word" }}
               required
@@ -626,7 +628,7 @@ const Customers = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className=" hover:bg-red-700 hover:text-white text-black font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className=" hover:bg-red-700 dark:text-textTitle hover:text-white text-black font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>

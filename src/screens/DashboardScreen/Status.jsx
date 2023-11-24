@@ -35,25 +35,47 @@ const Status = () => {
     setSearchText(e.target.value);
   };
 
-  useEffect(() => {
-    axios
-      .get(`${api_endpoint}/fetch-status/${user_id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((response) => {
-        const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
-      })
-      .catch((error) => {
-        if (error.response && error.response.data.status === 'Status Not Found') {
-          setStatusError(true);
-        }
-        console.error();
-      });
-  }, [status]);
+  const fetchStatus = async () => {
+    try {
+      const response = await axios
+        .get(`${api_endpoint}/fetch-status/${user_id}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+  
+      const data = response.data.status;
+      setAllStatus(data);
+      // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+      setStatusError(false)
+    } catch (error) {
+      if (error.response && error.response.data.status === 'Status Not Found') {
+        setStatusError(true);
+      }
+      // console.error();
+    }
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${api_endpoint}/fetch-status/${user_id}`, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       const fetchAllStatus = response.data.status;
+  //       // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+  //       setAllStatus(fetchAllStatus);
+  //       setStatusError(false)
+  //     })
+  //     .catch((error) => {
+  //       if (error.response && error.response.data.status === 'Status Not Found') {
+  //         setStatusError(true);
+  //       }
+  //       console.error();
+  //     });
+  // }, [status]);
 
   useEffect(() => {
     axios
@@ -64,7 +86,7 @@ const Status = () => {
       })
       .then((response) => {
         const fetchCustomerData = response.data.customer;
-        sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
+        // sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
         setCustomer(fetchCustomerData);
       });
   }, []);
@@ -78,7 +100,7 @@ const Status = () => {
       })
       .then((response) => {
         const fetchSorterData = response.data.sorters;
-        sessionStorage.setItem("sorterData", JSON.stringify(fetchSorterData));
+        // sessionStorage.setItem("sorterData", JSON.stringify(fetchSorterData));
         setSorter(fetchSorterData);
       });
   }, []);
@@ -89,22 +111,23 @@ const Status = () => {
 
   useEffect(() => {
     document.title = "Status";
+    fetchStatus();
   }, []);
 
-  useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("customerData");
-    if (cachedCustomerData) {
-      setCustomer(JSON.parse(cachedCustomerData));
-    }
-    const cachedSorterData = sessionStorage.getItem("sorterData");
-    if (cachedSorterData) {
-      setSorter(JSON.parse(cachedSorterData));
-    }
-    const cachedStatusData = sessionStorage.getItem("statusData");
-    if (cachedStatusData) {
-      setAllStatus(JSON.parse(cachedStatusData));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const cachedCustomerData = sessionStorage.getItem("customerData");
+  //   if (cachedCustomerData) {
+  //     setCustomer(JSON.parse(cachedCustomerData));
+  //   }
+  //   const cachedSorterData = sessionStorage.getItem("sorterData");
+  //   if (cachedSorterData) {
+  //     setSorter(JSON.parse(cachedSorterData));
+  //   }
+  //   const cachedStatusData = sessionStorage.getItem("statusData");
+  //   if (cachedStatusData) {
+  //     setAllStatus(JSON.parse(cachedStatusData));
+  //   }
+  // }, []);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -137,8 +160,8 @@ const Status = () => {
   const handleAddNew = (event) => {
     event.preventDefault();
 
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
+    // const token = localStorage.getItem("token");
+    // const user_id = localStorage.getItem("user_id");
     const postData = {
       user_id: user_id,
       customerName: newCustomerName,
@@ -155,6 +178,8 @@ const Status = () => {
       })
       .then((response) => {
         if (response.status === 200) {
+          fetchStatus();
+          setStatusError(false)
           closeModal();
         }
       })
@@ -191,7 +216,7 @@ const Status = () => {
       }
       if (response.status === 200) {
         const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
         setAllStatus(fetchAllStatus);
         setOpenDropdownId(null);
       }
@@ -224,7 +249,7 @@ const Status = () => {
       }
       if (response.status === 200) {
         const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
         setAllStatus(fetchAllStatus);
         setOpenDropdownId(null);
       }
@@ -257,7 +282,7 @@ const Status = () => {
       }
       if (response.status === 200) {
         const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
         setAllStatus(fetchAllStatus);
         setOpenDropdownId(null);
       }
@@ -440,10 +465,10 @@ const Status = () => {
                 </tbody>
               </table>
               <div>
-                  {statusError && (
-                    <p className="items-center justify-center">No status found. Please add new status!</p>
-                  )}
-                </div>
+                {statusError && (
+                  <p className="items-center justify-center text-center text-primary dark:text-textTitle">No status found. Please add new status!</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -457,7 +482,7 @@ const Status = () => {
         {/* Add your form or content for adding a new customer */}
         <form onSubmit={handleAddNew}>
           {/* CUSTOMER'S NAME */}
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomer"
               className="block font-medium poppins-font"
@@ -468,19 +493,19 @@ const Status = () => {
               id="newCustomer"
               value={newCustomerName}
               onChange={handleCustomerChange}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             >
-              <option value=" ">Select Customers</option>
+              <option value="">Select Customers</option>
               {customers.map((customer) => (
-                <option key={customer.id} value={customer.customerName}>
+                <option className="dark:text-primary" key={customer.id} value={customer.customerName}>
                   {customer.customerName}
                 </option>
               ))}
             </select>
           </div>
           {/* SORTERS NAME */}
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorter"
               className="block font-medium poppins-font"
@@ -491,7 +516,7 @@ const Status = () => {
               id="newSorter"
               value={newSorterName}
               onChange={handleSorterChange}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             >
               <option value=" ">Select Sorter</option>
@@ -502,7 +527,7 @@ const Status = () => {
               ))}
             </select>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="kiloOfBeans"
               className="block font-medium poppins-font"
@@ -514,12 +539,12 @@ const Status = () => {
               id="newCustomerKiloOfBeans"
               value={newCustomerKiloOfBeans}
               onChange={(e) => setKiloOfBeans(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
           {/* STATUS   */}
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newStatus"
               className="block font-medium poppins-font"
@@ -530,10 +555,10 @@ const Status = () => {
               id="newStatus"
               value={newStatus}
               onChange={handleStatusChange}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             >
-              <option value=" "> </option>
+              <option value="">Select Status</option>
               <option value="Finished">Finished</option>
               <option value="Pending">Pending</option>
               <option value="Cancelled">Cancelled</option>
@@ -550,7 +575,7 @@ const Status = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className=" hover:bg-red-700 text-black hover:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className=" hover:bg-red-700 text-black dark:text-textTitle hover:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>

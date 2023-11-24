@@ -17,6 +17,7 @@ import api_endpoint from "../../config";
 const Sorters = () => {
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
+  const [sorterError, setSorterError] = useState(false);
   const [navVisible, showNavbar] = useState(false);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -45,25 +46,48 @@ const Sorters = () => {
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [allSorters, setAllSorters] = useState([]);
   const [reloadSorterData, setReloadSorterData] = useState(null);
+
   useEffect(() => {
     document.title = "Sorters";
-    const cachedSorterData = sessionStorage.getItem("sorterData");
-    if (cachedSorterData) {
-      setAllSorters(JSON.parse(cachedSorterData));
-    }
-    const headers = {
-      Authorization: "Bearer " + token,
-    };
-    axiosInstance
-      .get(`${api_endpoint}/sorters/${user_id}`, { headers })
-      .then((response) => {
-        const sorters = response.data;
-        setAllSorters(sorters.sorters);
-        if (sessionStorage.getItem("sorterData") === null) {
-          sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
-        }
-      });
+    fetchSorters();
+    // const cachedSorterData = sessionStorage.getItem("sorterData");
+    // if (cachedSorterData) {
+    //   setAllSorters(JSON.parse(cachedSorterData));
+    // }
+    // const headers = {
+    //   Authorization: "Bearer " + token,
+    // };
+    // axiosInstance
+    //   .get(`${api_endpoint}/sorters/${user_id}`, { headers })
+    //   .then((response) => {
+    //     const sorters = response.data;
+    //     setAllSorters(sorters.sorters);
+    //     // if (sessionStorage.getItem("sorterData") === null) {
+    //     //   sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
+    //     // }
+    //   });
   }, []);
+
+  const fetchSorters = async () => {
+    try {
+      const response = await axios
+        .get(`${api_endpoint}/sorters/${user_id}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
+  
+      const data = response.data.sorters;
+      setAllSorters(data);
+      // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+      setSorterError(false)
+    } catch (error) {
+      if (error.response && error.response.data.status === 'Sorters Not Found') {
+        setSorterError(true);
+      }
+      // console.error();
+    }
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -98,12 +122,13 @@ const Sorters = () => {
       );
 
       if (response.status === 200) {
-        setAllSorters((prevSorters) => {
-          const updatedSorters = [...prevSorters, response.data.sorter];
-          sessionStorage.setItem("sorterData", JSON.stringify(updatedSorters));
+        // setAllSorters((prevSorters) => {
+        //   const updatedSorters = [...prevSorters, response.data.sorter];
+        //   sessionStorage.setItem("sorterData", JSON.stringify(updatedSorters));
 
-          return updatedSorters;
-        });
+        //   return updatedSorters;
+        // });
+        fetchSorters();
         closeModal();
       }
     } catch (error) {
@@ -236,6 +261,11 @@ const Sorters = () => {
                 </tbody>
               </table>
             </div>
+            <div>
+                {sorterError && (
+                  <p className="items-center justify-center text-center text-primary dark:text-textTitle">No sorters found. Please add new sorter!</p>
+                )}
+              </div>
           </div>
         </div>
       </div>
@@ -247,7 +277,7 @@ const Sorters = () => {
         </h2>
         {/* form for adding a new sorter */}
         <form onSubmit={handleAddNewSorter}>
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterName"
               className="block font-medium poppins-font"
@@ -259,12 +289,12 @@ const Sorters = () => {
               id="newSorterName"
               value={newSorterName}
               onChange={(e) => setNewSorterName(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterPhoneNumber"
               className="block font-medium poppins-font"
@@ -272,16 +302,16 @@ const Sorters = () => {
               Phone Number
             </label>
             <input
-              type="text"
+              type="number"
               id="newSorterPhoneNumber"
               value={newSorterPhoneNumber}
               onChange={(e) => setNewSorterPhoneNumber(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterAddress"
               className="block font-medium poppins-font"
@@ -293,12 +323,12 @@ const Sorters = () => {
               id="newSorterAddress"
               value={newSorterAddress}
               onChange={(e) => setNewSorterAddress(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterDateHired"
               className="block font-medium poppins-font"
@@ -325,7 +355,7 @@ const Sorters = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className="text-black hover:bg-red-700 hover:text-white  font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className="text-black dark:text-textTitle hover:bg-red-700 hover:text-white  font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>
