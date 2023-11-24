@@ -11,12 +11,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import Modal from "../../component/Modal";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import api_endpoint from "../../config";
+import { fetchSorterInfo } from "../../../redux/userActions";
 
 const Sorters = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
+  const sorterInfo = useSelector(state => state.user.sorters);
   const [sorterError, setSorterError] = useState(false);
   const [navVisible, showNavbar] = useState(false);
   const toggleSidebar = () => {
@@ -46,6 +49,12 @@ const Sorters = () => {
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [allSorters, setAllSorters] = useState([]);
   const [reloadSorterData, setReloadSorterData] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchSorterInfo({ user_id, token }));
+  }, [dispatch]);
+
+  // console.log(sorterInfo)
 
   useEffect(() => {
     document.title = "Sorters";

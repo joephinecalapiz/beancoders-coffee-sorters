@@ -8,11 +8,14 @@ import Select from "react-select";
 import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 import Modal from "../../component/Modal";
 import axios from 'axios';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCustomerInfo } from "../../../redux/userActions";
 
 const Customers = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
+  const customerInfo = useSelector(state => state.user.customers);
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
@@ -52,6 +55,12 @@ const Customers = () => {
     showNavbar(!navVisible);
   };
   const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchCustomerInfo({ user_id, token }));
+  }, [dispatch]);
+
+  // console.log(customerInfo)
 
   const toggleDropdown = (customerId) => {
     if (openDropdownId === customerId) {

@@ -6,11 +6,14 @@ import Modal from "../../component/Modal"; // Import the Modal component
 import "../.././css/status.css";
 import axios from "axios";
 import api_endpoint from "../../config";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchStatusInfo } from "../../../redux/userActions";
 
 const Status = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
+  const statusInfo = useSelector(state => state.user.statusInfo);
   const [navVisible, showNavbar] = useState(false);
   const [statusError, setStatusError] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
@@ -19,6 +22,12 @@ const Status = () => {
   const [status, setAllStatus] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  useEffect(() => {
+    dispatch(fetchStatusInfo({ user_id, token }));
+  }, [dispatch]);
+
+  // console.log(statusInfo)
 
   const toggleDropdown = (sorted) => {
     if (openDropdownId === sorted) {
