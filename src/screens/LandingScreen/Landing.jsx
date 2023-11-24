@@ -37,7 +37,7 @@ const Landing = () => {
       } else {
         setCompanyData([]); // Handle the case where data.companies is undefined or null
       }
-      console.log(companyData);
+      // console.log(companyData);
     });
   }, []);
 
