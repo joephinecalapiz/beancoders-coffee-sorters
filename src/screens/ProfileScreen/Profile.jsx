@@ -9,7 +9,7 @@ import api_endpoint from "../../config";
 import image_endpoint from "../../image-config";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCompanyDetails, fetchUserDetails } from "../../../redux/userActions";
+import { fetchUserDetails } from "../../../redux/userActions";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 
@@ -19,7 +19,7 @@ const Profile = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const companyInfo = useSelector(state => state.company.companyInfo);
+  const companyInfo = useSelector(state => state.user.companyInfo);
   const userInfo = useSelector(state => state.user.userInfo);
   const [navVisible, showNavbar] = useState(true);
   const [isEditing, setEditing] = useState(false);
@@ -69,7 +69,6 @@ const Profile = () => {
   useEffect(() => {
     // fetchUserInfo(); // Fetch user info when the component mounts
     // fetchCompanyInfo();
-    dispatch(fetchCompanyDetails({ user_id, token }));
     dispatch(fetchUserDetails({ token }));
   }, [dispatch]);
 

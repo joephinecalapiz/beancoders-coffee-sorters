@@ -11,13 +11,13 @@ import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../redux/authSlice";
-import { fetchCompanyDetails, fetchUserDetails } from "../../redux/userActions";
+import { fetchUserDetails } from "../../redux/userActions";
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const companyInfo = useSelector(state => state.company.companyInfo);
+  const companyInfo = useSelector(state => state.user.companyInfo);
   const userInfo = useSelector(state => state.user.userInfo);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
@@ -31,7 +31,6 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
   });
 
   useEffect(() => {
-    dispatch(fetchCompanyDetails({ user_id, token }));
     dispatch(fetchUserDetails({ token }));
   }, [dispatch]);
 
