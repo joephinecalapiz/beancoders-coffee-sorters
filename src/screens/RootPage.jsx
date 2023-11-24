@@ -17,17 +17,6 @@ import Main from "./mainpage";
 import {useSelector } from 'react-redux'
 
 function RootPage() {
-    const navigate = useNavigate();
-    const role = useSelector(state => state.auth.role);
-
-    useEffect(() => {
-        // const role = localStorage.getItem('token')
-        // Check if the user_id is not 1 and navigate back if necessary
-        if (role !== '2') {
-            navigate("/error404"); // Go back to the previous page
-            // window.location.reload();
-        }
-    }, []);
 
     return (
         <Routes>
@@ -48,19 +37,15 @@ function RootPage() {
                 }
             />
             <Route
-                path="/customer-archived"
+                path="/archive/customer"
                 element={
-                    <Main>
-                        <CustomerArchived />
-                    </Main>
+                    <CustomerArchived />
                 }
             />
             <Route
-                path="/status-archived"
+                path="/archive/status"
                 element={
-                    <Main>
-                        <StatusArchived />
-                    </Main>
+                    <StatusArchived />
                 }
             />
             <Route
