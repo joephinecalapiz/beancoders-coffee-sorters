@@ -6,9 +6,11 @@ import { useForm } from "react-hook-form";
 import Navbar from "../../../component/Navbar";
 import ForgotPasswordModal from "../../../component/ForgotPasswordModal";
 import Footer from "../Footer";
-
+import Cookies from 'js-cookie'
 import { loginUser } from "../../../../redux/authActions";
 import { useDispatch, useSelector } from 'react-redux'
+import { useGetUserDetailsQuery } from "../../../../redux/authService";
+import localhost_domain from "../../../cookie";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -42,20 +44,14 @@ const Login = () => {
   useEffect(() => {
     document.title = "Login";
     // Check for saved email and password in localStorage
-    const savedEmail = localStorage.getItem("savedEmail");
-    const savedPassword = localStorage.getItem("savedPassword");
+    const savedEmail = Cookies.get('se')
+    const savedPassword = Cookies.get('sp')
 
     if (savedEmail && savedPassword) {
       setRememberMe(true);
       setSavedEmail(savedEmail);
       setSavedPassword(savedPassword);
     }
-    // if(rememberMe == true){
-    //   localStorage.setItem("savedEmail", savedEmail);
-    //   localStorage.setItem("savedPassword", savedPassword);
-    //   setSavedEmail(savedEmail);
-    //   setSavedPassword(savedPassword);
-    // }
   }, []);
 
   // const onSubmitHandler = (data) => {
@@ -106,37 +102,44 @@ const Login = () => {
   //     });
   // };
 
+  // // automatically authenticate user if token is found
+  // const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
+  //   // perform a refetch every 15mins
+  //   pollingInterval: 900000,
+  // })
+
+  // useEffect(() => {
+  //   if (data) dispatch(setCredentials(data))
+  // }, [data, dispatch])
+
   const onSubmitHandler = (data) => {
-    // setLoading(true);
 
     dispatch(loginUser(data))
       .unwrap()
-      .then((data) => {
+      .then(() => {
         // Registration successful, you can navigate or perform other actions
         console.log('Login successful');
-        // if (data.user.role == 2) navigate('/dashboard')
-        // if (data.user.role == 1) navigate('/superadmin/manageusers')
-        console.log(data.user.role)
         window.location.reload();
       })
       .catch((err) => {
         if (err && err.type === 'email') {
-          setEmailError(true)
-          setPasswordError(false)
+          setEmailError(true);
+          setPasswordError(false);
         } else if (err && err.type === 'password') {
-          setEmailError(false)
-          setPasswordError(true)
+          setEmailError(false);
+          setPasswordError(true);
         } else if (err && err.type === 'disabled') {
-          setEmailError(false)
-          setPasswordError(false)
-          disableduser()
+          setEmailError(false);
+          setPasswordError(false);
+          disableduser();
         } else {
         }
       })
       .finally(() => {
         // setLoading(false);
-      });      
-  }
+      });
+  };
+  
 
 
   const openForgotPasswordModal = () => {
@@ -238,14 +241,16 @@ const Login = () => {
                     checked={rememberMe}
                     onChange={(e) => {
                       setRememberMe(e.target.checked);
-                      localStorage.setItem("savedEmail", savedEmail);
-                      localStorage.setItem("savedPassword", savedPassword);
+                      // localStorage.setItem("savedEmail", savedEmail);
+                      // localStorage.setItem("savedPassword", savedPassword);
+                      Cookies.set('sp', savedPassword, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                      Cookies.set('se', savedEmail, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
                       if (!e.target.checked) {
                         // Clear saved email and password when unchecked
                         // setSavedEmail("");
                         // setSavedPassword("");
-                        localStorage.removeItem("savedEmail");
-                        localStorage.removeItem("savedPassword");
+                        Cookies.remove('sp')
+                        Cookies.remove('se')
                       }
                     }}
                   />
@@ -268,30 +273,32 @@ const Login = () => {
               <button
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white text-xl font-semibold poppins-font"
-                disabled={loading}
+                // disabled={loading}
                 onClick={handleSubmit(onSubmitHandler)}
               >
                 {loading ? (
-                  <svg
-                    className="animate-spin h-5 w-5 mr-  text-white "
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
-                    ></path>
-                  </svg>
-                ) : null}
-                {loading ? "Loading..." : "Login"}
+                  <>
+                    <svg
+                      className="animate-spin h-5 w-5 mr-2 text-white"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-75"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      ></circle>
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
+                      ></path>
+                    </svg>
+                    <span>Loading...</span>
+                  </>
+                ) : 'Login'}
               </button>
               {disabledError && (
                 <p className="text-red-500 ml-2">User is disabled. Please contact the admin and try again.</p>
