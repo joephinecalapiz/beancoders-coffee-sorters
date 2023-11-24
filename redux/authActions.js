@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import api_endpoint from '../src/config'
+import Cookies from 'js-cookie'
+import localhost_domain from '../src/cookie';
 
 // Async Thunk for User Login
 export const loginUser = createAsyncThunk(
@@ -9,9 +11,13 @@ export const loginUser = createAsyncThunk(
         try {
             const response = await axios.post(`${api_endpoint}/login`, userData);
             if (response.status === 200) {
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('role', response.data.user.role);
-                localStorage.setItem('user_id', response.data.user.id);
+                // localStorage.setItem('token', response.data.token);
+                // localStorage.setItem('role', response.data.user.role);
+                // localStorage.setItem('user_id', response.data.user.id);
+                Cookies.set('tk', response.data.token, { expires: 7, domain: localhost_domain, sameSite: 'strict' }) //secure: true
+                Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                Cookies.set('isLoggedIn', true, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
             }
             return response.data;
         } catch (error) {
@@ -38,9 +44,9 @@ export const registerUser = createAsyncThunk(
         try {
             const response = await axios.post(`${api_endpoint}/register/users`, userData);
             if (response.status === 200) {
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('role', response.data.user.role);
-                localStorage.setItem('user_id', response.data.user.id);
+                Cookies.set('tk', response.data.token, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
             }
             return response.data;
         } catch (error) {
@@ -70,7 +76,7 @@ export const companyDetails = createAsyncThunk(
     'auth/company',
     async (userData, { rejectWithValue }) => {
         try {
-            let token = localStorage.getItem('token');
+            let token = Cookies.get('tk');
             const config = {
                 headers: {
                     'Content-Type': 'multipart/form-data',

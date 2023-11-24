@@ -10,7 +10,7 @@ export const authApi = createApi({
     // prepareHeaders is used to configure the header of every request and gives access to getState which we use to include the token from the store
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.token
-      console.log(token)
+      // console.log(token)
       if (token) {
        // include token in req header
         headers.set('authorization', `Bearer ${token}`)  

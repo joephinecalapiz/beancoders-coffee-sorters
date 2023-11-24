@@ -1,19 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { companyDetails, loginUser, registerUser } from './authActions';
+import Cookies from 'js-cookie'
+import localhost_domain from '../src/cookie';
 
 // initialize userToken from local storage
-const token = localStorage.getItem('token')
-  ? localStorage.getItem('token')
+const token = Cookies.get('tk')
+  ? Cookies.get('tk')
   : null
 
 // initialize role from local storage
-const role = localStorage.getItem('role')
-  ? localStorage.getItem('role')
+const role = Cookies.get('rl')
+  ? Cookies.get('rl')
   : null
 
 // initialize role from local storage
-const user_id = localStorage.getItem('user_id')
-  ? localStorage.getItem('user_id')
+const user_id = Cookies.get('uid')
+  ? Cookies.get('uid')
   : null
 
 
@@ -32,12 +34,17 @@ const authSlice = createSlice({
   },
   reducers: {
     logout: (state) => {
-      localStorage.removeItem('token') // deletes token from storage
-      localStorage.removeItem('role') // deletes token from storage
-      localStorage.removeItem('user_id') // deletes token from storage
+      // localStorage.removeItem('token') // deletes token from storage
+      // localStorage.removeItem('role') // deletes token from storage
+      // localStorage.removeItem('user_id') // deletes token from storage
+      Cookies.remove('tk')
+      Cookies.remove('rl')
+      Cookies.remove('uid')
+      Cookies.set('isLoggedIn', false, { domain: localhost_domain, sameSite: 'strict'})
       state.loading = false
       state.user = null
       state.token = null
+      state.details = null
       state.error = null
       state.role = null
       state.user_id = null
