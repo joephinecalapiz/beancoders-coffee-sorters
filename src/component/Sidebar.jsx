@@ -5,6 +5,8 @@ import { NavLink, useLocation } from "react-router-dom";
 import { FaChartBar, FaThLarge, FaUsers, FaUserFriends } from "react-icons/fa";
 import "./../css/sidebar.css";
 import { useSelector } from 'react-redux'
+import Cookies from 'js-cookie'
+import localhost_domain from "../cookie";
 
 const ICON_SIZE = 20;
 
@@ -47,7 +49,7 @@ function Sidebar({ collapsed }) {
     ).matches;
 
     // Check if dark mode is stored in localStorage
-    const storedDarkMode = localStorage.getItem("darkMode");
+    const storedDarkMode = Cookies.get('dm');
 
     // Use user preference if available, otherwise use localStorage, or default to false
     return (
@@ -79,7 +81,7 @@ function Sidebar({ collapsed }) {
   // Toggle the dark mode class when the component mounts and when darkMode changes
   useEffect(() => {
     // Check if dark mode is stored in localStorage
-    const storedDarkMode = localStorage.getItem("darkMode");
+    const storedDarkMode = Cookies.get('dm')
 
     // Automatically set dark mode based on localStorage or default to light mode
     setDarkMode(storedDarkMode ? JSON.parse(storedDarkMode) : false);
@@ -88,7 +90,7 @@ function Sidebar({ collapsed }) {
   // Toggle the dark mode class when the component mounts and when darkMode changes
   useEffect(() => {
     // Check if dark mode is stored in localStorage
-    const storedDarkMode = localStorage.getItem("darkMode");
+    // const storedDarkMode = localStorage.getItem("darkMode");
 
     document.documentElement.classList.toggle("dark", darkMode);
     const appBody = document.getElementById("app-body");
@@ -105,7 +107,8 @@ function Sidebar({ collapsed }) {
     appBody.classList.toggle("dark:bg-dark", newDarkModeState);
 
     // Save the dark mode state in localStorage
-    localStorage.setItem("darkMode", JSON.stringify(newDarkModeState));
+    // localStorage.setItem("darkMode", );
+    Cookies.set('dm', JSON.stringify(newDarkModeState), { domain: localhost_domain })
   };
 
   return (
