@@ -8,12 +8,14 @@ import Modal from "../../component/Modal";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCustomerInfo } from "../../../redux/userActions";
+import beanlogo from '../../assets/beanlogo.png';
 
 const Customers = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
   const customerInfo = useSelector(state => state.user.customers);
+  const { status, error } = useSelector((state) => state.user);
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
@@ -48,17 +50,29 @@ const Customers = () => {
   const [reloadCustomerData, setReloadCustomerData] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const [CustomerError, setCustomerError] = useState(false);
+  const [customerError, setCustomerError] = useState(false);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
-  useEffect(() => {
-    dispatch(fetchCustomerInfo({ user_id, token }));
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchCustomerInfo({ user_id, token }));
+  // }, [dispatch]);
 
   // console.log(customerInfo)
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      setAllCustomers(customerInfo)
+      setCustomerError(false);
+    }
+
+    // Render error state
+    if (status === 'failed') {
+      setCustomerError(true);
+    }
+  }, []);
 
   const toggleDropdown = (customerId) => {
     if (openDropdownId === customerId) {
@@ -94,25 +108,51 @@ const Customers = () => {
     }
   }, [selectedMonth, selectedYear]);
 
-  const fetchCustomers = async () => {
-    try {
-      const response = await axios.get(`${api_endpoint}/customers/${user_id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+  // const fetchCustomers = async () => {
+  //   try {
+  //     const response = await axios.get(`${api_endpoint}/customers/${user_id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
   
-      const data = response.data.customer;
-      setAllCustomers(data);
-      // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
-      setCustomerError(false)
-    } catch (error) {
-      if (error.response && error.response.data.customer === 'Customer Not Found') {
-        setCustomerError(true);
-        // console.error("Error fetching customer data:", error);
-      }
-    }
+  //     const data = response.data.customer;
+  //     // console.log(data)
+  //     setAllCustomers(data);
+  //     // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+  //     setCustomerError(false)
+  //   } catch (error) {
+  //     if (error.response && error.response.data.customer === 'Customer Not Found') {
+  //       setCustomerError(true);
+  //       // console.error("Error fetching customer data:", error);
+  //     }
+  //   }
+  // };
+
+  // console.log(allCustomers)
+
+  const fetchCustomers = async () => {
+    // dispatch(fetchCustomerInfo({ user_id, token }))
+    //   .unwrap()
+    //   .then(() => {
+    //     setAllCustomers(customerInfo)
+    //     setCustomerError(false);
+    //   })
+    //   .catch((err) => {
+    //     if (err && err.type === 'http') {
+    //       setCustomerError(true);
+    //     }
+    //   })
+    //   .finally(() => {
+    //     // setLoading(false);
+    //     // setAllCustomers(customerInfo)
+    //   });
+    dispatch(fetchCustomerInfo({ user_id, token }));
+    // console.log(customerInfo)
+      setAllCustomers(customerInfo)
+      setCustomerError(false);
   };
+  
 
   const [searchText, setSearchText] = useState("");
 
@@ -212,7 +252,11 @@ const Customers = () => {
         //   // );
         //   return updatedCustomers;
         // });
-        fetchCustomers();
+        // dispatch(fetchCustomerInfo({ user_id, token }));
+        if (status === 'succeeded') {
+          setAllCustomers(customerInfo)
+          setCustomerError(false);
+        }
         closeModal();
       }
     } catch (error) {
@@ -280,19 +324,8 @@ const Customers = () => {
           Authorization: "Bearer " + token,
         },
       });
-
-      if (response.status === 422) {
-        alert("Customer is already archive in the database");
-      }
-
-      if (!response.ok) {
-        throw new Error("Failed to archive customer");
-      }
-
-      if (response.status === 200) {
-        fetchCustomers();
-        setOpenDropdownId(null);
-      }
+      fetchCustomers();
+      setOpenDropdownId(null);
     } catch (error) {
       console.error(error);
     }
@@ -301,6 +334,13 @@ const Customers = () => {
   const handleCancel = () => {
     closeModal();
   };
+
+  // Render loading state
+  if (status === 'loading') {
+    return <div className="flex items-center justify-center h-screen">
+      <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
+    </div>;
+  }
 
   return (
     <>
@@ -557,7 +597,7 @@ const Customers = () => {
                 </tbody>
               </table>
               <div>
-              {CustomerError && (
+              {customerError && (
                     <p className="items-center justify-center text-center text-primary dark:text-textTitle">No Customer found. Please add new customer!</p>
                   )}
               </div>
