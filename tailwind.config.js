@@ -36,7 +36,7 @@ export default {
         },
         mainBrown: "#472214",
         secondBrown: "#7f1f19",
-        lightBrown: "#512615"
+        lightBrown: "#B77D67"
       },
       textColor: {
         dark: "#ffffff", // Set the text color for dark mode
@@ -53,7 +53,8 @@ export default {
         container: "#4d4f55",
         bgHover: "#353639",
         bgActive: "#4d4f55",
-        mainbg: "#000000"
+        mainbg: "#000000",
+        main: "#d4d4d4"
       },
       fontFamily: {
         display: "Poppins, sans-serif", // Adds a new `font-display` class
