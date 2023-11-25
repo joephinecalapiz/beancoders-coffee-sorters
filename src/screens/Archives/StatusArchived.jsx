@@ -4,6 +4,7 @@ import api_endpoint from "../../config";
 import { useSelector } from 'react-redux'
 import Sidebar from "../../component/Sidebar";
 import Topbar from "../../component/Topbar";
+import axios from 'axios';
 
 const StatusArchived = () => {
   const token = useSelector(state => state.auth.token);
@@ -35,32 +36,25 @@ const StatusArchived = () => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(
-        api_endpoint + "/fetch-archive-status/" + user_id,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch customer archived data");
-      }
+      const response = await axios.get(`${api_endpoint}/fetch-archive-status/${user_id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+  
+      // Use response.data directly
       const data = response.data.archived_status;
+  
       setAllCustomers(data);
-      setStatusError(false)
-      // if (sessionStorage.getItem("archive status data") === null) {
-      //   sessionStorage.setItem(
-      //     "archive status data",
-      //     JSON.stringify(data)
-      //   );
-      // }
+      setStatusError(false);
     } catch (error) {
-      if (error.response && error.response.data.status === 'No Status Found') {
+      // console.error("Error fetching customer archived data:", error);
+      if (error.response && error.response.data && error.response.data.status === 'No Status Found') {
         setStatusError(true);
-        console.error('error', error.response.status);
+        console.error("Error fetching customer data:", error);
+      } else {
+        // Handle other errors
+        console.error("Unexpected error:", error);
       }
     }
   };
