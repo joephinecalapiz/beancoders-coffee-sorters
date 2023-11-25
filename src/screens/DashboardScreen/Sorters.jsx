@@ -10,12 +10,14 @@ import Modal from "../../component/Modal";
 import { useDispatch, useSelector } from 'react-redux'
 import api_endpoint from "../../config";
 import { fetchSorterInfo } from "../../../redux/userActions";
+import beanlogo from '../../assets/beanlogo.png';
 
 const Sorters = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
   const sorterInfo = useSelector(state => state.user.sorters);
+  const { status, error } = useSelector((state) => state.user);
   const [sorterError, setSorterError] = useState(false);
   const [navVisible, showNavbar] = useState(false);
   const toggleSidebar = () => {
@@ -46,9 +48,21 @@ const Sorters = () => {
   const [allSorters, setAllSorters] = useState([]);
   const [reloadSorterData, setReloadSorterData] = useState(null);
 
+  // useEffect(() => {
+  //   dispatch(fetchSorterInfo({ user_id, token }));
+  // }, [dispatch]);
+
   useEffect(() => {
-    dispatch(fetchSorterInfo({ user_id, token }));
-  }, [dispatch]);
+    if (status === 'succeeded') {
+      // setAllSorters(sorterInfo)
+      setSorterError(false);
+    }
+
+    // Render error state
+    if (status === 'failed') {
+      setSorterError(true);
+    }
+  }, []);
 
   // console.log(sorterInfo)
 
@@ -74,24 +88,10 @@ const Sorters = () => {
   }, []);
 
   const fetchSorters = async () => {
-    try {
-      const response = await axios
-        .get(`${api_endpoint}/sorters/${user_id}`, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-  
-      const data = response.data.sorters;
-      setAllSorters(data);
-      // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
-      setSorterError(false)
-    } catch (error) {
-      if (error.response && error.response.data.status === 'Sorters Not Found') {
-        setSorterError(true);
-      }
-      // console.error();
-    }
+    dispatch(fetchSorterInfo({ user_id, token }));
+    console.log(sorterInfo)
+    setAllSorters(sorterInfo)
+    setSorterError(false);
   };
 
   const openModal = () => {
@@ -158,6 +158,14 @@ const Sorters = () => {
   };
 
   const totalSorters = allSorters.length;
+  // console.log(allSorters)
+
+  // Render loading state
+  if (status === 'loading') {
+    return <div className="flex items-center justify-center h-screen">
+      <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
+    </div>;
+  }
 
   return (
     <>
