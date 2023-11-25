@@ -24,12 +24,15 @@ import beanlogo from './assets/beanlogo.png';
 import Error from "./superadmin/Error";
 import PermissionDenied from "./superadmin/DeniedAccess";
 import Main from "./screens/mainpage";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo } from "../redux/userActions";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
   // Access the token from the Redux state
   const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (token) {
@@ -38,6 +41,13 @@ function App() {
       setAuthenticated(false);
     }
   }, []);
+
+  useEffect(() => {
+    dispatch(fetchCustomerInfo({ user_id, token }));
+    dispatch(fetchSorterInfo({ user_id, token }));
+    dispatch(fetchStatusInfo({ user_id, token }));
+  }, [dispatch]);
+
 
   if (authenticated === null) {
     return (
