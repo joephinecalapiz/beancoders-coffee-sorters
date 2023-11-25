@@ -63,14 +63,15 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
                 className="modal-overlay fixed inset-0 bg-black opacity-50 cursor-pointer"
                 onClick={show}
             ></div> */}
-            <div className="modal-container bg-white p-8 max-w-sm mx-auto rounded">
+            <div className="absolute inset-0 bg-black opacity-50"></div>
+            <div className="modal-container bg-white dark:bg-container dark:text-textTitle p-8 max-w-sm mx-auto z-50 rounded">
                 {/* <span
                     className=" absolute top-4 right-4 text-xl cursor-pointer"
                     onClick={() => onClose}
                 >
                     &times;
                 </span> */}
-                <h2 className="text-2xl font-semibold mb-4 poppins-font">
+                <h2 className="text-2xl font-semibold mb-4 text-center poppins-font">
                     Update Customer
                 </h2>
                 <form onSubmit={updateCustomerDetails}>
@@ -79,14 +80,14 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
                             htmlFor="newCustomerName"
                             className="block font-medium poppins-font"
                         >
-                            Name:
+                            Name
                         </label>
                         <input
                             type="text"
                             id="newCustomerName"
                             value={newCustomerName}
                             onChange={(e) => setNewCustomerName(e.target.value)}
-                            className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                            className="border rounded px-3 py-2 w-full dark:text-primary focus:outline-none focus:border-blue-400 poppins-font"
                             required
                         />
                     </div>
@@ -96,14 +97,14 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
                             htmlFor="newCustomerPhoneNumber"
                             className="block font-medium poppins-font"
                         >
-                            Phone Number:
+                            Phone Number
                         </label>
                         <input
                             type="text"
                             id="newCustomerPhoneNumber"
                             value={newCustomerPhoneNumber}
                             onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
-                            className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                            className="border rounded px-3 py-2 w-full dark:text-primary focus:outline-none focus:border-blue-400 poppins-font"
                             required
                         />
                     </div>
@@ -113,13 +114,13 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
                             htmlFor="newCustomerAddress"
                             className="block font-medium poppins-font"
                         >
-                            Address:
+                            Address
                         </label>
                         <textarea
                             id="newCustomerAddress"
                             value={newCustomerAddress}
                             onChange={(e) => setNewCustomerAddress(e.target.value)}
-                            className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+                            className="border rounded px-3 py-2 w-full  dark:text-primary focus:outline-none focus:border-blue-400 poppins-font"
                             rows={4}
                             style={{ height: "70px", wordWrap: "break-word" }}
                             required
@@ -142,7 +143,7 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
                 />
               </div> */}
 
-                    <div className="flex justify-between">
+                    <div className="flex flex-col gap-4 justify-between">
                         <button
                             type="submit"
                             className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
@@ -152,7 +153,7 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
                         <button
                             type="button"
                             onClick={() => onClose()}
-                            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+                            className="hover:bg-red-700 text-black hover:text-white dark:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
                         >
                             Cancel
                         </button>
