@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout, setCredentials } from "../../redux/authSlice";
 import { fetchUserDetails } from "../../redux/userActions";
 import { useGetUserDetailsQuery } from '../../redux/authService'
+import Cookies from 'js-cookie'
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const dispatch = useDispatch();
@@ -139,7 +140,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
 
     // Clear the user's local storage
     dispatch(logout())
-    localStorage.removeItem("isLoggedIn");
+    // Cookies.removeItem("isLoggedIn");
     // Clear the user data from state, if necessary
     // setUserInfo(null);
 
