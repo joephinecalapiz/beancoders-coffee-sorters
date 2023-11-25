@@ -246,7 +246,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                   }}
                 >
                   <a
-                    className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                    className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                     role="menuitem"
                     aria-expanded={isProfileMenuOpen}
                   >
@@ -259,7 +259,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 <li
                   onClick={toggleProfileMenu}
                 >
-                  <a className={`mx-2 hover:rounded-full flex justify-between items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle  ${isProfileMenuOpen ? "" : ""
+                  <a className={`mx-2 hover:rounded-full flex justify-between items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle  ${isProfileMenuOpen ? "" : ""
                     } `}
                     aria-expanded={isProfileMenuOpen}
                     role="menuitem"
@@ -281,7 +281,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     <ul className="py-1" role="none">
                       <li onClick={() => navigate("/archive/customer")}>
                         <a
-                          className="mx-2 pl-5 hover:rounded-full flex justify-start py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                          className="mx-2 pl-5 hover:rounded-full flex justify-start py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                           role="menuitem"
                         >
                           Customer
@@ -289,7 +289,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                       </li>
                       <li onClick={() => navigate("/archive/status")}>
                         <a
-                          className="mx-2 pl-5 hover:rounded-full flex justify-start py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                          className="mx-2 pl-5 hover:rounded-full flex justify-start py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                           role="menuitem"
                         >
                           Status
@@ -306,7 +306,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     }}
                   >
                     <a
-                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                       role="menuitem"
                       aria-expanded={isProfileMenuOpen}
                     >
@@ -322,7 +322,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                     }}
                   >
                     <a
-                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
                       role="menuitem"
                       aria-expanded={isProfileMenuOpen}
                     >
@@ -335,7 +335,7 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
                 </ul>
                 <li onClick={handleSignOut}>
                   <a
-                    className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-mainBrown dark:hover:bg-lightBrown dark:hover:text-textTitlee cursor-pointer"
+                    className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitlee cursor-pointer"
                     role="menuitem"
                   >
                     <span className="material-symbols-outlined pr-4">
