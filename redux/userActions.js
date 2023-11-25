@@ -29,32 +29,32 @@ export const fetchUserDetails = createAsyncThunk(
 
 export const fetchCustomerInfo = createAsyncThunk(
     'user/customers',
-    async ({ user_id, token }) => {
+    async ({ user_id, token }, { rejectWithValue }) => {
         try {
             const response = await fetch(`${api_endpoint}/customers/${user_id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                },
+              headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+              },
             });
-
+      
             if (!response.ok) {
-                throw new Error('Failed to fetch customer details data');
+              return rejectWithValue({ type: 'http', status: response.status });
             }
+      
             const data = await response.json();
-            // console.log(data.customer[0])
-            // Persist the data to sessionStorage
-            // sessionStorage.setItem('customerData', JSON.stringify(data.customer));
+            sessionStorage.setItem('customerData', JSON.stringify(data.customer));
             return data;
-        } catch (error) {
-            console.error('Error fetching company details data:', error);
+          } catch (error) {
+            // General error handling
+            console.error('Error:', error);
             throw error;
-        }
+          }
     });
 
 export const fetchSorterInfo = createAsyncThunk(
     'user/sorters',
-    async ({ user_id, token }) => {
+    async ({ user_id, token }, { rejectWithValue }) => {
         try {
             const response = await fetch(`${api_endpoint}/sorters/${user_id}`, {
                 headers: {
@@ -64,12 +64,13 @@ export const fetchSorterInfo = createAsyncThunk(
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch sorter details data');
+                return rejectWithValue({ type: 'http', status: response.status });
             }
+
             const data = await response.json();
-            // console.log(data.sorter[0])
+            // console.log('sorter', data.sorters)
             // Persist the data to sessionStorage
-            // sessionStorage.setItem('companyInfo', JSON.stringify(compData.details));
+            sessionStorage.setItem('sorterData', JSON.stringify(data.sorters));
             return data;
         } catch (error) {
             console.error('Error fetching sorter details data:', error);
@@ -79,7 +80,7 @@ export const fetchSorterInfo = createAsyncThunk(
 
 export const fetchStatusInfo = createAsyncThunk(
     'user/status',
-    async ({ user_id, token }) => {
+    async ({ user_id, token }, { rejectWithValue }) => {
         try {
             const response = await fetch(`${api_endpoint}/fetch-status/${user_id}`, {
                 headers: {
@@ -89,15 +90,42 @@ export const fetchStatusInfo = createAsyncThunk(
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch status customer details data');
+              return rejectWithValue({ type: 'http', status: response.status });
             }
+            
             const data = await response.json();
-            // console.log(data.status[0])
+            // console.log('status', data.status)
             // Persist the data to sessionStorage
-            // sessionStorage.setItem('companyInfo', JSON.stringify(compData.details));
+            sessionStorage.setItem('statusData', JSON.stringify(data.status));
             return data;
         } catch (error) {
             console.error('Error fetching status customer details data:', error);
             throw error;
         }
     });
+    
+    export const fetchCustomerArchives = createAsyncThunk(
+        'user/customers/archive',
+        async ({ user_id, token }, { rejectWithValue }) => {
+            try {
+                const response = await fetch(`${api_endpoint}/fetch-archive/${user_id}`, {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
+                  },
+                });
+          
+                if (!response.ok) {
+                  return rejectWithValue({ type: 'http', status: response.status });
+                }
+          
+                const data = await response.json();
+                // console.log(data.archiveds)
+                // sessionStorage.setItem('customerData', JSON.stringify(data.customer));
+                return data;
+              } catch (error) {
+                // General error handling
+                console.error('Error:', error);
+                throw error;
+              }
+        });
