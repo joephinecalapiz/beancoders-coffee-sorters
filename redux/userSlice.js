@@ -1,20 +1,33 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo, fetchUserDetails } from './userActions';
+import { fetchCustomerArchives, fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo, fetchUserDetails } from './userActions';
 
 // initialize role from local storage
-const storedUserInfo = JSON.parse(sessionStorage.getItem('userInfo'))
+const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
     ? JSON.parse(sessionStorage.getItem('userInfo'))
-    : ''
+    : []
 
-// console.log(storedUserInfo)
+const customers = JSON.parse(sessionStorage.getItem('customerData'))
+    ? JSON.parse(sessionStorage.getItem('customerData'))
+    : []
+
+const sorters = JSON.parse(sessionStorage.getItem('sorterData'))
+    ? JSON.parse(sessionStorage.getItem('sorterData'))
+    : []
+
+const statusInfo = JSON.parse(sessionStorage.getItem('statusData'))
+    ? JSON.parse(sessionStorage.getItem('statusData'))
+    : []
+
+// console.log(customers)
 // console.log(storedUserInfo.details[0])
 
 const initialState = {
-    userInfo: storedUserInfo,
-    companyInfo: '',
-    customers: null,
-    sorters: null,
-    statusInfo: null,
+    userInfo,
+    companyInfo: userInfo.details[0],
+    customers,
+    sorters,
+    statusInfo,
+    archiveds: '',
     status: 'idle',
     error: null,
 };
@@ -44,11 +57,11 @@ const userInfoSlice = createSlice({
             })
             .addCase(fetchCustomerInfo.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.customers = action.payload.customer[0];
+                state.customers = action.payload.customer;
             })
             .addCase(fetchCustomerInfo.rejected, (state, action) => {
                 state.status = 'failed';
-                state.error = action.error.message;
+                state.error = action.payload;
             })
             //sorter
             .addCase(fetchSorterInfo.pending, (state) => {
@@ -56,7 +69,7 @@ const userInfoSlice = createSlice({
             })
             .addCase(fetchSorterInfo.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.sorters = action.payload.sorters[0];
+                state.sorters = action.payload.sorters;
             })
             .addCase(fetchSorterInfo.rejected, (state, action) => {
                 state.status = 'failed';
@@ -68,9 +81,21 @@ const userInfoSlice = createSlice({
             })
             .addCase(fetchStatusInfo.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.statusInfo = action.payload.status[0];
+                state.statusInfo = action.payload.status;
             })
             .addCase(fetchStatusInfo.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            })
+            //archive customer
+            .addCase(fetchCustomerArchives.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchCustomerArchives.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                state.archiveds = action.payload.archiveds;
+            })
+            .addCase(fetchCustomerArchives.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
             });
