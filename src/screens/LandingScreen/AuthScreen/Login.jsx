@@ -154,8 +154,8 @@ const Login = () => {
     setDisabledError(true);
     setPasswordError(false);
     setEmailError(false);
-    localStorage.removeItem("savedEmail");
-    localStorage.removeItem("savedPassword");
+    Cookies.removeItem("se");
+    Cookies.removeItem("sp");
   };
 
   return (
