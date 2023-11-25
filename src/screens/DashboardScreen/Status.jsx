@@ -7,6 +7,7 @@ import axios from "axios";
 import api_endpoint from "../../config";
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchStatusInfo } from "../../../redux/userActions";
+import beanlogo from '../../assets/beanlogo.png';
 
 const Status = () => {
   const dispatch = useDispatch();
@@ -18,13 +19,26 @@ const Status = () => {
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customers, setCustomer] = useState([]);
   const [sorters, setSorter] = useState([]);
-  const [status, setAllStatus] = useState([]);
+  const [allStatus, setAllStatus] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
+  const { status, error } = useSelector((state) => state.user);
+
+  // useEffect(() => {
+  //   dispatch(fetchStatusInfo({ user_id, token }));
+  // }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchStatusInfo({ user_id, token }));
-  }, [dispatch]);
+    if (status === 'succeeded') {
+      setAllStatus(statusInfo)
+      setStatusError(false);
+    }
+
+    // Render error state
+    if (status === 'failed') {
+      setStatusError(true);
+    }
+  }, []);
 
   // console.log(statusInfo)
 
@@ -43,25 +57,49 @@ const Status = () => {
     setSearchText(e.target.value);
   };
 
-  const fetchStatus = async () => {
-    try {
-      const response = await axios
-        .get(`${api_endpoint}/fetch-status/${user_id}`, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
+  // const fetchStatus = async () => {
+  //   try {
+  //     const response = await axios
+  //       .get(`${api_endpoint}/fetch-status/${user_id}`, {
+  //         headers: {
+  //           Authorization: "Bearer " + token,
+  //         },
+  //       });
   
-      const data = response.data.status;
-      setAllStatus(data);
-      // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
-      setStatusError(false)
-    } catch (error) {
-      if (error.response && error.response.data.status === 'Status Not Found') {
-        setStatusError(true);
-      }
-      // console.error();
-    }
+  //     const data = response.data.status;
+  //     setAllStatus(data);
+  //     // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+  //     setStatusError(false)
+  //   } catch (error) {
+  //     if (error.response && error.response.data.status === 'Status Not Found') {
+  //       setStatusError(true);
+  //     }
+  //     // console.error();
+  //   }
+  // };
+
+  useEffect(() => {
+    document.title = "Status";
+    fetchStatus();
+  }, []);
+
+  const fetchStatus = async () => {
+    dispatch(fetchStatusInfo({ user_id, token }))
+      .unwrap()
+      .then(() => {
+        // console.log(statusInfo)
+        setAllStatus(statusInfo)
+        setStatusError(false);
+      })
+      .catch((err) => {
+        if (err && err.type === 'http') {
+          setStatusError(true);
+        }
+      })
+      .finally(() => {
+        // setLoading(false);
+        // setAllCustomers(customerInfo)
+      });
   };
 
   // useEffect(() => {
@@ -116,11 +154,6 @@ const Status = () => {
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
-
-  useEffect(() => {
-    document.title = "Status";
-    fetchStatus();
-  }, []);
 
   // useEffect(() => {
   //   const cachedCustomerData = sessionStorage.getItem("customerData");
@@ -186,8 +219,8 @@ const Status = () => {
       })
       .then((response) => {
         if (response.status === 200) {
-          fetchStatus();
-          setStatusError(false)
+          setAllStatus(statusInfo)
+          setStatusError(false);
           closeModal();
         }
       })
@@ -223,9 +256,12 @@ const Status = () => {
         throw new Error("Fail to update the status");
       }
       if (response.status === 200) {
-        const fetchAllStatus = response.data.status;
-        // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
+        // const fetchAllStatus = response.data.status;
+        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // setAllStatus(fetchAllStatus);
+        dispatch(fetchStatusInfo({ user_id, token }));
+        setAllStatus(statusInfo)
+        setStatusError(false);
         setOpenDropdownId(null);
       }
     } catch (error) {
@@ -256,9 +292,12 @@ const Status = () => {
         throw new Error("Fail to update the status");
       }
       if (response.status === 200) {
-        const fetchAllStatus = response.data.status;
-        // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
+        // const fetchAllStatus = response.data.status;
+        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // setAllStatus(fetchAllStatus);
+        dispatch(fetchStatusInfo({ user_id, token }));
+        setAllStatus(statusInfo)
+        setStatusError(false);
         setOpenDropdownId(null);
       }
     } catch (error) {
@@ -289,9 +328,12 @@ const Status = () => {
         throw new Error("Fail to update the status");
       }
       if (response.status === 200) {
-        const fetchAllStatus = response.data.status;
-        // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
+        // const fetchAllStatus = response.data.status;
+        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // setAllStatus(fetchAllStatus);
+        dispatch(fetchStatusInfo({ user_id, token }));
+        setAllStatus(statusInfo)
+        setStatusError(false);
         setOpenDropdownId(null);
       }
     } catch (error) {
@@ -299,6 +341,13 @@ const Status = () => {
     }
     setOpenDropdownId(null);
   };
+
+  // Render loading state
+  if (status === 'loading') {
+    return <div className="flex items-center justify-center h-screen">
+      <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
+    </div>;
+  }
 
   return (
     <>
@@ -386,7 +435,7 @@ const Status = () => {
                   </tr>
                 </thead>
                 <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
-                  {status
+                  {allStatus
                     .filter((sorted) =>
                       sorted.customerName
                         .toLowerCase()
@@ -425,7 +474,7 @@ const Status = () => {
                                       sorted.status === "Ongoing"
                                         ? "bg-brown hover:bg-gray-100 text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown text-black dark:hover:text-white`}
                                   >
                                     Ongoing
                                   </button>
@@ -437,7 +486,7 @@ const Status = () => {
                                       sorted.status === "Finished"
                                         ? "bg-brown hover:bg-gray-100  text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown text-black dark:hover:text-white`}
                                   >
                                     Finished
                                   </button>
@@ -449,7 +498,7 @@ const Status = () => {
                                       sorted.status === "Cancelled"
                                         ? "bg-brown hover:bg-gray-100 text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown text-black dark:hover:text-white`}
                                   >
                                     Cancelled
                                   </button>
@@ -474,7 +523,7 @@ const Status = () => {
               </table>
               <div>
                 {statusError && (
-                  <p className="items-center justify-center text-center text-primary dark:text-textTitle">No status found. Please add new status!</p>
+                  <p className="items-center justify-center text-center text-primary dark:text-textTitle poppins-font ">No status found. Please add new status!</p>
                 )}
               </div>
             </div>
