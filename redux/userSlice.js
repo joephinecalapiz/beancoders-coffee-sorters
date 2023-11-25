@@ -23,7 +23,7 @@ const statusInfo = JSON.parse(sessionStorage.getItem('statusData'))
 
 const initialState = {
     userInfo,
-    companyInfo: userInfo.details[0],
+    companyInfo: '',
     customers,
     sorters,
     statusInfo,
