@@ -3,13 +3,17 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import api_endpoint from "../../config";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
+import axios from 'axios';
+import { fetchCustomerArchives } from "../../../redux/userActions";
 
 const CustomerArchived = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
+  const archiveds = useSelector(state => state.user.archiveds);
   const [archiveError, setArchiveError] = useState(false);
   const [navVisible, showNavbar] = useState(true);
   const navigate = useNavigate(); // Use the hook here
@@ -41,6 +45,12 @@ const CustomerArchived = () => {
   };
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
+  useEffect(() => {
+    dispatch(fetchCustomerArchives({ user_id, token }));
+  }, [dispatch]);
+
+  // console.log("archived: ", archiveds)
+
   const toggleDropdown = (customerId) => {
     if (openDropdownId === customerId) {
       // If the clicked dropdown is already open, close it
@@ -51,39 +61,40 @@ const CustomerArchived = () => {
     }
   };
 
-  const handleShowUpdateModal = (customer) => {
-    setOpenDropdownId(null);
-    setSelectedCustomer(customer);
-    setShowUpdateModal(true);
-  };
-
-  const handleCloseUpdateModal = (customer) => {
-    setSelectedCustomer(customer);
-    handleShowUpdateModal(null);
-  };
+  useEffect(() => {
+    document.title = "Customer Archived";
+    if (selectedMonth !== null && selectedYear !== null) {
+      fetchCustomers();
+    }
+  }, [selectedMonth, selectedYear]);
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(api_endpoint + "/fetch-archive/" + user_id, {
-        method: "GET",
+      const response = await axios.get(`${api_endpoint}/fetch-archive/${user_id}`, {
         headers: {
           Authorization: "Bearer " + token,
         },
       });
-      const data = response.data.archiveds;
-      setAllCustomers(data);
-      setArchiveError(false)
-      // console.log(data.archiveds)
+  
+      // Use response.data directly
+      const data = response.data;
+  
+      setAllCustomers(data.archiveds);
+      setArchiveError(false);
     } catch (error) {
       // console.error("Error fetching customer archived data:", error);
-      if (error.response && error.response.data.status === 'No Customers Found') {
+      if (error.response && error.response.data && error.response.data.status === 'No Customers Found') {
         setArchiveError(true);
-        // console.error("Error fetching customer data:", error);
+        console.error("Error fetching customer data:", error);
+      } else {
+        // Handle other errors
+        console.error("Unexpected error:", error);
       }
     }
   };
+  
 
-  // console.log(allCustomers);
+  //console.log(allCustomers);
 
   const deleteCustomer = async (id) => {
     try {
@@ -105,14 +116,6 @@ const CustomerArchived = () => {
     }
     setOpenDropdownId(null);
   };
-
-  useEffect(() => {
-    document.title = "Customer Archived";
-
-    if (selectedMonth !== null && selectedYear !== null) {
-      fetchCustomers();
-    }
-  }, [selectedMonth, selectedYear]);
 
   const [searchText, setSearchText] = useState("");
 
