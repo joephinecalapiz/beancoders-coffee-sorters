@@ -45,7 +45,7 @@ const Landing = () => {
       <Navbar />
       <div className="block">
         <div className="bg-BgLanding bg-fixed md:bg-cover bg-cover bg-opacity-20 md:h-screen w-full sm:bg-scroll">
-          <div className="text-white poppins-font font-bold text-2xl py-[5%] flex flex-col items-center md:items-end">
+          <div className="text-white poppins-font font-bold text-2xl py-[5%] flex flex-col items-center justify-end md:items-end">
             <div className="mt-10 md:mt-1">
               <div className="px-6 md:mr-20">
                 <div>
@@ -55,15 +55,16 @@ const Landing = () => {
                     className="md:h-80 md:w-80 h-30 w-30 mt-8 md:mt-0 "
                   />
                   <p className="ml-26 poppins-font text-2xl block text-center md:hidden">
-                    Arabica Coffee Beans Sorter
+                  Computer Vision and AI Based Coffee Bean Sorter
                   </p>
                 </div>
 
                 <p className="md:ml-36 poppins-font md:text-5xl md:mb-10 md:block hidden">
-                  Bean Coders:
+                  Computer Vision
+                  and AI Based
                 </p>
-                <p className="md:ml-36 poppins-font text-4xl md:block hidden md:text-6xl">
-                  Quality Bean Sorter
+                <p className="md:ml-36 poppins-font text-lightBrown text-4xl md:block hidden md:text-6xl">
+                  Coffee Bean Sorter
                 </p>
               </div>
             </div>
