@@ -24,9 +24,11 @@ const Landing = () => {
     axios.get(api_endpoint + "/companies").then((response) => {
       const data = response.data;
       if (data.companies) {
-        // Check if data.companies is defined
+        // Filter companies that have details
+        const companiesWithData = data.companies.filter((company) => company.details && company.details.length > 0);
+
         setCompanyData(
-          data.companies.map((company) => {
+          companiesWithData.map((company) => {
             const detail = company.details[0];
             if (detail && detail.images) {
               detail.images = detail.images.replace(/[\[\]\\\"]/g, "");
@@ -34,10 +36,7 @@ const Landing = () => {
             return detail;
           })
         );
-      } else {
-        setCompanyData([]); // Handle the case where data.companies is undefined or null
       }
-      // console.log(companyData);
     });
   }, []);
 
@@ -82,7 +81,7 @@ const Landing = () => {
               companyData.map((detail, index) => (
                 <div
                   key={index}
-                  className="bg-white md:min-h-[250px] md:w-65 rounded-lg p-2 flex flex-col relative shadow-4xl z-100 md:flex-row"
+                  className="bg-hoverBrown md:min-h-[250px]  md:w-full lg:w-65 rounded-lg p-2 flex flex-col relative shadow-4xl z-100 md:flex-row"
                 >
                   {/* Image Section */}
                   {/* <div className="md:w-[50%] md:absolute"> */}
@@ -91,7 +90,7 @@ const Landing = () => {
                       <img
                         src={`${image_endpoint}/storage/${detail.images}`}
                         alt="beansLogo"
-                        className="w-70 h-64 md:w-70 md:h-64 max-h-full max-w-full mb-4 items-center  "
+                        className="w-70 h-64 md:w-70 md:h-64 max-h-full max-w-full items-center"
                       />
                     ) : (
                       <div>No image available</div>
@@ -101,7 +100,7 @@ const Landing = () => {
                   {/* Details Section */}
                   <div className="md:pl-6 md:order-2 md:w-50">
                     {detail && detail.companyName ? (
-                      <div className="text-black poppins-font  dark:text-textTitle font-bold text-3xl mt-3 flex items-center">
+                      <div className="text-black poppins-font  dark:text-textTitle font-bold text-2xl  sm:text-lg md:text-2xl lg:text-3xl mt-3 flex items-center">
                         <FontAwesomeIcon icon={faBuilding} className="mr-10" />
                         <span className="flex-grow">{detail.companyName}</span>
                       </div>
