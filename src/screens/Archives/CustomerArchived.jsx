@@ -301,10 +301,10 @@ const CustomerArchived = () => {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
+                    <tbody className="bg-white dark:text-textDesc dark:bg-container custom-table">
                       {(reloadCustomerData || sortedFilteredCustomers).map(
                         (customer) => (
-                          <tr key={customer.id} className="hover:bg-lightBrown">
+                          <tr key={customer.id} className="hover:bg-lightBrown hover:text-textTitle">
                             <td className="poppins-font">{customer.id}</td>
                             <td className="poppins-font">
                               {new Date(customer.created_at).toLocaleDateString()}

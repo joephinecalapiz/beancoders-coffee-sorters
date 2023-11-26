@@ -434,7 +434,7 @@ const Status = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="sort-table dark:text-textTitle dark:bg-container divide-y divide-gray-200">
+                <tbody className="sort-table dark:text-textDesc dark:bg-container divide-y divide-gray-200">
                   {allStatus
                     .filter((sorted) =>
                       sorted.customerName
@@ -442,7 +442,7 @@ const Status = () => {
                         .includes(searchText.toLowerCase())
                     )
                     .map((sorted) => (
-                      <tr key={sorted.id} className="hover:bg-lightBrown">
+                      <tr key={sorted.id} className="hover:bg-lightBrown hover:text-textTitle">
                         <td className="poppins-font">
                           {new Date(sorted.created_at).toLocaleDateString()}
                         </td>
@@ -512,7 +512,7 @@ const Status = () => {
                             onClick={() => {
                               navigate(`/status/receipt/${sorted.id}`);
                             }}
-                            className="see-more-button focus:outline-none"
+                            className="text-primary dark:text-secondary underline focus:outline-none"
                           >
                             Receipt
                           </button>

@@ -239,9 +239,9 @@ const CustomerHistory = () => {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200 custom-table">
+                  <tbody className="bg-white dark:text-textDesc dark:bg-container divide-y divide-gray-200 custom-table">
                     {sortedFilteredCustomers.map((historyItem) => (
-                      <tr key={historyItem.id} className="hover:bg-lightBrown">
+                      <tr key={historyItem.id} className="hover:bg-lightBrown hover:text-textTitle">
                         <td className="poppins-font text-center">
                           {new Date(historyItem.date).toLocaleDateString()}
                         </td>

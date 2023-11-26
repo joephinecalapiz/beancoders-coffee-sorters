@@ -12,6 +12,7 @@ const Activities = () => {
   const navigate = useNavigate();
   const [allHistory, setAllHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [historyError, setHistoryError] = useState(false);
 
   useEffect(() => {
     axios
@@ -29,19 +30,38 @@ const Activities = () => {
           .filter((record) => record.created_at.split("T")[0] === today)
           .slice(0, 5); // Limit to the first 5 records
 
-        sessionStorage.setItem(
-          "todayactivityData",
-          JSON.stringify(filteredData)
-        );
-        setAllHistory(filteredData);
-        setIsLoading(false); // Data fetching is complete
+        if (filteredData.length === 0) {
+          setHistoryError(true);
+          setIsLoading(false);
+        } else {
+          sessionStorage.setItem(
+            "todayactivityData",
+            JSON.stringify(filteredData)
+          );
+          setAllHistory(filteredData);
+          setIsLoading(false); // Data fetching is complete
+        }
+      })
+      .catch((error) => {
+        // Assuming 'error' should be used instead of 'err'
+        if (error.response && error.response.data.status === 'No Activities Found') {
+          setHistoryError(true);
+        } else {
+          // Handle other errors here
+          console.error("Error fetching data:", error);
+        }
       });
   }, []);
+
 
   useEffect(() => {
     const cachedCustomerData = sessionStorage.getItem("todayactivityData");
     if (cachedCustomerData) {
       setAllHistory(JSON.parse(cachedCustomerData));
+      setHistoryError(false)
+    }
+    if (allHistory == []){
+      setHistoryError(true)
     }
   }, []);
 
@@ -75,9 +95,9 @@ const Activities = () => {
               ></th>
             </tr>
           </thead>
-          <tbody className="bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200 custom-table">
+          <tbody className="bg-white dark:text-textDesc dark:bg-container divide-y divide-gray-200 custom-table">
             {allHistory.map((historyItem) => (
-              <tr key={historyItem.id}>
+              <tr key={historyItem.id} className="hover:bg-lightBrown">
                 <td className="poppins-font text-center">
                   {new Date(historyItem.date).toLocaleDateString()}
                 </td>
@@ -95,7 +115,7 @@ const Activities = () => {
                     onClick={() => {
                       navigate(`/status/receipt/${historyItem.id}`);
                     }}
-                    className="see-more-button focus:outline-none"
+                    className="text-primary dark:text-secondary underline focus:outline-none"
                   >
                     Receipt
                   </button>
@@ -104,6 +124,11 @@ const Activities = () => {
             ))}
           </tbody>
         </table>
+        <div>
+          {historyError && (
+            <p className="items-center justify-center text-center text-primary dark:text-textTitle">No recent activities today!</p>
+          )}
+        </div>
       </div>
     </div>
   );
