@@ -93,10 +93,11 @@ const YesterdayAct = () => {
             </tr>
           </thead>
           <tbody className="bg-white dark:text-textDesc dark:bg-container divide-y divide-gray-200 custom-table">
-            {allHistory.map((historyItem) => (
+            {allHistory.map((historyItem, index) => (
               <tr key={historyItem.id} className="hover:bg-lightBrown hover:text-textTitle">
                 <td className="poppins-font text-center">
-                  {new Date(historyItem.date).toLocaleDateString()}
+                  {/* {new Date(historyItem.date).toLocaleDateString()} */}
+                  {index + 1}
                 </td>
                 <td className="poppins-font text-center">
                   {historyItem.customerName}
