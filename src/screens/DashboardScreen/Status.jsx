@@ -65,7 +65,7 @@ const Status = () => {
   //           Authorization: "Bearer " + token,
   //         },
   //       });
-  
+
   //     const data = response.data.status;
   //     setAllStatus(data);
   //     // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
@@ -364,7 +364,7 @@ const Status = () => {
           {/* Search bar */}
           <input
             type="text"
-            placeholder="Search Sorters"
+            placeholder="Search Customer"
             value={searchText}
             onChange={handleSearchInputChange}
             className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
@@ -374,13 +374,13 @@ const Status = () => {
           {/* Add New button */}
           <button
             onClick={openModal}
-            className="px-4 py-2 poppins-font font-semibold text-white rounded bg-[#512615] text-shadow shadow-md border-none text-shadow focus:outline-none "
+            className="px-4 py-2 poppins-font font-semibold text-white rounded bg-[#74574D] text-shadow shadow-md border-none text-shadow focus:outline-none "
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = "#C4A484";
               e.target.style.transition = "background-color 0.3s ease";
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
+              e.target.style.backgroundColor = "#74574D";
               e.target.style.transition = "background-color 0.3s ease";
             }}
           >
@@ -406,7 +406,7 @@ const Status = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Date
+
                     </th>
                     <th
                       scope="col"
@@ -419,6 +419,12 @@ const Status = () => {
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
                       Sorter's Name
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date
                     </th>
                     <th
                       scope="col"
@@ -441,14 +447,14 @@ const Status = () => {
                         .toLowerCase()
                         .includes(searchText.toLowerCase())
                     )
-                    .map((sorted) => (
+                    .map((sorted, index) => (
                       <tr key={sorted.id} className="hover:bg-lightBrown hover:text-textTitle">
+                        <td className="poppins-font">{index + 1}</td>
+                        <td className="poppins-font">{sorted.customerName}</td>
+                        <td className="poppins-font">{sorted.sorterName}</td>
                         <td className="poppins-font">
                           {new Date(sorted.created_at).toLocaleDateString()}
                         </td>
-
-                        <td className="poppins-font">{sorted.customerName}</td>
-                        <td className="poppins-font">{sorted.sorterName}</td>
                         <td className="poppins-font">
                           <button
                             onClick={() => toggleDropdown(sorted.id)}
@@ -470,11 +476,10 @@ const Status = () => {
                                 <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToOngoing(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${
-                                      sorted.status === "Ongoing"
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Ongoing"
                                         ? "bg-brown hover:bg-gray-100 text-secondary"
                                         : ""
-                                    } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
+                                      } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Ongoing
                                   </button>
@@ -482,11 +487,10 @@ const Status = () => {
                                 <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToFinished(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${
-                                      sorted.status === "Finished"
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Finished"
                                         ? "bg-brown hover:bg-gray-100  text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
+                                      } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Finished
                                   </button>
@@ -494,11 +498,10 @@ const Status = () => {
                                 <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToCancelled(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${
-                                      sorted.status === "Cancelled"
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Cancelled"
                                         ? "bg-brown hover:bg-gray-100 text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
+                                      } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Cancelled
                                   </button>

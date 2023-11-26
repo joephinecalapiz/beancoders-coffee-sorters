@@ -266,19 +266,19 @@ const CustomerArchived = () => {
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                         >
-                          Id number
+                          
                         </th>
                         <th
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                         >
-                          Date Archived
+                           Customer Name
                         </th>
                         <th
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                         >
-                          Customer Name
+                          Address
                         </th>
                         <th
                           scope="col"
@@ -290,7 +290,7 @@ const CustomerArchived = () => {
                           scope="col"
                           className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                         >
-                          Address
+                          Date Archived
                         </th>
 
                         <th
@@ -303,17 +303,17 @@ const CustomerArchived = () => {
                     </thead>
                     <tbody className="bg-white dark:text-textDesc dark:bg-container custom-table">
                       {(reloadCustomerData || sortedFilteredCustomers).map(
-                        (customer) => (
+                        (customer, index) => (
                           <tr key={customer.id} className="hover:bg-lightBrown hover:text-textTitle">
-                            <td className="poppins-font">{customer.id}</td>
-                            <td className="poppins-font">
-                              {new Date(customer.created_at).toLocaleDateString()}
-                            </td>
+                            <td className="poppins-font">{index + 1}</td>
                             <td className="poppins-font">
                               {customer.customerName}
                             </td>
-                            <td className="poppins-font">{customer.phoneNum}</td>
                             <td className="poppins-font">{customer.address}</td>
+                            <td className="poppins-font">{customer.phoneNum}</td>
+                            <td className="poppins-font">
+                              {new Date(customer.created_at).toLocaleDateString()}
+                            </td>
                             <td className="poppins-font">
                               <button
                                 onClick={() => toggleDropdown(customer.id)}

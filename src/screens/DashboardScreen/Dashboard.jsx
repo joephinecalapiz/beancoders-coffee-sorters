@@ -45,7 +45,7 @@ const Dashboard = () => {
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto ml-5 mr-5">
                   Pieces of Bad Beans
                 </h1>
-                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
+                <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
                   {beanCount && beanCount.bad !== null
                     ? `${beanCount.bad} pieces`
                     : "0"}
@@ -57,7 +57,7 @@ const Dashboard = () => {
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
                   Pieces of Good Beans
                 </h1>
-                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
+                <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
                   {beanCount && beanCount.good !== null
                     ? `${beanCount.good} pieces`
                     : "0"}
@@ -69,7 +69,7 @@ const Dashboard = () => {
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
                   KG of Bad Beans
                 </h1>
-                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
+                <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
                   {beanCount && beanCount.kilograms !== null
                     ? `${beanCount.kilograms} kilograms`
                     : "0"}

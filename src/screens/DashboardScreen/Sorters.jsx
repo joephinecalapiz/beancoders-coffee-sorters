@@ -197,11 +197,11 @@ const Sorters = () => {
               e.target.style.transition = "background-color 0.3s ease";
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
+              e.target.style.backgroundColor = "#74574D";
               e.target.style.transition = "background-color 0.3s ease";
             }}
             style={{
-              backgroundColor: "#512615",
+              backgroundColor: "#74574D",
               boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
               border: "none",
               textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -222,14 +222,14 @@ const Sorters = () => {
           <br />
           <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
             <div className="max-h-[440px] overflow-y-auto">
-              <table className=" min-w-full divide-y divide-gray-200  sorters-table th table-auto ">
+              <table className=" min-w-full divide-y divide-gray-200  customers-table th table-auto ">
                 <thead>
                   <tr>
                     <th
                       scope="col"
                       className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Id number
+                     
                     </th>
                     <th
                       scope="col"

@@ -405,7 +405,7 @@ const Profile = () => {
                     </div>
                   ) : (
                       <button
-                        className="flex bg-mainBrown hover:bg-lightBrown poppins-font text-white font-bold py-2 md:px-6 px-8 rounded-full"
+                        className="flex bg-hoverBrown hover:bg-lightBrown poppins-font text-white font-bold py-2 md:px-6 px-8 rounded-full"
                         onClick={handleEditClick}
                       >
                         <span className="material-symbols-outlined pr-2">

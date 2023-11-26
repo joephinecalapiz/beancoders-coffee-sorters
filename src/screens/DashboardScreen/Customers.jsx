@@ -372,11 +372,11 @@ const Customers = () => {
               e.target.style.transition = "background-color 0.3s ease";
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
+              e.target.style.backgroundColor = "#74574D";
               e.target.style.transition = "background-color 0.3s ease";
             }}
             style={{
-              backgroundColor: "#512615",
+              backgroundColor: "#74574D",
               boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
               border: "none",
               textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -410,7 +410,7 @@ const Customers = () => {
                     singleValue: (provided) => ({
                       ...provided,
                       fontFamily: "'Poppins', sans-serif",
-                      color: "#333",
+                      color: "#74574D",
                     }),
                   }}
                 />
@@ -458,13 +458,13 @@ const Customers = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Id number
+                      
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Date Added
+                      Address
                     </th>
                     <th
                       scope="col"
@@ -482,7 +482,7 @@ const Customers = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Address
+                      Date Added
                     </th>
 
                     <th
@@ -499,13 +499,13 @@ const Customers = () => {
                       <tr key={customer.id} className="hover:bg-lightBrown hover:text-textTitle">
                         <td className="poppins-font">{index + 1}</td>
                         <td className="poppins-font">
-                          {new Date(customer.created_at).toLocaleDateString()}
-                        </td>
-                        <td className="poppins-font">
                           {customer.customerName}
                         </td>
                         <td className="poppins-font">{customer.phoneNum}</td>
                         <td className="poppins-font">{customer.address}</td>
+                        <td className="poppins-font">
+                          {new Date(customer.created_at).toLocaleDateString()}
+                        </td>
                         <td className="poppins-font">
                           <button
                             onClick={() => toggleDropdown(customer.id)}
