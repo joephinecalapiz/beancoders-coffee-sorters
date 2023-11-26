@@ -370,6 +370,8 @@ const CustomerArchived = () => {
               </div>
             </div>
           </div>
+          <div className="flex items-center"></div>
+          <br />
         </div>
       </div>
     </>
