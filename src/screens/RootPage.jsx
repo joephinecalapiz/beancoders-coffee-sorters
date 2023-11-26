@@ -15,7 +15,7 @@ import StatusArchived from "./Archives/StatusArchived";
 import Sorters from "./DashboardScreen/Sorters";
 import Status from "./DashboardScreen/Status";
 import Profile from "./ProfileScreen/Profile";
-import SortingStatus from "./DashboardScreen/SortingStatus";
+import CustomerHistory from "./DashboardScreen/CustomerHistory";
 import Receipt from "./ReceiptScreen/Receipt";
 import Error from "./Error";
 import PermissionDenied from "./DeniedAccess";
@@ -79,11 +79,9 @@ function RootPage() {
                 }
             />
             <Route
-                path="/customers/customerstatus/:customerName/:customerId"
+                path="/customers/history/:customerName/:customerId"
                 element={
-                    <Main>
-                        <SortingStatus />
-                    </Main>
+                    <CustomerHistory />
                 }
             />
             <Route
