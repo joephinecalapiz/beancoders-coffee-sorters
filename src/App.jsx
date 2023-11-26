@@ -21,9 +21,6 @@ import ContactUs from "./screens/LandingScreen/ContactUs";
 import RootPage from "./screens/RootPage";
 import AdminRootPage from "./superadmin/RootPage";
 import beanlogo from './assets/beanlogo.png';
-import Error from "./superadmin/Error";
-import PermissionDenied from "./superadmin/DeniedAccess";
-import Main from "./screens/mainpage";
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo } from "../redux/userActions";
 
