@@ -6,7 +6,7 @@ import beansLogo from "../assets/beansLogo.png"; // Import the image
 import api_endpoint from "../config";
 import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserDetails } from "../../redux/userActions";
+import { fetchUserDetails } from "../../redux/services/user/userActions";
 import Topbar from "../component/AdminTopbar";
 import AdminSidebar from "../component/AdminSidebar";
 

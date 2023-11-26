@@ -6,7 +6,7 @@ import Modal from "../../component/Modal"; // Import the Modal component
 import axios from "axios";
 import api_endpoint from "../../config";
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchStatusInfo } from "../../../redux/userActions";
+import { fetchStatusInfo } from "../../../redux/services/user/userActions";
 import beanlogo from '../../assets/beanlogo.png';
 
 const Status = () => {

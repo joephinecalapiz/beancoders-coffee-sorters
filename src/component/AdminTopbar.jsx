@@ -10,8 +10,8 @@ import { FaBars } from "react-icons/fa";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from "../../redux/authSlice";
-import { fetchUserDetails } from "../../redux/userActions";
+import { logout } from "../../redux/services/auth/authSlice";
+import { fetchUserDetails } from "../../redux/services/user/userActions";
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const dispatch = useDispatch();

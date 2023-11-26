@@ -6,7 +6,7 @@ import api_endpoint from "../../config";
 import image_endpoint from "../../image-config";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchUserDetails } from "../../../redux/userActions";
+import { fetchUserDetails } from "../../../redux/services/user/userActions";
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 

@@ -7,8 +7,8 @@ import axios from "axios";
 import api_endpoint from "../../../config";
 import Modal from "../../../component/Modal";
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from "../../../../redux/authSlice";
-import { companyDetails } from "../../../../redux/authActions";
+import { logout } from "../../../../redux/services/auth/authSlice";
+import { companyDetails } from "../../../../redux/services/auth/authActions";
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 

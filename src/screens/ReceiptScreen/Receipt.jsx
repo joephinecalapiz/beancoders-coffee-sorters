@@ -149,7 +149,7 @@ const Receipt = () => {
             </div>
 
             <div
-              className="md:flex flex-col sm:flex-row border rounded p-2 mt-4 bg-white whole-receipt"
+              className="md:flex flex-col sm:flex-row border rounded p-2 mt-4 bg-white whole-receipt shadow-xl"
               ref={contentRef}
             >
               <div className="">

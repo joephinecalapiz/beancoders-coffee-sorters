@@ -22,7 +22,7 @@ import RootPage from "./screens/RootPage";
 import AdminRootPage from "./superadmin/RootPage";
 import beanlogo from './assets/beanlogo.png';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo } from "../redux/userActions";
+import { fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo } from "../redux/services/user/userActions";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);

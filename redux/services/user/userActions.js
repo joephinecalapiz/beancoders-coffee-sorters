@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import api_endpoint from '../src/config'
+import api_endpoint from '../../../src/config';
 
 export const fetchUserDetails = createAsyncThunk(
     'user/fetchInfo',
@@ -50,7 +50,8 @@ export const fetchCustomerInfo = createAsyncThunk(
             console.error('Error:', error);
             throw error;
           }
-    });
+    }
+);
 
 export const fetchSorterInfo = createAsyncThunk(
     'user/sorters',
@@ -76,7 +77,8 @@ export const fetchSorterInfo = createAsyncThunk(
             console.error('Error fetching sorter details data:', error);
             throw error;
         }
-    });
+    }
+);
 
 export const fetchStatusInfo = createAsyncThunk(
     'user/status',
@@ -102,30 +104,5 @@ export const fetchStatusInfo = createAsyncThunk(
             console.error('Error fetching status customer details data:', error);
             throw error;
         }
-    });
-    
-    export const fetchCustomerArchives = createAsyncThunk(
-        'user/customers/archive',
-        async ({ user_id, token }, { rejectWithValue }) => {
-            try {
-                const response = await fetch(`${api_endpoint}/fetch-archive/${user_id}`, {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
-                  },
-                });
-          
-                if (!response.ok) {
-                  return rejectWithValue({ type: 'http', status: response.status });
-                }
-          
-                const data = await response.json();
-                // console.log(data.archiveds)
-                // sessionStorage.setItem('customerData', JSON.stringify(data.customer));
-                return data;
-              } catch (error) {
-                // General error handling
-                console.error('Error:', error);
-                throw error;
-              }
-        });
+    }
+);

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import axios from 'axios';
-import { fetchCustomerArchives } from "../../../redux/userActions";
+import { fetchCustomerArchives } from "../../../redux/services/user/userActions";
 
 const CustomerArchived = () => {
   const dispatch = useDispatch();
@@ -49,7 +49,7 @@ const CustomerArchived = () => {
     dispatch(fetchCustomerArchives({ user_id, token }));
   }, [dispatch]);
 
-  // console.log("archived: ", archiveds)
+  console.log("archived: ", archiveds)
 
   const toggleDropdown = (customerId) => {
     if (openDropdownId === customerId) {

@@ -1,6 +1,7 @@
 // React-specific entry point to allow generating React hooks
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import api_endpoint from '../src/config'
+import api_endpoint from '../../../src/config'
+
 
 export const authApi = createApi({
   reducerPath: 'authApi',

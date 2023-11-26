@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import api_endpoint from '../src/config'
+import api_endpoint from '../../../src/config'
 import Cookies from 'js-cookie'
-import localhost_domain from '../src/cookie';
+import localhost_domain from '../../../src/cookie';
 
 // Async Thunk for User Login
 export const loginUser = createAsyncThunk(

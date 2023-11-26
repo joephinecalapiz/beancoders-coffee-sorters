@@ -6,9 +6,9 @@ import BeansLogo from ".././assets/beansLogo.png";
 import "./../css/sidebar.css";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import { useDispatch, useSelector } from 'react-redux'
-import { logout, setCredentials } from "../../redux/authSlice";
-import { useGetUserDetailsQuery } from '../../redux/authService'
-import { fetchUserDetails } from "../../redux/userActions";
+import { logout, setCredentials } from "../../redux/services/auth/authSlice";
+import { useGetUserDetailsQuery } from '../../redux/services/auth/authService'
+import { fetchUserDetails } from "../../redux/services/user/userActions";
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);

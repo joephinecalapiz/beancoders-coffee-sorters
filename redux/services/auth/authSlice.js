@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { companyDetails, loginUser, registerUser } from './authActions';
 import Cookies from 'js-cookie'
-import localhost_domain from '../src/cookie';
+import localhost_domain from '../../../src/cookie';
 
 // initialize userToken from local storage
 const token = Cookies.get('tk')

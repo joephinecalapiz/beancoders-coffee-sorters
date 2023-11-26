@@ -11,9 +11,9 @@ import { IoIosArrowDown } from "react-icons/io";
 import ".././css/font.css"; // Replace with the correct path to your CSS file
 import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
-import { logout, setCredentials } from "../../redux/authSlice";
-import { fetchUserDetails } from "../../redux/userActions";
-import { useGetUserDetailsQuery } from '../../redux/authService'
+import { logout, setCredentials } from "../../redux/services/auth/authSlice";
+import { fetchUserDetails } from "../../redux/services/user/userActions";
+import { useGetUserDetailsQuery } from '../../redux/services/auth/authService'
 import Cookies from 'js-cookie'
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {

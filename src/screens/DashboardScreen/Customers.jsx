@@ -7,7 +7,7 @@ import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 import Modal from "../../component/Modal";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCustomerInfo } from "../../../redux/userActions";
+import { fetchCustomerInfo } from "../../../redux/services/user/userActions";
 import beanlogo from '../../assets/beanlogo.png';
 
 const Customers = () => {

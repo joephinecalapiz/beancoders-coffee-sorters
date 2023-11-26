@@ -6,9 +6,8 @@ import Navbar from "../../../component/Navbar";
 import { useForm } from "react-hook-form";
 import Modal from "../../../component/Modal";
 import Footer from "../Footer";
-
 import { useDispatch, useSelector } from 'react-redux'
-import { registerUser } from "../../../../redux/authActions";
+import { registerUser } from "../../../../redux/services/auth/authActions";
 
 const Signup = () => {
   const navigate = useNavigate();

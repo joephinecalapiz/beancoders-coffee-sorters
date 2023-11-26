@@ -9,7 +9,7 @@ import AxiosRateLimit from "axios-rate-limit";
 import Modal from "../../component/Modal";
 import { useDispatch, useSelector } from 'react-redux'
 import api_endpoint from "../../config";
-import { fetchSorterInfo } from "../../../redux/userActions";
+import { fetchSorterInfo } from "../../../redux/services/user/userActions";
 import beanlogo from '../../assets/beanlogo.png';
 
 const Sorters = () => {
