@@ -18,6 +18,7 @@
 
 .sorters-table th {
   position: sticky;
+  background-color: #B77D67;
   top: 0;
   width: 1000px;
   text-align: center;
@@ -50,7 +51,7 @@
 }
 
 .sort-table .see-more-button:hover {
-  color: #0052a3;
+  color: #ffffff;
 }
 
 /* For Modal Styling */
