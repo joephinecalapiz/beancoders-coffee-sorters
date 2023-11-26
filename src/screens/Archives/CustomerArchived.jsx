@@ -304,7 +304,7 @@ const CustomerArchived = () => {
                     <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
                       {(reloadCustomerData || sortedFilteredCustomers).map(
                         (customer) => (
-                          <tr key={customer.id}>
+                          <tr key={customer.id} className="hover:bg-lightBrown">
                             <td className="poppins-font">{customer.id}</td>
                             <td className="poppins-font">
                               {new Date(customer.created_at).toLocaleDateString()}
@@ -340,7 +340,7 @@ const CustomerArchived = () => {
                                     className="py-2 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="dropdownMenuIconHorizontalButton"
                                   >
-                                    <li>
+                                    <li className="hover:bg-lightBrown rounded-full mx-2">
                                       <button
                                         onClick={() =>
                                           deleteCustomer(customer.id)

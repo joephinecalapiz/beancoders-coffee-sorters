@@ -496,7 +496,7 @@ const Customers = () => {
                 <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
                   {(reloadCustomerData || sortedFilteredCustomers).map(
                     (customer, index) => (
-                      <tr key={customer.id}>
+                      <tr key={customer.id} className="hover:bg-lightBrown">
                         <td className="poppins-font">{index + 1}</td>
                         <td className="poppins-font">
                           {new Date(customer.created_at).toLocaleDateString()}
@@ -529,15 +529,15 @@ const Customers = () => {
                               style={{ top: "100", right: "0" }}
                             >
                               <ul
-                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                className="py-2 text-sm text-gray-700 dark:text-gray-200 "
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => {
                                       // Navigate to the desired page
                                       navigate(
-                                        `/customers/customerstatus/${customer.customerName}/${customer.id}`
+                                        `/customers/history/${customer.customerName}/${customer.id}`
                                       );
                                     }}
                                     className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
@@ -548,7 +548,7 @@ const Customers = () => {
                                     History
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() =>
                                       handleShowUpdateModal(customer)
@@ -561,7 +561,7 @@ const Customers = () => {
                                     Update
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() =>
                                       archivedCustomer(customer.id)

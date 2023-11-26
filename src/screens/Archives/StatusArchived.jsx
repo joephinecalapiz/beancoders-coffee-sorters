@@ -199,7 +199,7 @@ const StatusArchived = () => {
                   </thead>
                   <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
                     {sortedFilteredCustomers.map((customer) => (
-                      <tr key={customer.id}>
+                      <tr key={customer.id} className="hover:bg-lightBrown">
                         <td className="poppins-font">{customer.customer_id}</td>
                         <td className="poppins-font">{customer.customerName}</td>
                         <td className="poppins-font">{customer.sorterName}</td>

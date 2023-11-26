@@ -260,7 +260,7 @@ const Sorters = () => {
                 <tbody className="bg-white divide-y divide-gray-200 text-center sort-table dark:text-textTitle dark:bg-container">
                   {(reloadSorterData || sortedFilteredSorters).map(
                     (sorter, index) => (
-                      <tr key={sorter.id}>
+                      <tr key={sorter.id} className="hover:bg-lightBrown">
                         <td className="poppins-font">{index + 1}</td>
                         <td className="poppins-font">{sorter.sorterName}</td>
                         <td className="poppins-font">{sorter.phoneNum}</td>
@@ -275,10 +275,10 @@ const Sorters = () => {
               </table>
             </div>
             <div>
-                {sorterError && (
-                  <p className="items-center justify-center text-center text-primary dark:text-textTitle">No sorters found. Please add new sorter!</p>
-                )}
-              </div>
+              {sorterError && (
+                <p className="items-center justify-center text-center text-primary dark:text-textTitle">No sorters found. Please add new sorter!</p>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -434,7 +434,7 @@ const Status = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
+                <tbody className="sort-table dark:text-textTitle dark:bg-container divide-y divide-gray-200">
                   {allStatus
                     .filter((sorted) =>
                       sorted.customerName
@@ -442,7 +442,7 @@ const Status = () => {
                         .includes(searchText.toLowerCase())
                     )
                     .map((sorted) => (
-                      <tr key={sorted.id}>
+                      <tr key={sorted.id} className="hover:bg-lightBrown">
                         <td className="poppins-font">
                           {new Date(sorted.created_at).toLocaleDateString()}
                         </td>
@@ -467,38 +467,38 @@ const Status = () => {
                                 className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToOngoing(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${
                                       sorted.status === "Ongoing"
-                                        ? "bg-brown hover:bg-gray-100 text-white"
+                                        ? "bg-brown hover:bg-gray-100 text-secondary"
                                         : ""
-                                    } dark:hover:bg-lightBrown text-black dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Ongoing
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToFinished(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${
                                       sorted.status === "Finished"
                                         ? "bg-brown hover:bg-gray-100  text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown text-black dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Finished
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToCancelled(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${
                                       sorted.status === "Cancelled"
                                         ? "bg-brown hover:bg-gray-100 text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown text-black dark:hover:text-white`}
+                                    } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Cancelled
                                   </button>
