@@ -183,7 +183,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className=" text-red-700  fixed top-0 left-0 right-0 z-50 ">
+    <div className="text-lightBrown fixed top-0 left-0 right-0 z-50 ">
       {/* Mobile menu button */}
       <div
         className={`md:hidden absolute top-8 right-4 cursor-pointer z-50 transition-transform transform ${
@@ -213,8 +213,8 @@ const Navbar = () => {
           {mobileNav.map((item) => (
             <li
               key={item.href}
-              className={`my-4 hover:text-[#FF3535] cursor-pointer text-white hover:underline md:text-[20px] ${
-                item.current ? "text-[#883d3d]" : ""
+              className={`my-4 hover:text-ligthBrown cursor-pointer text-white hover:underline md:text-[20px] ${
+                item.current ? "text-mainBrown" : ""
               } poppins-font font-semibold`}
               onClick={() => {
                 handleMobileNavigationClick(item.href);
@@ -232,8 +232,8 @@ const Navbar = () => {
           {mainNav.map((item) => (
             <li
               key={item.href}
-              className={`my-4 hover:text-[#FF3535] cursor-pointer text-white hover:underline md:text-[20px] ${
-                item.current ? "text-[#883d3d]" : ""
+              className={`my-4 hover:text-lightBrown cursor-pointer text-white hover:underline md:text-[20px] ${
+                item.current ? "text-mainBrown" : ""
               } poppins-font font-semibold`}
               onClick={() => {
                 handleMainNavigationClick(item.href);
@@ -252,9 +252,9 @@ const Navbar = () => {
           {" "}
           {/* Add a flex container */}
           <img src={BeansLogo} alt="BeansLogo" className="h-20 w-20 ml-1" />
-          <span className="hidden md:block ml-2 text-red-800 mt-3 poppins-font md:text-xl font-semibold">
+          {/* <span className="hidden md:block ml-2 text-mainBrown mt-3 poppins-font md:text-xl font-semibold">
             Beancoders
-          </span>
+          </span> */}
           {authenticated ? (
             <div
               className={`absolute top-8 right-4 cursor-pointer z-50 transition-transform transform ${
@@ -290,8 +290,8 @@ const Navbar = () => {
                 !(item.name === "Login" && authenticated) && (
                   <li
                     key={item.href}
-                    className={`my-4 hover:text-[#783e3e] cursor-pointer  hover:underline md:text-[20px] ${
-                      item.current ? "text-[#512b2b]" : ""
+                    className={`my-4 hover:text-lightBrown cursor-pointer  hover:underline md:text-[20px] ${
+                      item.current ? "text-mainBrown" : ""
                     } poppins-font font-semibold `}
                     onClick={() => {
                       handleNavigationClick(item.href);
@@ -356,11 +356,11 @@ const Navbar = () => {
                 e.target.style.transition = "background-color 0.3s ease";
               }}
               onMouseLeave={(e) => {
-                e.target.style.backgroundColor = "#512615";
+                e.target.style.backgroundColor = "#74574D";
                 e.target.style.transition = "background-color 0.3s ease";
               }}
               style={{
-                backgroundColor: "#512615",
+                backgroundColor: "#74574D",
                 boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
                 border: "none",
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
