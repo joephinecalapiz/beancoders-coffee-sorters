@@ -36,7 +36,8 @@ export default {
         },
         mainBrown: "#472214",
         secondBrown: "#7f1f19",
-        lightBrown: "#B77D67"
+        lightBrown: "#8E6B5E",
+        hoverBrown: "#74574D"
       },
       textColor: {
         dark: "#ffffff", // Set the text color for dark mode
