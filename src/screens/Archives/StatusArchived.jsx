@@ -231,7 +231,7 @@ const StatusArchived = () => {
                                 className="py-2 text-sm text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary rounded-full mx-2">
                                   <button
                                     onClick={() => deleteCustomer(customer.id)}
                                     className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"

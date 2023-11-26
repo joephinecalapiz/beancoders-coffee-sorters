@@ -340,7 +340,7 @@ const CustomerArchived = () => {
                                     className="py-2 text-sm text-gray-700 dark:text-gray-200"
                                     aria-labelledby="dropdownMenuIconHorizontalButton"
                                   >
-                                    <li className="hover:bg-lightBrown rounded-full mx-2">
+                                    <li className="hover:bg-lightBrown hover:text-secondary rounded-full mx-2">
                                       <button
                                         onClick={() =>
                                           deleteCustomer(customer.id)
