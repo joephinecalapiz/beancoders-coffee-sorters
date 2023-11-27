@@ -27,7 +27,10 @@ export const authApi = createApi({
       }),
     }),
     getCustomers: builder.query({
-      query: user_id => `/customers/${user_id}`
+      query: () => ({
+        url: `/customers/${user_id}`,
+        method: 'GET',
+      }),
     }),
   }),
 })
