@@ -9,7 +9,7 @@ import Footer from "../Footer";
 import Cookies from 'js-cookie'
 import { loginUser } from "../../../../redux/services/auth/authActions";
 import { useDispatch, useSelector } from 'react-redux'
-import { useGetUserDetailsQuery } from "../../../../redux/services/auth/authService";
+import { useGetUserDetailsQuery } from "../../../../redux/services/api/authService";
 import localhost_domain from "../../../cookie";
 
 const Login = () => {

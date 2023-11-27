@@ -22,7 +22,8 @@ import RootPage from "./screens/RootPage";
 import AdminRootPage from "./superadmin/RootPage";
 import beanlogo from './assets/beanlogo.png';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo } from "../redux/services/user/userActions";
+import { fetchSorterInfo, fetchStatusInfo } from "../redux/services/user/userActions";
+import { fetchCustomerInfo } from "../redux/services/customer/customerAction";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);

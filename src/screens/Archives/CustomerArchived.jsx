@@ -7,13 +7,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import Topbar from "../../component/Topbar";
 import Sidebar from "../../component/Sidebar";
 import axios from 'axios';
-import { fetchCustomerArchives } from "../../../redux/services/user/userActions";
+import { fetchCustomerArchives } from "../../../redux/services/customer/customerAction";
 
 const CustomerArchived = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const archiveds = useSelector(state => state.user.archiveds);
+  const archiveds = useSelector(state => state.customer.archiveds);
   const [archiveError, setArchiveError] = useState(false);
   const [navVisible, showNavbar] = useState(true);
   const navigate = useNavigate(); // Use the hook here
@@ -49,7 +49,7 @@ const CustomerArchived = () => {
     dispatch(fetchCustomerArchives({ user_id, token }));
   }, [dispatch]);
 
-  console.log("archived: ", archiveds)
+  // console.log("archived: ", archiveds)
 
   const toggleDropdown = (customerId) => {
     if (openDropdownId === customerId) {
