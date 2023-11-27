@@ -27,32 +27,6 @@ export const fetchUserDetails = createAsyncThunk(
         }
     });
 
-export const fetchCustomerInfo = createAsyncThunk(
-    'user/customers',
-    async ({ user_id, token }, { rejectWithValue }) => {
-        try {
-            const response = await fetch(`${api_endpoint}/customers/${user_id}`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-                'Content-Type': 'application/json',
-              },
-            });
-      
-            if (!response.ok) {
-              return rejectWithValue({ type: 'http', status: response.status });
-            }
-      
-            const data = await response.json();
-            sessionStorage.setItem('customerData', JSON.stringify(data.customer));
-            return data;
-          } catch (error) {
-            // General error handling
-            console.error('Error:', error);
-            throw error;
-          }
-    }
-);
-
 export const fetchSorterInfo = createAsyncThunk(
     'user/sorters',
     async ({ user_id, token }, { rejectWithValue }) => {

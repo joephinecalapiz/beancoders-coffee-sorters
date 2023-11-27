@@ -1,13 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCustomerArchives, fetchCustomerInfo, fetchSorterInfo, fetchStatusInfo, fetchUserDetails } from './userActions';
+import { fetchSorterInfo, fetchStatusInfo, fetchUserDetails } from './userActions';
 
 // initialize role from local storage
 const userInfo = JSON.parse(sessionStorage.getItem('userInfo'))
     ? JSON.parse(sessionStorage.getItem('userInfo'))
-    : []
-
-const customers = JSON.parse(sessionStorage.getItem('customerData'))
-    ? JSON.parse(sessionStorage.getItem('customerData'))
     : []
 
 const sorters = JSON.parse(sessionStorage.getItem('sorterData'))
@@ -24,10 +20,8 @@ const statusInfo = JSON.parse(sessionStorage.getItem('statusData'))
 const initialState = {
     userInfo,
     companyInfo: '',
-    customers,
     sorters,
     statusInfo,
-    archiveds: '',
     status: 'idle',
     error: null,
 };
@@ -50,18 +44,6 @@ const userInfoSlice = createSlice({
             .addCase(fetchUserDetails.rejected, (state, action) => {
                 state.status = 'failed';
                 state.error = action.error.message;
-            })
-            //customer
-            .addCase(fetchCustomerInfo.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchCustomerInfo.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.customers = action.payload.customer;
-            })
-            .addCase(fetchCustomerInfo.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.payload;
             })
             //sorter
             .addCase(fetchSorterInfo.pending, (state) => {
@@ -87,18 +69,6 @@ const userInfoSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.error.message;
             })
-            //archive customer
-            .addCase(fetchCustomerArchives.pending, (state) => {
-                state.status = 'loading';
-            })
-            .addCase(fetchCustomerArchives.fulfilled, (state, action) => {
-                state.status = 'succeeded';
-                state.archiveds = action.payload.archiveds;
-            })
-            .addCase(fetchCustomerArchives.rejected, (state, action) => {
-                state.status = 'failed';
-                state.error = action.error.message;
-            });
     },
 });
 
