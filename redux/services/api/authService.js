@@ -26,9 +26,12 @@ export const authApi = createApi({
         method: 'GET',
       }),
     }),
+    getCustomers: builder.query({
+      query: user_id => `/customers/${user_id}`
+    }),
   }),
 })
 
 // export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetUserDetailsQuery } = authApi
+export const { useGetUserDetailsQuery, useGetCustomersQuery } = authApi
