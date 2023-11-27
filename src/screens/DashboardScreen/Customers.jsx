@@ -7,19 +7,22 @@ import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 import Modal from "../../component/Modal";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCustomerInfo } from "../../../redux/services/user/userActions";
+import { fetchCustomerInfo } from "../../../redux/services/customer/customerAction";
 import beanlogo from '../../assets/beanlogo.png';
+import { addCustomerInfo } from "../../../redux/services/customer/customerAction";
+import { updateCustomerList } from "../../../redux/services/customer/customerSlice";
+import { useGetCustomersQuery } from "../../../redux/services/api/authService";
 
 const Customers = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const customerInfo = useSelector(state => state.user.customers);
+  const customerInfo = useSelector(state => state.customer.customers);
   const { status, error } = useSelector((state) => state.user);
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
-  const [isFetching, setIsFetching] = useState(true); //experimental --erickson
+  // const [isFetching, setIsFetching] = useState(true); //experimental --erickson
   const monthOptions = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },
@@ -51,19 +54,29 @@ const Customers = () => {
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customerError, setCustomerError] = useState(false);
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
+  const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
-  // useEffect(() => {
-  //   dispatch(fetchCustomerInfo({ user_id, token }));
-  // }, [dispatch]);
+  // automatically fetch customer list
+  //  const { data: customer = [], isFetching, isSuccess } = useGetCustomersQuery(user_id)
 
-  // console.log(customerInfo)
+  // useEffect(() => {
+  //   if (customer) dispatch(updateCustomerList(customer.customer))
+  // }, [customer, dispatch])
 
   useEffect(() => {
+    // if (isSuccess) {
+    //   console.log(customer.customer)
+    // }
+    if (status === 'idle') {
+      // if (customer) dispatch(updateCustomerList(customer.customer))
+      // console.log(customer.customer)
+      fetchCustomers();
+    }
+
     if (status === 'succeeded') {
+      // if (customer) dispatch(updateCustomerList(customer.customer))
+      // console.log(customer.customer)
       setAllCustomers(customerInfo)
       setCustomerError(false);
     }
@@ -72,36 +85,10 @@ const Customers = () => {
     if (status === 'failed') {
       setCustomerError(true);
     }
-  }, []);
-
-  const toggleDropdown = (customerId) => {
-    if (openDropdownId === customerId) {
-      // If the clicked dropdown is already open, close it
-      setOpenDropdownId(null);
-    } else {
-      // Close the previously open dropdown (if any)
-      setOpenDropdownId(customerId);
-    }
-  };
-
-  const handleShowUpdateModal = (customer) => {
-    setOpenDropdownId(null);
-    setSelectedCustomer(customer);
-    setShowUpdateModal(true);
-  };
-
-  const handleCloseUpdateModal = (customer) => {
-    setSelectedCustomer(customer);
-    handleShowUpdateModal(null);
-  };
+  }, [status, dispatch]);
 
   useEffect(() => {
     document.title = "Customers";
-    // const cachedCustomerData = sessionStorage.getItem("customerData");
-
-    // if (cachedCustomerData) {
-    //   setAllCustomers(JSON.parse(cachedCustomerData));
-    // }
 
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
@@ -115,7 +102,7 @@ const Customers = () => {
   //         Authorization: `Bearer ${token}`,
   //       },
   //     });
-  
+
   //     const data = response.data.customer;
   //     // console.log(data)
   //     setAllCustomers(data);
@@ -149,64 +136,41 @@ const Customers = () => {
     //   });
     dispatch(fetchCustomerInfo({ user_id, token }));
     // console.log(customerInfo)
-      setAllCustomers(customerInfo)
-      setCustomerError(false);
-  };
-  
-
-  const [searchText, setSearchText] = useState("");
-
-  const handleSearchInputChange = (e) => {
-    console.log("Search input changed:", e.target.value);
-    setSearchText(e.target.value);
+    setAllCustomers(customerInfo)
+    setCustomerError(false);
   };
 
-  const filteredCustomers = allCustomers.filter((customer) => {
-    const registrationDate = new Date(customer.created_at);
-    const matchesSearchText =
-      customer && customer.customerName
-        ? customer.customerName.toLowerCase().includes(searchText.toLowerCase())
-        : false;
+  const addCustomer = async (e) => {
+    e.preventDefault();
+    const currentDate = new Date().toISOString();
 
-    // Check if selectedMonth is not null, and if it is, don't apply the month filter
-    const monthFilter =
-      selectedMonth !== null
-        ? registrationDate.getMonth() + 1 === selectedMonth.value
-        : true;
+    const customerData = {
+      user_id: user_id,
+      customerName: newCustomerName,
+      phoneNum: newCustomerPhoneNumber,
+      address: newCustomerAddress,
+      registrationDate: currentDate,
+    };
 
-    return (
-      monthFilter &&
-      (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
-      matchesSearchText
-    );
-  });
-
-  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.id - b.id);
-
-  const totalCustomers = allCustomers.length;
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setNewCustomerName("");
-    setNewCustomerPhoneNumber("");
-    setNewCustomerAddress("");
-    setKiloOfBeans("");
-  };
-
-  const openUpdateModal = () => {
-    setIsUpdateModalOpen(true);
-  };
-
-  const closeUpdateModal = () => {
-    setIsUpdateModalOpen(false);
-    setNewCustomerName("");
-    setNewCustomerPhoneNumber("");
-    setNewCustomerAddress("");
-    setKiloOfBeans("");
+    // Dispatch the addCustomerInfo thunk
+    dispatch(addCustomerInfo({ user_id, token, customerData }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (addCustomerInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllCustomers(resultAction.payload)
+          closeModal();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Add Customer Failed');
+        }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching addCustomerInfo:', error);
+      });
   };
 
   const getCustomerPostHistory = async (e) => {
@@ -241,7 +205,7 @@ const Customers = () => {
       }
       if (response.status === 200) {
         // const newCustomer = await response.json();
-        setIsFetching(true);
+        // setIsFetching(true);
         // setAllCustomers((prevCustomers) => {
         //   // Update state with the new customer data
         //   const updatedCustomers = [...prevCustomers, newCustomer.customer];
@@ -329,6 +293,76 @@ const Customers = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleSearchInputChange = (e) => {
+    console.log("Search input changed:", e.target.value);
+    setSearchText(e.target.value);
+  };
+
+  const filteredCustomers = allCustomers.filter((customer) => {
+    const registrationDate = new Date(customer.created_at);
+    const matchesSearchText =
+      customer && customer.customerName
+        ? customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+        : false;
+
+    // Check if selectedMonth is not null, and if it is, don't apply the month filter
+    const monthFilter =
+      selectedMonth !== null
+        ? registrationDate.getMonth() + 1 === selectedMonth.value
+        : true;
+
+    return (
+      monthFilter &&
+      (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
+      matchesSearchText
+    );
+  });
+
+  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.id - b.id);
+
+  const totalCustomers = allCustomers.length;
+
+  const toggleDropdown = (customerId) => {
+    if (openDropdownId === customerId) {
+      // If the clicked dropdown is already open, close it
+      setOpenDropdownId(null);
+    } else {
+      // Close the previously open dropdown (if any)
+      setOpenDropdownId(customerId);
+    }
+  };
+
+  const handleShowUpdateModal = (customer) => {
+    setOpenDropdownId(null);
+    setSelectedCustomer(customer);
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = (customer) => {
+    setSelectedCustomer(customer);
+    handleShowUpdateModal(null);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNewCustomerName("");
+    setNewCustomerPhoneNumber("");
+    setNewCustomerAddress("");
+    setKiloOfBeans("");
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+    setNewCustomerName("");
+    setNewCustomerPhoneNumber("");
+    setNewCustomerAddress("");
+    setKiloOfBeans("");
   };
 
   const handleCancel = () => {
@@ -450,7 +484,7 @@ const Customers = () => {
           }}
         >
           <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-            <div className="max-h-[350px] overflow-y-auto">
+            <div className="max-h-[450px] overflow-y-auto">
               <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                 <thead>
                   <tr>
@@ -458,7 +492,7 @@ const Customers = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      
+
                     </th>
                     <th
                       scope="col"
@@ -597,9 +631,9 @@ const Customers = () => {
                 </tbody>
               </table>
               <div>
-              {customerError && (
-                    <p className="items-center justify-center text-center text-primary dark:text-textTitle">No Customer found. Please add new customer!</p>
-                  )}
+                {customerError && (
+                  <p className="items-center justify-center text-center text-primary dark:text-textTitle">No Customer found. Please add new customer!</p>
+                )}
               </div>
             </div>
             {selectedCustomer && (
@@ -620,7 +654,7 @@ const Customers = () => {
           Customer
         </h2>
         {/* form for adding a new customer */}
-        <form onSubmit={getCustomerPostHistory}>
+        <form onSubmit={addCustomer}>
           <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomerName"
