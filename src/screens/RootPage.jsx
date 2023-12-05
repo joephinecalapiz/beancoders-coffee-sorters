@@ -19,8 +19,7 @@ import CustomerHistory from "./DashboardScreen/CustomerHistory";
 import Receipt from "./ReceiptScreen/Receipt";
 import Error from "./Error";
 import PermissionDenied from "./DeniedAccess";
-import Main from "./mainpage";
-import {useSelector } from 'react-redux'
+import Main from "./Mainpage";
 
 function RootPage() {
 
