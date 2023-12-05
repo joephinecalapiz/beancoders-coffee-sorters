@@ -81,7 +81,7 @@ const customerSlice = createSlice({
             })
             .addCase(updateCustomerInfo.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.updateCustomer = action.payload.customer;
+                state.customers = action.payload;
             })
             .addCase(updateCustomerInfo.rejected, (state, action) => {
                 state.status = 'failed';

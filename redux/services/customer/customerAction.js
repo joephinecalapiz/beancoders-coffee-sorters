@@ -80,23 +80,41 @@ export const addCustomerInfo = createAsyncThunk(
 // Async Thunk for Updating Customer
 export const updateCustomerInfo = createAsyncThunk(
     'customer/updateCustomer',
-    async ({ id, customerData }, { rejectWithValue }) => {
+    async ({ customerId, token, customerData }, { rejectWithValue }) => {
         try {
-            const response = await axios.patch(`${api_endpoint}/edit-customer/${id}`, {
+            const config = {
                 headers: {
-                    Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
-                },
-                body: customerData
-            });
+                    Authorization: "Bearer " + token,
+                },  
+            }
+            const response = await axios.patch(`${api_endpoint}/edit-customer/${customerId}`, customerData, config);
 
-            if (!response.ok) {
+            if (response.status !== 200) {
                 return rejectWithValue({ type: 'http', status: response.status });
             }
 
             if (response.status === 200) {
+                console.log("Customer Updated Sucessfully")
             }
-            return response.data;
+            
+            // console.log(response.data.customer)
+            // Retrieve existing data from sessionStorage
+            const existingData = sessionStorage.getItem('customerData');
+
+            // Parse the existing data (or initialize an empty array if it doesn't exist)
+            const prevCustomers = existingData ? JSON.parse(existingData) : [];
+
+            // Add the new customer data to the existing array
+            const updatedCustomers = [...prevCustomers, response.data.customer];
+
+            // Dispatch the action to update the Redux store
+            // dispatch(updateCustomerList(updatedCustomers));
+
+            // Update sessionStorage with the updated data
+            sessionStorage.setItem('customerData', JSON.stringify(updatedCustomers));
+            // console.log(updatedCustomers);
+            return updatedCustomers;
         } catch (error) {
             // General error handling
             console.error('Error:', error);
