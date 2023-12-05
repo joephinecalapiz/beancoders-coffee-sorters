@@ -8,6 +8,7 @@ import Modal from "../../../component/Modal";
 import Footer from "../Footer";
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from "../../../../redux/services/auth/authActions";
+import KeyVerificationModal from "../../../component/KeyVerificationModal";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -18,6 +19,8 @@ const Signup = () => {
   )
   const token = useSelector(state => state.auth.token);
   const role = useSelector(state => state.auth.role);
+  const [showVerifyKeyModal, setShowVerifyKeyModal] = useState(false);
+  const [keyValidated, setKeyValidated] = useState(false);
   const {
     register,
     handleSubmit,
@@ -78,9 +81,9 @@ const Signup = () => {
       .then(() => {
         // Registration successful, you can navigate or perform other actions
         setTimeout(() => {
-            // setLoading(false); // Set loading to false when the operation is complete
-            navigate("/company");
-            // window.location.reload();
+          // setLoading(false); // Set loading to false when the operation is complete
+          navigate("/company");
+          // window.location.reload();
         }, 2000);
         console.log('Registration successful');
       })
@@ -116,6 +119,15 @@ const Signup = () => {
 //       navigate("/dashboard")
 //     }  
 // })
+
+  const openVerifyKeyModal = () => {
+    setShowVerifyKeyModal(true);
+  };
+
+  const closeVerifyKeyModal = () => {
+    setShowVerifyKeyModal(false);
+    setKeyValidated(true);
+  };
 
   return (
     <>
@@ -200,35 +212,28 @@ const Signup = () => {
               {errors.password && (
                 <p className="text-red-500 ml-2">{errors.password.message}</p>
               )}
-              <button
+              {keyValidated ? (
+                <button
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white"
                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
-                disabled={loading}
+                // disabled={loading}
                 onClick={handleSubmit(onSubmitHandler)}
               >
-                {loading ? (
-                  <svg
-                    className="animate-spin h-5 w-5 mr-3 text-white"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
-                    ></path>
-                  </svg>
-                ) : null}
-                {loading ? "Loading..." : "Sign Up"}
+                Sign Up
               </button>
+              ) : (
+                <button
+                  className="bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
+                  onClick={openVerifyKeyModal}
+                >
+                  Submit
+                </button>
+              )}
+              <KeyVerificationModal
+                isOpen={showVerifyKeyModal}
+                onClose={closeVerifyKeyModal}
+              />
               <p className="text-white text-center my-7 ">
                 Already have an account?
                 <span
