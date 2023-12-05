@@ -12,6 +12,7 @@ import image_endpoint from "../image-config";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../redux/services/auth/authSlice";
 import { fetchUserDetails } from "../../redux/services/user/userActions";
+import Cookies from 'js-cookie'
 
 const Topbar = ({ handleToggleSidebar, collapsed }) => {
   const dispatch = useDispatch();
