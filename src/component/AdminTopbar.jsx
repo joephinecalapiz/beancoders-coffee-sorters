@@ -120,6 +120,9 @@ const Topbar = ({ handleToggleSidebar, collapsed }) => {
     // Check for saved email and password in localStorage
     localStorage.getItem("savedEmail");
     localStorage.getItem("savedPassword");
+    Cookies.remove('uid')
+    Cookies.remove('rl')
+    Cookies.remove('tk')
 
     // Close the confirmation modal
     setConfirmationModalOpen(false);

@@ -40,7 +40,7 @@ const authSlice = createSlice({
       Cookies.remove('tk')
       Cookies.remove('rl')
       Cookies.remove('uid')
-      Cookies.set('isLoggedIn', false, { domain: localhost_domain, secure: true})
+      Cookies.set('isLoggedIn', false, { domain: localhost_domain, secure: true, sameSite: 'lax'})
       state.loading = false
       state.user = null
       state.token = null

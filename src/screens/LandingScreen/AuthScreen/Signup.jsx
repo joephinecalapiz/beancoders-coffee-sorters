@@ -212,8 +212,7 @@ const Signup = () => {
               {errors.password && (
                 <p className="text-red-500 ml-2">{errors.password.message}</p>
               )}
-              {keyValidated ? (
-                <button
+              <button
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white"
                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
@@ -222,14 +221,6 @@ const Signup = () => {
               >
                 Sign Up
               </button>
-              ) : (
-                <button
-                  className="bg-blue-500 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
-                  onClick={openVerifyKeyModal}
-                >
-                  Submit
-                </button>
-              )}
               <KeyVerificationModal
                 isOpen={showVerifyKeyModal}
                 onClose={closeVerifyKeyModal}

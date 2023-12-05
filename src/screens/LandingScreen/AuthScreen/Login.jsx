@@ -243,8 +243,8 @@ const Login = () => {
                       setRememberMe(e.target.checked);
                       // localStorage.setItem("savedEmail", savedEmail);
                       // localStorage.setItem("savedPassword", savedPassword);
-                      Cookies.set('sp', savedPassword, { expires: 7, domain: localhost_domain, secure: true})
-                      Cookies.set('se', savedEmail, { expires: 7, domain: localhost_domain, secure: true})
+                      Cookies.set('sp', savedPassword, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
+                      Cookies.set('se', savedEmail, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
                       if (!e.target.checked) {
                         // Clear saved email and password when unchecked
                         // setSavedEmail("");
