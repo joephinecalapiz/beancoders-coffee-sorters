@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import api_endpoint from "../../config";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateCustomerInfo } from "../../../redux/services/customer/customerAction";
 
 const UpdateCustomer = ({ show, onClose, customer, update }) => {
+    const dispatch = useDispatch();
     const token = useSelector(state => state.auth.token);
     const user_id = useSelector(state => state.auth.user_id);
     const [customerId, setCustomerId] = useState(customer.id);
@@ -16,46 +18,74 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
         onClose();
     };
 
-
-    const updateCustomerDetails = async (e) => {
+    const updateCustomer = async (e) => {
         e.preventDefault();
-        try {
-            const currentDate = new Date().toISOString();
-
-            const response = await fetch(api_endpoint + "/edit-customer/" + customerId, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: "Bearer " + token,
-                },
-                body: JSON.stringify({
-                    customerName: newCustomerName,
-                    phoneNum: newCustomerPhoneNumber,
-                    address: newCustomerAddress,
-                    //kiloOfBeans: newCustomerKiloOfBeans,
-                    registrationDate: currentDate,
-                    // year: selectedYearValue, // Use the selected year
-                    // month: selectedMonthValue, // Use the selected month value
-                }),
-            });
-            if (response.status === 422) {
-                alert("Customer is already in the database");
-            }
-
+        const currentDate = new Date().toISOString();
+    
+        const customerData = {
+          user_id: user_id,
+          customerName: newCustomerName,
+          phoneNum: newCustomerPhoneNumber,
+          address: newCustomerAddress,
+          registrationDate: currentDate,
+        };
+    
+        // Dispatch the addCustomerInfo thunk
+        dispatch(updateCustomerInfo({ customerId, token, customerData }))
+          .then(() => {
+            // // Check if the thunk was fulfilled successfully
+            // if (updateCustomerInfo.fulfilled.match(resultAction)) {
+            console.log('Customer Update Successfully');
+            //   update();
+            // } else {
+            //   // Handle the case where the thunk was rejected or pending
+            //   console.error('Add Customer Failed');
+            // }
             update();
+          })
+          .catch((error) => {
+            // Handle errors that occurred during the dispatching of the thunk
+            console.error('Error dispatching updateCustomerInfo:', error);
+          });
+          closeModal();
+      };
 
-            if (!response.ok) {
-                throw new Error("Fail to add customer");
-            }
+    // const updateCustomerDetails = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const currentDate = new Date().toISOString();
 
-        } catch (error) {
-            console.error(error);
-        }
-        closeModal();
-    };
+    //         const response = await fetch(api_endpoint + "/edit-customer/" + customerId, {
+    //             method: "PATCH",
+    //             headers: {
+    //                 "Content-Type": "application/json",
+    //                 Authorization: "Bearer " + token,
+    //             },
+    //             body: JSON.stringify({
+    //                 customerName: newCustomerName,
+    //                 phoneNum: newCustomerPhoneNumber,
+    //                 address: newCustomerAddress,
+    //                 //kiloOfBeans: newCustomerKiloOfBeans,
+    //                 registrationDate: currentDate,
+    //                 // year: selectedYearValue, // Use the selected year
+    //                 // month: selectedMonthValue, // Use the selected month value
+    //             }),
+    //         });
+    //         if (response.status === 422) {
+    //             alert("Customer is already in the database");
+    //         }
 
+    //         update();
 
+    //         if (!response.ok) {
+    //             throw new Error("Fail to add customer");
+    //         }
 
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    //     closeModal();
+    // };
 
     return (
         <div className="fixed inset-0 flex items-center justify-center z-30">
@@ -74,7 +104,7 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
                 <h2 className="text-2xl font-semibold mb-4 text-center poppins-font">
                     Update Customer
                 </h2>
-                <form onSubmit={updateCustomerDetails}>
+                <form onSubmit={updateCustomer}>
                     <div className="mb-4">
                         <label
                             htmlFor="newCustomerName"
