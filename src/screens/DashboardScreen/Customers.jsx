@@ -7,7 +7,7 @@ import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 import Modal from "../../component/Modal";
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchCustomerInfo } from "../../../redux/services/customer/customerAction";
+import { fetchCustomerInfo, updateCustomerInfo } from "../../../redux/services/customer/customerAction";
 import beanlogo from '../../assets/beanlogo.png';
 import { addCustomerInfo } from "../../../redux/services/customer/customerAction";
 import { updateCustomerList } from "../../../redux/services/customer/customerSlice";
@@ -56,6 +56,7 @@ const Customers = () => {
   const [customerError, setCustomerError] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // automatically fetch customer list
   //  const { data: customer = [], isFetching, isSuccess } = useGetCustomersQuery(user_id)
@@ -63,6 +64,7 @@ const Customers = () => {
   // useEffect(() => {
   //   if (customer) dispatch(updateCustomerList(customer.customer))
   // }, [customer, dispatch])
+  
 
   useEffect(() => {
     // if (isSuccess) {
@@ -134,14 +136,34 @@ const Customers = () => {
     //     // setLoading(false);
     //     // setAllCustomers(customerInfo)
     //   });
-    dispatch(fetchCustomerInfo({ user_id, token }));
-    // console.log(customerInfo)
-    setAllCustomers(customerInfo)
-    setCustomerError(false);
+    // Dispatch the addCustomerInfo thunk
+    dispatch(fetchCustomerInfo({ user_id, token }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (fetchCustomerInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllCustomers(customerInfo)
+          setCustomerError(false);
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Fetch Customer Failed');
+        }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching fetchCustomerInfo:', error);
+      });
+    // dispatch(fetchCustomerInfo({ user_id, token }));
+    // // console.log(customerInfo)
+    // setAllCustomers(customerInfo)
+    // setCustomerError(false);
   };
 
   const addCustomer = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const currentDate = new Date().toISOString();
 
     const customerData = {
@@ -161,6 +183,7 @@ const Customers = () => {
           // Dispatch the updateCustomerList action to update the state with the new data
           // dispatch(updateCustomerList(resultAction.payload));
           setAllCustomers(resultAction.payload)
+          setLoading(false);
           closeModal();
         } else {
           // Handle the case where the thunk was rejected or pending
@@ -170,6 +193,30 @@ const Customers = () => {
       .catch((error) => {
         // Handle errors that occurred during the dispatching of the thunk
         console.error('Error dispatching addCustomerInfo:', error);
+      });
+  };
+
+  const updateCustomer = async () => {
+    // Dispatch the addCustomerInfo thunk
+    dispatch(fetchCustomerInfo({ user_id, token }))
+      .then(() => {
+        fetchCustomers();
+        // Check if the thunk was fulfilled successfully
+        // if (fetchCustomerInfo.fulfilled.match(resultAction)) {
+        //   // console.log('Add Customer Successfully');
+        //   // Dispatch the updateCustomerList action to update the state with the new data
+        //   // dispatch(updateCustomerList(resultAction.payload));
+        //   // setAllCustomers(resultAction.payload)
+        //   // console.log(resultAction.payload.customer[0])
+        //   fetchCustomers();
+        // } else {
+        //   // Handle the case where the thunk was rejected or pending
+        //   console.error('Fetch Customer Failed');
+        // }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching fetchCustomerInfo:', error);
       });
   };
 
@@ -334,6 +381,26 @@ const Customers = () => {
     }
   };
 
+  const closeDropdownOnOutsideClick = (event) => {
+    // Check if the click is outside the dropdown
+    if (
+      event.target.closest('.dropdown')
+    ) {
+      // Close the dropdown
+      setOpenDropdownId(null);
+    }
+  };
+
+  useEffect(() => {
+    // Add a click event listener to the document body
+    document.body.addEventListener('click', closeDropdownOnOutsideClick);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.body.removeEventListener('click', closeDropdownOnOutsideClick);
+    };
+  }, []); // Empty dependency array to ensure the effect runs only once
+
   const handleShowUpdateModal = (customer) => {
     setOpenDropdownId(null);
     setSelectedCustomer(customer);
@@ -492,25 +559,25 @@ const Customers = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-
+                      
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Address
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Customer Name
+                      Customer
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
                       Phone Number
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Address
                     </th>
                     <th
                       scope="col"
@@ -559,8 +626,7 @@ const Customers = () => {
                           {openDropdownId === customer.id && (
                             <div
                               id="dropdownDotsHorizontal"
-                              className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                              style={{ top: "100", right: "0" }}
+                              className="dropdown absolute mt-2 w-56 z-10 right-0 my-4 mr-5 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600"
                             >
                               <ul
                                 className="py-2 text-sm text-gray-700 dark:text-gray-200 "
@@ -710,9 +776,10 @@ const Customers = () => {
           <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
+              disabled = {loading}
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
-              Add Customer
+              {loading ? "Adding..." : "Add Customer"}
             </button>
             <button
               type="button"

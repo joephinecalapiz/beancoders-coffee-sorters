@@ -6,14 +6,14 @@ import Modal from "../../component/Modal"; // Import the Modal component
 import axios from "axios";
 import api_endpoint from "../../config";
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchStatusInfo } from "../../../redux/services/user/userActions";
+import { fetchStatusInfo } from "../../../redux/services/status/statusAction";
 import beanlogo from '../../assets/beanlogo.png';
 
 const Status = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const statusInfo = useSelector(state => state.user.statusInfo);
+  const statusInfo = useSelector(state => state.statusInfo.allStatus);
   const [navVisible, showNavbar] = useState(false);
   const [statusError, setStatusError] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);

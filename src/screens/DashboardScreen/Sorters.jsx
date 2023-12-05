@@ -9,17 +9,19 @@ import AxiosRateLimit from "axios-rate-limit";
 import Modal from "../../component/Modal";
 import { useDispatch, useSelector } from 'react-redux'
 import api_endpoint from "../../config";
-import { fetchSorterInfo } from "../../../redux/services/user/userActions";
+import { addSorterInfo, fetchSorterInfo } from "../../../redux/services/sorter/sorterAction";
 import beanlogo from '../../assets/beanlogo.png';
 
 const Sorters = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
-  const sorterInfo = useSelector(state => state.user.sorters);
+  const sorterInfo = useSelector(state => state.sorter.sorterInfo);
   const { status, error } = useSelector((state) => state.user);
   const [sorterError, setSorterError] = useState(false);
   const [navVisible, showNavbar] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -53,8 +55,14 @@ const Sorters = () => {
   // }, [dispatch]);
 
   useEffect(() => {
+    if (status === 'idle') {
+      // if (customer) dispatch(updateCustomerList(customer.customer))
+      // console.log(customer.customer)
+      fetchSorters();
+    }
+
     if (status === 'succeeded') {
-      // setAllSorters(sorterInfo)
+      setAllSorters(sorterInfo)
       setSorterError(false);
     }
 
@@ -88,10 +96,27 @@ const Sorters = () => {
   }, []);
 
   const fetchSorters = async () => {
-    dispatch(fetchSorterInfo({ user_id, token }));
-    console.log(sorterInfo)
-    setAllSorters(sorterInfo)
-    setSorterError(false);
+    dispatch(fetchSorterInfo({ user_id, token }))
+    .then((resultAction) => {
+      // Check if the thunk was fulfilled successfully
+      if (fetchSorterInfo.fulfilled.match(resultAction)) {
+        // console.log('Add Customer Successfully');
+        // Dispatch the updateCustomerList action to update the state with the new data
+        // dispatch(updateCustomerList(resultAction.payload));
+        setAllSorters(sorterInfo)
+        setSorterError(false);
+      } else {
+        // Handle the case where the thunk was rejected or pending
+        console.error('Fetch Sorter Failed');
+      }
+    })
+    .catch((error) => {
+      // Handle errors that occurred during the dispatching of the thunk
+      console.error('Error dispatching fetchSorterInfo:', error);
+    });
+    // console.log(sorterInfo)
+    // setAllSorters(sorterInfo)
+    // setSorterError(false);
   };
 
   const openModal = () => {
@@ -106,41 +131,76 @@ const Sorters = () => {
     setNewSorterDateHired("");
   };
 
-  const handleAddNewSorter = async (e) => {
+  const addSorter = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axiosInstance.post(
-        api_endpoint + "/add/sorter",
-        {
-          user_id: user_id,
-          sorterName: newSorterName,
-          phoneNum: newSorterPhoneNumber,
-          address: newSorterAddress,
-          dateHired: newSorterDateHired,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-          },
+    setLoading(true);
+
+    const sorterData = {
+      user_id: user_id,
+      sorterName: newSorterName,
+      phoneNum: newSorterPhoneNumber,
+      address: newSorterAddress,
+      dateHired: newSorterDateHired,
+    };
+
+    // Dispatch the addCustomerInfo thunk
+    dispatch(addSorterInfo({ token, sorterData }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (addSorterInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          console.log(resultAction.payload)
+          setAllSorters(resultAction.payload)
+          setLoading(false);
+          closeModal();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Add Sorter Failed');
         }
-      );
-
-      if (response.status === 200) {
-        // setAllSorters((prevSorters) => {
-        //   const updatedSorters = [...prevSorters, response.data.sorter];
-        //   sessionStorage.setItem("sorterData", JSON.stringify(updatedSorters));
-
-        //   return updatedSorters;
-        // });
-        fetchSorters();
-        closeModal();
-      }
-    } catch (error) {
-      console.error("Error adding sorter:", error);
-      // Handle error scenarios if needed
-    }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching addSorterInfo:', error);
+      });
   };
+
+  // const addSorter = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axiosInstance.post(
+  //       api_endpoint + "/add/sorter",
+  //       {
+  //         user_id: user_id,
+  //         sorterName: newSorterName,
+  //         phoneNum: newSorterPhoneNumber,
+  //         address: newSorterAddress,
+  //         dateHired: newSorterDateHired,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + token,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     if (response.status === 200) {
+  //       // setAllSorters((prevSorters) => {
+  //       //   const updatedSorters = [...prevSorters, response.data.sorter];
+  //       //   sessionStorage.setItem("sorterData", JSON.stringify(updatedSorters));
+
+  //       //   return updatedSorters;
+  //       // });
+  //       fetchSorters();
+  //       closeModal();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding sorter:", error);
+  //     // Handle error scenarios if needed
+  //   }
+  // };
 
   const handleCancel = () => {
     closeModal();
@@ -289,7 +349,7 @@ const Sorters = () => {
           Sorter
         </h2>
         {/* form for adding a new sorter */}
-        <form onSubmit={handleAddNewSorter}>
+        <form onSubmit={addSorter}>
           <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterName"
@@ -361,9 +421,10 @@ const Sorters = () => {
           <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
+              disabled={loading}
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
-              Add Sorter
+              {loading ? "Adding..." : "Add Sorter"}
             </button>
             <button
               type="button"
