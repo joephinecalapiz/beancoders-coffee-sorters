@@ -9,6 +9,7 @@ import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
 import { useSelector } from 'react-redux'
+import GenerateKeyModal from "../component/GenerateKeyModal";
 
 const GenerateKeys = () => {
   const token = useSelector(state => state.auth.token);
@@ -32,6 +33,7 @@ const GenerateKeys = () => {
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [showGenerateKeyModal, setShowGenerateKeyModal] = useState(false);
 
   const filteredKeys = allKeys.filter((keys) =>
     keys.created_at.toLowerCase().includes(searchText.toLowerCase())
@@ -143,6 +145,14 @@ const GenerateKeys = () => {
     }
   };
 
+  const openGenerateKeyModal = () => {
+    setShowGenerateKeyModal(true);
+  };
+
+  const closeGenerateKeyModal = () => {
+    setShowGenerateKeyModal(false);
+  };
+
   const totalUsers = allKeys.length;
 
   return (
@@ -160,7 +170,8 @@ const GenerateKeys = () => {
           <div className="poppins-font font-bold">Total: {totalUsers}</div>
           {/* Add New button */}
           <button
-            onClick={handleGenerateKeys}
+            // onClick={handleGenerateKeys}
+            onClick={openGenerateKeyModal}
             className="px-4 py-2 text-white rounded focus:outline-none"
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = "#C4A484";
@@ -264,7 +275,7 @@ const GenerateKeys = () => {
                   onClick={handleDelete}
                   className="bg-red-500 justify-center hover:bg-red-600 text-white font-bold py-2 px-6 rounded mr-2"
                 >
-                  Yes
+                  Delete
                 </button>
                 <button
                   onClick={handleCancel}
@@ -277,6 +288,10 @@ const GenerateKeys = () => {
           </div>
         </div>
       )}
+      <GenerateKeyModal
+        isOpen={showGenerateKeyModal}
+        onClose={closeGenerateKeyModal}
+      />
     </>
   );
 };
