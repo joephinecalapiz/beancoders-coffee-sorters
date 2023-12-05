@@ -13,7 +13,7 @@ import Feedbacks from "./Feedbacks";
 import Error from "./Error";
 import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
-import Main from "./mainpage";
+import Main from "./Mainpage";
 import {useSelector } from 'react-redux'
 
 function AdminRootPage() {
