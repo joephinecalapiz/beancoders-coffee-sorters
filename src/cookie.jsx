@@ -1,6 +1,5 @@
 /** @format */
 
-// const localhost_domain = ".beancoders.online";
-const localhost_domain = "192.168.1.20";
+const localhost_domain = ".beancoders.online";
 
 export default localhost_domain;
