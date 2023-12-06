@@ -24,6 +24,7 @@ import beanlogo from './assets/beanlogo.png';
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchSorterInfo, fetchStatusInfo } from "../redux/services/user/userActions";
 import { fetchCustomerInfo } from "../redux/services/customer/customerAction";
+import RedeemKey from "./screens/LandingScreen/AuthScreen/RedeemKey";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
@@ -64,6 +65,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/company" element={<CompanyDetails />} />
+        <Route path="/redeem-key" element={<RedeemKey />} />
         <Route
           exact
           path="/*"

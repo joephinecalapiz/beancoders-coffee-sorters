@@ -158,6 +158,7 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
           </div>
         )
       ) : (
+        <>
         <button
           className="bg-blue-500 hover.bg-blue-700 text-white font-bold py-2 px-4 rounded"
           onClick={sendOTP}
@@ -165,6 +166,13 @@ const ForgotPasswordModal = ({ isOpen, onClose }) => {
         >
           {loading ? "Sending OTP..." : "Send OTP"}
         </button>
+        <button
+          className=" hover:bg-red-700 dark:text-textTitle hover:text-white text-black font-medium py-2 px-4 mt-2 rounded focus:outline-none poppins-font"
+          onClick={handleClose}
+        >
+          Cancel
+        </button>
+        </>
       )}
     </Modal>
   );

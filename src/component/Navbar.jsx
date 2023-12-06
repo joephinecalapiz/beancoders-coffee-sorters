@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logout, setCredentials } from "../../redux/services/auth/authSlice";
 import { useGetUserDetailsQuery } from '../../redux/services/api/authService'
 import { fetchUserDetails } from "../../redux/services/user/userActions";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 const Navbar = () => {
   const token = useSelector(state => state.auth.token);
@@ -19,6 +20,8 @@ const Navbar = () => {
   const location = useLocation(); // Get the current location
   const [menuOpen, setMenuOpen] = useState(false);
   const [mainMenuOpen, setMainMenuOpen] = useState(false);
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [showForgotPasswordModal, setShowForgotPasswordModal] = useState(false);
   // Initialize the navigation items
   const [navigation, setNavigation] = useState([
     { name: "Home", href: "/", current: location.pathname === "/" },
@@ -33,7 +36,7 @@ const Navbar = () => {
       current: location.pathname === "/contact-us",
     },
     // { name: "Register", href: "/signup", current: location.pathname === "/signup" },
-    { name: "Login", href: "/login", current: location.pathname === "/login" },
+    // { name: "Login", href: "/login", current: location.pathname === "/login" },
   ]);
   const [mobileNav, setMobileNav] = useState([
     { name: "Home", href: "/", current: location.pathname === "/" },
@@ -143,6 +146,14 @@ const Navbar = () => {
     navigate(href);
   };
 
+  const openForgotPasswordModal = () => {
+    setShowForgotPasswordModal(true);
+  };
+
+  const closeForgotPasswordModal = () => {
+    setShowForgotPasswordModal(false);
+  };
+
   // Function to clear session storage on logout
   function clearSessionStorage() {
     sessionStorage.clear(); // This will remove all data from session storage
@@ -178,7 +189,7 @@ const Navbar = () => {
     } else {
       // Handle sign up logic
       // For example, navigate to the sign-up page
-      navigate(`/signup`);
+      setDropdownOpen(true);
     }
   };
 
@@ -366,8 +377,58 @@ const Navbar = () => {
                 textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
               }}
             >
-              {authenticated ? "Logout" : "Sign Up"}
+              {authenticated ? "Logout" : "Login"}
             </button>
+            {isDropdownOpen && (
+            <div
+              className="mx-5 z-50 absolute dark:bg-container top-12 right-0 my-4 text-base list-none bg-mainbg divide-y divide-gray-100 rounded shadow"
+              id="dropdown-user"
+            >
+              <ul className="py-1" role="none">
+                <ul
+                >
+                  <li
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    <a
+                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                      role="menuitem"
+                    >
+                     Login
+                    </a>
+                  </li>
+                  <li
+                    onClick={() => {
+                      navigate("/redeem-key");
+                    }}
+                  >
+                    <a
+                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                      role="menuitem"
+                    >
+                      Redeem Special Key
+                    </a>
+                  </li>
+                  <li
+                    onClick={openForgotPasswordModal}
+                  >
+                    <a
+                      className="mx-2 hover:rounded-full flex items-center px-4 py-2 poppins-font text-sm text-textTitle dark:text-textTitle hover:bg-lightBrown dark:hover:bg-lightBrown dark:hover:text-textTitle cursor-pointer"
+                      role="menuitem"
+                    >
+                      Forgot Password
+                    </a>
+                  </li>
+                  <ForgotPasswordModal
+                  isOpen={showForgotPasswordModal}
+                  onClose={closeForgotPasswordModal}
+                />
+                </ul>
+              </ul>
+            </div>
+          )}
           </ul>
         </div>
       </div>

@@ -306,13 +306,13 @@ const Login = () => {
               <p className="text-white poppins-font mt-10 text-center my-7">
                 Don't have and account?
                 <span
-                  className="underline cursor-pointer poppins-font font-semibold text-yellow-800"
+                  className="pl-2 underline cursor-pointer poppins-font font-semibold text-yellow-800"
                   onClick={() => {
-                    navigate("/signup");
+                    navigate("/redeem-key");
                   }}
                 >
                   {" "}
-                  Create an Account
+                  Redeem Key
                 </span>
               </p>
             </div>
