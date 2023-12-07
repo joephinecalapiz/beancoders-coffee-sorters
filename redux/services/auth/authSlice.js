@@ -80,10 +80,10 @@ const authSlice = createSlice({
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true // registration successful
-        state.user = action.payload.user; // Assuming the payload contains user data
-        state.token = action.payload.token; // Assuming the payload contains a token
-        state.role = action.payload.user.role; // Assuming the payload contains a role
-        state.user_id = action.payload.user.id;
+        // state.user = action.payload.user; // Assuming the payload contains user data
+        // state.token = action.payload.token; // Assuming the payload contains a token
+        // state.role = action.payload.user.role; // Assuming the payload contains a role
+        // state.user_id = action.payload.user.id;
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
