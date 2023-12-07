@@ -174,13 +174,13 @@ const Signup = () => {
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i,
                     message: "Invalid email address",
                   },
                 })}
-                onChange={(e) => {
-                  localStorage.setItem("savedEmail", e.target.value);
-                }}
+                // onChange={(e) => {
+                //   localStorage.setItem("savedEmail", e.target.value);
+                // }}
                 className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
                   errors.email ? "mb-2" : "mb-5"
                 }`}
@@ -202,9 +202,9 @@ const Signup = () => {
                     message: "Password must be at least 8 characters long",
                   },
                 })}
-                onChange={(e) => {
-                  localStorage.setItem("savedPassword", e.target.value);
-                }}
+                // onChange={(e) => {
+                //   localStorage.setItem("savedPassword", e.target.value);
+                // }}
                 className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
                   errors.password ? "mb-2" : "mb-5"
                 }`}
