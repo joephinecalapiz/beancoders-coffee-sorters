@@ -15,9 +15,9 @@ export const loginUser = createAsyncThunk(
                 // localStorage.setItem('role', response.data.user.role);
                 // localStorage.setItem('user_id', response.data.user.id);
                 Cookies.set('isLoggedIn', true, { expires: 7, domain: localhost_domain, httpOnly: true, sameSite: 'strict'})
-                Cookies.set('tk', response.data.token, { expires: 7, domain: localhost_domain, httpOnly: true, secure: true, sameSite: 'strict'})
-                Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, httpOnly: true, secure: true, sameSite: 'strict'})
-                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, httpOnly: true, secure: true, sameSite: 'strict'})
+                Cookies.set('tk', response.data.token, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
+                Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
+                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
             }
             return response.data;
         } catch (error) {
@@ -46,7 +46,7 @@ export const registerUser = createAsyncThunk(
             if (response.status === 200) {
                 // Cookies.set('tk', response.data.token, { expires: 7, domain: localhost_domain, sameSite: 'strict' }) //secure: true
                 // Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
-                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
                 console.log("Successfull Registration")
             }
             return response.data;

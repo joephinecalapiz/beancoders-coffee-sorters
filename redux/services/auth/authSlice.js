@@ -37,9 +37,9 @@ const authSlice = createSlice({
       // localStorage.removeItem('token') // deletes token from storage
       // localStorage.removeItem('role') // deletes token from storage
       // localStorage.removeItem('user_id') // deletes token from storage
-      Cookies.remove('tk')
-      Cookies.remove('rl')
-      Cookies.remove('uid')
+      Cookies.remove('tk', { path: '/', domain: localhost_domain })
+      Cookies.remove('rl', { path: '/', domain: localhost_domain })
+      Cookies.remove('uid', { path: '/', domain: localhost_domain })
       Cookies.set('isLoggedIn', false, { domain: localhost_domain, secure: true, sameSite: 'lax'})
       state.loading = false
       state.user = null
