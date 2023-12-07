@@ -3,8 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import api_endpoint from "../../../config";
+import Cookies from 'js-cookie'
 import Modal from "../../../component/Modal";
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from "../../../../redux/services/auth/authSlice";
@@ -29,7 +28,7 @@ const CompanyDetails = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { loading, user_id } = useSelector(
+  const { loading } = useSelector(
     (state) => state.auth
   )
 
@@ -114,6 +113,8 @@ const CompanyDetails = () => {
       setFile(null); // Clear the file state
     }
   };
+
+  const user_id = Cookies.get("uid");
   
   //---kanang console.log eh change rana para eh connect sa database
   // const onSubmitHandler = (data) => {
