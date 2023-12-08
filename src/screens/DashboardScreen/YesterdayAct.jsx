@@ -21,23 +21,23 @@ const YesterdayAct = () => {
       .then((response) => {
         const data = response.data;
         // Get yesterday's date by subtracting one day from the current date
-        const beancounts = new Date().toISOString().split("T")[0];
+        // const beancounts = new Date().toISOString().split("T")[0];
+        const beancounts = data.allBeans;
+        const sorted = beancounts.sort((a, b) => b.id - a.id);
         // Filter data to include only records created today
-        const filteredData = data.allBeans
+        const filteredData = sorted
           .filter((record) => record.created_at.split("T")[0])
           .slice(0, 5); // Limit to the first 5 records
 
-        const sorted = filteredData.sort((a, b) => b.id - a.id);
-
-          if (sorted.length === 0) {
+          if (filteredData.length === 0) {
             setHistoryError(true);
             setIsLoading(false);
           } else {
             sessionStorage.setItem(
               "beanCount",
-              JSON.stringify(sorted)
+              JSON.stringify(filteredData)
             );
-            setBeanCounts(sorted);
+            setBeanCounts(filteredData);
             setIsLoading(false); // Data fetching is complete
           }
       })
