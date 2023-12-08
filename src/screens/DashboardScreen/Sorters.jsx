@@ -21,6 +21,7 @@ const Sorters = () => {
   const [sorterError, setSorterError] = useState(false);
   const [navVisible, showNavbar] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [addError, setAddError] = useState(false);
 
   const toggleSidebar = () => {
     showNavbar(!navVisible);
@@ -151,18 +152,26 @@ const Sorters = () => {
           // console.log('Add Customer Successfully');
           // Dispatch the updateCustomerList action to update the state with the new data
           // dispatch(updateCustomerList(resultAction.payload));
-          console.log(resultAction.payload)
+          // console.log(resultAction.payload)
           setAllSorters(resultAction.payload)
           setLoading(false);
           closeModal();
         } else {
           // Handle the case where the thunk was rejected or pending
           console.error('Add Sorter Failed');
+          setLoading(false);
+          closeModal();
         }
       })
       .catch((error) => {
         // Handle errors that occurred during the dispatching of the thunk
         console.error('Error dispatching addSorterInfo:', error);
+        if (error && error.type === 'invalid') {
+          setAddError(true);
+          setLoading(false);
+          closeModal();
+        }
+        setLoading(false);
       });
   };
 
@@ -281,7 +290,7 @@ const Sorters = () => {
         >
           <br />
           <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-            <div className="max-h-[440px] overflow-y-auto">
+            <div className="max-h-[500px] overflow-y-auto">
               <table className=" min-w-full divide-y divide-gray-200  customers-table th table-auto ">
                 <thead>
                   <tr>
@@ -337,6 +346,9 @@ const Sorters = () => {
             <div>
               {sorterError && (
                 <p className="items-center justify-center text-center text-primary dark:text-textTitle">No sorters found. Please add new sorter!</p>
+              )}
+              {addError && (
+                <p className="items-center justify-center text-center text-primary dark:text-textTitle">Sorter Already Added. Please try again!</p>
               )}
             </div>
           </div>

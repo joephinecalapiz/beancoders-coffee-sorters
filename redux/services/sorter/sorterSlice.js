@@ -1,20 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { updateSorterInfo, fetchSorterInfo, addSorterInfo } from './sorterAction';
 
-// initialize role from session storage
-// const customers = JSON.parse(sessionStorage.getItem('customerData'))
-//     ? JSON.parse(sessionStorage.getItem('customerData'))
-//     : []
-
 const storedSorters = JSON.parse(sessionStorage.getItem('sorterData'));
-
-// const archivedData = JSON.parse(sessionStorage.getItem('userInfo'))
-//     ? JSON.parse(sessionStorage.getItem('userInfo'))
-//     : []
-
-// const addCustomer = JSON.parse(sessionStorage.getItem('customerData'))
-//     ? JSON.parse(sessionStorage.getItem('customerData'))
-//     : []
 
 const initialState = {
     sorterInfo: Array.isArray(storedSorters) ? storedSorters : [],
@@ -29,7 +16,7 @@ const sorterSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            //customer
+            //sorters
             .addCase(fetchSorterInfo.pending, (state) => {
                 state.status = 'loading';
             })
@@ -41,13 +28,13 @@ const sorterSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.payload;
             })
-            //add customer
+            //add sorter
             .addCase(addSorterInfo.pending, (state) => {
                 state.status = 'loading';
             })
             .addCase(addSorterInfo.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                state.sorterInfo = action.payload;
+                // state.sorterInfo = action.payload;
                 //state.customers.push(action.payload)
             })
             .addCase(addSorterInfo.rejected, (state, action) => {

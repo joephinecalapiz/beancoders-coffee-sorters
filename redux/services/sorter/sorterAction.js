@@ -59,7 +59,7 @@ export const addSorterInfo = createAsyncThunk(
             const prevCustomers = existingData ? JSON.parse(existingData) : [];
 
             // Add the new customer data to the existing array
-            const updatedSorters = [...prevCustomers, response.data.sorters];
+            const updatedSorters = [...prevCustomers, response.data.sorter];
 
             // Dispatch the action to update the Redux store
             // dispatch(updateCustomerList(updatedCustomers));
@@ -70,6 +70,9 @@ export const addSorterInfo = createAsyncThunk(
             return updatedSorters;
         } catch (error) {
             // General error handling
+            if (error.response && error.response.data.error === 'Sorter is in the database already') {
+                return rejectWithValue({ type: 'invalid', message: "Sorter is in the database already" });
+            }
             console.error('Error:', error);
             throw error;
         }
