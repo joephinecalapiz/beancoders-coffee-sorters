@@ -10,26 +10,21 @@ const YesterdayAct = () => {
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
   const navigate = useNavigate();
-  const [allHistory, setAllHistory] = useState([]);
+  const [beanCounts, setBeanCounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [historyError, setHistoryError] = useState(false);
 
   useEffect(() => {
     axios
-      .get(api_endpoint + "/fetch-histories/" + user_id, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+      .get(api_endpoint + "/count", {
       })
       .then((response) => {
         const data = response.data;
         // Get yesterday's date by subtracting one day from the current date
-        const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
-          .toISOString()
-          .split("T")[0];
+        const beancounts = new Date().toISOString().split("T")[0];
         // Filter data to include only records created today
-        const filteredData = data.history
-          .filter((record) => record.created_at.split("T")[0] === yesterday)
+        const filteredData = data.allBeans
+          .filter((record) => record.created_at.split("T")[0])
           .slice(0, 5); // Limit to the first 5 records
 
           if (filteredData.length === 0) {
@@ -37,10 +32,10 @@ const YesterdayAct = () => {
             setIsLoading(false);
           } else {
             sessionStorage.setItem(
-              "yestactivityData",
+              "beanCount",
               JSON.stringify(filteredData)
             );
-            setAllHistory(filteredData);
+            setBeanCounts(filteredData);
             setIsLoading(false); // Data fetching is complete
           }
       })
@@ -58,65 +53,44 @@ const YesterdayAct = () => {
   useEffect(() => {
     const cachedCustomerData = sessionStorage.getItem("yestactivityData");
     if (cachedCustomerData) {
-      setAllHistory(JSON.parse(cachedCustomerData));
+      setBeanCounts(JSON.parse(cachedCustomerData));
     }
   }, []);
 
   return (
     <div className="mt-10 shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
       <div className="max-h-[450px] overflow-y-auto">
-        <table className="min-w-full divide-y divide-gray-200 customers-table poppins-font ">
+        <table className="min-w-full divide-y divide-gray-200 customers-table poppins-font items-center">
           <thead>
             <tr>
               <th
                 scope="col"
-                className="px-6 py-3 text-start  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                className="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
               >
-                Yesterday
+                Beancounts
               </th>
               <th
                 scope="col"
                 className="px-6 py-3  text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-              ></th>
+              >
+              </th>
               <th
                 scope="col"
                 className="px-6 py-3 text-center   text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
               ></th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-              ></th>
-              <th
-                scope="col"
-                className="px-6 py-3 text-center  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-              ></th>
             </tr>
           </thead>
           <tbody className="bg-white dark:text-textDesc dark:bg-container divide-y divide-gray-200 custom-table">
-            {allHistory.map((historyItem, index) => (
-              <tr key={historyItem.id} className="hover:bg-lightBrown hover:text-textTitle">
+            {beanCounts.map((beanItems, index) => (
+              <tr key={beanItems.id} className="hover:bg-lightBrown hover:text-textTitle">
                 <td className="poppins-font text-center">
-                  {/* {new Date(historyItem.date).toLocaleDateString()} */}
-                  {index + 1}
+                  {beanItems.bad} pieces
                 </td>
                 <td className="poppins-font text-center">
-                  {historyItem.customerName}
+                  Bad
                 </td>
                 <td className="poppins-font text-center">
-                  {historyItem.kiloOfBeans} kilo
-                </td>
-                <td className="poppins-font text-center">
-                  {historyItem.status}
-                </td>
-                <td className="poppins-font">
-                  <button
-                    onClick={() => {
-                      navigate(`/status/receipt/${historyItem.id}`);
-                    }}
-                    className="text-primary dark:text-secondary underline focus:outline-none"
-                  >
-                    Receipt
-                  </button>
+                   {new Date(beanItems.updated_at).toLocaleDateString()}
                 </td>
               </tr>
             ))}
