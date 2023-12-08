@@ -86,8 +86,8 @@ export const updateCustomerInfo = createAsyncThunk(
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: "Bearer " + token,
-                },  
-            }
+                },
+            };
             const response = await axios.patch(`${api_endpoint}/edit-customer/${customerId}`, customerData, config);
 
             if (response.status !== 200) {
@@ -95,26 +95,32 @@ export const updateCustomerInfo = createAsyncThunk(
             }
 
             if (response.status === 200) {
-                console.log("Customer Updated Sucessfully")
+                console.log("Customer Updated Successfully");
             }
-            
-            // console.log(response.data.customer)
+
             // Retrieve existing data from sessionStorage
             const existingData = sessionStorage.getItem('customerData');
 
             // Parse the existing data (or initialize an empty array if it doesn't exist)
             const prevCustomers = existingData ? JSON.parse(existingData) : [];
 
-            // Add the new customer data to the existing array
-            const updatedCustomers = [...prevCustomers, response.data.customer];
+            // Find the index of the customer to be updated
+            const indexToUpdate = prevCustomers.findIndex(customer => customer.id === customerId);
+
+            // If the customer is found, update the data, else add a new entry
+            if (indexToUpdate !== -1) {
+                prevCustomers[indexToUpdate] = response.data.customer;
+            } else {
+                prevCustomers.push(response.data.customer);
+            }
 
             // Dispatch the action to update the Redux store
-            // dispatch(updateCustomerList(updatedCustomers));
+            // dispatch(updateCustomerList(prevCustomers));
 
             // Update sessionStorage with the updated data
-            sessionStorage.setItem('customerData', JSON.stringify(updatedCustomers));
-            // console.log(updatedCustomers);
-            return updatedCustomers;
+            sessionStorage.setItem('customerData', JSON.stringify(prevCustomers));
+            // console.log(prevCustomers);
+            return prevCustomers;
         } catch (error) {
             // General error handling
             console.error('Error:', error);
@@ -122,6 +128,7 @@ export const updateCustomerInfo = createAsyncThunk(
         }
     }
 );
+
 
 // Async Thunk for Archiving Customer
 export const archiveCustomerInfo = createAsyncThunk(

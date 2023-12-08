@@ -15,6 +15,7 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get(api_endpoint + "/count").then((response) => {
       const bean = response.data.beans;
+      console.log(response.data.allBeans)
       setBeanCount(bean);
     });
   }, []);
@@ -40,7 +41,7 @@ const Dashboard = () => {
       >
         <div className="grid grid-cols-1 gap-12 mb-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
-            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+            <div className="shadow-xl flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto ml-5 mr-5">
                   Pieces of Bad Beans
@@ -52,27 +53,29 @@ const Dashboard = () => {
                 </h1>
               </div>
             </div>
-            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+            <div className="shadow-xl flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
                   Pieces of Good Beans
                 </h1>
                 <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
-                  {beanCount && beanCount.good !== null
+                  {/* {beanCount && beanCount.good !== null
                     ? `${beanCount.good} pieces`
-                    : "0"}
+                    : "0"} */}
+                    0 pieces
                 </h1>
               </div>
             </div>
-            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+            <div className="shadow-xl flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
-                  KG of Bad Beans
+                  KG of Bad Beans 
                 </h1>
                 <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
-                  {beanCount && beanCount.kilograms !== null
+                  {/* {beanCount && beanCount.kilograms !== null
                     ? `${beanCount.kilograms} kilograms`
-                    : "0"}
+                    : "0"} */}
+                    0 kilograms
                 </h1>
               </div>
             </div>
@@ -88,9 +91,9 @@ const Dashboard = () => {
         }}
       >
         <div>
-          <h1 className="text-black poppins-font dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
+          {/* <h1 className="text-black poppins-font dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
             Recent Activities
-          </h1>
+          </h1> */}
           <Activities />
           <YesterdayAct />
         </div>

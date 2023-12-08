@@ -75,7 +75,7 @@ const Activities = () => {
                 scope="col"
                 className="px-6 py-3 text-start  text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
               >
-                Today
+                Recent Activities
               </th>
               <th
                 scope="col"

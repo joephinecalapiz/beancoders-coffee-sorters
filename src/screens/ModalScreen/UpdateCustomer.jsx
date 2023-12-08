@@ -23,32 +23,37 @@ const UpdateCustomer = ({ show, onClose, customer, update }) => {
         const currentDate = new Date().toISOString();
     
         const customerData = {
-          user_id: user_id,
-          customerName: newCustomerName,
-          phoneNum: newCustomerPhoneNumber,
-          address: newCustomerAddress,
-          registrationDate: currentDate,
+            user_id: user_id,
+            customerName: newCustomerName,
+            phoneNum: newCustomerPhoneNumber,
+            address: newCustomerAddress,
+            registrationDate: currentDate,
         };
     
-        // Dispatch the addCustomerInfo thunk
-        dispatch(updateCustomerInfo({ customerId, token, customerData }))
-          .then(() => {
-            // // Check if the thunk was fulfilled successfully
-            // if (updateCustomerInfo.fulfilled.match(resultAction)) {
-            console.log('Customer Update Successfully');
-            //   update();
-            // } else {
-            //   // Handle the case where the thunk was rejected or pending
-            //   console.error('Add Customer Failed');
-            // }
-            update();
-          })
-          .catch((error) => {
+        try {
+            // Dispatch the updateCustomerInfo thunk
+            const resultAction = await dispatch(updateCustomerInfo({ customerId, token, customerData }));
+    
+            // Check if the thunk was fulfilled successfully
+            if (updateCustomerInfo.fulfilled.match(resultAction)) {
+                // Customer data has been updated in the Redux store
+                // Perform any additional actions you need, such as closing the modal
+                customer(resultAction.payload);
+                update
+                // console.log(resultAction.payload.customer[0])
+            } else {
+                // Handle the case where the thunk was rejected or pending
+                console.error('Update Customer Failed');
+            }
+        } catch (error) {
             // Handle errors that occurred during the dispatching of the thunk
             console.error('Error dispatching updateCustomerInfo:', error);
-          });
-          closeModal();
-      };
+        }
+    
+        // Close the modal after dispatching the update
+        closeModal();
+    };
+    
 
     // const updateCustomerDetails = async (e) => {
     //     e.preventDefault();
