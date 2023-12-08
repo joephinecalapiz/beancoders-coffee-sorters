@@ -27,15 +27,17 @@ const YesterdayAct = () => {
           .filter((record) => record.created_at.split("T")[0])
           .slice(0, 5); // Limit to the first 5 records
 
-          if (filteredData.length === 0) {
+        const sorted = filteredData.sort((a, b) => b.id - a.id);
+
+          if (sorted.length === 0) {
             setHistoryError(true);
             setIsLoading(false);
           } else {
             sessionStorage.setItem(
               "beanCount",
-              JSON.stringify(filteredData)
+              JSON.stringify(sorted)
             );
-            setBeanCounts(filteredData);
+            setBeanCounts(sorted);
             setIsLoading(false); // Data fetching is complete
           }
       })
