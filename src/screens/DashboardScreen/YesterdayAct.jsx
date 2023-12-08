@@ -25,19 +25,19 @@ const YesterdayAct = () => {
         const beancounts = data.allBeans;
         const sorted = beancounts.sort((a, b) => b.id - a.id);
         // Filter data to include only records created today
-        const filteredData = sorted
-          .filter((record) => record.created_at.split("T")[0])
-          .slice(0, 5); // Limit to the first 5 records
+        // const filteredData = sorted
+        //   .filter((record) => record.created_at.split("T")[0])
+        //   .slice(0, 5); // Limit to the first 5 records
 
-          if (filteredData.length === 0) {
+          if (sorted.length === 0) {
             setHistoryError(true);
             setIsLoading(false);
           } else {
             sessionStorage.setItem(
               "beanCount",
-              JSON.stringify(filteredData)
+              JSON.stringify(sorted)
             );
-            setBeanCounts(filteredData);
+            setBeanCounts(sorted);
             setIsLoading(false); // Data fetching is complete
           }
       })
@@ -61,7 +61,7 @@ const YesterdayAct = () => {
 
   return (
     <div className="mt-10 shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-      <div className="max-h-[450px] overflow-y-auto">
+      <div className="max-h-[325px] overflow-y-auto">
         <table className="min-w-full divide-y divide-gray-200 customers-table poppins-font items-center">
           <thead>
             <tr>
