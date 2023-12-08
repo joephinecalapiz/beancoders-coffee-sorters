@@ -92,7 +92,7 @@ const Profile = () => {
       }));
 
       // Print the file name
-      console.log("Selected file name:", file);
+      // console.log("Selected file name:", file);
     } else {
       setSelectedImage(null); // Clear the image preview if no file is selected
       setFile(null); // Clear the file state
@@ -207,14 +207,14 @@ const Profile = () => {
         },
         body: JSON.stringify(newDetails), // Make sure newDetails contains the updated data
       });
-      console.log(newDetails);
+      // console.log(newDetails);
       if (!response.ok) {
         throw new Error("Failed to update company details");
       }
 
       // Handle success response
       console.log("Company details updated successfully");
-      console.log(user_id);
+      // console.log(user_id);
     } catch (error) {
       console.error("Error updating company details:", error);
     }
@@ -261,7 +261,7 @@ const Profile = () => {
     });
     // update the details on the server
     updateCompanyDetails(editableContent);
-    console.log(editableContent);
+    // console.log(editableContent);
     updateProfileInfo(editableProfile);
   };
 

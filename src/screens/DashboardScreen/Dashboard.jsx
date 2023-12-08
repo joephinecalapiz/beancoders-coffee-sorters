@@ -15,7 +15,6 @@ const Dashboard = () => {
   useEffect(() => {
     axios.get(api_endpoint + "/count").then((response) => {
       const bean = response.data.beans;
-      console.log(response.data.allBeans)
       setBeanCount(bean);
     });
   }, []);

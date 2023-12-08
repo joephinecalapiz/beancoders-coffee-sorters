@@ -51,7 +51,7 @@ const YesterdayAct = () => {
   }, []);
 
   useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("yestactivityData");
+    const cachedCustomerData = sessionStorage.getItem("beanCount");
     if (cachedCustomerData) {
       setBeanCounts(JSON.parse(cachedCustomerData));
     }

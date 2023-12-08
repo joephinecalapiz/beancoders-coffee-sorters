@@ -199,20 +199,20 @@ const Customers = () => {
   const updateCustomer = async () => {
     // Dispatch the addCustomerInfo thunk
     dispatch(fetchCustomerInfo({ user_id, token }))
-      .then(() => {
-        fetchCustomers();
+      .then((resultAction) => {
+        // fetchCustomers();
         // Check if the thunk was fulfilled successfully
-        // if (fetchCustomerInfo.fulfilled.match(resultAction)) {
-        //   // console.log('Add Customer Successfully');
-        //   // Dispatch the updateCustomerList action to update the state with the new data
-        //   // dispatch(updateCustomerList(resultAction.payload));
-        //   // setAllCustomers(resultAction.payload)
-        //   // console.log(resultAction.payload.customer[0])
-        //   fetchCustomers();
-        // } else {
-        //   // Handle the case where the thunk was rejected or pending
-        //   console.error('Fetch Customer Failed');
-        // }
+        if (fetchCustomerInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllCustomers(resultAction.payload)
+          // console.log(resultAction.payload.customer[0])
+          // fetchCustomers();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Fetch Customer Failed');
+        }
       })
       .catch((error) => {
         // Handle errors that occurred during the dispatching of the thunk
