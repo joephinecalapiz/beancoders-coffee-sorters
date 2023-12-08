@@ -273,32 +273,10 @@ const Login = () => {
               <button
                 type="submit"
                 className="btn w-full btn-primary mt-7 text-white text-xl font-semibold poppins-font"
-                // disabled={loading}
+                disabled={loading}
                 onClick={handleSubmit(onSubmitHandler)}
               >
-                {loading ? (
-                  <>
-                    <svg
-                      className="animate-spin h-5 w-5 mr-2 text-white"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle
-                        className="opacity-75"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                      ></circle>
-                      <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
-                      ></path>
-                    </svg>
-                    <span>Loading...</span>
-                  </>
-                ) : 'Login'}
+                {loading ? "Signing in..." : "Login"}
               </button>
               {disabledError && (
                 <p className="text-red-500 ml-2">User is disabled. Please contact the admin and try again.</p>
