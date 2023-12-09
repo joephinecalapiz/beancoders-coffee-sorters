@@ -128,7 +128,7 @@ const GenerateMachineId = () => {
 
   const fetchKeys = async () => {
     try {
-      const response = await fetch(api_endpoint + "/fetch-keys/" + user_id, {
+      const response = await fetch(api_endpoint + "/fetch-machine-id/" + user_id, {
         method: "GET",
         headers: {
           Authorization: "Bearer " + token,
@@ -140,7 +140,7 @@ const GenerateMachineId = () => {
       }
 
       const data = await response.json();
-      setAllKeys(data.random_key);
+      setAllKeys(data.machineId);
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
@@ -190,7 +190,7 @@ const GenerateMachineId = () => {
               textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
             }}
           >
-            Generate New Key
+            Generate
           </button>
         </div>
       </div>
@@ -217,7 +217,7 @@ const GenerateMachineId = () => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Special Key
+                      Machine ID
                     </th>
                     <th
                       scope="col"
@@ -235,7 +235,7 @@ const GenerateMachineId = () => {
                   {sortedFilteredKeys.map((key, index) => (
                     <tr key={key.id}>
                       <td className="poppins-font">{index + 1}</td>
-                      <td className="poppins-font">{key.special_key}</td>
+                      <td className="poppins-font">{key.formattedId}</td>
                       <td className="poppins-font">
                         {new Date(key.created_at).toLocaleDateString()}
                       </td>

@@ -24,7 +24,7 @@ const GenerateMachineIdModal = ({ isOpen, onClose }) => {
     };
   
     axios
-      .post(api_endpoint + '/generate-machineid')
+      .post(api_endpoint + '/generate-machineid', {}, config)
       .then((response) => {
         if (response.status === 200) {
           setOtpSent(true);
