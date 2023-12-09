@@ -29,6 +29,12 @@ function AdminSidebar({ collapsed }) {
       current: location.pathname === "/superadmin/generate-keys",
       icon: <FaKey size={ICON_SIZE} />,
     },
+    {
+      name: "Generate MachineID",
+      href: "/superadmin/generate-machine-id",
+      current: location.pathname === "/superadmin/generate-machine-id",
+      icon: <FaKey size={ICON_SIZE} />,
+    },
   ]);
 
   // Initialize dark mode state based on localStorage or user preference

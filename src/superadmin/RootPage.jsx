@@ -15,6 +15,7 @@ import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
 import Main from "./Mainpage";
 import {useSelector } from 'react-redux'
+import GenerateMachineId from "./GenerateMachineID";
 
 function AdminRootPage() {
     const navigate = useNavigate();
@@ -52,6 +53,14 @@ function AdminRootPage() {
                 element={
                     <Main>
                         <GenerateKeys />
+                    </Main>
+                }
+            />
+            <Route
+                path="/generate-machine-id"
+                element={
+                    <Main>
+                        <GenerateMachineId />
                     </Main>
                 }
             />
