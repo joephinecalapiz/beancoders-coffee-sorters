@@ -92,7 +92,15 @@ const YesterdayAct = () => {
                   Bad
                 </td>
                 <td className="poppins-font text-center">
-                   {new Date(beanItems.updated_at).toLocaleDateString()}
+                   {/* {new Date(beanItems.updated_at).toLocaleDateString()} */}
+                  {new Date(beanItems.updated_at).toLocaleString('en-US', {
+                    year: 'numeric',
+                    month: 'numeric',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    // second: 'numeric'
+                  })}
                 </td>
               </tr>
             ))}
