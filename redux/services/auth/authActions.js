@@ -14,10 +14,10 @@ export const loginUser = createAsyncThunk(
                 // localStorage.setItem('token', response.data.token);
                 // localStorage.setItem('role', response.data.user.role);
                 // localStorage.setItem('user_id', response.data.user.id);
+                Cookies.set('tk', response.data.token, { expires: 7, domain: localhost_domain, sameSite: 'strict' }) //secure: true
+                Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
                 Cookies.set('isLoggedIn', true, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
-                Cookies.set('tk', response.data.token, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
-                Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
-                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
             }
             return response.data;
         } catch (error) {
