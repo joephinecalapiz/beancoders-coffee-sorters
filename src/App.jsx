@@ -23,6 +23,7 @@ import AdminRootPage from "./superadmin/RootPage";
 import beanlogo from './assets/beanlogo.png';
 import { useSelector } from 'react-redux'
 import RedeemKey from "./screens/LandingScreen/AuthScreen/RedeemKey";
+import TermsAndConditions from "./screens/LandingScreen/TermsAndConditions";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
@@ -53,6 +54,7 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/company" element={<CompanyDetails />} />
         <Route path="/redeem-key" element={<RedeemKey />} />

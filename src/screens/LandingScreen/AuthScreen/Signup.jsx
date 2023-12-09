@@ -27,7 +27,7 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
   const dispatch = useDispatch()
-  
+
 
   //---kanang console.log eh change rana para eh connect sa database
   // const onSubmitHandler = (data) => {
@@ -101,24 +101,24 @@ const Signup = () => {
       })
       .finally(() => {
         // setLoading(false);
-      });      
+      });
   }
 
   useEffect(() => {
-     if (token) {
+    if (token) {
       if (role == 2) navigate('/dashboard')
       if (role == 1) navigate('/superadmin/manageusers')
     }
     document.title = "Sign Up";
   }, []);
 
-//   useEffect(() =>{
-//     const token = localStorage.getItem('token');
-//     if (token) {
-//       // If there's a token, navigate back to the previous page
-//       navigate("/dashboard")
-//     }  
-// })
+  //   useEffect(() =>{
+  //     const token = localStorage.getItem('token');
+  //     if (token) {
+  //       // If there's a token, navigate back to the previous page
+  //       navigate("/dashboard")
+  //     }  
+  // })
 
   const openVerifyKeyModal = () => {
     setShowVerifyKeyModal(true);
@@ -156,9 +156,8 @@ const Signup = () => {
                     message: "Invalid Name",
                   },
                 })}
-                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${
-                  errors.name ? "mb-2" : "mb-5"
-                }`}
+                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.name ? "mb-2" : "mb-5"
+                  }`}
               />
 
               {errors.name && (
@@ -181,9 +180,8 @@ const Signup = () => {
                 // onChange={(e) => {
                 //   localStorage.setItem("savedEmail", e.target.value);
                 // }}
-                className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
-                  errors.email ? "mb-2" : "mb-5"
-                }`}
+                className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${errors.email ? "mb-2" : "mb-5"
+                  }`}
               />
               {errors.email && (
                 <p className="text-red-500 ml-2">{errors.email.message}</p>
@@ -205,16 +203,15 @@ const Signup = () => {
                 // onChange={(e) => {
                 //   localStorage.setItem("savedPassword", e.target.value);
                 // }}
-                className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${
-                  errors.password ? "mb-2" : "mb-5"
-                }`}
+                className={`bg-white w-full rounded-[10px] mt-2 h-10 text-black poppins-font px-4 ${errors.password ? "mb-2" : "mb-5"
+                  }`}
               />
               {errors.password && (
                 <p className="text-red-500 ml-2">{errors.password.message}</p>
               )}
               <button
                 type="submit"
-                className="btn w-full btn-primary mt-7 text-white"
+                className="btn w-full btn-primary mt-3 text-white"
                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
                 // disabled={loading}
                 onClick={handleSubmit(onSubmitHandler)}
@@ -225,18 +222,32 @@ const Signup = () => {
                 isOpen={showVerifyKeyModal}
                 onClose={closeVerifyKeyModal}
               />
-              <p className="text-white text-center my-7 ">
-                Already have an account?
-                <span
-                  className="underline cursor-pointer text-yellow-700 poppins-font font-semibold"
+              <span className="poppins-font ml-2 mr-4 pt-1 text-white font-Poppins">
+                By clicking Sign up, you agree to our
+                <p
+                  className="ml-2 poppins-font hover:underline font-semibold cursor-pointer pt-1 text-white "
                   onClick={() => {
-                    navigate("/signin");
+                    // Navigate to the desired page
+                    navigate(
+                      `/terms-and-conditions`
+                    );
                   }}
                 >
-                  {" "}
-                  Sign in
-                </span>
-              </p>
+                  Terms and Conditions.
+                </p>
+                <p className="text-white text-center my-4">
+                  Already have an account?
+                  <span
+                    className="underline cursor-pointer text-yellow-700 poppins-font font-semibold"
+                    onClick={() => {
+                      navigate("/signin");
+                    }}
+                  >
+                    {" "}
+                    Sign in
+                  </span>
+                </p>
+              </span>
             </div>
           </form>
         </section>
