@@ -6,7 +6,7 @@ import Modal from "../../component/Modal"; // Import the Modal component
 import axios from "axios";
 import api_endpoint from "../../config";
 import { useDispatch, useSelector } from 'react-redux'
-import { fetchStatusInfo } from "../../../redux/services/status/statusAction";
+import { addStatusInfo, fetchStatusInfo } from "../../../redux/services/status/statusAction";
 import beanlogo from '../../assets/beanlogo.png';
 
 const Status = () => {
@@ -226,6 +226,38 @@ const Status = () => {
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const handleAddNew1 = async (e) => {
+    e.preventDefault();
+
+    const customerData = {
+      user_id: user_id,
+      customerName: newCustomerName,
+      sorterName: newSorterName,
+      kiloOfBeans: newCustomerKiloOfBeans,
+      status: newStatus,
+    };
+
+    // Dispatch the addCustomerInfo thunk
+    dispatch(addStatusInfo({ token, customerData }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (addStatusInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllStatus(resultAction.payload)
+          closeModal();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Add Status Failed');
+        }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching addStatusInfo:', error);
       });
   };
 

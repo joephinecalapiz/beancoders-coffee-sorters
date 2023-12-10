@@ -23,7 +23,7 @@ const YesterdayAct = () => {
 
   useEffect(() => {
     axios
-      .get(api_endpoint + "/count/" + userInfo.formattedId, {
+      .get(`${api_endpoint}/count/${userInfo.formattedId}/${user_id}`, {
       })
       .then((response) => {
         const data = response.data;
