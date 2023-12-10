@@ -4,19 +4,26 @@ import React, { useState, useEffect } from "react"; // Import useState
 import axios from "axios";
 import api_endpoint from "../../config";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUserDetails } from "../../../redux/services/user/userActions";
 
 const YesterdayAct = () => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
   const user_id = useSelector(state => state.auth.user_id);
   const navigate = useNavigate();
   const [beanCounts, setBeanCounts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [historyError, setHistoryError] = useState(false);
+  const userInfo = useSelector(state => state.user.userInfo);
+
+  useEffect(() => {
+    dispatch(fetchUserDetails({ token }));
+  }, [dispatch]);
 
   useEffect(() => {
     axios
-      .get(api_endpoint + "/count", {
+      .get(api_endpoint + "/count/" + userInfo.formattedId, {
       })
       .then((response) => {
         const data = response.data;
