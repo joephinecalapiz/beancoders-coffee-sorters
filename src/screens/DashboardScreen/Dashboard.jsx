@@ -13,6 +13,7 @@ import { fetchUserDetails } from "../../../redux/services/user/userActions";
 const Dashboard = () => {
   const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [beanCount, setBeanCount] = useState("");
   const [goodCount, setGoodCount] = useState("");
   const [beanKilo, setBeanKilo] = useState("");
@@ -25,7 +26,7 @@ const Dashboard = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    axios.get(api_endpoint + "/count/" + userInfo.formattedId).then((response) => {
+    axios.get(`${api_endpoint}/count/${userInfo.formattedId}/${user_id}`).then((response) => {
       const bean = response.data.beans;
       const good = response.data.goodbeans;
       const totalBeans = response.data.totalBeans;

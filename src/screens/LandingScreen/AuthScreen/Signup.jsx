@@ -213,10 +213,10 @@ const Signup = () => {
                 type="submit"
                 className="btn w-full btn-primary mt-3 text-white"
                 style={{ fontFamily: "Poppins, sans-serif", fontSize: "20px" }}
-                // disabled={loading}
+                disabled={loading}
                 onClick={handleSubmit(onSubmitHandler)}
               >
-                Sign Up
+                {loading ? "Processing..." : "Signup"}
               </button>
               <KeyVerificationModal
                 isOpen={showVerifyKeyModal}

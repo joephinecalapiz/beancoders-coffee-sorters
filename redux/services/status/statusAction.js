@@ -34,7 +34,7 @@ export const fetchStatusInfo = createAsyncThunk(
 // Async Thunk for Adding New Customer
 export const addStatusInfo = createAsyncThunk(
     'statusInfo/addStatus',
-    async ({ user_id, token, sorterData: statusData }, { dispatch, rejectWithValue }) => {
+    async ({ token, statusData }, { dispatch, rejectWithValue }) => {
         try {
             const config = {
                 headers: {
@@ -42,7 +42,7 @@ export const addStatusInfo = createAsyncThunk(
                     Authorization: "Bearer " + token,
                 },  
             }
-            const response = await axios.post(`${api_endpoint}/add-status/${user_id}`, statusData, config);
+            const response = await axios.post(`${api_endpoint}/add-status`, statusData, config);
 
             if (response.status !== 200) {
                 return rejectWithValue({ type: 'http', status: response.status });
