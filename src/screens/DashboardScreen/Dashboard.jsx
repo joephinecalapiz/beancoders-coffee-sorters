@@ -7,15 +7,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
 import Activities from "./Activities";
 import YesterdayAct from "./YesterdayAct";
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUserDetails } from "../../../redux/services/user/userActions";
 
 const Dashboard = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
   const [beanCount, setBeanCount] = useState("");
   const [goodCount, setGoodCount] = useState("");
   const [beanKilo, setBeanKilo] = useState("");
+  const [machineiD, setMachineId] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const userInfo = useSelector(state => state.user.userInfo);
 
   useEffect(() => {
-    axios.get(api_endpoint + "/count").then((response) => {
+    dispatch(fetchUserDetails({ token }));
+  }, [dispatch]);
+
+  useEffect(() => {
+    axios.get(api_endpoint + "/count/" + userInfo.formattedId).then((response) => {
       const bean = response.data.beans;
       const good = response.data.goodbeans;
       const totalBeans = response.data.totalBeans;
@@ -26,7 +36,7 @@ const Dashboard = () => {
   }, []);
 
   //console.log(goodCount)
-  console.log(beanCount)
+  // console.log(beanCount)
 
   useEffect(() => {
     document.title = "Dashboard";
