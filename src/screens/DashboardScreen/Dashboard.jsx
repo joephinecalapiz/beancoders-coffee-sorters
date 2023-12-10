@@ -10,14 +10,23 @@ import YesterdayAct from "./YesterdayAct";
 
 const Dashboard = () => {
   const [beanCount, setBeanCount] = useState("");
+  const [goodCount, setGoodCount] = useState("");
+  const [beanKilo, setBeanKilo] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     axios.get(api_endpoint + "/count").then((response) => {
       const bean = response.data.beans;
+      const good = response.data.goodbeans;
+      const totalBeans = response.data.totalBeans;
       setBeanCount(bean);
+      setGoodCount(good);
+      setBeanKilo(totalBeans);
     });
   }, []);
+
+  //console.log(goodCount)
+  console.log(beanCount)
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -58,10 +67,9 @@ const Dashboard = () => {
                   Pieces of Good Beans
                 </h1>
                 <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
-                  {/* {beanCount && beanCount.good !== null
-                    ? `${beanCount.good} pieces`
-                    : "0"} */}
-                    0 pieces
+                  {goodCount && goodCount !== null
+                    ? `${goodCount} pieces`
+                    : "0"}
                 </h1>
               </div>
             </div>
@@ -71,10 +79,9 @@ const Dashboard = () => {
                   KG of Bad Beans 
                 </h1>
                 <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
-                  {/* {beanCount && beanCount.kilograms !== null
-                    ? `${beanCount.kilograms} kilograms`
-                    : "0"} */}
-                    0 kilograms
+                  {beanKilo && beanKilo.kilograms !== null
+                    ? `${beanKilo.kilograms} kilograms`
+                    : "0"}
                 </h1>
               </div>
             </div>

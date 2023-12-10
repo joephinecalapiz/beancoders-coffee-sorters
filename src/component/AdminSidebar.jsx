@@ -30,7 +30,7 @@ function AdminSidebar({ collapsed }) {
       icon: <FaKey size={ICON_SIZE} />,
     },
     {
-      name: "Generate MachineID",
+      name: "Machines",
       href: "/superadmin/generate-machine-id",
       current: location.pathname === "/superadmin/generate-machine-id",
       icon: <FaKey size={ICON_SIZE} />,

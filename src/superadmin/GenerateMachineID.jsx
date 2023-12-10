@@ -161,7 +161,7 @@ const GenerateMachineId = () => {
       <div className="header">
         <div className="md:pl-5 md:pr-5 pr-2 pl-2 pt-0.5 mb-2">
           <h1 className="text-black poppins-font font-bold bg-white dark:text-textTitle dark:bg-container mt-5 text-base p-3 rounded-lg shadow-xl">
-            Generate Keys
+            Generate Machine ID
           </h1>
         </div>
       </div>
