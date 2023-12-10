@@ -25,6 +25,7 @@ const ManageUsers = () => {
 
   const [allUsers, setAllUsers] = useState([]);
   const [machines, setMachines] = useState([]);
+  const [userIdToUpdate, setUserIdToUpdate] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
@@ -43,6 +44,24 @@ const ManageUsers = () => {
   const deleteKeys = (id) => {
     setKeyToDelete(id);
     openModal();
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(api_endpoint + "/allusers", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      const data = await response.json();
+      setAllUsers(data.user);
+      console.log(data.user)
+      // sessionStorage.setItem("userData", JSON.stringify(data.user));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
 
   useEffect(() => {
@@ -77,8 +96,9 @@ const ManageUsers = () => {
     setMachine(e.target.value);
   };
 
-  const openModals = () => {
+  const openModals = (id) => {
     setIsModal(true);
+    setUserIdToUpdate(id);
   };
 
   const closeModals = () => {
@@ -140,11 +160,11 @@ const ManageUsers = () => {
     }
   };
 
-  const handleAddNew = async (event) => {
+  const handleAddNew = async () => {
     event.preventDefault();
     try {
       const response = await fetch(
-        api_endpoint + "/machine-id/" + user_id,
+        api_endpoint + "/machine-id/" + userIdToUpdate,
         {
           method: "PATCH",
           headers: {
@@ -225,28 +245,11 @@ const ManageUsers = () => {
     setOpenDropdownId(null);
   };
 
-  const fetchUsers = async () => {
-    try {
-      const response = await fetch(api_endpoint + "/allusers", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-
-      const data = await response.json();
-      setAllUsers(data.user);
-      sessionStorage.setItem("userData", JSON.stringify(data.user));
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
   useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("userData");
-    if (cachedCustomerData) {
-      setAllUsers(JSON.parse(cachedCustomerData));
-    }
+    // const cachedCustomerData = sessionStorage.getItem("userData");
+    // if (cachedCustomerData) {
+    //   setAllUsers(JSON.parse(cachedCustomerData));
+    // }
   }, []);
 
   const totalUsers = allUsers.length;
@@ -420,7 +423,7 @@ const ManageUsers = () => {
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                         <button
-                          onClick={openModals}
+                          onClick={() => openModals(user.id)}
                           className="delete-button ml-2"
                         >
                           <FontAwesomeIcon icon={faEdit} />
