@@ -37,7 +37,7 @@ const Dashboard = () => {
   }, []);
 
   //console.log(goodCount)
-  // console.log(beanCount)
+  //console.log(beanKilo)
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -90,8 +90,8 @@ const Dashboard = () => {
                   KG of Bad Beans 
                 </h1>
                 <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
-                  {beanKilo && beanKilo.kilograms !== null
-                    ? `${beanKilo.kilograms} kilograms`
+                  {beanKilo && beanKilo !== null
+                    ? `${beanKilo} kilograms`
                     : "0"}
                 </h1>
               </div>
