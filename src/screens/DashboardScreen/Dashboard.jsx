@@ -29,7 +29,7 @@ const Dashboard = () => {
     axios.get(`${api_endpoint}/count/${userInfo.formattedId}/${user_id}`).then((response) => {
       const bean = response.data.beans;
       const good = response.data.goodbeans;
-      const totalBeans = response.data.totalBeans;
+      const totalBeans = response.data.GramsBadBeans;
       setBeanCount(bean);
       setGoodCount(good);
       setBeanKilo(totalBeans);
