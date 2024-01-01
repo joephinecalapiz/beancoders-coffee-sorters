@@ -8,6 +8,7 @@ import api_endpoint from "../../config";
 import { useDispatch, useSelector } from 'react-redux'
 import { addStatusInfo, fetchStatusInfo } from "../../../redux/services/status/statusAction";
 import beanlogo from '../../assets/beanlogo.png';
+import rpi_endpoint from "../../rpi-endpoint";
 
 const Status = () => {
   const dispatch = useDispatch();
@@ -266,7 +267,7 @@ const Status = () => {
     closeModal();
   };
 
-  const setToOngoing = async (statusId) => {
+  const setToOngoing = async (statusId, customerId) => {
     try {
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
@@ -295,6 +296,25 @@ const Status = () => {
         setAllStatus(statusInfo)
         setStatusError(false);
         setOpenDropdownId(null);
+        console.log(statusInfo)
+        console.log(statusId)
+        console.log(customerId)
+      }
+      const rspns = await fetch(
+        `${rpi_endpoint}/update_json`,{
+          method:"POST",
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            statusId: statusId,
+            customerId: customerId
+          })
+        });
+        console.log(customerId)
+      if (rspns.status === 200){
+        console.log(customerId)
+        console.log("success")
       }
     } catch (error) {
       console.error(error);
@@ -507,7 +527,7 @@ const Status = () => {
                               >
                                 <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
-                                    onClick={() => setToOngoing(sorted.id)}
+                                    onClick={() => setToOngoing(sorted.id, sorted.customer_id)}
                                     className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Ongoing"
                                         ? "bg-brown hover:bg-gray-100 text-secondary"
                                         : ""
