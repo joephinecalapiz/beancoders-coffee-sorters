@@ -322,7 +322,10 @@ const Status = () => {
     setOpenDropdownId(null);
   };
 
-  const setToFinished = async (statusId) => {
+  const setToFinished = async (statusId, badCount, kiloOfBeans) => {
+    const totalGrams = kiloOfBeans * 1000;
+    const totalBadBeans = badCount * 0.1;
+    const goodBeanCount = (totalGrams - totalBadBeans) / 0.1; 
     try {
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
@@ -333,6 +336,7 @@ const Status = () => {
             Authorization: "Bearer " + token,
           },
           body: JSON.stringify({
+            goodCount: goodBeanCount,
             status: "Finished",
           }),
         }
@@ -488,6 +492,24 @@ const Status = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
+                      Bad Beans
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Good Beans
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Total Kilo
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
                       receipt
                     </th>
                   </tr>
@@ -538,7 +560,7 @@ const Status = () => {
                                 </li>
                                 <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
-                                    onClick={() => setToFinished(sorted.id)}
+                                    onClick={() => setToFinished(sorted.id, sorted.badCount, sorted.kiloOfBeans)}
                                     className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Finished"
                                         ? "bg-brown hover:bg-gray-100  text-white"
                                         : ""
@@ -562,6 +584,9 @@ const Status = () => {
                             </div>
                           )}
                         </td>
+                        <td className="poppins-font">{sorted.badCount} pcs.</td>
+                        <td className="poppins-font">{sorted.goodCount} pcs.</td>
+                        <td className="poppins-font">{sorted.kiloOfBeans} kg</td>
                         <td className="poppins-font">
                           <button
                             onClick={() => {
