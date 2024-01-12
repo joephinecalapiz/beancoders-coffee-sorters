@@ -44,9 +44,9 @@ export const registerUser = createAsyncThunk(
         try {
             const response = await axios.post(`${api_endpoint}/register/users`, userData);
             if (response.status === 200) {
-                Cookies.set('tk', response.data.token, { domain: localhost_domain, secure: true, sameSite: 'strict' }) //secure: true
+                Cookies.set('tk', response.data.token, { domain: localhost_domain, sameSite: 'strict' }) //secure: true
                 // Cookies.set('rl', response.data.user.role, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
-                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, secure: true, sameSite: 'strict'})
+                Cookies.set('uid', response.data.user.id, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
                 console.log("Successfull Registration")
             }
             return response.data;
