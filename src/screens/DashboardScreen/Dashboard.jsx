@@ -27,9 +27,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     axios.get(`${api_endpoint}/count/${userInfo.formattedId}/${user_id}`).then((response) => {
-      const bean = response.data.beans;
-      const good = response.data.goodbeans;
-      const totalBeans = response.data.GramsBadBeans;
+      console.log(response.data.badBeans)
+      const bean = response.data.badBeans;
+      const good = response.data.goodBeans;
+      const totalBeans = response.data.totalKg;
       setBeanCount(bean);
       setGoodCount(good);
       setBeanKilo(totalBeans);
@@ -66,8 +67,8 @@ const Dashboard = () => {
                   Pieces of Bad Beans
                 </h1>
                 <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
-                  {beanCount && beanCount.bad !== null
-                    ? `${beanCount.bad} pieces`
+                  {beanCount && beanCount.badBeans !== null
+                    ? `${beanCount} pieces`
                     : "0"}
                 </h1>
               </div>
@@ -87,7 +88,7 @@ const Dashboard = () => {
             <div className="shadow-xl flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
-                  KG of Bad Beans 
+                  Total Kilograms
                 </h1>
                 <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
                   {beanKilo && beanKilo !== null
