@@ -1,20 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { updatedStatusInfo, addStatusInfo, fetchStatusInfo } from './statusAction';
 
-// initialize role from session storage
-// const customers = JSON.parse(sessionStorage.getItem('customerData'))
-//     ? JSON.parse(sessionStorage.getItem('customerData'))
-//     : []
-
 const storedStatus = JSON.parse(sessionStorage.getItem('storedStatus'));
-
-// const archivedData = JSON.parse(sessionStorage.getItem('userInfo'))
-//     ? JSON.parse(sessionStorage.getItem('userInfo'))
-//     : []
-
-// const addCustomer = JSON.parse(sessionStorage.getItem('customerData'))
-//     ? JSON.parse(sessionStorage.getItem('customerData'))
-//     : []
 
 const initialState = {
     allStatus: Array.isArray(storedStatus) ? storedStatus : [],
@@ -29,7 +16,7 @@ const statuSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            //customer
+            //status
             .addCase(fetchStatusInfo.pending, (state) => {
                 state.status = 'loading';
             })
@@ -41,7 +28,7 @@ const statuSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.payload;
             })
-            //add customer
+            //add status
             .addCase(addStatusInfo.pending, (state) => {
                 state.status = 'loading';
             })
@@ -54,7 +41,7 @@ const statuSlice = createSlice({
                 state.status = 'failed';
                 state.error = action.payload;
             })
-            //edit customer
+            //edit status
             .addCase(updatedStatusInfo.pending, (state) => {
                 state.status = 'loading';
             })

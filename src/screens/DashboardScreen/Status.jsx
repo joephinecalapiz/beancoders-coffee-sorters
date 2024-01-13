@@ -21,15 +21,27 @@ const Status = () => {
   const [customers, setCustomer] = useState([]);
   const [sorters, setSorter] = useState([]);
   const [allStatus, setAllStatus] = useState([]);
+  const navigate = useNavigate();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newSorterName, setNewSorterName] = useState("");
+  const [newCustomerName, setNewCustomerName] = useState("");
+  const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
+  const [newStatus, setNewStatus] = useState("");
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const { status, error } = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
+  const [addError, setAddError] = useState(false);
 
   // useEffect(() => {
   //   dispatch(fetchStatusInfo({ user_id, token }));
   // }, [dispatch]);
 
   useEffect(() => {
+    if (status === 'idle') {
+      fetchStatus();
+    }
+
     if (status === 'succeeded') {
       setAllStatus(statusInfo)
       setStatusError(false);
@@ -58,31 +70,14 @@ const Status = () => {
     setSearchText(e.target.value);
   };
 
-  // const fetchStatus = async () => {
-  //   try {
-  //     const response = await axios
-  //       .get(`${api_endpoint}/fetch-status/${user_id}`, {
-  //         headers: {
-  //           Authorization: "Bearer " + token,
-  //         },
-  //       });
-
-  //     const data = response.data.status;
-  //     setAllStatus(data);
-  //     // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
-  //     setStatusError(false)
-  //   } catch (error) {
-  //     if (error.response && error.response.data.status === 'Status Not Found') {
-  //       setStatusError(true);
-  //     }
-  //     // console.error();
-  //   }
-  // };
-
   useEffect(() => {
     document.title = "Status";
     fetchStatus();
-  }, []);
+    const cachedStatusData = sessionStorage.getItem("statusData");
+    if (cachedStatusData) {
+      setAllStatus(JSON.parse(cachedStatusData));
+    }
+  }, [status]);
 
   const fetchStatus = async () => {
     dispatch(fetchStatusInfo({ user_id, token }))
@@ -102,27 +97,6 @@ const Status = () => {
         // setAllCustomers(customerInfo)
       });
   };
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${api_endpoint}/fetch-status/${user_id}`, {
-  //       headers: {
-  //         Authorization: "Bearer " + token,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       const fetchAllStatus = response.data.status;
-  //       // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-  //       setAllStatus(fetchAllStatus);
-  //       setStatusError(false)
-  //     })
-  //     .catch((error) => {
-  //       if (error.response && error.response.data.status === 'Status Not Found') {
-  //         setStatusError(true);
-  //       }
-  //       console.error();
-  //     });
-  // }, [status]);
 
   useEffect(() => {
     axios
@@ -171,14 +145,6 @@ const Status = () => {
   //   }
   // }, []);
 
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newSorterName, setNewSorterName] = useState("");
-  const [newCustomerName, setNewCustomerName] = useState("");
-  const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
-
-  const [newStatus, setNewStatus] = useState("");
-
   const handleStatusChange = (e) => {
     setNewStatus(e.target.value);
   };
@@ -199,7 +165,7 @@ const Status = () => {
     setIsModalOpen(false);
   };
 
-  const handleAddNew = (event) => {
+  const handleAddNew1 = (event) => {
     event.preventDefault();
 
     // const token = localStorage.getItem("token");
@@ -230,10 +196,11 @@ const Status = () => {
       });
   };
 
-  const handleAddNew1 = async (e) => {
+  const addStatus = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
-    const customerData = {
+    const statusData = {
       user_id: user_id,
       customerName: newCustomerName,
       sorterName: newSorterName,
@@ -242,13 +209,11 @@ const Status = () => {
     };
 
     // Dispatch the addCustomerInfo thunk
-    dispatch(addStatusInfo({ token, customerData }))
+    dispatch(addStatusInfo({ token, statusData }))
       .then((resultAction) => {
+        //console.log(statusData)
         // Check if the thunk was fulfilled successfully
         if (addStatusInfo.fulfilled.match(resultAction)) {
-          // console.log('Add Customer Successfully');
-          // Dispatch the updateCustomerList action to update the state with the new data
-          // dispatch(updateCustomerList(resultAction.payload));
           setAllStatus(resultAction.payload)
           closeModal();
         } else {
@@ -259,6 +224,12 @@ const Status = () => {
       .catch((error) => {
         // Handle errors that occurred during the dispatching of the thunk
         console.error('Error dispatching addStatusInfo:', error);
+        if (error && error.type === 'invalid') {
+          setAddError(true);
+          setLoading(false);
+          closeModal();
+        }
+        setLoading(false);
       });
   };
 
@@ -405,6 +376,10 @@ const Status = () => {
     </div>;
   }
 
+  const filteredStatus = allStatus.filter((status) =>
+    status.customerName.toLowerCase().includes(searchText.toLowerCase())
+  );
+  const sortedFilteredStatus = filteredStatus.sort((a, b) => a.id - b.id);
   return (
     <>
       <div className="header">
@@ -515,7 +490,7 @@ const Status = () => {
                   </tr>
                 </thead>
                 <tbody className="sort-table dark:text-textDesc dark:bg-container divide-y divide-gray-200">
-                  {allStatus
+                  {sortedFilteredStatus
                     .filter((sorted) =>
                       sorted.customerName
                         .toLowerCase()
@@ -605,6 +580,9 @@ const Status = () => {
                 {statusError && (
                   <p className="items-center justify-center text-center text-primary dark:text-textTitle poppins-font ">No status found. Please add new status!</p>
                 )}
+                {addError && (
+                <p className="items-center justify-center text-center text-primary dark:text-textTitle">Sorter Already Added. Please try again!</p>
+              )}
               </div>
             </div>
           </div>
@@ -617,7 +595,7 @@ const Status = () => {
           Status
         </h2>
         {/* Add your form or content for adding a new customer */}
-        <form onSubmit={handleAddNew}>
+        <form onSubmit={addStatus}>
           {/* CUSTOMER'S NAME */}
           <div className="mb-4 dark:text-textTitle">
             <label
@@ -703,11 +681,12 @@ const Status = () => {
           </div>
 
           <div className="flex flex-col gap-4 justify-between">
-            <button
+          <button
               type="submit"
+              disabled={loading}
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
-              Add Sorting
+              {loading ? "Adding..." : "Add Status"}
             </button>
             <button
               type="button"

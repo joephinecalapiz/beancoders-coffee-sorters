@@ -34,7 +34,8 @@ export const fetchStatusInfo = createAsyncThunk(
 // Async Thunk for Adding New Customer
 export const addStatusInfo = createAsyncThunk(
     'statusInfo/addStatus',
-    async ({ token, statusData }, { dispatch, rejectWithValue }) => {
+    async ({ token, statusData }, { rejectWithValue }) => {
+        console.log("New status:", statusData)
         try {
             const config = {
                 headers: {
