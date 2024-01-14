@@ -240,52 +240,57 @@ const Status = () => {
 
   const setToOngoing = async (statusId, customerId) => {
     try {
-      const response = await fetch(
-        api_endpoint + "/update-status/" + statusId,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + token,
-          },
-          body: JSON.stringify({
-            status: "Ongoing",
-          }),
-        }
-      );
-      if (response.status === 422) {
-        alert("Status is already updated in the database");
-      }
+      // Optimistically update local state
+      setAllStatus((prevStatus) => {
+        const updatedStatus = prevStatus.map((status) =>
+          status.id === statusId ? { ...status, status: "Ongoing" } : status
+        );
+        sessionStorage.setItem("statusData", JSON.stringify(updatedStatus));
+        return updatedStatus;
+      });
+
+      const response = await fetch(api_endpoint + "/update-status/" + statusId, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+        body: JSON.stringify({
+          status: "Ongoing",
+        }),
+      });
+
       if (!response.ok) {
-        throw new Error("Fail to update the status");
+        throw new Error("Failed to update the status");
       }
-      if (response.status === 200) {
-        // const fetchAllStatus = response.data.status;
-        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        // setAllStatus(fetchAllStatus);
-        dispatch(fetchStatusInfo({ user_id, token }));
-        setAllStatus(statusInfo)
-        setStatusError(false);
-        setOpenDropdownId(null);
-        console.log(statusInfo)
-        console.log(statusId)
-        console.log(customerId)
-      }
-      const rspns = await fetch(
-        `${rpi_endpoint}/update_json`,{
-          method:"POST",
-          headers:{
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            statusId: statusId,
-            customerId: customerId
-          })
-        });
-        console.log(customerId)
-      if (rspns.status === 200){
-        console.log(customerId)
-        console.log("success")
+
+      const fetchAllStatus = await response.json();
+      console.log(fetchAllStatus.status);
+
+      // Update local state with the actual server response
+      setAllStatus((prevStatus) => {
+        const updatedStatus = prevStatus.map((status) =>
+          status.id === statusId ? fetchAllStatus.status : status
+        );
+        sessionStorage.setItem("statusData", JSON.stringify(updatedStatus));
+        return updatedStatus;
+      });
+
+      const rspns = await fetch(`${rpi_endpoint}/update_json`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          statusId: statusId,
+          customerId: customerId,
+        }),
+      });
+
+      console.log(customerId);
+      if (rspns.status === 200) {
+        console.log(customerId);
+        console.log("success");
       }
     } catch (error) {
       console.error(error);
@@ -293,11 +298,21 @@ const Status = () => {
     setOpenDropdownId(null);
   };
 
+
   const setToFinished = async (statusId, badCount, kiloOfBeans) => {
     const totalGrams = kiloOfBeans * 1000;
     const totalBadBeans = badCount * 0.1;
-    const goodBeanCount = (totalGrams - totalBadBeans) / 0.1; 
+    const goodBeanCount = (totalGrams - totalBadBeans) / 0.1;
     try {
+      // update local state
+      setAllStatus((prevStatus) => {
+        const updatedStatus = prevStatus.map((status) =>
+          status.id === statusId ? { ...status, status: "Finished" } : status
+        );
+        sessionStorage.setItem("statusData", JSON.stringify(updatedStatus));
+        return updatedStatus;
+      });
+
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {
@@ -318,15 +333,26 @@ const Status = () => {
       if (!response.ok) {
         throw new Error("Fail to update the status");
       }
-      if (response.status === 200) {
-        // const fetchAllStatus = response.data.status;
-        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        // setAllStatus(fetchAllStatus);
-        dispatch(fetchStatusInfo({ user_id, token }));
-        setAllStatus(statusInfo)
-        setStatusError(false);
-        setOpenDropdownId(null);
-      }
+      // if (response.status === 200) {
+      //   // const fetchAllStatus = response.data.status;
+      //   // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+      //   // setAllStatus(fetchAllStatus);
+      //   dispatch(fetchStatusInfo({ user_id, token }));
+      //   setAllStatus(statusInfo)
+      //   setStatusError(false);
+      //   setOpenDropdownId(null);
+      // }
+      const fetchAllStatus = await response.json();
+      console.log(fetchAllStatus.status);
+
+      // Update local state with the actual server response
+      setAllStatus((prevStatus) => {
+        const updatedStatus = prevStatus.map((status) =>
+          status.id === statusId ? fetchAllStatus.status : status
+        );
+        sessionStorage.setItem("statusData", JSON.stringify(updatedStatus));
+        return updatedStatus;
+      });
     } catch (error) {
       console.error(error);
     }
@@ -335,6 +361,15 @@ const Status = () => {
 
   const setToCancelled = async (statusId) => {
     try {
+      // Optimistically update local state
+      setAllStatus((prevStatus) => {
+        const updatedStatus = prevStatus.map((status) =>
+          status.id === statusId ? { ...status, status: "Cancelled" } : status
+        );
+        sessionStorage.setItem("statusData", JSON.stringify(updatedStatus));
+        return updatedStatus;
+      });
+
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {
@@ -354,15 +389,26 @@ const Status = () => {
       if (!response.ok) {
         throw new Error("Fail to update the status");
       }
-      if (response.status === 200) {
-        // const fetchAllStatus = response.data.status;
-        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        // setAllStatus(fetchAllStatus);
-        dispatch(fetchStatusInfo({ user_id, token }));
-        setAllStatus(statusInfo)
-        setStatusError(false);
-        setOpenDropdownId(null);
-      }
+      // if (response.status === 200) {
+      //   const fetchAllStatus = response.data.status;
+      //   // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+      //   setAllStatus(fetchAllStatus);
+      //   // dispatch(fetchStatusInfo({ user_id, token }));
+      //   // setAllStatus(statusInfo)
+      //   setStatusError(false);
+      //   setOpenDropdownId(null);
+      // }
+      const fetchAllStatus = await response.json();
+      console.log(fetchAllStatus.status);
+
+      // Update local state with the actual server response
+      setAllStatus((prevStatus) => {
+        const updatedStatus = prevStatus.map((status) =>
+          status.id === statusId ? fetchAllStatus.status : status
+        );
+        sessionStorage.setItem("statusData", JSON.stringify(updatedStatus));
+        return updatedStatus;
+      });
     } catch (error) {
       console.error(error);
     }
@@ -526,8 +572,8 @@ const Status = () => {
                                   <button
                                     onClick={() => setToOngoing(sorted.id, sorted.customer_id)}
                                     className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Ongoing"
-                                        ? "bg-brown hover:bg-gray-100 text-secondary"
-                                        : ""
+                                      ? "bg-brown hover:bg-gray-100 text-secondary"
+                                      : ""
                                       } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Ongoing
@@ -537,8 +583,8 @@ const Status = () => {
                                   <button
                                     onClick={() => setToFinished(sorted.id, sorted.badCount, sorted.kiloOfBeans)}
                                     className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Finished"
-                                        ? "bg-brown hover:bg-gray-100  text-white"
-                                        : ""
+                                      ? "bg-brown hover:bg-gray-100  text-white"
+                                      : ""
                                       } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Finished
@@ -548,8 +594,8 @@ const Status = () => {
                                   <button
                                     onClick={() => setToCancelled(sorted.id)}
                                     className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Cancelled"
-                                        ? "bg-brown hover:bg-gray-100 text-white"
-                                        : ""
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
                                       } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Cancelled
@@ -581,8 +627,8 @@ const Status = () => {
                   <p className="items-center justify-center text-center text-primary dark:text-textTitle poppins-font ">No status found. Please add new status!</p>
                 )}
                 {addError && (
-                <p className="items-center justify-center text-center text-primary dark:text-textTitle">Sorter Already Added. Please try again!</p>
-              )}
+                  <p className="items-center justify-center text-center text-primary dark:text-textTitle">Sorter Already Added. Please try again!</p>
+                )}
               </div>
             </div>
           </div>
@@ -681,7 +727,7 @@ const Status = () => {
           </div>
 
           <div className="flex flex-col gap-4 justify-between">
-          <button
+            <button
               type="submit"
               disabled={loading}
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
