@@ -284,6 +284,7 @@ const Status = () => {
         body: JSON.stringify({
           statusId: statusId,
           customerId: customerId,
+          bad: 0
         }),
       });
 
@@ -300,9 +301,10 @@ const Status = () => {
 
 
   const setToFinished = async (statusId, badCount, kiloOfBeans) => {
-    const totalGrams = kiloOfBeans * 1000;
-    const totalBadBeans = badCount * 0.1;
-    const goodBeanCount = (totalGrams - totalBadBeans) / 0.1;
+    const inGrams = kiloOfBeans * 1000;
+    const totalGrams = inGrams * 2;
+    const totalBadCount = badCount * 1;
+    const goodBeanCount = totalGrams - totalBadCount;
     try {
       // update local state
       setAllStatus((prevStatus) => {
