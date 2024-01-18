@@ -1,7 +1,6 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Navbar from "../../component/Navbar";
@@ -9,7 +8,6 @@ import api_endpoint from "../../config";
 import Footer from "./Footer";
 
 const ContactUs = () => {
-  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [loginError, setLoginError] = useState(false); // Add a state variable for login error
   const {

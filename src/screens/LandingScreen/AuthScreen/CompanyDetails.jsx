@@ -3,22 +3,34 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import api_endpoint from "../../../config";
+import Cookies from 'js-cookie'
 import Modal from "../../../component/Modal";
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from "../../../../redux/services/auth/authSlice";
+import { companyDetails } from "../../../../redux/services/auth/authActions";
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const CompanyDetails = () => {
+  // const user_id = useSelector(state => state.auth.user_id);
+  const dispatch = useDispatch()
   const navigate = useNavigate();
   const [popupMessage, setPopupMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState();
   const [file, setFile] = useState();
   const [profileImage, setProfileImage] = useState(null);
   const [companyImage, setCompanyImage] = useState(null);
   const [profileFileDataURL, setProfileFileDataURL] = useState(null);
   const [companyFileDataURL, setCompanyFileDataURL] = useState(null);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { loading } = useSelector(
+    (state) => state.auth
+  )
 
   const profileImageHandler = (e) => {
     const selectedFile = e.target.files[0];
@@ -102,58 +114,82 @@ const CompanyDetails = () => {
     }
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-
-  const token = localStorage.getItem("token");
-  const user_id = localStorage.getItem("user_id");
+  const user_id = Cookies.get("uid");
+  
   //---kanang console.log eh change rana para eh connect sa database
+  // const onSubmitHandler = (data) => {
+  //   setLoading(true);
+  //   const formData = new FormData();
+  //   formData.append("user_id", user_id);
+  //   formData.append("companyName", data.companyName);
+  //   formData.append("companyNumber", data.companyNumber);
+  //   formData.append("companyLocation", data.companyLocation);
+  //   formData.append("images", data.images);
+  //   formData.append("profileAvatar", data.profileAvatar);
+  //   console.log(data.images);
+  //   console.log(data.profileAvatar);
+  //   console.log(data);
+  //   console.log('userid', user_id)
+  //   axios
+  //     .post(api_endpoint + "/add-info", data, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         setTimeout(() => {
+  //           setPopupMessage("Company Information is set!");
+  //           setLoading(false);
+  //         }, 2000);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error", error.response.data);
+  //       if (error.response.status === 401) {
+  //         setLoginError(true);
+  //         setLoading(false);
+  //       }
+  //     })
+  //     .finally(() => {
+  //       setLoading(false); // Reset loading state
+  //     });
+  //   //console.log(data);
+  // };
+
   const onSubmitHandler = (data) => {
-    setLoading(true);
-    const formData = new FormData();
-    formData.append("user_id", user_id);
-    formData.append("companyName", data.companyName);
-    formData.append("companyNumber", data.companyNumber);
-    formData.append("companyLocation", data.companyLocation);
-    formData.append("images", data.images);
-    formData.append("profileAvatar", data.profileAvatar);
-    console.log(companyFileDataURL);
-    console.log(profileFileDataURL);
-    axios
-      .post(api_endpoint + "/add-info", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: "Bearer " + token,
-        },
+      const formData = new FormData();
+      formData.append("user_id", user_id);
+      formData.append("companyName", data.companyName);
+      formData.append("companyNumber", data.companyNumber);
+      formData.append("companyLocation", data.companyLocation);
+      formData.append("images", data.images);
+      formData.append("profileAvatar", data.profileAvatar);
+      // console.log(data.images);
+      // console.log(data.profileAvatar);
+      // console.log(data);
+      console.log('userid', user_id)
+      dispatch(companyDetails(data))
+      .unwrap()
+      .then(() => {
+        // Registration successful, you can navigate or perform other actions
+        setPopupMessage("Company Information is set!");
+        console.log('Company Registration successful');
       })
-      .then((response) => {
-        if (response.status === 200) {
-          setTimeout(() => {
-            setPopupMessage("Company Information is set!");
-            setLoading(false);
-          }, 2000);
+      .catch((err) => {
+        if (err  === 401) {
+          setPopupMessage("Error");
         }
       })
-      .catch((error) => {
-        console.error("Error", error.response.data);
-        if (error.response.status === 401) {
-          setLoginError(true);
-          setLoading(false);
-        }
-      })
-      .finally(() => {
-        setLoading(false); // Reset loading state
-      });
-    //console.log(data);
-  };
+      // .finally(() => {
+      // });
+    };
 
   const closeMessage = () => {
     setPopupMessage(null)
     navigate('/login')
-    localStorage.removeItem("token")
+    dispatch(logout())
   }
 
   useEffect(() => {

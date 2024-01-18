@@ -6,13 +6,14 @@ import api_endpoint from "../../config";
 import Sidebar from "../../component/Sidebar";
 import Topbar from "../../component/Topbar";
 import html2canvas from "html2canvas";
-import "../../css/receipt.css";
 import jsPDF from "jspdf";
 import BeansLogo from "../../assets/beansLogo.png"; // Import the image here
+import { useSelector } from 'react-redux'
 
 const Receipt = () => {
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const { customerId } = useParams();
-
   const [receiptDetails, setReceiptDetails] = useState([]);
   const [navVisible, showNavbar] = useState(true);
   const contentRef = useRef(null);
@@ -26,8 +27,6 @@ const Receipt = () => {
 
   const fetchCompanyInfo = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -45,8 +44,6 @@ const Receipt = () => {
   };
 
   const fetchReceiptDetails = async () => {
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
     try {
       const response = await fetch(
         `${api_endpoint}/customer-receipt/${customerId}/${user_id}`,
@@ -152,7 +149,7 @@ const Receipt = () => {
             </div>
 
             <div
-              className="md:flex flex-col sm:flex-row border rounded p-2 mt-4 bg-white whole-receipt"
+              className="md:flex flex-col sm:flex-row border rounded p-2 mt-4 bg-white whole-receipt shadow-xl"
               ref={contentRef}
             >
               <div className="">

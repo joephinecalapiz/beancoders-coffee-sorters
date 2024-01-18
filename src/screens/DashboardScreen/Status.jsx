@@ -1,22 +1,46 @@
 /** @format */
 
 import React, { useState, useEffect } from "react"; // Import useState
-import { useNavigate, useParams } from "react-router-dom";
-import Topbar from "../../component/Topbar";
-import Sidebar from "../../component/Sidebar";
+import { useNavigate } from "react-router-dom";
 import Modal from "../../component/Modal"; // Import the Modal component
-import "../.././css/status.css";
 import axios from "axios";
 import api_endpoint from "../../config";
+import { useDispatch, useSelector } from 'react-redux'
+import { addStatusInfo, fetchStatusInfo } from "../../../redux/services/status/statusAction";
+import beanlogo from '../../assets/beanlogo.png';
 
 const Status = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const statusInfo = useSelector(state => state.statusInfo.allStatus);
   const [navVisible, showNavbar] = useState(false);
+  const [statusError, setStatusError] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
   const [customers, setCustomer] = useState([]);
   const [sorters, setSorter] = useState([]);
-  const [status, setAllStatus] = useState([]);
+  const [allStatus, setAllStatus] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
+  const { status, error } = useSelector((state) => state.user);
+
+  // useEffect(() => {
+  //   dispatch(fetchStatusInfo({ user_id, token }));
+  // }, [dispatch]);
+
+  useEffect(() => {
+    if (status === 'succeeded') {
+      setAllStatus(statusInfo)
+      setStatusError(false);
+    }
+
+    // Render error state
+    if (status === 'failed') {
+      setStatusError(true);
+    }
+  }, []);
+
+  // console.log(statusInfo)
 
   const toggleDropdown = (sorted) => {
     if (openDropdownId === sorted) {
@@ -33,29 +57,73 @@ const Status = () => {
     setSearchText(e.target.value);
   };
 
-  useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
+  // const fetchStatus = async () => {
+  //   try {
+  //     const response = await axios
+  //       .get(`${api_endpoint}/fetch-status/${user_id}`, {
+  //         headers: {
+  //           Authorization: "Bearer " + token,
+  //         },
+  //       });
 
-    axios
-      .get(`${api_endpoint}/fetch-status/${user_id}`, {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+  //     const data = response.data.status;
+  //     setAllStatus(data);
+  //     // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+  //     setStatusError(false)
+  //   } catch (error) {
+  //     if (error.response && error.response.data.status === 'Status Not Found') {
+  //       setStatusError(true);
+  //     }
+  //     // console.error();
+  //   }
+  // };
+
+  useEffect(() => {
+    document.title = "Status";
+    fetchStatus();
+  }, []);
+
+  const fetchStatus = async () => {
+    dispatch(fetchStatusInfo({ user_id, token }))
+      .unwrap()
+      .then(() => {
+        // console.log(statusInfo)
+        setAllStatus(statusInfo)
+        setStatusError(false);
       })
-      .then((response) => {
-        const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
+      .catch((err) => {
+        if (err && err.type === 'http') {
+          setStatusError(true);
+        }
       })
-      .catch((error) => {
-        console.error();
+      .finally(() => {
+        // setLoading(false);
+        // setAllCustomers(customerInfo)
       });
-  }, [status]);
+  };
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${api_endpoint}/fetch-status/${user_id}`, {
+  //       headers: {
+  //         Authorization: "Bearer " + token,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       const fetchAllStatus = response.data.status;
+  //       // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+  //       setAllStatus(fetchAllStatus);
+  //       setStatusError(false)
+  //     })
+  //     .catch((error) => {
+  //       if (error.response && error.response.data.status === 'Status Not Found') {
+  //         setStatusError(true);
+  //       }
+  //       console.error();
+  //     });
+  // }, [status]);
 
   useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
     axios
       .get(`${api_endpoint}/customers/${user_id}`, {
         headers: {
@@ -64,14 +132,12 @@ const Status = () => {
       })
       .then((response) => {
         const fetchCustomerData = response.data.customer;
-        sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
+        // sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
         setCustomer(fetchCustomerData);
       });
   }, []);
 
   useEffect(() => {
-    const user_id = localStorage.getItem("user_id");
-    const token = localStorage.getItem("token");
     axios
       .get(`${api_endpoint}/sorters/${user_id}`, {
         headers: {
@@ -80,7 +146,7 @@ const Status = () => {
       })
       .then((response) => {
         const fetchSorterData = response.data.sorters;
-        sessionStorage.setItem("sorterData", JSON.stringify(fetchSorterData));
+        // sessionStorage.setItem("sorterData", JSON.stringify(fetchSorterData));
         setSorter(fetchSorterData);
       });
   }, []);
@@ -89,24 +155,20 @@ const Status = () => {
     showNavbar(!navVisible);
   };
 
-  useEffect(() => {
-    document.title = "Status";
-  }, []);
-
-  useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("customerData");
-    if (cachedCustomerData) {
-      setCustomer(JSON.parse(cachedCustomerData));
-    }
-    const cachedSorterData = sessionStorage.getItem("sorterData");
-    if (cachedSorterData) {
-      setSorter(JSON.parse(cachedSorterData));
-    }
-    const cachedStatusData = sessionStorage.getItem("statusData");
-    if (cachedStatusData) {
-      setAllStatus(JSON.parse(cachedStatusData));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const cachedCustomerData = sessionStorage.getItem("customerData");
+  //   if (cachedCustomerData) {
+  //     setCustomer(JSON.parse(cachedCustomerData));
+  //   }
+  //   const cachedSorterData = sessionStorage.getItem("sorterData");
+  //   if (cachedSorterData) {
+  //     setSorter(JSON.parse(cachedSorterData));
+  //   }
+  //   const cachedStatusData = sessionStorage.getItem("statusData");
+  //   if (cachedStatusData) {
+  //     setAllStatus(JSON.parse(cachedStatusData));
+  //   }
+  // }, []);
 
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -139,8 +201,8 @@ const Status = () => {
   const handleAddNew = (event) => {
     event.preventDefault();
 
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
+    // const token = localStorage.getItem("token");
+    // const user_id = localStorage.getItem("user_id");
     const postData = {
       user_id: user_id,
       customerName: newCustomerName,
@@ -157,11 +219,45 @@ const Status = () => {
       })
       .then((response) => {
         if (response.status === 200) {
+          setAllStatus(statusInfo)
+          setStatusError(false);
           closeModal();
         }
       })
       .catch((error) => {
         console.log(error);
+      });
+  };
+
+  const handleAddNew1 = async (e) => {
+    e.preventDefault();
+
+    const customerData = {
+      user_id: user_id,
+      customerName: newCustomerName,
+      sorterName: newSorterName,
+      kiloOfBeans: newCustomerKiloOfBeans,
+      status: newStatus,
+    };
+
+    // Dispatch the addCustomerInfo thunk
+    dispatch(addStatusInfo({ token, customerData }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (addStatusInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllStatus(resultAction.payload)
+          closeModal();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Add Status Failed');
+        }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching addStatusInfo:', error);
       });
   };
 
@@ -172,9 +268,6 @@ const Status = () => {
 
   const setToOngoing = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {
@@ -195,9 +288,12 @@ const Status = () => {
         throw new Error("Fail to update the status");
       }
       if (response.status === 200) {
-        const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
+        // const fetchAllStatus = response.data.status;
+        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // setAllStatus(fetchAllStatus);
+        dispatch(fetchStatusInfo({ user_id, token }));
+        setAllStatus(statusInfo)
+        setStatusError(false);
         setOpenDropdownId(null);
       }
     } catch (error) {
@@ -208,9 +304,6 @@ const Status = () => {
 
   const setToFinished = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {
@@ -231,9 +324,12 @@ const Status = () => {
         throw new Error("Fail to update the status");
       }
       if (response.status === 200) {
-        const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
+        // const fetchAllStatus = response.data.status;
+        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // setAllStatus(fetchAllStatus);
+        dispatch(fetchStatusInfo({ user_id, token }));
+        setAllStatus(statusInfo)
+        setStatusError(false);
         setOpenDropdownId(null);
       }
     } catch (error) {
@@ -244,9 +340,6 @@ const Status = () => {
 
   const setToCancelled = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-status/" + statusId,
         {
@@ -267,9 +360,12 @@ const Status = () => {
         throw new Error("Fail to update the status");
       }
       if (response.status === 200) {
-        const fetchAllStatus = response.data.status;
-        sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
-        setAllStatus(fetchAllStatus);
+        // const fetchAllStatus = response.data.status;
+        // // sessionStorage.setItem("statusData", JSON.stringify(fetchAllStatus));
+        // setAllStatus(fetchAllStatus);
+        dispatch(fetchStatusInfo({ user_id, token }));
+        setAllStatus(statusInfo)
+        setStatusError(false);
         setOpenDropdownId(null);
       }
     } catch (error) {
@@ -277,6 +373,13 @@ const Status = () => {
     }
     setOpenDropdownId(null);
   };
+
+  // Render loading state
+  if (status === 'loading') {
+    return <div className="flex items-center justify-center h-screen">
+      <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
+    </div>;
+  }
 
   return (
     <>
@@ -293,7 +396,7 @@ const Status = () => {
           {/* Search bar */}
           <input
             type="text"
-            placeholder="Search Sorters"
+            placeholder="Search Customer"
             value={searchText}
             onChange={handleSearchInputChange}
             className="px-4 py-2 poppins-font dark:text-textTitle dark:bg-container border rounded focus:outline-none search-bar"
@@ -303,13 +406,13 @@ const Status = () => {
           {/* Add New button */}
           <button
             onClick={openModal}
-            className="px-4 py-2 poppins-font font-semibold text-white rounded bg-[#512615] text-shadow shadow-md border-none text-shadow focus:outline-none "
+            className="px-4 py-2 poppins-font font-semibold text-white rounded bg-[#74574D] text-shadow shadow-md border-none text-shadow focus:outline-none "
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = "#C4A484";
               e.target.style.transition = "background-color 0.3s ease";
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
+              e.target.style.backgroundColor = "#74574D";
               e.target.style.transition = "background-color 0.3s ease";
             }}
           >
@@ -335,7 +438,7 @@ const Status = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Date
+
                     </th>
                     <th
                       scope="col"
@@ -353,6 +456,12 @@ const Status = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
+                      Date
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
                       Status
                     </th>
                     <th
@@ -363,21 +472,21 @@ const Status = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="custom-table bg-white dark:text-textTitle dark:bg-container divide-y divide-gray-200">
-                  {status
+                <tbody className="sort-table dark:text-textDesc dark:bg-container divide-y divide-gray-200">
+                  {allStatus
                     .filter((sorted) =>
                       sorted.customerName
                         .toLowerCase()
                         .includes(searchText.toLowerCase())
                     )
-                    .map((sorted) => (
-                      <tr key={sorted.id}>
+                    .map((sorted, index) => (
+                      <tr key={sorted.id} className="hover:bg-lightBrown hover:text-textTitle">
+                        <td className="poppins-font">{index + 1}</td>
+                        <td className="poppins-font">{sorted.customerName}</td>
+                        <td className="poppins-font">{sorted.sorterName}</td>
                         <td className="poppins-font">
                           {new Date(sorted.created_at).toLocaleDateString()}
                         </td>
-
-                        <td className="poppins-font">{sorted.customerName}</td>
-                        <td className="poppins-font">{sorted.sorterName}</td>
                         <td className="poppins-font">
                           <button
                             onClick={() => toggleDropdown(sorted.id)}
@@ -396,38 +505,35 @@ const Status = () => {
                                 className="py-2 text-base poppins-font text-gray-700 dark:text-gray-200"
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToOngoing(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
-                                      sorted.status === "Ongoing"
-                                        ? "bg-brown hover:bg-gray-100 text-white"
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Ongoing"
+                                        ? "bg-brown hover:bg-gray-100 text-secondary"
                                         : ""
-                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                      } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Ongoing
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToFinished(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
-                                      sorted.status === "Finished"
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Finished"
                                         ? "bg-brown hover:bg-gray-100  text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                      } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Finished
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => setToCancelled(sorted.id)}
-                                    className={`block px-4 py-2 mx-auto w-full ${
-                                      sorted.status === "Cancelled"
+                                    className={`block px-4 py-2 mx-auto w-full rounded-full ${sorted.status === "Cancelled"
                                         ? "bg-brown hover:bg-gray-100 text-white"
                                         : ""
-                                    } dark:hover:bg-lightBrown dark:hover:text-white`}
+                                      } dark:hover:bg-lightBrown text-primary dark:hover:text-white`}
                                   >
                                     Cancelled
                                   </button>
@@ -441,7 +547,7 @@ const Status = () => {
                             onClick={() => {
                               navigate(`/status/receipt/${sorted.id}`);
                             }}
-                            className="see-more-button focus:outline-none"
+                            className="text-primary dark:text-secondary underline focus:outline-none"
                           >
                             Receipt
                           </button>
@@ -450,6 +556,11 @@ const Status = () => {
                     ))}
                 </tbody>
               </table>
+              <div>
+                {statusError && (
+                  <p className="items-center justify-center text-center text-primary dark:text-textTitle poppins-font ">No status found. Please add new status!</p>
+                )}
+              </div>
             </div>
           </div>
         </div>
@@ -463,7 +574,7 @@ const Status = () => {
         {/* Add your form or content for adding a new customer */}
         <form onSubmit={handleAddNew}>
           {/* CUSTOMER'S NAME */}
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomer"
               className="block font-medium poppins-font"
@@ -474,19 +585,19 @@ const Status = () => {
               id="newCustomer"
               value={newCustomerName}
               onChange={handleCustomerChange}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             >
-              <option value=" ">Select Customers</option>
+              <option value="">Select Customers</option>
               {customers.map((customer) => (
-                <option key={customer.id} value={customer.customerName}>
+                <option className="dark:text-primary" key={customer.id} value={customer.customerName}>
                   {customer.customerName}
                 </option>
               ))}
             </select>
           </div>
           {/* SORTERS NAME */}
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorter"
               className="block font-medium poppins-font"
@@ -497,7 +608,7 @@ const Status = () => {
               id="newSorter"
               value={newSorterName}
               onChange={handleSorterChange}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             >
               <option value=" ">Select Sorter</option>
@@ -508,7 +619,7 @@ const Status = () => {
               ))}
             </select>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="kiloOfBeans"
               className="block font-medium poppins-font"
@@ -520,12 +631,12 @@ const Status = () => {
               id="newCustomerKiloOfBeans"
               value={newCustomerKiloOfBeans}
               onChange={(e) => setKiloOfBeans(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
           {/* STATUS   */}
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newStatus"
               className="block font-medium poppins-font"
@@ -536,10 +647,10 @@ const Status = () => {
               id="newStatus"
               value={newStatus}
               onChange={handleStatusChange}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             >
-              <option value=" "> </option>
+              <option value="">Select Status</option>
               <option value="Finished">Finished</option>
               <option value="Pending">Pending</option>
               <option value="Cancelled">Cancelled</option>
@@ -556,7 +667,7 @@ const Status = () => {
             <button
               type="button"
               onClick={handleCancel}
-              className=" hover:bg-red-700 text-black hover:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className=" hover:bg-red-700 text-black dark:text-textTitle hover:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>

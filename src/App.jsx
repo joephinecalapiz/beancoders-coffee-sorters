@@ -5,8 +5,15 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Login from "./screens/LandingScreen/AuthScreen/Login";
 import Landing from "./screens/LandingScreen/Landing";
 import "./index.css";
-// import ".../../css/index.css";
-import ".../.././css/Sidebar.css";
+import "./css/sidebar.css";
+import "./css/dashboard.css";
+import "./css/sorter.css";
+import "./css/status.css";
+import "./css/profile.css";
+import "./css/customer.css";
+import "./css/datepicker.css";
+import "./css/receipt.css";
+import "./css/topbar.css";
 import Signup from "./screens/LandingScreen/AuthScreen/Signup";
 import CompanyDetails from "./screens/LandingScreen/AuthScreen/CompanyDetails";
 import About from "./screens/LandingScreen/About";
@@ -14,15 +21,21 @@ import ContactUs from "./screens/LandingScreen/ContactUs";
 import RootPage from "./screens/RootPage";
 import AdminRootPage from "./superadmin/RootPage";
 import beanlogo from './assets/beanlogo.png';
-import Error from "./superadmin/Error";
-import PermissionDenied from "./superadmin/DeniedAccess";
-import Main from "./screens/mainpage";
+import { useDispatch, useSelector } from 'react-redux'
+import RedeemKey from "./screens/LandingScreen/AuthScreen/RedeemKey";
+import TermsAndConditions from "./screens/LandingScreen/TermsAndConditions";
+import { fetchCustomerInfo } from "../redux/services/customer/customerAction";
+import { fetchSorterInfo } from "../redux/services/sorter/sorterAction";
+import { fetchStatusInfo } from "../redux/services/status/statusAction";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
+  // Access the token from the Redux state
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       setAuthenticated(true);
     } else {
@@ -30,23 +43,16 @@ function App() {
     }
   }, []);
 
-
-
-  // useEffect(() => {
-  //   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  //   if (prefersDarkMode) {
-  //     document.body.classList.add('dark:bg-dark');
-  //   } else {
-  //     document.body.classList.remove('dark:bg-dark');
-  //   }
-  // }, []);
-
+  useEffect(() => {
+    dispatch(fetchCustomerInfo({ user_id, token }));
+    dispatch(fetchSorterInfo({ user_id, token }));
+    dispatch(fetchStatusInfo({ user_id, token }));
+  }, [dispatch]);
 
 
   if (authenticated === null) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-screen backdrop-blur">
             <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
       </div>
     );
@@ -59,51 +65,21 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/company" element={<CompanyDetails />} />
+        <Route path="/redeem-key" element={<RedeemKey />} />
         <Route
           exact
           path="/*"
-          element={
-            authenticated ? (
-              <RootPage />
-            ) : (
-              <Navigate to="/login" />
-            )
-
-          }
+          element={authenticated ? <RootPage /> : <Navigate to="/login" />}
         />
 
         <Route
           exact
           path="/superadmin/*"
-          element={
-            authenticated ? (
-              <AdminRootPage />
-            ) : (
-              <Navigate to="/login" />
-            )
-
-          }
+          element={authenticated ? <AdminRootPage /> : <Navigate to="/login" />}
         />
-        <Route
-          path="/error"
-          element={
-            <Main>
-              <Error />
-            </Main>
-
-          }
-        />
-        <Route
-          path="/superadmin/permission-denied/"
-          element={
-            <Main>
-              <PermissionDenied />
-            </Main>
-          }
-        />
-        <Route path="*" element={<Error />} />
       </Routes>
     </BrowserRouter>
   );

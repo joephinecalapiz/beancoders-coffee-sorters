@@ -1,7 +1,13 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
 import Dashboard from "./DashboardScreen/Dashboard";
 import Customers from "./DashboardScreen/Customers";
 import CustomerArchived from "./Archives/CustomerArchived";
@@ -9,23 +15,13 @@ import StatusArchived from "./Archives/StatusArchived";
 import Sorters from "./DashboardScreen/Sorters";
 import Status from "./DashboardScreen/Status";
 import Profile from "./ProfileScreen/Profile";
-import SortingStatus from "./DashboardScreen/SortingStatus";
+import CustomerHistory from "./DashboardScreen/CustomerHistory";
 import Receipt from "./ReceiptScreen/Receipt";
-import Error from "./error";
+import Error from "./Error";
 import PermissionDenied from "./DeniedAccess";
-import Main from "./mainpage";
+import Main from "./Mainpage";
 
 function RootPage() {
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const role = localStorage.getItem("role");
-        // Check if the user_id is not 1 and navigate back if necessary
-        if (role !== "2") {
-            navigate("/error404"); // Go back to the previous page
-            // window.location.reload();
-        }
-    }, []);
 
     return (
         <Routes>
@@ -46,19 +42,15 @@ function RootPage() {
                 }
             />
             <Route
-                path="/customer-archived"
+                path="/archive/customer"
                 element={
-                    <Main>
-                        <CustomerArchived />
-                    </Main>
+                    <CustomerArchived />
                 }
             />
             <Route
-                path="/status-archived"
+                path="/archive/status"
                 element={
-                    <Main>
-                        <StatusArchived />
-                    </Main>
+                    <StatusArchived />
                 }
             />
             <Route
@@ -82,17 +74,13 @@ function RootPage() {
             <Route
                 path="/profile"
                 element={
-                    <Main>
-                        <Profile />
-                    </Main>
+                    <Profile />
                 }
             />
             <Route
-                path="/customers/customerstatus/:customerName/:customerId"
+                path="/customers/history/:customerName/:customerId"
                 element={
-                    <Main>
-                        <SortingStatus />
-                    </Main>
+                    <CustomerHistory />
                 }
             />
             <Route

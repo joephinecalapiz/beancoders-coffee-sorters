@@ -3,16 +3,17 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import axios from "axios";
-import api_endpoint from "../../../config";
 import Navbar from "../../../component/Navbar";
 import ForgotPasswordModal from "../../../component/ForgotPasswordModal";
 import Footer from "../Footer";
+import Cookies from 'js-cookie'
+import { loginUser } from "../../../../redux/services/auth/authActions";
+import { useDispatch, useSelector } from 'react-redux'
+import { useGetUserDetailsQuery } from "../../../../redux/services/api/authService";
+import localhost_domain from "../../../cookie";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [checkboxStatus, setCheckboxStatus] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [disabledError, setDisabledError] = useState(false);
@@ -25,82 +26,121 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [savedEmail, setSavedEmail] = useState("");
   const [savedPassword, setSavedPassword] = useState("");
+  const dispatch = useDispatch()
+  const { loading, success } = useSelector((state) => state.auth)
+  const token = useSelector(state => state.auth.token);
+  const role = useSelector(state => state.auth.role);
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/login")
+    }
+    else{
+      if (role == 2) navigate('/dashboard')
+      if (role == 1) navigate('/superadmin/manageusers')
+    }
+  }, []);
 
   useEffect(() => {
     document.title = "Login";
-
     // Check for saved email and password in localStorage
-    const savedEmail = localStorage.getItem("savedEmail");
-    const savedPassword = localStorage.getItem("savedPassword");
+    const savedEmail = Cookies.get('se')
+    const savedPassword = Cookies.get('sp')
 
     if (savedEmail && savedPassword) {
       setRememberMe(true);
       setSavedEmail(savedEmail);
       setSavedPassword(savedPassword);
     }
-    // if(rememberMe == true){
-    //   localStorage.setItem("savedEmail", savedEmail);
-    //   localStorage.setItem("savedPassword", savedPassword);
-    //   setSavedEmail(savedEmail);
-    //   setSavedPassword(savedPassword);
-    // }
   }, []);
 
-  useEffect(() =>{
-      const token = localStorage.getItem('token');
-      if (token) {
-        // If there's a token, navigate back to the previous page
-        navigate("/dashboard")
-      }  
-  })
+  // const onSubmitHandler = (data) => {
+  //   setLoading(true); // Set loading state to true when form is submitted
+  //   axios
+  //     .post(api_endpoint + "/login", data)
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         const token = response.data.token;
+  //         const user_id = response.data.user.id;
+  //         const role = response.data.user.role;
+  //         localStorage.setItem("role", role);
+  //         localStorage.setItem("token", token);
+  //         localStorage.setItem("user_id", user_id);
+  //         console.log(role, user_id);
+  //         if (role == 2) {
+  //           setTimeout(() => {
+  //             setLoading(false); // Set loading to false when the operation is complete
+  //             navigate("/dashboard");
+  //             // window.location.reload();
+  //           }, 2000);
+  //         }
+  //         if (role == 1) {
+  //           setTimeout(() => {
+  //             setLoading(false); // Set loading to false when the operation is complete
+  //             navigate("/superadmin/manageusers");
+  //             // window.location.reload();
+  //           }, 2000);
+  //         }
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error", error.response ? error.response.data : error);
+  //       if (error.response && error.response.data.email === 'Email Not Found') {
+  //         setEmailError(true);
+  //         setPasswordError(false);
+  //       }
+  //       if (error.response && error.response.data.password === 'Invalid Password') {
+  //         setPasswordError(true);
+  //         setEmailError(false);
+  //       }
+  //       if (error.response && error.response.data.disabled === 'User is disabled') {
+  //         disableduser();
+  //       }
+  //     })
+  //     .finally(() => {
+  //       setLoading(false); // Reset loading state
+  //     });
+  // };
+
+  // // automatically authenticate user if token is found
+  // const { data, isFetching } = useGetUserDetailsQuery('userDetails', {
+  //   // perform a refetch every 15mins
+  //   pollingInterval: 900000,
+  // })
+
+  // useEffect(() => {
+  //   if (data) dispatch(setCredentials(data))
+  // }, [data, dispatch])
 
   const onSubmitHandler = (data) => {
-    setLoading(true); // Set loading state to true when form is submitted
-    axios
-      .post(api_endpoint + "/login", data)
-      .then((response) => {
-        if (response.status === 200) {
-          const token = response.data.token;
-          const user_id = response.data.user.id;
-          const role = response.data.user.role;
-          localStorage.setItem("role", role);
-          localStorage.setItem("token", token);
-          localStorage.setItem("user_id", user_id);
-          console.log(role, user_id);
-          if (role == 2) {
-            setTimeout(() => {
-              setLoading(false); // Set loading to false when the operation is complete
-              navigate("/dashboard");
-              window.location.reload();
-            }, 2000);
-          }
-          if (role == 1) {
-            setTimeout(() => {
-              setLoading(false); // Set loading to false when the operation is complete
-              navigate("/superadmin/manageusers");
-              window.location.reload();
-            }, 2000);
-          }
-        }
+
+    dispatch(loginUser(data))
+      .unwrap()
+      .then(() => {
+        // Registration successful, you can navigate or perform other actions
+        console.log('Login successful');
+        window.location.reload();
       })
-      .catch((error) => {
-        console.error("Error", error.response ? error.response.data : error);
-        if (error.response && error.response.data.email === 'Email Not Found') {
+      .catch((err) => {
+        if (err && err.type === 'email') {
           setEmailError(true);
           setPasswordError(false);
-        }
-        if (error.response && error.response.data.password === 'Invalid Password') {
-          setPasswordError(true);
+        } else if (err && err.type === 'password') {
           setEmailError(false);
-        }
-        if (error.response && error.response.data.disabled === 'User is disabled') {
+          setPasswordError(true);
+        } else if (err && err.type === 'disabled') {
+          setEmailError(false);
+          setPasswordError(false);
           disableduser();
+        } else {
         }
       })
       .finally(() => {
-        setLoading(false); // Reset loading state
+        // setLoading(false);
       });
   };
+  
+
 
   const openForgotPasswordModal = () => {
     setShowForgotPasswordModal(true);
@@ -114,8 +154,8 @@ const Login = () => {
     setDisabledError(true);
     setPasswordError(false);
     setEmailError(false);
-    localStorage.removeItem("savedEmail");
-    localStorage.removeItem("savedPassword");
+    Cookies.removeItem("se");
+    Cookies.removeItem("sp");
   };
 
   return (
@@ -141,7 +181,7 @@ const Login = () => {
                 {...register("email", {
                   required: "Email is required",
                   pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,6}$/i,
                     message: "Invalid email address",
                   },
                 })}
@@ -201,14 +241,16 @@ const Login = () => {
                     checked={rememberMe}
                     onChange={(e) => {
                       setRememberMe(e.target.checked);
-                      localStorage.setItem("savedEmail", savedEmail);
-                      localStorage.setItem("savedPassword", savedPassword);
+                      // localStorage.setItem("savedEmail", savedEmail);
+                      // localStorage.setItem("savedPassword", savedPassword);
+                      Cookies.set('sp', savedPassword, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
+                      Cookies.set('se', savedEmail, { expires: 7, domain: localhost_domain, sameSite: 'strict'})
                       if (!e.target.checked) {
                         // Clear saved email and password when unchecked
                         // setSavedEmail("");
                         // setSavedPassword("");
-                        localStorage.removeItem("savedEmail");
-                        localStorage.removeItem("savedPassword");
+                        Cookies.remove('sp')
+                        Cookies.remove('se')
                       }
                     }}
                   />
@@ -234,27 +276,7 @@ const Login = () => {
                 disabled={loading}
                 onClick={handleSubmit(onSubmitHandler)}
               >
-                {loading ? (
-                  <svg
-                    className="animate-spin h-5 w-5 mr-  text-white "
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    ></circle>
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
-                    ></path>
-                  </svg>
-                ) : null}
-                {loading ? "Loading..." : "Login"}
+                {loading ? "Signing in..." : "Login"}
               </button>
               {disabledError && (
                 <p className="text-red-500 ml-2">User is disabled. Please contact the admin and try again.</p>
@@ -262,13 +284,13 @@ const Login = () => {
               <p className="text-white poppins-font mt-10 text-center my-7">
                 Don't have and account?
                 <span
-                  className="underline cursor-pointer poppins-font font-semibold text-yellow-800"
+                  className="pl-2 underline cursor-pointer poppins-font font-semibold text-yellow-800"
                   onClick={() => {
-                    navigate("/signup");
+                    navigate("/redeem-key");
                   }}
                 >
                   {" "}
-                  Create an Account
+                  Redeem Key
                 </span>
               </p>
             </div>

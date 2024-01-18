@@ -2,17 +2,16 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import ".././css/sorter.css";
-import ".././css/datepicker.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
-import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/AdminTopbar";
+import { useSelector } from 'react-redux'
 
 const Feedbacks = () => {
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
 
   const toggleSidebar = () => {
@@ -62,9 +61,6 @@ const Feedbacks = () => {
 
   const fetchFeedbacks = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await axiosInstance.get(
         api_endpoint + "/fetch-feedback/" + user_id
       );
@@ -95,9 +91,6 @@ const Feedbacks = () => {
 
   const setToPending = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-feedback/" + statusId,
         {
@@ -129,9 +122,6 @@ const Feedbacks = () => {
 
   const setToFinished = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-
       const response = await fetch(
         api_endpoint + "/update-feedback/" + statusId,
         {
@@ -271,12 +261,12 @@ const Feedbacks = () => {
                       <td className="poppins-font">{feedback.full_name}</td>
                       <td className="poppins-font">
                         {feedback.coffee_bean_ai_sorter && feedback.website
-                          ? 'Coffee Bean Sorter and Website'
+                          ? "Coffee Bean Sorter and Website"
                           : feedback.coffee_bean_ai_sorter
-                            ? 'Coffee Bean'
-                            : feedback.website
-                              ? 'Website'
-                              : 'None'}
+                          ? "Coffee Bean"
+                          : feedback.website
+                          ? "Website"
+                          : "None"}
                       </td>
                       <td className="poppins-font">{feedback.message}</td>
                       <td className="poppins-font">
@@ -288,7 +278,7 @@ const Feedbacks = () => {
                           className="inline-flex items-center p-2 text-base font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
                           type="button"
                         >
-                          {feedback.status === 'Solved' ? feedback.status : ''}
+                          {feedback.status}
                         </button>
                         {openDropdownId === feedback.id && (
                           <div
@@ -305,9 +295,9 @@ const Feedbacks = () => {
                                   onClick={() => setToPending(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Pending"
-                                    ? "bg-brown hover:bg-gray-100 text-white"
-                                    : ""
-                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
+                                  } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Pending
                                 </button>
@@ -317,9 +307,9 @@ const Feedbacks = () => {
                                   onClick={() => setToFinished(feedback.id)}
                                   className={`block px-4 py-2 mx-auto w-full ${
                                     feedback.status === "Finished"
-                                    ? "bg-brown hover:bg-gray-100 text-white"
-                                    : ""
-                                } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
+                                      ? "bg-brown hover:bg-gray-100 text-white"
+                                      : ""
+                                  } dark:hover:bg-lightBrown dark:hover:text-black text-black`}
                                 >
                                   Solved
                                 </button>

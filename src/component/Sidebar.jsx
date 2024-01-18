@@ -4,10 +4,15 @@ import React, { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { FaChartBar, FaThLarge, FaUsers, FaUserFriends } from "react-icons/fa";
 import "./../css/sidebar.css";
+import { useSelector } from 'react-redux'
+import Cookies from 'js-cookie'
+import localhost_domain from "../cookie";
 
 const ICON_SIZE = 20;
 
 function Sidebar({ collapsed }) {
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.token);
   const location = useLocation();
   const [navigation, setNavigation] = useState([
     {
@@ -44,16 +49,13 @@ function Sidebar({ collapsed }) {
     ).matches;
 
     // Check if dark mode is stored in localStorage
-    const storedDarkMode = localStorage.getItem("darkMode");
+    const storedDarkMode = Cookies.get('dm');
 
     // Use user preference if available, otherwise use localStorage, or default to false
     return (
       prefersDarkMode || (storedDarkMode ? JSON.parse(storedDarkMode) : false)
     );
   });
-
-  // Add code to get the user_id from local storage
-  const role = localStorage.getItem("user_id");
 
   const handleNavigationClick = (href) => {
     const updatedNavigation = navigation.map((item) => ({
@@ -79,7 +81,7 @@ function Sidebar({ collapsed }) {
   // Toggle the dark mode class when the component mounts and when darkMode changes
   useEffect(() => {
     // Check if dark mode is stored in localStorage
-    const storedDarkMode = localStorage.getItem("darkMode");
+    const storedDarkMode = Cookies.get('dm')
 
     // Automatically set dark mode based on localStorage or default to light mode
     setDarkMode(storedDarkMode ? JSON.parse(storedDarkMode) : false);
@@ -88,7 +90,7 @@ function Sidebar({ collapsed }) {
   // Toggle the dark mode class when the component mounts and when darkMode changes
   useEffect(() => {
     // Check if dark mode is stored in localStorage
-    const storedDarkMode = localStorage.getItem("darkMode");
+    // const storedDarkMode = localStorage.getItem("darkMode");
 
     document.documentElement.classList.toggle("dark", darkMode);
     const appBody = document.getElementById("app-body");
@@ -105,13 +107,14 @@ function Sidebar({ collapsed }) {
     appBody.classList.toggle("dark:bg-dark", newDarkModeState);
 
     // Save the dark mode state in localStorage
-    localStorage.setItem("darkMode", JSON.stringify(newDarkModeState));
+    // localStorage.setItem("darkMode", );
+    Cookies.set('dm', JSON.stringify(newDarkModeState), { domain: localhost_domain })
   };
 
   return (
     <>
       <nav
-        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-black dark:bg-gray fixed z-20 inset-0 mt-16 left-[max(0px,calc(10%-100rem))]  ${
+        className={`sidebar pl-4 pt-2 pr-4 pb-4 bg-mainbg dark:bg-gray fixed z-10 inset-0 mt-16 left-[max(0px,calc(10%-100rem))]  ${
           collapsed ? "collapsed" : "w-[15rem]"
         }`}
       >
@@ -121,8 +124,8 @@ function Sidebar({ collapsed }) {
             <NavLink
               to={item.href}
               // className={'nav-link ${item.current ? "bg-gray text-white" : ""}'}
-              className={`nav-link hover:bg-bgHover ${
-                item.current ? "bg-lightBrown text-white" : "text-white"
+              className={`nav-link text-secondary dark:text-textTitle hover:bg-bgHover ${
+                item.current ? "bg-lightBrown" : ""
               } poppins-font`}
               onMouseEnter={() => setNavigation((prev) => [...prev])}
               onMouseLeave={() => setNavigation((prev) => [...prev])}
@@ -140,7 +143,7 @@ function Sidebar({ collapsed }) {
           {/* Dark mode toggle button */}
           <div className="fixed bottom-4 left-4">
             <button
-              className="p-2 text-white rounded-full flex items-center"
+              className="p-2 text-secondary rounded-full flex items-center"
               onClick={toggleDarkMode}
             >
               {darkMode ? (
