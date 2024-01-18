@@ -302,7 +302,7 @@ const Status = () => {
 
   const setToFinished = async (statusId, badCount, kiloOfBeans) => {
     const inGrams = kiloOfBeans * 1000;
-    const totalGrams = inGrams * 2;
+    const totalGrams = inGrams * 10;
     const totalBadCount = badCount * 1;
     const goodBeanCount = totalGrams - totalBadCount;
     try {
