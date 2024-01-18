@@ -221,7 +221,7 @@
 /* Custom button styling */
 .custom-button {
   margin-top: 10px;
-  background-color: #50c878;
+  background-color: #74574D;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -232,5 +232,5 @@
 
 /* Custom button hover effect */
 .custom-button:hover {
-  background-color: #097969;
+  background-color: #8E6B5E;
 }

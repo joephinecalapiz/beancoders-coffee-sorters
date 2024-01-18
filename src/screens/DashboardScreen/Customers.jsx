@@ -5,12 +5,24 @@ import { useNavigate } from "react-router-dom";
 import Select from "react-select";
 import UpdateCustomer from "../ModalScreen/UpdateCustomer";
 import Modal from "../../component/Modal";
+import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchCustomerInfo, updateCustomerInfo } from "../../../redux/services/customer/customerAction";
+import beanlogo from '../../assets/beanlogo.png';
+import { addCustomerInfo } from "../../../redux/services/customer/customerAction";
+import { updateCustomerList } from "../../../redux/services/customer/customerSlice";
+import { useGetCustomersQuery } from "../../../redux/services/api/authService";
 
 const Customers = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const customerInfo = useSelector(state => state.customer.customers);
+  const { status, error } = useSelector((state) => state.user);
   const [navVisible, showNavbar] = useState(false);
   const navigate = useNavigate(); // Use the hook here
   const [allCustomers, setAllCustomers] = useState([]);
-  const [isFetching, setIsFetching] = useState(true); //experimental --erickson
+  // const [isFetching, setIsFetching] = useState(true); //experimental --erickson
   const monthOptions = [
     { value: 1, label: "January" },
     { value: 2, label: "February" },
@@ -41,131 +53,176 @@ const Customers = () => {
   const [reloadCustomerData, setReloadCustomerData] = useState(null);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState(null);
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
+  const [customerError, setCustomerError] = useState(false);
+  const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const toggleDropdown = (customerId) => {
-    if (openDropdownId === customerId) {
-      // If the clicked dropdown is already open, close it
-      setOpenDropdownId(null);
-    } else {
-      // Close the previously open dropdown (if any)
-      setOpenDropdownId(customerId);
+  // automatically fetch customer list
+  //  const { data: customer = [], isFetching, isSuccess } = useGetCustomersQuery(user_id)
+
+  // useEffect(() => {
+  //   if (customer) dispatch(updateCustomerList(customer.customer))
+  // }, [customer, dispatch])
+  
+
+  useEffect(() => {
+    // if (isSuccess) {
+    //   console.log(customer.customer)
+    // }
+    if (status === 'idle') {
+      // if (customer) dispatch(updateCustomerList(customer.customer))
+      // console.log(customer.customer)
+      fetchCustomers();
     }
-  };
 
-  const handleShowUpdateModal = (customer) => {
-    setOpenDropdownId(null);
-    setSelectedCustomer(customer);
-    setShowUpdateModal(true);
-  };
+    if (status === 'succeeded') {
+      // if (customer) dispatch(updateCustomerList(customer.customer))
+      // console.log(customer.customer)
+      setAllCustomers(customerInfo)
+      setCustomerError(false);
+    }
 
-  const handleCloseUpdateModal = (customer) => {
-    setSelectedCustomer(customer);
-    handleShowUpdateModal(null);
-  };
+    // Render error state
+    if (status === 'failed') {
+      setCustomerError(true);
+    }
+  }, [status, dispatch]);
 
   useEffect(() => {
     document.title = "Customers";
-    const cachedCustomerData = sessionStorage.getItem("customerData");
-
-    if (cachedCustomerData) {
-      setAllCustomers(JSON.parse(cachedCustomerData));
-    }
 
     if (selectedMonth !== null && selectedYear !== null) {
       fetchCustomers();
     }
   }, [selectedMonth, selectedYear]);
 
+  // const fetchCustomers = async () => {
+  //   try {
+  //     const response = await axios.get(`${api_endpoint}/customers/${user_id}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+
+  //     const data = response.data.customer;
+  //     // console.log(data)
+  //     setAllCustomers(data);
+  //     // sessionStorage.setItem("customerData", JSON.stringify(data.customer));
+  //     setCustomerError(false)
+  //   } catch (error) {
+  //     if (error.response && error.response.data.customer === 'Customer Not Found') {
+  //       setCustomerError(true);
+  //       // console.error("Error fetching customer data:", error);
+  //     }
+  //   }
+  // };
+
+  // console.log(allCustomers)
+
   const fetchCustomers = async () => {
-    try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/customers/" + user_id, {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
+    // dispatch(fetchCustomerInfo({ user_id, token }))
+    //   .unwrap()
+    //   .then(() => {
+    //     setAllCustomers(customerInfo)
+    //     setCustomerError(false);
+    //   })
+    //   .catch((err) => {
+    //     if (err && err.type === 'http') {
+    //       setCustomerError(true);
+    //     }
+    //   })
+    //   .finally(() => {
+    //     // setLoading(false);
+    //     // setAllCustomers(customerInfo)
+    //   });
+    // Dispatch the addCustomerInfo thunk
+    dispatch(fetchCustomerInfo({ user_id, token }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (fetchCustomerInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllCustomers(customerInfo)
+          setCustomerError(false);
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Fetch Customer Failed');
+        }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching fetchCustomerInfo:', error);
       });
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch customer data");
-      }
-
-      const data = await response.json();
-      setAllCustomers(data.customer);
-      //localStorage.setItem("customerData", JSON.stringify(data.customer));
-      if (sessionStorage.getItem("customerData") === null) {
-        sessionStorage.setItem("customerData", JSON.stringify(data.customer));
-      }
-    } catch (error) {
-      console.error("Error fetching customer data:", error);
-    }
+    // dispatch(fetchCustomerInfo({ user_id, token }));
+    // // console.log(customerInfo)
+    // setAllCustomers(customerInfo)
+    // setCustomerError(false);
   };
 
-  const [searchText, setSearchText] = useState("");
+  const addCustomer = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const currentDate = new Date().toISOString();
 
-  const handleSearchInputChange = (e) => {
-    console.log("Search input changed:", e.target.value);
-    setSearchText(e.target.value);
+    const customerData = {
+      user_id: user_id,
+      customerName: newCustomerName,
+      phoneNum: newCustomerPhoneNumber,
+      address: newCustomerAddress,
+      registrationDate: currentDate,
+    };
+
+    // Dispatch the addCustomerInfo thunk
+    dispatch(addCustomerInfo({ user_id, token, customerData }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (addCustomerInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllCustomers(resultAction.payload)
+          setLoading(false);
+          closeModal();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Add Customer Failed');
+        }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching addCustomerInfo:', error);
+      });
   };
 
-  const filteredCustomers = allCustomers.filter((customer) => {
-    const registrationDate = new Date(customer.created_at);
-    const matchesSearchText =
-      customer && customer.customerName
-        ? customer.customerName.toLowerCase().includes(searchText.toLowerCase())
-        : false;
-
-    // Check if selectedMonth is not null, and if it is, don't apply the month filter
-    const monthFilter =
-      selectedMonth !== null
-        ? registrationDate.getMonth() + 1 === selectedMonth.value
-        : true;
-
-    return (
-      monthFilter &&
-      (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
-      matchesSearchText
-    );
-  });
-
-  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.id - b.id);
-
-  const totalCustomers = allCustomers.length;
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setNewCustomerName("");
-    setNewCustomerPhoneNumber("");
-    setNewCustomerAddress("");
-    setKiloOfBeans("");
-  };
-
-  const openUpdateModal = () => {
-    setIsUpdateModalOpen(true);
-  };
-
-  const closeUpdateModal = () => {
-    setIsUpdateModalOpen(false);
-    setNewCustomerName("");
-    setNewCustomerPhoneNumber("");
-    setNewCustomerAddress("");
-    setKiloOfBeans("");
+  const updateCustomer = async () => {
+    // Dispatch the addCustomerInfo thunk
+    dispatch(fetchCustomerInfo({ user_id, token }))
+      .then((resultAction) => {
+        // fetchCustomers();
+        // Check if the thunk was fulfilled successfully
+        if (fetchCustomerInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          setAllCustomers(resultAction.payload)
+          // console.log(resultAction.payload.customer[0])
+          // fetchCustomers();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Fetch Customer Failed');
+        }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching fetchCustomerInfo:', error);
+      });
   };
 
   const getCustomerPostHistory = async (e) => {
     e.preventDefault();
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const currentDate = new Date().toISOString();
 
       // Get the selected year and month from the state
@@ -194,18 +251,23 @@ const Customers = () => {
         throw new Error("Fail to add customer");
       }
       if (response.status === 200) {
-        const newCustomer = await response.json();
-        setIsFetching(true);
-        setAllCustomers((prevCustomers) => {
-          // Update state with the new customer data
-          const updatedCustomers = [...prevCustomers, newCustomer.customer];
-          // Update session storage with the updated data
-          sessionStorage.setItem(
-            "customerData",
-            JSON.stringify(updatedCustomers)
-          );
-          return updatedCustomers;
-        });
+        // const newCustomer = await response.json();
+        // setIsFetching(true);
+        // setAllCustomers((prevCustomers) => {
+        //   // Update state with the new customer data
+        //   const updatedCustomers = [...prevCustomers, newCustomer.customer];
+        //   // Update session storage with the updated data
+        //   // sessionStorage.setItem(
+        //   //   "customerData",
+        //   //   JSON.stringify(updatedCustomers)
+        //   // );
+        //   return updatedCustomers;
+        // });
+        // dispatch(fetchCustomerInfo({ user_id, token }));
+        if (status === 'succeeded') {
+          setAllCustomers(customerInfo)
+          setCustomerError(false);
+        }
         closeModal();
       }
     } catch (error) {
@@ -216,8 +278,6 @@ const Customers = () => {
 
   const updateCustomerDetails = async (id) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const currentDate = new Date().toISOString();
 
       const response = await fetch(api_endpoint + "/edit-customer/" + id, {
@@ -253,10 +313,10 @@ const Customers = () => {
             return customer;
           });
           // Update session storage with the updated data
-          sessionStorage.setItem(
-            "customerData",
-            JSON.stringify(updatedCustomers)
-          );
+          // sessionStorage.setItem(
+          //   "customerData",
+          //   JSON.stringify(updatedCustomers)
+          // );
           return updatedCustomers;
         });
       }
@@ -268,7 +328,6 @@ const Customers = () => {
 
   const archivedCustomer = async (id) => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(api_endpoint + `/archive-customer/${id}`, {
         method: "PATCH",
         headers: {
@@ -276,28 +335,113 @@ const Customers = () => {
           Authorization: "Bearer " + token,
         },
       });
-
-      if (response.status === 422) {
-        alert("Customer is already archive in the database");
-      }
-
-      if (!response.ok) {
-        throw new Error("Failed to archive customer");
-      }
-
-      if (response.status === 200) {
-        // Assuming there's a function to fetch the updated customer list
-        fetchCustomers();
-        setOpenDropdownId(null);
-      }
+      fetchCustomers();
+      setOpenDropdownId(null);
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleSearchInputChange = (e) => {
+    console.log("Search input changed:", e.target.value);
+    setSearchText(e.target.value);
+  };
+
+  const filteredCustomers = allCustomers.filter((customer) => {
+    const registrationDate = new Date(customer.created_at);
+    const matchesSearchText =
+      customer && customer.customerName
+        ? customer.customerName.toLowerCase().includes(searchText.toLowerCase())
+        : false;
+
+    // Check if selectedMonth is not null, and if it is, don't apply the month filter
+    const monthFilter =
+      selectedMonth !== null
+        ? registrationDate.getMonth() + 1 === selectedMonth.value
+        : true;
+
+    return (
+      monthFilter &&
+      (!selectedYear || registrationDate.getFullYear() === selectedYear) &&
+      matchesSearchText
+    );
+  });
+
+  const sortedFilteredCustomers = filteredCustomers.sort((a, b) => a.id - b.id);
+
+  const totalCustomers = allCustomers.length;
+
+  const toggleDropdown = (customerId) => {
+    if (openDropdownId === customerId) {
+      // If the clicked dropdown is already open, close it
+      setOpenDropdownId(null);
+    } else {
+      // Close the previously open dropdown (if any)
+      setOpenDropdownId(customerId);
+    }
+  };
+
+  const closeDropdownOnOutsideClick = (event) => {
+    // Check if the click is outside the dropdown
+    if (
+      event.target.closest('.dropdown')
+    ) {
+      // Close the dropdown
+      setOpenDropdownId(null);
+    }
+  };
+
+  useEffect(() => {
+    // Add a click event listener to the document body
+    document.body.addEventListener('click', closeDropdownOnOutsideClick);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      document.body.removeEventListener('click', closeDropdownOnOutsideClick);
+    };
+  }, []); // Empty dependency array to ensure the effect runs only once
+
+  const handleShowUpdateModal = (customer) => {
+    setOpenDropdownId(null);
+    setSelectedCustomer(customer);
+    setShowUpdateModal(true);
+  };
+
+  const handleCloseUpdateModal = (customer) => {
+    setSelectedCustomer(customer);
+    handleShowUpdateModal(null);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setNewCustomerName("");
+    setNewCustomerPhoneNumber("");
+    setNewCustomerAddress("");
+    setKiloOfBeans("");
+  };
+
+  const closeUpdateModal = () => {
+    setIsUpdateModalOpen(false);
+    setNewCustomerName("");
+    setNewCustomerPhoneNumber("");
+    setNewCustomerAddress("");
+    setKiloOfBeans("");
+  };
+
   const handleCancel = () => {
     closeModal();
   };
+
+  // Render loading state
+  if (status === 'loading') {
+    return <div className="flex items-center justify-center h-screen">
+      <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
+    </div>;
+  }
 
   return (
     <>
@@ -329,11 +473,11 @@ const Customers = () => {
               e.target.style.transition = "background-color 0.3s ease";
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
+              e.target.style.backgroundColor = "#74574D";
               e.target.style.transition = "background-color 0.3s ease";
             }}
             style={{
-              backgroundColor: "#512615",
+              backgroundColor: "#74574D",
               boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
               border: "none",
               textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -350,7 +494,7 @@ const Customers = () => {
               <label htmlFor="monthSelect" className="poppins-font font-bold">
                 Month:
               </label>
-              <div className="ml-2 poppins-font font-bold">
+              <div className="ml-2 poppins-font font-seminold">
                 <Select
                   id="monthSelect"
                   options={monthOptions}
@@ -367,7 +511,7 @@ const Customers = () => {
                     singleValue: (provided) => ({
                       ...provided,
                       fontFamily: "'Poppins', sans-serif",
-                      color: "#333",
+                      color: "#74574D",
                     }),
                   }}
                 />
@@ -407,7 +551,7 @@ const Customers = () => {
           }}
         >
           <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-            <div className="max-h-[350px] overflow-y-auto">
+            <div className="max-h-[450px] overflow-y-auto">
               <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
                 <thead>
                   <tr>
@@ -415,19 +559,13 @@ const Customers = () => {
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Id number
+                      
                     </th>
                     <th
                       scope="col"
                       className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Date Added
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Customer Name
+                      Customer
                     </th>
                     <th
                       scope="col"
@@ -441,6 +579,12 @@ const Customers = () => {
                     >
                       Address
                     </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Date Added
+                    </th>
 
                     <th
                       scope="col"
@@ -450,19 +594,19 @@ const Customers = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
+                <tbody className="bg-white dark:text-textDesc dark:bg-container custom-table">
                   {(reloadCustomerData || sortedFilteredCustomers).map(
                     (customer, index) => (
-                      <tr key={customer.id}>
+                      <tr key={customer.id} className="hover:bg-lightBrown hover:text-textTitle">
                         <td className="poppins-font">{index + 1}</td>
-                        <td className="poppins-font">
-                          {new Date(customer.created_at).toLocaleDateString()}
-                        </td>
                         <td className="poppins-font">
                           {customer.customerName}
                         </td>
                         <td className="poppins-font">{customer.phoneNum}</td>
                         <td className="poppins-font">{customer.address}</td>
+                        <td className="poppins-font">
+                          {new Date(customer.created_at).toLocaleDateString()}
+                        </td>
                         <td className="poppins-font">
                           <button
                             onClick={() => toggleDropdown(customer.id)}
@@ -482,57 +626,42 @@ const Customers = () => {
                           {openDropdownId === customer.id && (
                             <div
                               id="dropdownDotsHorizontal"
-                              className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                              style={{ top: "100", right: "0" }}
+                              className="dropdown absolute mt-2 w-56 z-10 right-0 my-4 mr-5 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600"
                             >
                               <ul
-                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                className="py-2 text-sm text-gray-700 dark:text-gray-200 "
                                 aria-labelledby="dropdownMenuIconHorizontalButton"
                               >
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() => {
                                       // Navigate to the desired page
                                       navigate(
-                                        `/customers/customerstatus/${customer.customerName}/${customer.id}`
+                                        `/customers/history/${customer.customerName}/${customer.id}`
                                       );
                                     }}
                                     className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
-                                    <span class="history pr-2">
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="24"
-                                        viewBox="0 -960 960 960"
-                                        width="24"
-                                      >
-                                        <path d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z" />
-                                      </svg>
+                                    <span className="history pr-2">
+                                      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M480-120q-138 0-240.5-91.5T122-440h82q14 104 92.5 172T480-200q117 0 198.5-81.5T760-480q0-117-81.5-198.5T480-760q-69 0-129 32t-101 88h110v80H120v-240h80v94q51-64 124.5-99T480-840q75 0 140.5 28.5t114 77q48.5 48.5 77 114T840-480q0 75-28.5 140.5t-77 114q-48.5 48.5-114 77T480-120Zm112-192L440-464v-216h80v184l128 128-56 56Z" /></svg>
                                     </span>
                                     History
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() =>
                                       handleShowUpdateModal(customer)
                                     }
                                     className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                                   >
-                                    <span class="edit pr-2">
-                                      <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        height="24"
-                                        viewBox="0 -960 960 960"
-                                        width="24"
-                                      >
-                                        <path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
-                                      </svg>
+                                    <span className="edit pr-2">
+                                      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" /></svg>
                                     </span>
                                     Update
                                   </button>
                                 </li>
-                                <li>
+                                <li className="hover:bg-lightBrown hover:text-secondary mx-5 rounded-full">
                                   <button
                                     onClick={() =>
                                       archivedCustomer(customer.id)
@@ -567,6 +696,11 @@ const Customers = () => {
                   )}
                 </tbody>
               </table>
+              <div>
+                {customerError && (
+                  <p className="items-center justify-center text-center text-primary dark:text-textTitle">No Customer found. Please add new customer!</p>
+                )}
+              </div>
             </div>
             {selectedCustomer && (
               <UpdateCustomer
@@ -586,8 +720,8 @@ const Customers = () => {
           Customer
         </h2>
         {/* form for adding a new customer */}
-        <form onSubmit={getCustomerPostHistory}>
-          <div className="mb-4">
+        <form onSubmit={addCustomer}>
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomerName"
               className="block font-medium poppins-font"
@@ -599,12 +733,12 @@ const Customers = () => {
               id="newCustomerName"
               value={newCustomerName}
               onChange={(e) => setNewCustomerName(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomerPhoneNumber"
               className="block font-medium poppins-font"
@@ -612,16 +746,16 @@ const Customers = () => {
               Phone Number
             </label>
             <input
-              type="text"
+              type="number"
               id="newCustomerPhoneNumber"
               value={newCustomerPhoneNumber}
               onChange={(e) => setNewCustomerPhoneNumber(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newCustomerAddress"
               className="block font-medium poppins-font"
@@ -632,7 +766,7 @@ const Customers = () => {
               id="newCustomerAddress"
               value={newCustomerAddress}
               onChange={(e) => setNewCustomerAddress(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               rows={4}
               style={{ height: "70px", wordWrap: "break-word" }}
               required
@@ -642,14 +776,15 @@ const Customers = () => {
           <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
+              disabled = {loading}
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
-              Add Customer
+              {loading ? "Adding..." : "Add Customer"}
             </button>
             <button
               type="button"
               onClick={handleCancel}
-              className=" hover:bg-red-700 hover:text-white text-black font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className=" hover:bg-red-700 dark:text-textTitle hover:text-white text-black font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>

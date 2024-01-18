@@ -20,13 +20,22 @@ import About from "./screens/LandingScreen/About";
 import ContactUs from "./screens/LandingScreen/ContactUs";
 import RootPage from "./screens/RootPage";
 import AdminRootPage from "./superadmin/RootPage";
-import logo from "./assets/logo.png";
+import beanlogo from './assets/beanlogo.png';
+import { useDispatch, useSelector } from 'react-redux'
+import RedeemKey from "./screens/LandingScreen/AuthScreen/RedeemKey";
+import TermsAndConditions from "./screens/LandingScreen/TermsAndConditions";
+import { fetchCustomerInfo } from "../redux/services/customer/customerAction";
+import { fetchSorterInfo } from "../redux/services/sorter/sorterAction";
+import { fetchStatusInfo } from "../redux/services/status/statusAction";
 
 function App() {
   const [authenticated, setAuthenticated] = useState(null);
+  // Access the token from the Redux state
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (token) {
       setAuthenticated(true);
     } else {
@@ -34,20 +43,17 @@ function App() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  useEffect(() => {
+    dispatch(fetchCustomerInfo({ user_id, token }));
+    dispatch(fetchSorterInfo({ user_id, token }));
+    dispatch(fetchStatusInfo({ user_id, token }));
+  }, [dispatch]);
 
-  //   if (prefersDarkMode) {
-  //     document.body.classList.add('dark:bg-dark');
-  //   } else {
-  //     document.body.classList.remove('dark:bg-dark');
-  //   }
-  // }, []);
 
   if (authenticated === null) {
     return (
-      <div className="flex items-center justify-center h-screen">
-        <img src={logo} alt="Beans Logo" className="w-32 h-32" />
+      <div className="flex items-center justify-center h-screen backdrop-blur">
+            <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
       </div>
     );
   }
@@ -59,8 +65,10 @@ function App() {
         <Route path="/aboutus" element={<About />} />
         <Route path="/contact-us" element={<ContactUs />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/company" element={<CompanyDetails />} />
+        <Route path="/redeem-key" element={<RedeemKey />} />
         <Route
           exact
           path="/*"

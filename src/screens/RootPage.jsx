@@ -15,110 +15,99 @@ import StatusArchived from "./Archives/StatusArchived";
 import Sorters from "./DashboardScreen/Sorters";
 import Status from "./DashboardScreen/Status";
 import Profile from "./ProfileScreen/Profile";
-import SortingStatus from "./DashboardScreen/SortingStatus";
+import CustomerHistory from "./DashboardScreen/CustomerHistory";
 import Receipt from "./ReceiptScreen/Receipt";
 import Error from "./Error";
 import PermissionDenied from "./DeniedAccess";
 import Main from "./Mainpage";
 
 function RootPage() {
-  const navigate = useNavigate();
 
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    // Check if the user_id is not 1 and navigate back if necessary
-    if (role !== "2") {
-      navigate("/error404"); // Go back to the previous page
-      // window.location.reload();
-    }
-  }, []);
+    return (
+        <Routes>
+            <Route
+                path="/dashboard"
+                element={
+                    <Main>
+                        <Dashboard />
+                    </Main>
+                }
+            />
+            <Route
+                path="/customers"
+                element={
+                    <Main>
+                        <Customers />
+                    </Main>
+                }
+            />
+            <Route
+                path="/archive/customer"
+                element={
+                    <CustomerArchived />
+                }
+            />
+            <Route
+                path="/archive/status"
+                element={
+                    <StatusArchived />
+                }
+            />
+            <Route
+                path="/sorters"
+                element={
+                    <Main>
+                        <Sorters />
+                    </Main>
 
-  return (
-    <Routes>
-      <Route
-        path="/dashboard"
-        element={
-          <Main>
-            <Dashboard />
-          </Main>
-        }
-      />
-      <Route
-        path="/customers"
-        element={
-          <Main>
-            <Customers />
-          </Main>
-        }
-      />
-      <Route
-        path="/customer-archived"
-        element={
-          <Main>
-            <CustomerArchived />
-          </Main>
-        }
-      />
-      <Route
-        path="/status-archived"
-        element={
-          <Main>
-            <StatusArchived />
-          </Main>
-        }
-      />
-      <Route
-        path="/sorters"
-        element={
-          <Main>
-            <Sorters />
-          </Main>
-        }
-      />
-      <Route
-        path="/status"
-        element={
-          <Main>
-            <Status />
-          </Main>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <Main>
-            <Profile />
-          </Main>
-        }
-      />
-      <Route
-        path="/customers/customerstatus/:customerName/:customerId"
-        element={
-          <Main>
-            <SortingStatus />
-          </Main>
-        }
-      />
-      <Route
-        path="/status/receipt/:customerId"
-        element={
-          <div>
-            <Receipt />
-          </div>
-        }
-      />
-      <Route path="/error404" element={<Error />} />
-      <Route
-        path="/permission-denied"
-        element={
-          <Main>
-            <PermissionDenied />
-          </Main>
-        }
-      />
-      <Route path="*" element={<Error />} />
-    </Routes>
-  );
+                }
+            />
+            <Route
+                path="/status"
+                element={
+                    <Main>
+                        <Status />
+                    </Main>
+
+                }
+            />
+            <Route
+                path="/profile"
+                element={
+                    <Profile />
+                }
+            />
+            <Route
+                path="/customers/history/:customerName/:customerId"
+                element={
+                    <CustomerHistory />
+                }
+            />
+            <Route
+                path="/status/receipt/:customerId"
+                element={
+                    <div>
+                        <Receipt />
+                    </div>
+                }
+            />
+            <Route
+                path="/error404"
+                element={
+                    <Error />
+                }
+            />
+            <Route
+                path="/permission-denied"
+                element={
+                    <Main>
+                        <PermissionDenied />
+                    </Main>
+                }
+            />
+            <Route path="*" element={<Error />} />
+        </Routes>
+    );
 }
 
 export default RootPage;

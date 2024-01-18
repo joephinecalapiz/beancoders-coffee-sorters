@@ -23,10 +23,10 @@
 
 /* Table - Cell Data (below the header) */
 .sort-table {
-  /* background-color: #f2f2f2; */
+  background-color: #f2f2f2;
   font-size: 16px;
-  color: #333;
-  text-align: left;
+  /* color: #333; */
+  text-align: center;
 }
 
 .sort-table td {
@@ -35,12 +35,12 @@
 }
 
 .sort-table .see-more-button {
-  color: #0066cc;
+  /* color: #000; */
   text-decoration: underline;
 }
 
 .sort-table .see-more-button:hover {
-  color: #0052a3;
+  color: #ffffff;
 }
 
 /* For Modal Styling */

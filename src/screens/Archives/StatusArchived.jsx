@@ -1,42 +1,17 @@
 /** @format */
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Select from "react-select";
 import api_endpoint from "../../config";
+import { useSelector } from 'react-redux'
+import Sidebar from "../../component/Sidebar";
+import Topbar from "../../component/Topbar";
+import axios from 'axios';
 
 const StatusArchived = () => {
-  const [navVisible, showNavbar] = useState(false);
-  const navigate = useNavigate(); // Use the hook here
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const [statusError, setStatusError] = useState(false);
+  const [navVisible, showNavbar] = useState(true);
   const [allCustomers, setAllCustomers] = useState([]);
-  const monthOptions = [
-    { value: 1, label: "January" },
-    { value: 2, label: "February" },
-    { value: 3, label: "March" },
-    { value: 4, label: "April" },
-    { value: 5, label: "May" },
-    { value: 6, label: "June" },
-    { value: 7, label: "July" },
-    { value: 8, label: "August" },
-    { value: 9, label: "September" },
-    { value: 10, label: "October" },
-    { value: 11, label: "November" },
-    { value: 12, label: "December" },
-  ];
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth() + 1; // Adding 1 to match your month options (1 - 12)
-  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState({
-    value: currentMonth,
-    label: monthOptions[currentMonth - 1].label, // Get the label for the current month
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newCustomerName, setNewCustomerName] = useState("");
-  const [newCustomerPhoneNumber, setNewCustomerPhoneNumber] = useState("");
-  const [newCustomerAddress, setNewCustomerAddress] = useState("");
-  const [newCustomerKiloOfBeans, setKiloOfBeans] = useState("");
-  const [reloadCustomerData, setReloadCustomerData] = useState(null);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedCustomer, setSelectedCustomer] = useState(null);
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -52,17 +27,6 @@ const StatusArchived = () => {
     }
   };
 
-  const handleShowUpdateModal = (customer) => {
-    setOpenDropdownId(null);
-    setSelectedCustomer(customer);
-    setShowUpdateModal(true);
-  };
-
-  const handleCloseUpdateModal = (customer) => {
-    setSelectedCustomer(customer);
-    handleShowUpdateModal(null);
-  };
-
   const [searchText, setSearchText] = useState("");
 
   const handleSearchInputChange = (e) => {
@@ -72,38 +36,31 @@ const StatusArchived = () => {
 
   const fetchCustomers = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
-      const response = await fetch(
-        api_endpoint + "/fetch-archive-status/" + user_id,
-        {
-          method: "GET",
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch customer archived data");
-      }
-      const data = await response.json();
-      setAllCustomers(data.archived_status);
-      if (sessionStorage.getItem("archive status data") === null) {
-        sessionStorage.setItem(
-          "archive status data",
-          JSON.stringify(data.archived_status)
-        );
-      }
+      const response = await axios.get(`${api_endpoint}/fetch-archive-status/${user_id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+  
+      // Use response.data directly
+      const data = response.data.archived_status;
+  
+      setAllCustomers(data);
+      setStatusError(false);
     } catch (error) {
-      console.error("Error fetching customer archived data:", error);
+      // console.error("Error fetching customer archived data:", error);
+      if (error.response && error.response.data && error.response.data.status === 'No Status Found') {
+        setStatusError(true);
+        console.error("Error fetching customer data:", error);
+      } else {
+        // Handle other errors
+        console.error("Unexpected error:", error);
+      }
     }
   };
 
   const deleteCustomer = async (id) => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(
         api_endpoint + "/delete-archive-status/" + id,
         {
@@ -151,205 +108,157 @@ const StatusArchived = () => {
 
   return (
     <>
-      <div className={`mx-auto ${navVisible ? "" : ""}`}>
-        <div className="header">
-          <div className="md:pl-5 md:pr-5 pr-2 pl-2 pb-5 pt-0.5">
-            <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
-              Status Archives
-            </h1>
-          </div>
-        </div>
-        <div className="search-and-button mt-20">
-          <div className="dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
-            <div className="poppins-font font-bold">
-              Total: {totalCustomers}
-            </div>
-
-            <input
-              type="text"
-              placeholder="Search Customers"
-              value={searchText}
-              onChange={handleSearchInputChange}
-              className="px-4 py-2 border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
-              style={{ width: "50%", maxWidth: "1000px" }}
-            />
-          </div>
-        </div>
-        {/* <div className="calendar">
-          <div className={`p-5 ${navVisible ? "px-10" : "sm:ml-44"}`}>
-            <div className="grid grid-rows-1 gap-3 md:grid-cols-2 md:grid-rows-1">
-              <div className="relative dark:text-textTitle mobile:justify-self-center z-10 md:mb-0 flex items-center justify-end">
-                <label
-                  htmlFor="monthSelect"
-                  className="font-bold"
-                  style={{
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  Month:
-                </label>
-                <div className="ml-2">
-                  <Select
-                    id="monthSelect"
-                    options={monthOptions}
-                    value={selectedMonth}
-                    onChange={setSelectedMonth}
-                    isSearchable={false}
-                    clearable={false}
-                    styles={{
-                      option: (provided) => ({
-                        ...provided,
-                        fontFamily: "'Poppins', sans-serif",
-                        color: "#000"
-                      }),
-                      singleValue: (provided) => ({
-                        ...provided,
-                        fontFamily: "'Poppins', sans-serif",
-                        color: "#333",
-                      }),
-                    }}
-                  />
-                </div>
-              </div>
-              <div className="mb-5 dark:text-textTitle  md:mb-0 mobile:justify-self-center  flex items-center">
-                <label
-                  htmlFor="yearSelect"
-                  className="font-bold"
-                  style={{
-                    fontFamily: "'Poppins', sans-serif",
-                  }}
-                >
-                  Year:
-                </label>
-                <div className="ml-2">
-                  <input
-                    type="number"
-                    id="yearSelect"
-                    value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
-                    className="border rounded px-2 py-2 w-20 dark:bg-container focus:outline-none focus:border-blue-400 poppins-font"
-                    required
-                  />
-                </div>
-              </div>
+      <Topbar
+        onToggleSidebar={toggleSidebar}
+        collapsed={navVisible}
+        handleToggleSidebar={toggleSidebar}
+      />
+      <Sidebar collapsed={navVisible} handleToggleSidebar={toggleSidebar} />
+      <div
+        className={`main relative z-5 inset-0 mt-16  ${!navVisible ? "sm:ml-60" : "sm:ml-16"
+          }`}
+        style={{
+          transition: "margin-left 0.3s ease",
+        }}
+      >
+        <div className={`mx-auto ${navVisible ? "" : ""}`}>
+          <div className="header">
+            <div className="md:pl-5 md:pr-5 pr-2 pl-2 pb-5 pt-0.5">
+              <h1 className="text-black poppins-font bg-white dark:text-textTitle dark:bg-container mt-5 font-bold text-base p-3 rounded-lg shadow-xl">
+                Status Archives
+              </h1>
             </div>
           </div>
-        </div> */}
+          <div className="search-and-button mt-20">
+            <div className="dark:text-textTitle p-5 px-10 flex justify-between items-center transition-transform duration-300 ease-in -mt-20 font-poppins">
+              <div className="poppins-font font-bold">
+                Total: {totalCustomers}
+              </div>
 
-        <div className="md:pl-2 md:pr-2 pr-2 pl-2">
-          <div
-            className="md:p-5 md:pt-10 pt-5 "
-            style={{
-              transition: "margin-left 0.3s ease",
-              marginTop: "-10px",
-            }}
-          >
-            <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
-              <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
-                <thead>
-                  <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Customer Number
-                    </th>
+              <input
+                type="text"
+                placeholder="Search Customers"
+                value={searchText}
+                onChange={handleSearchInputChange}
+                className="px-4 py-2 border rounded focus:outline-none search-bar dark:text-textTitle dark:bg-container"
+                style={{ width: "50%", maxWidth: "1000px" }}
+              />
+            </div>
+          </div>
+          <div className="md:pl-2 md:pr-2 pr-2 pl-2">
+            <div
+              className="md:p-5 md:pt-10 pt-5 "
+              style={{
+                transition: "margin-left 0.3s ease",
+                marginTop: "-10px",
+              }}
+            >
+              <div className="shadow mx-auto overflow-hidden overflow-x-auto order-b border-gray-200 sm:rounded-lg">
+                <table className="min-w-full divide-y divide-gray-200 customers-table table-auto">
+                  <thead>
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Customer Number
+                      </th>
 
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Customer Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Sorter Name
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Bean Weight
-                    </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Status
-                    </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Customer Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Sorter Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Bean Weight
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Status
+                      </th>
 
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
-                    >
-                      Action
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white dark:text-textTitle dark:bg-container custom-table">
-                  {sortedFilteredCustomers.map((customer) => (
-                    <tr key={customer.id}>
-                      <td className="poppins-font">{customer.customer_id}</td>
-                      <td className="poppins-font">{customer.customerName}</td>
-                      <td className="poppins-font">{customer.sorterName}</td>
-                      <td className="poppins-font">{customer.kiloOfBeans}</td>
-                      <td className="poppins-font">{customer.status}</td>
-                      <td className="poppins-font">
-                        <button
-                          onClick={() => toggleDropdown(customer.id)}
-                          className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-                          type="button"
-                        >
-                          <svg
-                            className="w-5 h-5"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="currentColor"
-                            viewBox="0 0 16 3"
-                          >
-                            <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
-                          </svg>
-                        </button>
-                        {openDropdownId === customer.id && (
-                          <div
-                            id="dropdownDotsHorizontal"
-                            className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
-                            style={{ top: "100", right: "0" }}
-                          >
-                            <ul
-                              className="py-2 text-sm text-gray-700 dark:text-gray-200"
-                              aria-labelledby="dropdownMenuIconHorizontalButton"
-                            >
-                              <li>
-                                <button
-                                  onClick={() => deleteCustomer(customer.id)}
-                                  className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                >
-                                  <span className="delete pr-2">
-                                    <svg
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      height="24"
-                                      viewBox="0 -960 960 960"
-                                      width="24"
-                                    >
-                                      <path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" />
-                                    </svg>{" "}
-                                  </span>
-                                  Permanent Delete
-                                </button>
-                              </li>
-                            </ul>
-                          </div>
-                        )}
-                      </td>
+                      <th
+                        scope="col"
+                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                      >
+                        Action
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="bg-white dark:text-textDesc dark:bg-container custom-table">
+                    {sortedFilteredCustomers.map((customer, index) => (
+                      <tr key={customer.id} className="hover:bg-lightBrown hover:text-textTitle">
+                        <td className="poppins-font">{index + 1}</td>
+                        <td className="poppins-font">{customer.customerName}</td>
+                        <td className="poppins-font">{customer.sorterName}</td>
+                        <td className="poppins-font">{customer.kiloOfBeans}</td>
+                        <td className="poppins-font">{customer.status}</td>
+                        <td className="poppins-font">
+                          <button
+                            onClick={() => toggleDropdown(customer.id)}
+                            className="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                            type="button"
+                          >
+                            <svg
+                              className="w-5 h-5"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="currentColor"
+                              viewBox="0 0 16 3"
+                            >
+                              <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" />
+                            </svg>
+                          </button>
+                          {openDropdownId === customer.id && (
+                            <div
+                              id="dropdownDotsHorizontal"
+                              className="absolute mt-2 w-56 origin-top-right z-10 divide-y divide-gray-100 rounded-lg shadow bg-white dark:bg-dark dark:divide-gray-600 mr-5"
+                              style={{ top: "100", right: "0" }}
+                            >
+                              <ul
+                                className="py-2 text-sm text-gray-700 dark:text-gray-200"
+                                aria-labelledby="dropdownMenuIconHorizontalButton"
+                              >
+                                <li className="hover:bg-lightBrown hover:text-secondary rounded-full mx-2">
+                                  <button
+                                    onClick={() => deleteCustomer(customer.id)}
+                                    className="poppins-font flex items-center justify-center px-4 py-2 mx-auto hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                  >
+                                    <span className="delete pr-2">
+                                      <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z" /></svg>                                    </span>
+                                    Permanent Delete
+                                  </button>
+                                </li>
+                              </ul>
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div>
+                  {statusError && (
+                    <p className="items-center justify-center text-center text-primary dark:text-textTitle">No status archives found!</p>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
+          <div className="flex items-center"></div>
+          <br />
         </div>
       </div>
     </>

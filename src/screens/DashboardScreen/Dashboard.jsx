@@ -7,84 +7,38 @@ import "react-datepicker/dist/react-datepicker.css";
 import UpdateCompanyInfo from "../ModalScreen/UpdateCompanyInfo";
 import Activities from "./Activities";
 import YesterdayAct from "./YesterdayAct";
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchUserDetails } from "../../../redux/services/user/userActions";
 
 const Dashboard = () => {
-  const [navVisible, showNavbar] = useState(false);
-  const [userInfo, setUserInfo] = useState("");
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [beanCount, setBeanCount] = useState("");
+  const [goodCount, setGoodCount] = useState("");
+  const [beanKilo, setBeanKilo] = useState("");
+  const [machineiD, setMachineId] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const userInfo = useSelector(state => state.user.userInfo);
 
   useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const fetchUserInfo = async () => {
-    let token = localStorage.getItem("token");
-    let user_id = localStorage.getItem("user_id");
-    try {
-      user_id = localStorage.getItem("user_id");
-      const response = await fetch(api_endpoint + "/fetch-info/" + user_id, {
-        headers: {
-          Authorization: "Bearer " + token,
-          "Content-Type": "application/json",
-        },
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch user data");
-      }
-      const data = await response.json();
-      setUserInfo(data.details);
-
-      // Now that userInfo is set, you can check companyName
-      if (data.details.companyName === "") {
-        console.log("No company info yet");
-        openModal();
-      }
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
+    dispatch(fetchUserDetails({ token }));
+  }, [dispatch]);
 
   useEffect(() => {
-    // Function to check the screen width and update navVisible
-    const handleResize = () => {
-      if (window.innerWidth <= 640) {
-        showNavbar(true);
-      } else {
-        showNavbar(false);
-      }
-    };
-
-    // Add an event listener for window resize
-    window.addEventListener("resize", handleResize);
-
-    // Initial check when the component mounts
-    handleResize();
-
-    // Clean up the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const toggleSidebar = () => {
-    showNavbar(!navVisible);
-  };
-
-  useEffect(() => {
-    axios.get(api_endpoint + "/count").then((response) => {
-      const bean = response.data.beans;
+    axios.get(`${api_endpoint}/count/${userInfo.formattedId}/${user_id}`).then((response) => {
+      console.log(response.data.badBeans)
+      const bean = response.data.badBeans;
+      const good = response.data.goodBeans;
+      const totalBeans = response.data.totalKg;
       setBeanCount(bean);
+      setGoodCount(good);
+      setBeanKilo(totalBeans);
     });
   }, []);
+
+  //console.log(goodCount)
+  //console.log(beanKilo)
 
   useEffect(() => {
     document.title = "Dashboard";
@@ -107,38 +61,38 @@ const Dashboard = () => {
       >
         <div className="grid grid-cols-1 gap-12 mb-4 ">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-9 ">
-            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+            <div className="shadow-xl flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto ml-5 mr-5">
                   Pieces of Bad Beans
                 </h1>
-                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                  {beanCount && beanCount.bad !== null
-                    ? `${beanCount.bad} pieces`
+                <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
+                  {beanCount && beanCount.badBeans !== null
+                    ? `${beanCount} pieces`
                     : "0"}
                 </h1>
               </div>
             </div>
-            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+            <div className="shadow-xl flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
                   Pieces of Good Beans
                 </h1>
-                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                  {beanCount && beanCount.good !== null
-                    ? `${beanCount.good} pieces`
+                <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
+                  {goodCount && goodCount !== null
+                    ? `${goodCount} pieces`
                     : "0"}
                 </h1>
               </div>
             </div>
-            <div className="flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
+            <div className="shadow-xl flex items-center bg-white dark:bg-container justify-center h-28 grid-item">
               <div>
                 <h1 className="text-black dark:text-textTitle poppins-font font-medium data-title m-auto">
-                  KG of Bad Beans
+                  Total Kilograms
                 </h1>
-                <h1 className="text-secondBrown dark:text-mainBrown data-size m-auto">
-                  {beanCount && beanCount.kilograms !== null
-                    ? `${beanCount.kilograms} kilograms`
+                <h1 className="text-lightBrown dark:text-lightBrown data-size m-auto">
+                  {beanKilo && beanKilo !== null
+                    ? `${beanKilo} kilograms`
                     : "0"}
                 </h1>
               </div>
@@ -155,9 +109,9 @@ const Dashboard = () => {
         }}
       >
         <div>
-          <h1 className="text-black poppins-font dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
+          {/* <h1 className="text-black poppins-font dark:text-textTitle mt-1 font-bold text-base p-3 rounded-lg shadow-xl">
             Recent Activities
-          </h1>
+          </h1> */}
           <Activities />
           <YesterdayAct />
         </div>

@@ -8,10 +8,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
-import AdminSidebar from "../component/AdminSidebar";
-import Topbar from "../component/AdminTopbar";
+import { useSelector } from 'react-redux'
+import GenerateKeyModal from "../component/GenerateKeyModal";
 
 const GenerateKeys = () => {
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [keyToDelete, setKeyToDelete] = useState(null);
@@ -31,6 +33,7 @@ const GenerateKeys = () => {
   const [newSorterAddress, setNewSorterAddress] = useState("");
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [searchText, setSearchText] = useState("");
+  const [showGenerateKeyModal, setShowGenerateKeyModal] = useState(false);
 
   const filteredKeys = allKeys.filter((keys) =>
     keys.created_at.toLowerCase().includes(searchText.toLowerCase())
@@ -75,7 +78,6 @@ const GenerateKeys = () => {
 
   const handleDelete = async () => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(
         api_endpoint + "/delete-key/" + keyToDelete,
         {
@@ -102,7 +104,6 @@ const GenerateKeys = () => {
 
   const handleGenerateKeys = async () => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(api_endpoint + "/generate-keys", {
         method: "POST",
         headers: {
@@ -126,8 +127,6 @@ const GenerateKeys = () => {
 
   const fetchKeys = async () => {
     try {
-      let token = localStorage.getItem("token");
-      let user_id = localStorage.getItem("user_id");
       const response = await fetch(api_endpoint + "/fetch-keys/" + user_id, {
         method: "GET",
         headers: {
@@ -144,6 +143,14 @@ const GenerateKeys = () => {
     } catch (error) {
       console.error("Error fetching customer data:", error);
     }
+  };
+
+  const openGenerateKeyModal = () => {
+    setShowGenerateKeyModal(true);
+  };
+
+  const closeGenerateKeyModal = () => {
+    setShowGenerateKeyModal(false);
   };
 
   const totalUsers = allKeys.length;
@@ -163,7 +170,8 @@ const GenerateKeys = () => {
           <div className="poppins-font font-bold">Total: {totalUsers}</div>
           {/* Add New button */}
           <button
-            onClick={handleGenerateKeys}
+            // onClick={handleGenerateKeys}
+            onClick={openGenerateKeyModal}
             className="px-4 py-2 text-white rounded focus:outline-none"
             onMouseEnter={(e) => {
               e.target.style.backgroundColor = "#C4A484";
@@ -267,7 +275,7 @@ const GenerateKeys = () => {
                   onClick={handleDelete}
                   className="bg-red-500 justify-center hover:bg-red-600 text-white font-bold py-2 px-6 rounded mr-2"
                 >
-                  Yes
+                  Delete
                 </button>
                 <button
                   onClick={handleCancel}
@@ -280,6 +288,10 @@ const GenerateKeys = () => {
           </div>
         </div>
       )}
+      <GenerateKeyModal
+        isOpen={showGenerateKeyModal}
+        onClose={closeGenerateKeyModal}
+      />
     </>
   );
 };

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from "react";
 import api_endpoint from "../../config";
 import Modal from "../../component/Modal";
 import { useForm } from "react-hook-form";
+import { useSelector } from 'react-redux'
 
 const imageMimeType = /image\/(png|jpg|jpeg)/i;
 
 const UpdateCompanyInfo = ({ show, onClose }) => {
+    const token = useSelector(state => state.auth.token);
+    const user_id = useSelector(state => state.auth.user_id);
     const [modalStep, setModalStep] = useState(1); // Track the current step of the modal
     const [loading, setLoading] = useState(false);
     const [companyName, setCompanyName] = useState("");
@@ -113,7 +116,7 @@ const UpdateCompanyInfo = ({ show, onClose }) => {
                     setTimeout(() => {
                         setLoading(false);
                         closeModal();
-                      }, 2000); 
+                    }, 2000);
                 }
             })
             .catch((error) => {
@@ -133,232 +136,232 @@ const UpdateCompanyInfo = ({ show, onClose }) => {
             overlayClassName="absolute inset-0 bg-black opacity-50"
         >
             <form onSubmit={handleSubmit(onSubmitHandler)}>
-            <div className="rounded max-w-sm mx-auto z-50">
-                <span
-                    className="modal-close bg-white absolute pl-5 pr-5 top-4 right-4 text-xl cursor-pointer"
-                    onClick={closeModal}
-                >
-                    &times;
-                </span>
+                <div className="rounded max-w-sm mx-auto z-50">
+                    <span
+                        className="modal-close bg-white absolute pl-5 pr-5 top-4 right-4 text-xl cursor-pointer"
+                        onClick={closeModal}
+                    >
+                        &times;
+                    </span>
 
-                {modalStep === 1 && (
-                    <>
-                        <h2 className="text-2xl font-semibold dark:text-textTitle mb-4 text-center" htmlFor='image'> Profile Avatar </h2>
-                        {profileFileDataURL ?
-                            <p className="">
-                                {
-                                    <img src={profileFileDataURL} alt="preview" />
-                                }
-                            </p> : null}
-                        <input
-                            type="file"
-                            id='image'
-                            onChange={profileImageHandler}
-                            accept='.png, .jpg, .jpeg'
-                            className="mb-2 mt-4 flex justify-center dark:text-textTitle"
-                        />
+                    {modalStep === 1 && (
+                        <>
+                            <h2 className="text-2xl font-semibold dark:text-textTitle mb-4 text-center" htmlFor='image'> Profile Avatar </h2>
+                            {profileFileDataURL ?
+                                <p className="">
+                                    {
+                                        <img src={profileFileDataURL} alt="preview" />
+                                    }
+                                </p> : null}
+                            <input
+                                type="file"
+                                id='image'
+                                onChange={profileImageHandler}
+                                accept='.png, .jpg, .jpeg'
+                                className="mb-2 mt-4 flex justify-center dark:text-textTitle"
+                            />
 
-                        {/* buttons */}
-                        <div className="flex justify-center mt-4">
-                            {/* <button
+                            {/* buttons */}
+                            <div className="flex justify-center mt-4">
+                                {/* <button
                                 onClick={handleUpdateProfileImage}
                                 className="bg-green-500 text-white rounded px-4 py-2"
                             >
                                 Upload Image
                             </button> */}
-                            <button
-                                onClick={handleNextStep}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 ml-2 rounded focus:outline-none"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </>
-                )}
+                                <button
+                                    onClick={handleNextStep}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 ml-2 rounded focus:outline-none"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </>
+                    )}
 
-                {modalStep === 2 && (
-                    <>
-                        <h2 className="text-2xl font-semibold dark:text-textTitle mb-4 text-center" htmlFor='CompImage'> Company Image </h2>
-                        {companyFileDataURL ?
-                            <p className="">
-                                {
-                                    <img src={companyFileDataURL} alt="preview" />
-                                }
-                            </p> : null}
-                        <input
-                            type="file"
-                            id='CompImage'
-                            onChange={companyImageHandler}
-                            accept='.png, .jpg, .jpeg'
-                            className="mb-2 mt-4 flex justify-center dark:text-textTitle"
-                        />
-                        {/* ... buttons ... */}
-                        <div className="flex justify-center mt-4">
-                            <button
-                                onClick={handlePreviousStep}
-                                className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
-                            >
-                                Previous
-                            </button>
-                            {/* <button
+                    {modalStep === 2 && (
+                        <>
+                            <h2 className="text-2xl font-semibold dark:text-textTitle mb-4 text-center" htmlFor='CompImage'> Company Image </h2>
+                            {companyFileDataURL ?
+                                <p className="">
+                                    {
+                                        <img src={companyFileDataURL} alt="preview" />
+                                    }
+                                </p> : null}
+                            <input
+                                type="file"
+                                id='CompImage'
+                                onChange={companyImageHandler}
+                                accept='.png, .jpg, .jpeg'
+                                className="mb-2 mt-4 flex justify-center dark:text-textTitle"
+                            />
+                            {/* ... buttons ... */}
+                            <div className="flex justify-center mt-4">
+                                <button
+                                    onClick={handlePreviousStep}
+                                    className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
+                                >
+                                    Previous
+                                </button>
+                                {/* <button
                                 onClick={handleUpdateCompanyImage}
                                 className="bg-green-500 text-white rounded px-4 py-2"
                             >
                                 Upload Image
                             </button> */}
-                            <button
-                                onClick={handleNextStep}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 ml-2 rounded focus:outline-none"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </>
-                )}
+                                <button
+                                    onClick={handleNextStep}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 ml-2 rounded focus:outline-none"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </>
+                    )}
 
-                {modalStep === 3 && (
-                    <>
-                        <h2 className="text-2xl font-semibold mb-4 text-center">
-                            Enter Company Name
-                        </h2>
-                        <input
-                            type="text"
-                            value={companyName}
-                            onChange={(e) => setCompanyName(e.target.value)}
-                            {...register("companyName", {
-                                required: "Company Name is required",
-                                pattern: {
-                                    value: /^[a-zA-Z ]{2,30}$/,
-                                    message: "Invalid Company Name",
-                                },
-                            })}
-                            className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.companyName ? "mb-2" : "mb-5"
-                                }`}
-                            style={{ fontFamily: "Poppins, sans-serif" }}
+                    {modalStep === 3 && (
+                        <>
+                            <h2 className="text-2xl font-semibold mb-4 text-center">
+                                Enter Company Name
+                            </h2>
+                            <input
+                                type="text"
+                                value={companyName}
+                                onChange={(e) => setCompanyName(e.target.value)}
+                                {...register("companyName", {
+                                    required: "Company Name is required",
+                                    pattern: {
+                                        value: /^[a-zA-Z ]{2,30}$/,
+                                        message: "Invalid Company Name",
+                                    },
+                                })}
+                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.companyName ? "mb-2" : "mb-5"
+                                    }`}
+                                style={{ fontFamily: "Poppins, sans-serif" }}
                             // className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400"
-                        />
-                        {errors.companyName && (
+                            />
+                            {errors.companyName && (
                                 <p className="text-red-500 ml-2">{errors.companyName.message}</p>
-                        )}
-                        <div className="flex justify-center mt-4">
-                            <button
-                                onClick={handlePreviousStep}
-                                className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
-                            >
-                                Previous
-                            </button>
-                            <button
-                                onClick={handleNextStep}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </>
-                )}
+                            )}
+                            <div className="flex justify-center mt-4">
+                                <button
+                                    onClick={handlePreviousStep}
+                                    className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    onClick={handleNextStep}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </>
+                    )}
 
-                {modalStep === 4 && (
-                    <>
-                        <h2 className="text-2xl font-semibold mb-4 text-center">
-                            Company Phone Number
-                        </h2>
-                        <input
-                            type="text"
-                            value={companyPhoneNumber}
-                            onChange={(e) => setCompanyPhoneNumber(e.target.value)}
-                            {...register("companyNumber", {
-                                required: "Phone Number is required",
-                                pattern: {
-                                    value: /^[\d-()+\s]*$/,
-                                    message: "Invalid Phone Number",
-                                }
-                            })}
-                            className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.companyNumber ? "mb-2" : "mb-5"
-                                }`}
-                            style={{ fontFamily: "Poppins, sans-serif" }}
-                        />
-                        {errors.companyNumber && (
-                            <p className="text-red-500 ml-2">{errors.companyNumber.message}</p>
-                        )}
-                        <div className="flex justify-center mt-4">
-                            <button
-                                onClick={handlePreviousStep}
-                                className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
-                            >
-                                Previous
-                            </button>
-                            <button
-                                onClick={handleNextStep}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
-                            >
-                                Next
-                            </button>
-                        </div>
-                    </>
-                )}
+                    {modalStep === 4 && (
+                        <>
+                            <h2 className="text-2xl font-semibold mb-4 text-center">
+                                Company Phone Number
+                            </h2>
+                            <input
+                                type="text"
+                                value={companyPhoneNumber}
+                                onChange={(e) => setCompanyPhoneNumber(e.target.value)}
+                                {...register("companyNumber", {
+                                    required: "Phone Number is required",
+                                    pattern: {
+                                        value: /^[\d-()+\s]*$/,
+                                        message: "Invalid Phone Number",
+                                    }
+                                })}
+                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.companyNumber ? "mb-2" : "mb-5"
+                                    }`}
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            />
+                            {errors.companyNumber && (
+                                <p className="text-red-500 ml-2">{errors.companyNumber.message}</p>
+                            )}
+                            <div className="flex justify-center mt-4">
+                                <button
+                                    onClick={handlePreviousStep}
+                                    className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    onClick={handleNextStep}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+                                >
+                                    Next
+                                </button>
+                            </div>
+                        </>
+                    )}
 
-                {modalStep === 5 && (
-                    <>
-                        <h2 className="text-2xl font-semibold mb-4 text-center">
-                            Company Address
-                        </h2>
-                        <input
-                            type="text"
-                            value={companyAddress}
-                            onChange={(e) => setCompanyAddress(e.target.value)}
-                            {...register("companyLocation", {
-                                required: "Location is required",
-                                pattern: {
-                                    value: /^[a-zA-Z ]{2,30}$/,
-                                    message: "Invalid Location",
-                                },
-                            })}
-                            className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.companyLocation ? "mb-2" : "mb-5"
-                                }`}
-                            style={{ fontFamily: "Poppins, sans-serif" }}
-                        />
+                    {modalStep === 5 && (
+                        <>
+                            <h2 className="text-2xl font-semibold mb-4 text-center">
+                                Company Address
+                            </h2>
+                            <input
+                                type="text"
+                                value={companyAddress}
+                                onChange={(e) => setCompanyAddress(e.target.value)}
+                                {...register("companyLocation", {
+                                    required: "Location is required",
+                                    pattern: {
+                                        value: /^[a-zA-Z ]{2,30}$/,
+                                        message: "Invalid Location",
+                                    },
+                                })}
+                                className={`bg-white w-full rounded-[10px] h-10 text-black px-4 ${errors.companyLocation ? "mb-2" : "mb-5"
+                                    }`}
+                                style={{ fontFamily: "Poppins, sans-serif" }}
+                            />
 
-                        {errors.companyLocation && (
-                            <p className="text-red-500 ml-2">{errors.companyLocation.message}</p>
-                        )}
-                        <div className="flex justify-center mt-4">
-                            <button
-                                onClick={handlePreviousStep}
-                                className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
-                            >
-                                Previous
-                            </button>
-                            <button
-                                onClick={handleSubmit(onSubmitHandler)}
-                                disabled={loading}
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
-                            >
-                                {loading ? (
-                                    <svg
-                                        className="animate-spin h-5 w-5 mr-3 text-white"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <circle
-                                            className="opacity-25"
-                                            cx="12"
-                                            cy="12"
-                                            r="10"
-                                            stroke="currentColor"
-                                            strokeWidth="4"
-                                        ></circle>
-                                        <path
-                                            className="opacity-75"
-                                            fill="currentColor"
-                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
-                                        ></path>
-                                    </svg>
-                                ) : null}
-                                {loading ? "Processing..." : "Submit"}
-                            </button>
-                        </div>
-                    </>
-                )}
-            </div>
+                            {errors.companyLocation && (
+                                <p className="text-red-500 ml-2">{errors.companyLocation.message}</p>
+                            )}
+                            <div className="flex justify-center mt-4">
+                                <button
+                                    onClick={handlePreviousStep}
+                                    className="bg-gray-400 hover:bg-gray-500 text-white font-medium py-2 px-4 rounded focus:outline-none mr-2"
+                                >
+                                    Previous
+                                </button>
+                                <button
+                                    onClick={handleSubmit(onSubmitHandler)}
+                                    disabled={loading}
+                                    className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none"
+                                >
+                                    {loading ? (
+                                        <svg
+                                            className="animate-spin h-5 w-5 mr-3 text-white"
+                                            viewBox="0 0 24 24"
+                                        >
+                                            <circle
+                                                className="opacity-25"
+                                                cx="12"
+                                                cy="12"
+                                                r="10"
+                                                stroke="currentColor"
+                                                strokeWidth="4"
+                                            ></circle>
+                                            <path
+                                                className="opacity-75"
+                                                fill="currentColor"
+                                                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.96 8.01 0 014 12H0c0 3.042 1.135 5.86 3.169 8.022l2.83-2.73zM12 20a8 8 0 008-8h4a12 12 0 01-12 12v-4zm5.819-10.169A7.96 8.01 0 0120 12h4c0-3.042-1.135-5.86-3.169-8.022l-2.83 2.73z"
+                                            ></path>
+                                        </svg>
+                                    ) : null}
+                                    {loading ? "Processing..." : "Submit"}
+                                </button>
+                            </div>
+                        </>
+                    )}
+                </div>
             </form>
         </Modal>
     );

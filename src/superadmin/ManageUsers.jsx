@@ -1,16 +1,18 @@
 /** @format */
 
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import api_endpoint from "../config";
-import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from 'react-redux';
+import Modal from "../component/Modal"; // Import the Modal component
 
 const ManageUsers = () => {
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
   const [navVisible, showNavbar] = useState(false);
 
   const toggleSidebar = () => {
@@ -22,10 +24,13 @@ const ManageUsers = () => {
   }); // Example: 5 requests per second
 
   const [allUsers, setAllUsers] = useState([]);
+  const [machines, setMachines] = useState([]);
+  const [userIdToUpdate, setUserIdToUpdate] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const [keyToDelete, setKeyToDelete] = useState(null);
+  const [isModal, setIsModal] = useState(false);
   const filteredSorters = allUsers.filter((users) =>
     users.name.toLowerCase().includes(searchText.toLowerCase())
   );
@@ -39,6 +44,24 @@ const ManageUsers = () => {
   const deleteKeys = (id) => {
     setKeyToDelete(id);
     openModal();
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch(api_endpoint + "/allusers", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+
+      const data = await response.json();
+      setAllUsers(data.user);
+      console.log(data.user)
+      // sessionStorage.setItem("userData", JSON.stringify(data.user));
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
   };
 
   useEffect(() => {
@@ -67,8 +90,24 @@ const ManageUsers = () => {
     setKeyToDelete(null);
   };
 
+  const [machineid, setMachine] = useState("");
+
+  const handleMachine = (e) => {
+    setMachine(e.target.value);
+  };
+
+  const openModals = (id) => {
+    setIsModal(true);
+    setUserIdToUpdate(id);
+  };
+
+  const closeModals = () => {
+    setIsModal(false);
+  };
+
   const handleCancel = () => {
     closeModal();
+    closeModals();
   };
 
   const toggleDropdown = (user) => {
@@ -81,9 +120,22 @@ const ManageUsers = () => {
     }
   };
 
+  useEffect(() => {
+    axios
+      .get(`${api_endpoint}/fetch-machine-id/${user_id}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((response) => {
+        const fetchCustomerData = response.data.machineId;
+        // sessionStorage.setItem("customerData", JSON.stringify(fetchCustomerData));
+        setMachines(fetchCustomerData);
+      });
+  }, []);
+
   const handleDelete = async () => {
     try {
-      let token = localStorage.getItem("token");
       const response = await fetch(
         api_endpoint + "/delete-user/" + keyToDelete,
         {
@@ -108,10 +160,37 @@ const ManageUsers = () => {
     }
   };
 
+  const handleAddNew = async () => {
+    event.preventDefault();
+    try {
+      const response = await fetch(
+        api_endpoint + "/machine-id/" + userIdToUpdate,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+          },
+          body: JSON.stringify({
+            formattedId: machineid,
+          }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Fail to update the user");
+      }
+      if (response.status === 200) {
+        closeModals();
+        fetchUsers();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+    closeModals();
+  };
+
   const setEnabled = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-
       const response = await fetch(
         api_endpoint + "/disabled-user/" + statusId,
         {
@@ -140,8 +219,6 @@ const ManageUsers = () => {
 
   const setToDisabled = async (statusId) => {
     try {
-      let token = localStorage.getItem("token");
-
       const response = await fetch(
         api_endpoint + "/disabled-user/" + statusId,
         {
@@ -168,30 +245,11 @@ const ManageUsers = () => {
     setOpenDropdownId(null);
   };
 
-  const fetchUsers = async () => {
-    try {
-      let token = localStorage.getItem("token");
-
-      const response = await fetch(api_endpoint + "/allusers", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-
-      const data = await response.json();
-      setAllUsers(data.user);
-      sessionStorage.setItem("userData", JSON.stringify(data.user));
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-    }
-  };
-
   useEffect(() => {
-    const cachedCustomerData = sessionStorage.getItem("userData");
-    if (cachedCustomerData) {
-      setAllUsers(JSON.parse(cachedCustomerData));
-    }
+    // const cachedCustomerData = sessionStorage.getItem("userData");
+    // if (cachedCustomerData) {
+    //   setAllUsers(JSON.parse(cachedCustomerData));
+    // }
   }, []);
 
   const totalUsers = allUsers.length;
@@ -256,6 +314,12 @@ const ManageUsers = () => {
                       scope="col"
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
+                      Machine
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
                       Status
                     </th>
                     <th
@@ -263,6 +327,12 @@ const ManageUsers = () => {
                       className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
                       Date Registered
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-6 py-3 text-xs font-medium text-gray-500 uppercase tracking-wider table-header poppins-font"
+                    >
+                      Last Login
                     </th>
                     <th
                       scope="col"
@@ -278,6 +348,9 @@ const ManageUsers = () => {
                       <td className="poppins-font">{index + 1}</td>
                       <td className="poppins-font">{user.name}</td>
                       <td className="poppins-font">{user.email}</td>
+                      <td className="poppins-font">
+                        {user.formattedId !== '' ? <span style={{ color: "green" }}>{user.formattedId}</span> : 'No assigned machine'}
+                      </td>
                       <td className="poppins-font">
                         <button
                           onClick={() => toggleDropdown(user.id)}
@@ -331,12 +404,29 @@ const ManageUsers = () => {
                       <td className="poppins-font">
                         {new Date(user.created_at).toLocaleDateString()}
                       </td>
+                      <td className="poppins-font">
+                        {user.last_login ? new Date(user.last_login).toLocaleString('en-US', {
+                          year: 'numeric',
+                          month: 'numeric',
+                          day: 'numeric',
+                          hour: 'numeric',
+                          minute: 'numeric',
+                          second: 'numeric',
+                          hour12: true
+                        }) : 'N/A'}
+                      </td>
                       <td>
                         <button
                           onClick={() => deleteKeys(user.id)}
                           className="delete-button "
                         >
                           <FontAwesomeIcon icon={faTrash} />
+                        </button>
+                        <button
+                          onClick={() => openModals(user.id)}
+                          className="delete-button ml-2"
+                        >
+                          <FontAwesomeIcon icon={faEdit} />
                         </button>
                       </td>
                     </tr>
@@ -380,6 +470,51 @@ const ManageUsers = () => {
           </div>
         </div>
       )}
+      <Modal isOpen={isModal} onClose={closeModals}>
+        <h2 className="text-2xl font-semibold mb-4 text-center poppins-font text-black dark:text-textTitle">
+          Assigned Sorter Machine
+        </h2>
+        {/* Add your form or content for adding a new customer */}
+        <form onSubmit={handleAddNew}>
+          <div className="mb-4 dark:text-textTitle">
+            <label
+              htmlFor="newSorter"
+              className="block font-medium poppins-font"
+            >
+              Machine ID
+            </label>
+            <select
+              id="newSorter"
+              value={machineid}
+              onChange={handleMachine}
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
+              required
+            >
+              <option value=" ">Select Machine</option>
+              {machines.map((machine) => (
+                <option key={machine.id} value={machine.formattedId}>
+                  {machine.formattedId}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex flex-col gap-4 justify-between">
+            <button
+              type="submit"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Set Machine
+            </button>
+            <button
+              type="button"
+              onClick={handleCancel}
+              className=" hover:bg-red-700 text-black dark:text-textTitle hover:text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </Modal>
     </>
   );
 };

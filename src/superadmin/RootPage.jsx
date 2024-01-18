@@ -13,66 +13,75 @@ import Feedbacks from "./Feedbacks";
 import Error from "./Error";
 import Profile from "./Profile";
 import GenerateKeys from "./GenerateKey";
-import PermissionDenied from "./DeniedAccess";
 import Main from "./Mainpage";
+import {useSelector } from 'react-redux'
+import GenerateMachineId from "./GenerateMachineID";
 
 function AdminRootPage() {
-  const navigate = useNavigate();
+    const navigate = useNavigate();
+    const role = useSelector(state => state.auth.role);
+    
+    useEffect(() => {
+        // const role = localStorage.getItem('token')
+        // Check if the user_id is not 1 and navigate back if necessary
+        if (role !== '1') {
+            navigate("/superadmin/permission-denied"); // Go back to the previous page
+            // window.location.reload();
+        }
+    }, []);
 
-  useEffect(() => {
-    const role = localStorage.getItem("role");
-    // Check if the user_id is not 1 and navigate back if necessary
-    if (role !== "1") {
-      navigate("/superadmin/permission-denied"); // Go back to the previous page
-      // window.location.reload();
-    }
-  }, []);
+    return (
+        <Routes>
+            <Route
+                path="/manageusers"
+                element={
+                    <Main>
+                        <ManageUsers />
+                    </Main>
+                }
+            />
+            <Route
+                path="/feedbacks"
+                element={
+                    <Main>
+                        <Feedbacks />
+                    </Main>
+                }
+            />
+            <Route
+                path="/generate-keys"
+                element={
+                    <Main>
+                        <GenerateKeys />
+                    </Main>
+                }
+            />
+            <Route
+                path="/generate-machine-id"
+                element={
+                    <Main>
+                        <GenerateMachineId />
+                    </Main>
+                }
+            />
+            <Route
+                path="/profile"
+                element={
+                    <Profile />
+                }
+            />
+            <Route
+                path="/error"
+                element={
+                    <Main>
+                        <Error />
+                    </Main>
 
-  return (
-    <Routes>
-      <Route
-        path="/manageusers"
-        element={
-          <Main>
-            <ManageUsers />
-          </Main>
-        }
-      />
-      <Route
-        path="/feedbacks"
-        element={
-          <Main>
-            <Feedbacks />
-          </Main>
-        }
-      />
-      <Route
-        path="/generate-keys"
-        element={
-          <Main>
-            <GenerateKeys />
-          </Main>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <Main>
-            <Profile />
-          </Main>
-        }
-      />
-      <Route
-        path="/error"
-        element={
-          <Main>
-            <Error />
-          </Main>
-        }
-      />
-      <Route path="*" element={<Error />} />
-    </Routes>
-  );
+                }
+            />
+            <Route path="*" element={<Error />} />
+        </Routes>
+    );
 }
 
 export default AdminRootPage;

@@ -7,11 +7,22 @@ import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import AxiosRateLimit from "axios-rate-limit";
 import Modal from "../../component/Modal";
-
+import { useDispatch, useSelector } from 'react-redux'
 import api_endpoint from "../../config";
+import { addSorterInfo, fetchSorterInfo } from "../../../redux/services/sorter/sorterAction";
+import beanlogo from '../../assets/beanlogo.png';
 
 const Sorters = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.auth.token);
+  const user_id = useSelector(state => state.auth.user_id);
+  const sorterInfo = useSelector(state => state.sorter.sorterInfo);
+  const { status, error } = useSelector((state) => state.user);
+  const [sorterError, setSorterError] = useState(false);
   const [navVisible, showNavbar] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [addError, setAddError] = useState(false);
+
   const toggleSidebar = () => {
     showNavbar(!navVisible);
   };
@@ -39,27 +50,75 @@ const Sorters = () => {
   const [newSorterDateHired, setNewSorterDateHired] = useState("");
   const [allSorters, setAllSorters] = useState([]);
   const [reloadSorterData, setReloadSorterData] = useState(null);
+
+  // useEffect(() => {
+  //   dispatch(fetchSorterInfo({ user_id, token }));
+  // }, [dispatch]);
+
+  useEffect(() => {
+    if (status === 'idle') {
+      // if (customer) dispatch(updateCustomerList(customer.customer))
+      // console.log(customer.customer)
+      fetchSorters();
+    }
+
+    if (status === 'succeeded') {
+      setAllSorters(sorterInfo)
+      setSorterError(false);
+    }
+
+    // Render error state
+    if (status === 'failed') {
+      setSorterError(true);
+    }
+  }, []);
+
+  // console.log(sorterInfo)
+
   useEffect(() => {
     document.title = "Sorters";
-    const cachedSorterData = sessionStorage.getItem("sorterData");
-    if (cachedSorterData) {
-      setAllSorters(JSON.parse(cachedSorterData));
-    }
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
-    const headers = {
-      Authorization: "Bearer " + token,
-    };
-    axiosInstance
-      .get(`${api_endpoint}/sorters/${user_id}`, { headers })
-      .then((response) => {
-        const sorters = response.data;
-        setAllSorters(sorters.sorters);
-        if (sessionStorage.getItem("sorterData") === null) {
-          sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
-        }
-      });
+    fetchSorters();
+    // const cachedSorterData = sessionStorage.getItem("sorterData");
+    // if (cachedSorterData) {
+    //   setAllSorters(JSON.parse(cachedSorterData));
+    // }
+    // const headers = {
+    //   Authorization: "Bearer " + token,
+    // };
+    // axiosInstance
+    //   .get(`${api_endpoint}/sorters/${user_id}`, { headers })
+    //   .then((response) => {
+    //     const sorters = response.data;
+    //     setAllSorters(sorters.sorters);
+    //     // if (sessionStorage.getItem("sorterData") === null) {
+    //     //   sessionStorage.setItem("sorterData", JSON.stringify(sorters.sorters));
+    //     // }
+    //   });
   }, []);
+
+  const fetchSorters = async () => {
+    dispatch(fetchSorterInfo({ user_id, token }))
+    .then((resultAction) => {
+      // Check if the thunk was fulfilled successfully
+      if (fetchSorterInfo.fulfilled.match(resultAction)) {
+        // console.log('Add Customer Successfully');
+        // Dispatch the updateCustomerList action to update the state with the new data
+        // dispatch(updateCustomerList(resultAction.payload));
+        setAllSorters(sorterInfo)
+        setSorterError(false);
+      } else {
+        // Handle the case where the thunk was rejected or pending
+        console.error('Fetch Sorter Failed');
+      }
+    })
+    .catch((error) => {
+      // Handle errors that occurred during the dispatching of the thunk
+      console.error('Error dispatching fetchSorterInfo:', error);
+    });
+    // console.log(sorterInfo)
+    // setAllSorters(sorterInfo)
+    // setSorterError(false);
+  };
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -73,42 +132,84 @@ const Sorters = () => {
     setNewSorterDateHired("");
   };
 
-  const handleAddNewSorter = async (e) => {
+  const addSorter = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
-    const user_id = localStorage.getItem("user_id");
-    try {
-      const response = await axiosInstance.post(
-        api_endpoint + "/add/sorter",
-        {
-          user_id: user_id,
-          sorterName: newSorterName,
-          phoneNum: newSorterPhoneNumber,
-          address: newSorterAddress,
-          dateHired: newSorterDateHired,
-        },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-            "Content-Type": "application/json",
-          },
+    setLoading(true);
+
+    const sorterData = {
+      user_id: user_id,
+      sorterName: newSorterName,
+      phoneNum: newSorterPhoneNumber,
+      address: newSorterAddress,
+      dateHired: newSorterDateHired,
+    };
+
+    // Dispatch the addCustomerInfo thunk
+    dispatch(addSorterInfo({ token, sorterData }))
+      .then((resultAction) => {
+        // Check if the thunk was fulfilled successfully
+        if (addSorterInfo.fulfilled.match(resultAction)) {
+          // console.log('Add Customer Successfully');
+          // Dispatch the updateCustomerList action to update the state with the new data
+          // dispatch(updateCustomerList(resultAction.payload));
+          // console.log(resultAction.payload)
+          setAllSorters(resultAction.payload)
+          setLoading(false);
+          closeModal();
+        } else {
+          // Handle the case where the thunk was rejected or pending
+          console.error('Add Sorter Failed');
+          setLoading(false);
+          closeModal();
         }
-      );
-
-      if (response.status === 200) {
-        setAllSorters((prevSorters) => {
-          const updatedSorters = [...prevSorters, response.data.sorter];
-          sessionStorage.setItem("sorterData", JSON.stringify(updatedSorters));
-
-          return updatedSorters;
-        });
-        closeModal();
-      }
-    } catch (error) {
-      console.error("Error adding sorter:", error);
-      // Handle error scenarios if needed
-    }
+      })
+      .catch((error) => {
+        // Handle errors that occurred during the dispatching of the thunk
+        console.error('Error dispatching addSorterInfo:', error);
+        if (error && error.type === 'invalid') {
+          setAddError(true);
+          setLoading(false);
+          closeModal();
+        }
+        setLoading(false);
+      });
   };
+
+  // const addSorter = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axiosInstance.post(
+  //       api_endpoint + "/add/sorter",
+  //       {
+  //         user_id: user_id,
+  //         sorterName: newSorterName,
+  //         phoneNum: newSorterPhoneNumber,
+  //         address: newSorterAddress,
+  //         dateHired: newSorterDateHired,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: "Bearer " + token,
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+
+  //     if (response.status === 200) {
+  //       // setAllSorters((prevSorters) => {
+  //       //   const updatedSorters = [...prevSorters, response.data.sorter];
+  //       //   sessionStorage.setItem("sorterData", JSON.stringify(updatedSorters));
+
+  //       //   return updatedSorters;
+  //       // });
+  //       fetchSorters();
+  //       closeModal();
+  //     }
+  //   } catch (error) {
+  //     console.error("Error adding sorter:", error);
+  //     // Handle error scenarios if needed
+  //   }
+  // };
 
   const handleCancel = () => {
     closeModal();
@@ -126,6 +227,14 @@ const Sorters = () => {
   };
 
   const totalSorters = allSorters.length;
+  // console.log(allSorters)
+
+  // Render loading state
+  if (status === 'loading') {
+    return <div className="flex items-center justify-center h-screen">
+      <img src={beanlogo} alt="Beans Logo" className="w-32 h-32" />
+    </div>;
+  }
 
   return (
     <>
@@ -157,11 +266,11 @@ const Sorters = () => {
               e.target.style.transition = "background-color 0.3s ease";
             }}
             onMouseLeave={(e) => {
-              e.target.style.backgroundColor = "#512615";
+              e.target.style.backgroundColor = "#74574D";
               e.target.style.transition = "background-color 0.3s ease";
             }}
             style={{
-              backgroundColor: "#512615",
+              backgroundColor: "#74574D",
               boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.9)",
               border: "none",
               textShadow: "1px 1px 1px rgba(0, 0, 0, 1)",
@@ -181,15 +290,15 @@ const Sorters = () => {
         >
           <br />
           <div className="shadow overflow-hidden overflow-x-auto border-b border-gray-200 sm:rounded-lg">
-            <div className="max-h-[440px] overflow-y-auto">
-              <table className=" min-w-full divide-y divide-gray-200  sorters-table th table-auto ">
+            <div className="max-h-[500px] overflow-y-auto">
+              <table className=" min-w-full divide-y divide-gray-200  customers-table th table-auto ">
                 <thead>
                   <tr>
                     <th
                       scope="col"
                       className="px-6 py-3 text-xs font-bold text-gray-500 uppercase tracking-wider table-header poppins-font"
                     >
-                      Id number
+                     
                     </th>
                     <th
                       scope="col"
@@ -217,10 +326,10 @@ const Sorters = () => {
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200 text-center sort-table dark:text-textTitle dark:bg-container">
+                <tbody className="bg-white divide-y divide-gray-200 text-center sort-table dark:text-textDesc dark:bg-container">
                   {(reloadSorterData || sortedFilteredSorters).map(
                     (sorter, index) => (
-                      <tr key={sorter.id}>
+                      <tr key={sorter.id} className="hover:bg-lightBrown hover:text-textTitle">
                         <td className="poppins-font">{index + 1}</td>
                         <td className="poppins-font">{sorter.sorterName}</td>
                         <td className="poppins-font">{sorter.phoneNum}</td>
@@ -234,6 +343,14 @@ const Sorters = () => {
                 </tbody>
               </table>
             </div>
+            <div>
+              {sorterError && (
+                <p className="items-center justify-center text-center text-primary dark:text-textTitle">No sorters found. Please add new sorter!</p>
+              )}
+              {addError && (
+                <p className="items-center justify-center text-center text-primary dark:text-textTitle">Sorter Already Added. Please try again!</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -244,8 +361,8 @@ const Sorters = () => {
           Sorter
         </h2>
         {/* form for adding a new sorter */}
-        <form onSubmit={handleAddNewSorter}>
-          <div className="mb-4">
+        <form onSubmit={addSorter}>
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterName"
               className="block font-medium poppins-font"
@@ -257,12 +374,12 @@ const Sorters = () => {
               id="newSorterName"
               value={newSorterName}
               onChange={(e) => setNewSorterName(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterPhoneNumber"
               className="block font-medium poppins-font"
@@ -270,16 +387,16 @@ const Sorters = () => {
               Phone Number
             </label>
             <input
-              type="text"
+              type="number"
               id="newSorterPhoneNumber"
               value={newSorterPhoneNumber}
               onChange={(e) => setNewSorterPhoneNumber(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterAddress"
               className="block font-medium poppins-font"
@@ -291,12 +408,12 @@ const Sorters = () => {
               id="newSorterAddress"
               value={newSorterAddress}
               onChange={(e) => setNewSorterAddress(e.target.value)}
-              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font"
+              className="border rounded px-3 py-2 w-full focus:outline-none focus:border-blue-400 poppins-font dark:text-primary"
               required
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-4 dark:text-textTitle">
             <label
               htmlFor="newSorterDateHired"
               className="block font-medium poppins-font"
@@ -316,14 +433,15 @@ const Sorters = () => {
           <div className="flex flex-col gap-4 justify-between">
             <button
               type="submit"
+              disabled={loading}
               className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
-              Add Sorter
+              {loading ? "Adding..." : "Add Sorter"}
             </button>
             <button
               type="button"
               onClick={handleCancel}
-              className="text-black hover:bg-red-700 hover:text-white  font-medium py-2 px-4 rounded focus:outline-none poppins-font"
+              className="text-black dark:text-textTitle hover:bg-red-700 hover:text-white  font-medium py-2 px-4 rounded focus:outline-none poppins-font"
             >
               Cancel
             </button>
